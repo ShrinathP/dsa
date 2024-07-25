@@ -1,0 +1,28 @@
+https://leetcode.com/problems/smallest-string-starting-from-leaf/discuss/231117/java-dfs-O(N)
+
+
+//https://leetcode.com/problems/smallest-string-starting-from-leaf/discuss/231117/java-dfs-O(N)
+//Check comments of this link , very good solution
+
+class Solution {
+     
+    public String smallestFromLeaf(TreeNode root) {
+        if (root == null) return null;
+        return dfs(root);
+    }
+    
+    private String dfs(TreeNode node) {
+        char c = (char) (node.val + 'a');
+        String l = null, r = null;
+        if (node.left != null) {
+            l = dfs(node.left);
+        }
+        if (node.right != null) {
+            r = dfs(node.right);
+        }
+        if (l == null && r == null) return "" + c;
+        if (l == null) return r + c;
+        if (r == null) return l + c;
+        return (l.compareTo(r) > 0 ? r : l) + c;
+    }
+}

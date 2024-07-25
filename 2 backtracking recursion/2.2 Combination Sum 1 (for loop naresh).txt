@@ -1,0 +1,45 @@
+/*
+Check this one too
+https://leetcode.com/problems/combination-sum/discuss/16502/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partitioning)
+
+Naresh Gupta
+For loop + 1 pick backtrack
+
+NOTE
+If you use for loop you dont have to put a non pick recursion
+condition, 
+
+as the for loop starting from
+further indices will automatically not pick 
+previous indices elements
+*/
+
+class Solution {
+    
+    //Backtracking
+    //You can repeat the number multiple times
+    //Naresh Gupta - backtracking with for loop
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        
+        List<List<Integer>> result = new ArrayList();
+        backtrack(candidates, 0 , target, new ArrayList(), result);
+        //given array, start index, new temp list, result list
+        return result;
+    }
+    
+    private void backtrack(int[] cand, int start, int target, List<Integer> list, List<List<Integer>> result){
+        if(target < 0)
+            return;
+        if(target == 0)
+            result.add(new ArrayList(list));
+        for(int ind = start; i< cand.length; i++){
+            list.add(cand[ind]);
+            list.forEach(System.out::print);
+            System.out.println();
+            backtrack(cand, ind, target - cand[ind], list, result);
+            //when backtrack comes here then the sume has exceeded target
+            //so remove the last list element and try combination with other elements
+            list.remove(list.size() - 1);
+        }
+    }
+}

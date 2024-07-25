@@ -1,0 +1,52 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+//Algorithms made easy //check visualization good
+
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+
+//Here we need a prev node, as we have to remove all duplicates, not leave one
+/so we attach prev next, to head's next
+
+        ListNode dummy = new ListNode(0, head);
+        ListNode prev = dummy;
+	
+	//ListNode dummy = new ListNode(0);
+	//dummy.next = head;
+        //ListNode prev = dummy;
+	
+        
+        while(head != null && head.next!= null) {
+            
+            //if the head and head next values are equal
+            //keep moving head until head!= head.next
+            //Then only assign prev.next to head.next
+            if(head.val == head.next.val) {
+                //skip nodes whose values are equal
+                while(head.next!= null && head.val == head.next.val) {
+                    head = head.next;
+                }
+//important step
+                prev.next = head.next;
+            }
+            //else keep moving prev
+            else{
+                prev = prev.next;
+            }
+            //in every case we have to move head
+            head = head.next;
+        }
+        
+        return dummy.next;
+        
+    }
+}

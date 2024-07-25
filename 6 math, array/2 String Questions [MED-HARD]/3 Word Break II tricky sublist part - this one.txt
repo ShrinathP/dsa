@@ -1,0 +1,50 @@
+//Naresh Gupta
+//Recursion + Memo
+//Check this dfs also
+//https://leetcode.com/problems/word-break-ii/discuss/44167/My-concise-JAVA-solution-based-on-memorized-DFS
+
+/*
+DFS + memo solution
+https://leetcode.com/problems/word-break-ii/discuss/44167/My-concise-JAVA-solution-based-on-memorized-DFS
+
+Here the 2nd one is DFS + memo
+https://leetcode.com/problems/word-break-ii/discuss/44243/Java-DP%2BDFS-Memoization%2BDFS-and-DP-Pruning-Solutions-with-Analysis
+Check the 1st type solution also, very much used
+
+Good explanation:
+https://www.youtube.com/watch?v=1U4jQusbeJc
+
+*/
+class Solution {
+    Map<String, List<String>> map = new HashMap();
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        if(map.containsKey(s)){
+            return map.get(s);
+        }
+        
+        List<String> result = new ArrayList();
+        
+        if(wordDict.contains(s)){
+            result.add(s);
+        }
+        
+        for(int i=1; i<=s.length(); i++) {
+            String left = s.substring(0,i);
+            if(wordDict.contains(left)) {
+                System.out.println("found word: " + left);
+                List<String> subList = wordBreak(s.substring(i), wordDict);
+                    
+                    for(String sen: subList) {
+                        System.out.println("loop" + left);
+                        result.add(left + " " + sen);
+                        System.out.println("joining "+ left + " " + sen);
+                    }
+                
+            }
+        }
+        
+        //Adding the result
+        map.put(s, result);
+        return result;
+    }
+}

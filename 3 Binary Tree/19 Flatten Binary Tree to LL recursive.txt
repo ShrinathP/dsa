@@ -1,0 +1,52 @@
+/*
+Algorithms made easy
+-Pre order traversal-
+
+1. take left and right in temp variable
+2. we need to attach the left to the right and store the right in temp variable
+eg. if 1, 2,5 then take 2 and 5 in temp and attach 2 to right to 1, hold 5
+then attach 5
+3. But if left i.e. is also a tree then we need to flatten it as well
+4. so we run 2 flatten
+flatten(left) to flatten 2,3,4
+flatten(right) to flatten 5, null, 6
+
+5. now attach flatten(left) to right of root.
+6. traverse to the right end of the newly attached node at step 5
+7. attach the flatten(right)
+
+Recursive solution
+TC O(N)
+Space height
+*/
+class Solution {
+    public void flatten(TreeNode root) {
+        if(root == null) return;
+        
+        //Step 1
+        //store in temps and set current root left to null
+        TreeNode tempLeft = root.left;
+        TreeNode tempRight = root.right;
+        
+        root.left = null;
+        
+        //Flatten left and right recursively
+        flatten(tempLeft);
+        flatten(tempRight);
+ 
+        //Step 2
+        root.right = tempLeft; //attach 3 to right of 2
+        
+        //Step 3
+        //traverse to end of node attached at right, in this case 3
+        TreeNode current = root;
+        while(current.right != null) {
+            current = current.right;
+        }
+        
+        //Step 4
+        //attach the tempRight
+        current.right = tempRight;
+        
+    }
+}

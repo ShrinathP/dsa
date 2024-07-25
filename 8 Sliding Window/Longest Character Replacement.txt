@@ -1,0 +1,58 @@
+/*Find the longest string which can be formend
+by making k replacement operations on a string
+*/
+
+class Solution {
+    /*Nick White
+    Sliding window Problem
+    We need to keep track of a window
+    1. window should have at max K characters other than the repeating character
+    (as only K operations are allowed)
+    
+    Steps
+    1. Create a frequency array
+    - Max count - to keep track of the maximum count of the repeating character
+    - Distinct character other than repeating character
+    - window size - repeating char count
+    i.e. window_end - winodow_start - max_count
+    - if it exceeds K, move the start ahead
+    2. Calculate max_length, which will be max window size
+    
+    
+    */
+    public int characterReplacement(String s, int k) {
+        int N = s.length();
+        //to keep track of the repeating characters, we use a char array/ freq array
+        int char_count[] = new int[26];
+        
+        int window_start=0;
+        int max_length=0;
+        int max_count=0;
+        
+        for(int window_end=0; window_end<N; window_end++){
+            char_count[s.charAt(window_end) - 'A']++; //keep increasing the count
+            int current_char_count = char_count[s.charAt(window_end) - 'A'];
+            max_count = Math.max(max_count, current_char_count);
+            
+            //** find the number of distinct characters (other than the repeating character)
+            //Formula = window_end - window_start - max_count + 1
+            //window_end - window_start this is the range
+            //max_count is max number of repeating characters
+            //1 is for increasing the window by adding new elmenets
+            
+            //If distinct charcaters are > k . we need to pop out the front
+            while(window_end - window_start - max_count + 1 > k) {
+                char_count[s.charAt(window_start) - 'A']--;
+                window_start++;
+            }
+            
+            //Max length is the max length of the windown
+            max_length = Math.max(max_length, window_end - window_start + 1);
+            
+        }
+        
+        return max_length;
+        
+        
+    }
+}

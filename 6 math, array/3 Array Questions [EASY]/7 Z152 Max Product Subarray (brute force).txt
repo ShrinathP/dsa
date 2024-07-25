@@ -1,0 +1,29 @@
+
+class Solution {
+    
+    /* Naresh gupta
+    //similar to Max Sum Subarray, Kadanes
+    https://leetcode.com/problems/maximum-subarray/
+Check brute force
+do 2 for loops and at every time - calculate the produce
+*/
+    
+    //Time Complexity O(N square)
+//2 for loops
+//Naresh Gupta
+class Solution {
+    public int maxProduct(int[] nums) {
+        int n = nums.length;
+        
+        int result = nums[0];
+        for(int i=0; i< n; i++){
+            int product = 1;
+            for(int j=i; j<n; j++){
+                product = product*nums[j];
+                result = Math.max(result, product);
+            }
+        }
+        return result;
+        
+    }
+}

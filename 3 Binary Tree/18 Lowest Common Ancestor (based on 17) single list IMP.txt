@@ -1,0 +1,36 @@
+
+/* Take U forward
+TC O(N) no 2 arraylist solution
+1. if you find one of the 2 nodes return the node otherwise return null
+2. backtrack
+3. the point where you find the left and right non null
+    thats the point of common ancestor
+    
+if elseif else loop
+*/
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        
+        //base case
+        if(root == null || root == p || root == q){
+            return root;
+        }
+        
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        
+        //result
+        if(left == null){
+            return right; //check on right
+            
+        } else if(right == null){
+            return left;
+            
+        } else{
+            //both left and right have been checked and are non nulls
+            //we found our result
+            return root;
+        }
+        
+    }
+}

@@ -1,0 +1,84 @@
+/* 
+3 ways
+
+1st way
+Naive way Naresh gupta
+1. Sort the array
+2. Iterate over the array and check if nums[i] == nums[i+1]
+
+Time complexity NlogN
+logN to sort and N to iterate
+*/
+class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        Arrays.sort(nums);
+        List<Integer> result = new ArrayList<>();
+        for(int i=0; i< nums.length-1; i++){
+            if(nums[i] == nums[i+1]){
+                result.add(nums[i]);
+                i++;
+            }
+        }
+        return result;
+        
+    }
+}
+
+
+
+
+2nd way
+Using Set
+/* Naive way Naresh gupta
+2nd way using set
+*/
+class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        List<Integer> result = new ArrayList<>();
+        for(int num : nums){
+            if(set.contains(num)){
+                result.add(num);
+            } else {
+                set.add(num);
+            }
+            
+        }
+        return result;
+        
+    }
+}
+
+
+3rd way
+/*3rd way, optimised approach
+No space
+Naresh gupta
+Nick white explanation
+
+It is given that the numbers lie between 1 and N, where N is the length of the array
+The value of each element can also be an index
+for zero based index subtract 1
+Keep setting the value of nums[nums[i]-1] as -1
+if we see already -1 , that means we are setting it the 2nd time
+hence duplicate
+*/
+class Solution {
+    public List<Integer> findDuplicates(int[] nums) {
+        List<Integer> result = new ArrayList<>();
+        for(int i=0; i< nums.length; i++) {
+            int index = Math.abs(nums[i]) -1;
+            
+            //if duplicate add in result
+            if(nums[index] < 0){
+                result.add(index + 1);
+            }
+            
+            //setting to negative
+            //negate all the seen values
+            nums[index] = -nums[index];
+        }
+        return result;
+        
+    }
+}

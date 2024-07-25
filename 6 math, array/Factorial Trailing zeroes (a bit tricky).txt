@@ -1,0 +1,42 @@
+//GFG v good explanation
+//https://www.geeksforgeeks.org/count-trailing-zeroes-factorial-number/
+
+/*
+10 is created whenever 5 and 2 is multiplied
+so we need to find pairs of 5 and 2 in the given number
+
+Examples
+n = 5: There is one 5 and 3 2s in prime factors of 5! (2 * 2 * 2 * 3 * 5). So a count of trailing 0s is 1.
+n = 11: There are two 5s and eight 2s in prime factors of 11! (2 8 * 34 * 52 * 7). So the count of trailing 0s is 2.
+
+The number of 2s in prime factors is always >= 5s
+
+We can easily observe that the number of 2s in prime factors is always more than or equal to the number of 5s. So if we count 5s in prime factors, we are done
+
+To count number of 5s
+        // Keep dividing n by powers
+        // of 5 and update count
+
+*/
+
+class Solution {
+    public int trailingZeroes(int n) {
+        int result = 0;
+        
+        if(n < 0) return -1;
+        
+        // Keep dividing n by powers
+        // of 5 and update count
+        while(n > 0){
+            n = n/5;
+            result += n;
+        }
+        
+        /*Other way
+        for (int i = 5; n / i >= 1; i *= 5)
+            count += n / i;
+        */
+        
+        return result;
+    }
+}

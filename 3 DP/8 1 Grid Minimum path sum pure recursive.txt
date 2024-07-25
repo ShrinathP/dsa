@@ -1,0 +1,40 @@
+class Solution {
+    
+    //codebix utube basic solution
+    //check memiozation and dp solutions
+    public int minPathSum(int[][] grid) {
+        
+        if(grid==null || grid.length == 0){
+            return 0;
+        }
+        
+        int ans = rec(0, 0, grid);
+        return ans;
+    }
+    
+    public static int rec(int si, int sj,int[][] grid){
+        int ei = grid.length -1;
+        int ej = grid[0].length -1;
+        
+        //if si reached end
+        if(si == ei &&sj == ej){
+            return grid[si][sj];
+        }
+        
+        System.out.println(si + "_" + sj);
+        
+        if(si>ei || sj> ej)
+            return Integer.MAX_VALUE;
+        //returning max value 
+        //as we are considering min value this will not be considered
+        
+        //either dont call opt1 and op2 or return Integer max value
+        int opt1 =  rec(si+1, sj, grid);
+        int opt2 =  rec(si, sj+1, grid);
+        
+        System.out.println(opt1 + "opt1 returning");
+        System.out.println(opt2 + "opt2 returning");
+        return grid[si][sj] + Math.min(opt1, opt2);
+        
+    }
+}

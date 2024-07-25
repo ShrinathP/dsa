@@ -1,0 +1,43 @@
+//Bottom up, filling DP solution
+//https://leetcode.com/problems/maximal-square/discuss/61802/Extremely-Simple-Java-Solution-%3A)
+//IDeserve Explanation also good
+//Tech dose also good
+
+//Bottom up, filling DP solution
+//https://leetcode.com/problems/maximal-square/discuss/61802/Extremely-Simple-Java-Solution-%3A)
+
+class Solution {
+    
+    //NOTE
+    //Do we need to fill 1st row and column of the dp?? like in 
+    //https://leetcode.com/problems/maximal-square/discuss/61828/My-Java-DP-AC-solution-simple-and-easy-to-understand-with-explanation
+    //No because if matrix, 0,0 will be 1 then min of current, left, top, and diagonal top left will be 1 anyways (coz current is 1)
+    
+    public int maximalSquare(char[][] matrix) {
+        if(matrix.length == 0) return 0;
+        int r = matrix.length;
+        int c = matrix[0].length;
+        int result = 0;
+        
+        int dp[][] = new int[r+1][c+1];
+        //dp[i,j] array holds the max size of the square which can be made at that index
+        //whose lower right corner is located at i j
+        
+        
+        //Check for the current position if its prev diagonal position is 1
+        //if 1 then find the min square lengths from dp array
+        for(int i=1; i<= r; i++) {
+            for(int j=1; j<= c; j++){
+                if(matrix[i-1][j-1] == '1')
+                //3 prev directions should be checked
+                dp[i][j] = Math.min(Math.min(dp[i][j-1] , dp[i-1][j-1]), dp[i-1][j]) + 1;
+                result = Math.max(dp[i][j], result); // update result
+                
+            }
+        }
+        
+        //return the area
+        return result * result;
+        
+    }
+}

@@ -1,0 +1,59 @@
+//Kevin Naughton
+//DFS + recursion
+/*
+//Nick white uses visited array
+To not relook at the same thing
+you either need to reassign the current used cell to
+blank or something
+OR
+you need to maintain a visited array, that stores the state
+of current celll
+either used or not used
+*/
+class Solution {
+    public boolean exist(char[][] board, String word) {
+        for(int i=0; i<board.length; i++){
+            for(int j=0; j<board[i].length; j++){
+                
+                //if we find the first letter and the remainder of the letters
+                //return true
+                if(board[i][j] == word.charAt(0) && dfs(board, i, j, 0, word)) {
+                    return true;
+                
+                }
+            }
+        }
+        return false;
+
+    }
+    
+    public boolean dfs(char[][] board, int i, int j, int count, String word){
+        
+        //if we reached the end
+        if(count == word.length()){
+            return true;
+        }
+        
+        //cases to exclude
+        if(i<0 || i>= board.length || j<0 || j >= board[i].length
+          || board[i][j] != word.charAt(count)) {
+            return false;
+        }
+        
+        //as the same letter cell cannot be used more than once
+        //we are emptying the current cell
+        //runnnig recursion
+        //adding it back
+        
+        char temp = board[i][j];
+        board[i][j] = ' ';
+        boolean found = dfs(board, i+1, j, count+1, word) ||
+            dfs(board, i-1, j, count+1, word) ||
+            dfs(board, i, j+1, count+1, word) ||
+            dfs(board, i, j-1, count+1, word);
+        
+        board[i][j] = temp;
+        return found;
+        
+    }
+}

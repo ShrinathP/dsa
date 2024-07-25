@@ -1,0 +1,40 @@
+
+//Single Stack solution
+//Take U forward (can leave)
+
+class Solution {
+
+    public List<Integer> postorderTraversal(TreeNode root) {
+        Stack<TreeNode> st1 = new Stack<TreeNode>(); 
+        List<Integer> postOrder = new ArrayList<Integer>();
+        
+        if(root == null) return postOrder; 
+        
+        TreeNode current = root;  
+        while(current != null || !st1.isEmpty()) {
+//Keep moving left left left left until null
+            if(current != null){
+                st1.push(current);
+                current = current.left;
+            }else{
+//No left, check for right not null
+                TreeNode temp = st1.peek().right;
+//This is the last right
+                if (temp == null) {
+                    temp = st1.pop();
+                    postOrder.add(temp.val);
+//Keep popping all elements in the right line and adding to the postOrder
+                    while (!st1.isEmpty() && temp == st1.peek().right) {
+                        temp = st1.pop();
+                        postOrder.add(temp.val);
+                    }
+                } else {
+//Right is not null, add to current which will be checked for lefts in the next iteration
+                    current = temp;
+                }
+            }
+        }
+      
+        return postOrder; 
+    }
+}

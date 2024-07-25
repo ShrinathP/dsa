@@ -1,0 +1,44 @@
+class Solution {
+    //Nick white
+    //4 loops
+    public int[][] generateMatrix(int n) {
+        int columnBegin = 0;
+        int columnEnd = n-1;
+        int rowBegin = 0;
+        int rowEnd = n-1;
+        int counter = 1;
+        
+        int[][] res = new int[n][n];
+        while(columnEnd >= columnBegin && rowEnd >= rowBegin){
+            
+            //left to right traversal
+            for(int i=columnBegin;i<= columnEnd; i++){
+                res[rowBegin][i] = counter;
+                counter++;
+            }
+            rowBegin ++;
+            
+            for(int i= rowBegin; i<=rowEnd; i++){
+                res[i][columnEnd] = counter++;
+            }
+            columnEnd --;
+            
+            //if(rowBegin <= rowEnd){
+                for(int i=columnEnd; i>=columnBegin; i--){
+                    res[rowEnd][i] = counter++;
+                }
+            //}
+            rowEnd--;
+            
+            //if(columnBegin<= columnEnd){
+                for(int i= rowEnd; i>=rowBegin; i--){
+                    res[i][columnBegin] = counter++;
+                }
+            //}
+            columnBegin++;
+            
+        }
+        return res;
+        
+    }
+}

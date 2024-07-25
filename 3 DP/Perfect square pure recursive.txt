@@ -1,0 +1,25 @@
+//Code bix
+//dfs or recursion with min calculation
+class Solution {
+    public int numSquares(int n) {
+        return rec(n);
+    }
+    
+    int rec(int n){
+        if(n < 0) return Integer.MAX_VALUE;
+        if(n == 0) return 0;
+        
+        //base case where 12 = 1*2 + 1^2 + 1^2    12 times
+        int min = n;
+        
+        //do recursion /dfs
+        //for all digits whose squre is less than n
+        for(int i=1;i*i <= n; i++) {
+            
+            //keep finding min
+            min = Math.min(rec(n-(i*i)), min);
+        }
+        
+        return min + 1;
+    }
+}

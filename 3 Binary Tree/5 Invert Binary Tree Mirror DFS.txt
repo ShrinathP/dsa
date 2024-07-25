@@ -1,0 +1,34 @@
+//Nick white
+
+//DFS solution
+
+//This will traverse , 4 -> 3 ->1
+//Note for left and right first swap would be null and null of 1
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        if(root == null) return root;
+        
+        TreeNode left = invertTree(root.left);
+        TreeNode right = invertTree(root.right);
+        
+        //swap
+        //swaps on the children of the root node
+        root.left = right;
+        root.right = left;
+        
+        return root;
+    }
+}
+
+
+
+//Invert binary tree
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        if (root == null) return null;
+        TreeNode tempRight = root.right;
+        root.right = invertTree(root.left);
+        root.left = invertTree(tempRight);
+        return root;
+    }
+}

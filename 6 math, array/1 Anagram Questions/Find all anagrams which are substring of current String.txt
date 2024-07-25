@@ -1,0 +1,63 @@
+
+Similar questions:
+https://binarysearch.com/problems/Generate-Anagram-Substrings
+https://www.tutorialspoint.com/program-to-find-all-substrings-whose-anagrams-are-present-in-a-string-in-python
+
+/*
+https://leetcode.com/discuss/interview-question/1092392/Amazon-SDE-2-interview-question-(ANAGRAMS)
+
+s :abccba
+Print all the anagrams which are substrings of the original string
+result List : ab ba bc cb abc cba bcc ccb abcc ccba abccb bccba
+
+
+Solution- find substrings and add the same and its reverse
+*/
+
+
+
+//check for all substring lengths, upto s.length-1
+//if reverse is the same, do not add
+
+public static void main(String[] args) {  
+    //Input: str=abccba
+    String str = "abccba",v1="",v2="";
+    int w_len=1, s_len=str.length();
+    Set result=new HashSet<>();
+    
+    while(w_len++<s_len){
+        for(int i=0;i+w_len<s_len;i++){
+            v1=str.substring(i,i+w_len);
+            StringBuilder sb = new StringBuilder(v1);
+            v2=sb.reverse().toString();
+            if(v1.equals(v2)) continue;
+            result.add(v1);
+            result.add(v2);
+        }
+    }
+    System.out.println(result);
+    //Output: [ab, bc, ccba, bccba, abc, cba, bcc, ccb, abccb, abcc, ba, cb]
+}
+
+
+
+
+//better solution
+
+
+public static List findAnagrams(String s) {
+Set result = new HashSet<>();
+if (s == null || s.length() == 0)
+return new ArrayList<>(result);
+
+    for (int i = 0; i < s.length(); i++) {
+        for (int j = i + 1; j < s.length(); j++) {
+            StringBuffer sb = new StringBuffer(s.substring(i, j));
+            if (sb.length() < s.length() && sb.length() > 1) {
+                result.add(sb.toString());
+                result.add(sb.reverse().toString());
+            }
+        }
+    }
+    return new ArrayList<>(result);
+}

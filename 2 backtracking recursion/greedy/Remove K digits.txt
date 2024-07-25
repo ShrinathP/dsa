@@ -1,0 +1,54 @@
+/*Nick white
+Greedy solution
+For every integer check if there is something lesser ahead
+if yes pop the current integer from stack
+*/
+class Solution {
+    public String removeKdigits(String num, int k) {
+        int size = num.length();
+        
+        //edge case if size of num is k , we have remove all digits
+        if(k == size) return "0";
+        
+        Stack<Character> stack = new Stack<>();
+        
+        int counter = 0;
+        while(counter < size){
+            while(k>0 && !stack.isEmpty() && stack.peek() > num.charAt(counter)){
+                stack.pop();
+                k--;
+            }
+            
+            stack.push(num.charAt(counter));
+            counter++;
+        }
+        
+        /*Ending number is greater, or last numbers are equal and ke havent deleted all k
+        number of characters*/
+        //This is for cases like "112" and we have to delete 1 char, which has to be last
+        
+        //This is for cases like "121111" or "332333" and we have to delete 3 chars
+        //Here 2 will be deleted, but other ones will not be
+        //where peek character is not greater than character to be added
+        
+        while(k > 0){
+            stack.pop();
+            k--;
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        while(!stack.isEmpty()){
+            char current_char = stack.pop();
+            sb.append(current_char);
+        }
+        sb.reverse();
+        
+        //removing leading zeroes //if Sb has any
+        while(sb.length() > 1 && sb.charAt(0) == '0'){
+            sb.deleteCharAt(0);
+        }
+        
+        return sb.toString();
+        
+    }
+}

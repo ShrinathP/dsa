@@ -1,0 +1,37 @@
+class Solution {
+    //codebix pure recursive
+    public int numDecodings(String s) {
+        //recursive
+        int ans = numDecodings(s, 0);
+        return ans;
+        
+    }
+    
+    private int numDecodings(String s, int index) {
+        if(index == s.length()){
+            return 1;
+        }
+        
+        //0 cannot be mapped
+        if(s.charAt(index) == '0'){
+            return 0;
+        }
+        
+        if(index == s.length() -1){
+            return 1;
+        }
+        
+        //if String is 1141
+        //way 1 picking first integer
+        int way1 = numDecodings(s, index+1); 
+        
+        //way 2 picking first 2 integer
+        //do only if parsed int is less than 26
+        int way2 = 0;
+        if(Integer.parseInt(s.substring(index, index + 2)) <= 26) {
+            way2 = numDecodings(s, index + 2);
+        }
+        
+        return way1 + way2;
+    }
+}

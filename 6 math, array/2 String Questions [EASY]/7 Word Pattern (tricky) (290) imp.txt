@@ -1,0 +1,30 @@
+//cue- base case length match-> map(patternchar, word) -> if-containskey,check val -> else-map.put
+
+//Nick White
+class Solution {
+    public boolean wordPattern(String pattern, String s) {
+        String[] words = s.split(" ");
+//base case, check for lengths
+        if(words.length != pattern.length()) return false;
+        
+        HashMap<Character, String> hm = new HashMap();
+        for(int i=0; i< pattern.length(); i++) {
+            char currentChar = pattern.charAt(i);
+            if(hm.containsKey(currentChar)){
+                if(!hm.get(currentChar).equals(words[i])){
+                    return false;
+                }
+            } else {
+                //imp, if no corresponding key, present but value present return false
+                //eg : pattern = "abba", s = "dog dog dog dog"
+		// in 2nd iteration, b char isnt present but dog is present in map
+                if(hm.containsValue(words[i])){
+                    return false;
+                }
+                hm.put(currentChar, words[i]);
+            }
+        }
+        return true;
+        
+    }
+}

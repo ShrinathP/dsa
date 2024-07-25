@@ -1,0 +1,51 @@
+//Solution from
+//Take u forward
+//NOTE Pick and Non Pick way, run 2 recursions
+
+//https://www.youtube.com/watch?v=rYkfBRtMJr8&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=53
+//https://practice.geeksforgeeks.org/problems/subset-sums2234/1
+
+//Time Complexity
+
+
+public class SumSubsets{
+
+void func(int index, int sum, ArrayList<Integer> arr, int N, ArrayList<Integer> sumSubset){
+    
+    //If reached the end, add the generated sum, in
+    //sum Subset
+    if(index == N){
+        sumSubSet.add(sum);
+        return;
+    }
+    
+    //There will be 2 cases
+    //Either you pick the element
+    //Or you do not pick
+    
+    //Pick the element, add to sum
+    func(int+1, sum + arr.get(ind), arr, N, sumSubset);
+    
+    //Not pick the element, dont add to sum
+    func(int+1, sum, arr, N, sumSubset);
+    
+    }
+    
+    
+    ArrayList<Integer> subSetSums(ArrayList<Integer> arr, int N) {
+        ArrayList<Integer> sumSubset = new ArrayList<>();
+        func(0, 0, arr, N, sumSubset);
+        Collections.sort(sumSubset);
+        return subSubset;
+    }
+    
+    /*
+    public static void main(String[] main){
+        ArrayList<Integer> given = new ArrayList<>({2,4,5,6,7,8,5});
+       //Call SubsetSums
+        subSetSums()
+    }
+    */
+}
+     
+}

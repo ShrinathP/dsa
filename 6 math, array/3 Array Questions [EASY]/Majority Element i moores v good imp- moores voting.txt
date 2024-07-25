@@ -1,0 +1,25 @@
+//Take U forward solution and explanation
+//https://leetcode.com/problems/majority-element/discuss/51611/Java-solutions-(sorting-hashmap-moore-voting-bit-manipulation).
+
+//Moore voting algorithm
+/*
+Run a for loop
+if count becomes zero, add new candidate
+if the next no matches increase count
+if the next no is not matches decrease count
+
+*/
+class Solution {
+    public int majorityElement(int[] nums) {
+    int count=0, candidate = 0;
+    for (int num: nums) {
+        if (count==0)
+            candidate = num;
+        if (num==candidate)
+            count++;
+        else
+            count--;
+    }
+    return candidate;
+}
+}

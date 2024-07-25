@@ -1,0 +1,66 @@
+class Solution {
+    
+    //Explanation Tushar Roy
+    //https://github.com/mission-peace/interview/blob/master/src/com/interview/dynamic/TwoStringInterleavingToFormThird.java
+    //Code Tushar roy and this one also good
+    //https://leetcode.com/problems/interleaving-string/discuss/32078/DP-Solution-in-Java
+    public boolean isInterleave(String s1, String s2, String s3) {
+        
+        if((s1.length() + s2.length()) != s3.length()) return false;
+        /*
+        Create a table of s2 length + s3 length
+        Step 1:
+        fill 0, 0 with true
+        
+        Step2: 
+        fill first column and first row 
+        if char at s3 equals s2[row], then true
+        if char at s3 equals s1[col], then true
+        
+        Step 3:
+        Fill the rest of the matrix with logic
+        length of s3 is i+j-1
+        //if s3[i+j-1] equals to top char, consider matrix value of top
+        //else if s3[i+j-1] equals to left char, consider matrix value of left , j-1
+        
+        
+        [0, str2]
+        [str1, ]
+        [    ,  ]
+        
+        */
+        
+        
+        //dp matrix                     //row s2            //column s1
+        boolean[][] matrix = new boolean[s2.length() + 1][s1.length() + 1];
+        matrix[0][0] = true;
+        
+        //Filling the first row , comparing column values
+        //with s1, since s1 is in column
+        for(int i =1; i< matrix[0].length; i++){
+            matrix[0][i] = matrix[0][i-1] && (s1.charAt(i-1)==s3.charAt(i-1));
+        }
+        
+        //Filling the first column, comparing row values 
+        //with s2, since s2 is in row
+        for(int i =1; i< matrix.length; i++){
+            matrix[i][0] = matrix[i-1][0] && (s2.charAt(i-1)==s3.charAt(i-1));
+        }
+        
+        for(int i = 1; i< matrix.length; i++){
+            for(int j = 1; j< matrix[0].length; j++){
+               
+                matrix[i][j] =
+                    (matrix[i-1][j] &&  (s2.charAt(i-1) == s3.charAt(i+j-1)))
+                  ||(matrix[i][j-1] &&  (s1.charAt(j-1) == s3.charAt(i+j-1)));
+               
+                //System.out.println(matrix[i][j]);
+                
+            }
+            
+        }
+        return matrix[s2.length()][s1.length()];
+        
+        
+    }
+}

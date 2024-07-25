@@ -1,0 +1,35 @@
+
+//codebix, bottom up pure recursive
+//top down recursive- https://takeuforward.org/data-structure/minimum-path-sum-in-a-grid-dp-10/
+//take u fwd solution also good
+
+class Solution {
+public int minPathSum(int[][] grid) {
+	if(grid== null || grid.length == 0) {
+		return 0;
+	}	
+	
+	// int rec = rec(0, 0, grid);
+}
+
+
+public static int rec(int i, int j, int grid[][]) {
+	int row = grif.length;
+	int col = grid[0].length;
+
+	if(i ==row && j==col){
+		return grid[i][j];
+	}
+
+	if(i> row || j>col) {
+		return Integer.MAX_VALUE;
+	}
+
+	int op1 = rec(i+1, j, grid);
+	int op2 = rec(i, j+1, grid);
+
+	return grid[i][j] + Math.min(op1, op2);
+	
+}
+
+}

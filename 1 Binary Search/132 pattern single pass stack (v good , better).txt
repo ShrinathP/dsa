@@ -1,0 +1,28 @@
+//cue - travel from back, keep pushing in stack, compare pop with 2nd update second, compare second with 3rd number
+//https://leetcode.com/problems/132-pattern/discuss/425027/Java-simple-and-clean-O(n)-solution-similar-idea-with-%22Next-Greater-Element%22
+
+//Single pass stack solution
+//https://thefellowprogrammer.blogspot.com/2020/10/132-pattern.html
+/*
+Steps:
+1. Push to stack, 
+2. if stack is not empty, peek into the stack and check if curr num is greater than last stack number
+	- if yes store as 2nd largest number
+3. check if curr number is less than 2nd largest number, if yes return true
+*/
+class Solution {
+    public boolean find132pattern (int[] nums) {
+        Stack <Integer> stack = new Stack ();
+        int second = Integer.MIN_VALUE;
+        for (int i = nums.length - 1; i >= 0; i--) {
+            if (nums [i] < second){
+                return true;}
+            while (!stack.isEmpty() && nums [i] > stack.peek()){
+                second = stack.pop ();}
+            System.out.println("Adding number to stack :  " + nums[i]);
+            stack.push (nums[i]);
+        }
+        return false;
+    }
+}
+

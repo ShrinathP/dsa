@@ -1,0 +1,16 @@
+//pepcoding
+
+public static void main(String[] args) {
+	Scanner scn = new Scanner(System.in);
+	int n = scn.nextInt();
+	printDecreasing(n);
+}
+
+public static void pdi(int n) {
+	if(n == 0) {
+	return;
+	}
+	System.out.println(n); //keeps on printing decreasing sequence //then when n==0 keeps printing increasing sequence
+	pdi(n-1);
+	System.out.println(n);
+}

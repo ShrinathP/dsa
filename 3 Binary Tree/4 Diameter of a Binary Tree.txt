@@ -1,0 +1,51 @@
+
+//Take U forward
+//Same as finding the height of the tree
+//with one change, keep a variable maxi to calculate max height
+
+class Solution {
+    int max = 0;
+    
+    public int diameterOfBinaryTree(TreeNode root) {
+        maxDepth(root);
+        return max;
+    }
+    
+      //Basic max depth solution
+    //with one change, keep a variable maxi to calculate max height
+    private int maxDepth(TreeNode root) {
+        if (root == null) return 0;
+        
+        //max depth on both sides
+        int left = maxDepth(root.left);
+        int right = maxDepth(root.right);
+        
+        //keep a check of max of both heights at any node
+        max = Math.max(max, left + right);
+        
+        return Math.max(left, right) + 1;
+
+//maxDepth(node.left);
+//maxDepth(node.right);
+    }
+}
+
+
+//Another solutiion with array passed
+public class Solution {
+    public int diameterOfBinaryTree(TreeNode root) {
+        int[] diameter = new int[1];
+        height(root, diameter);
+        return diameter[0];        
+    }
+
+    private int height(TreeNode node, int[] diameter) {
+        if (node == null) {
+            return 0;
+        }
+        int lh = height(node.left, diameter);
+        int rh = height(node.right, diameter);
+        diameter[0] = Math.max(diameter[0], lh + rh);
+        return 1 + Math.max(lh, rh);
+    }
+}

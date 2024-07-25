@@ -1,0 +1,58 @@
+//Time complexity O(n2)
+
+class Solution {
+    
+    //Longest increasing subsequence DP way
+    //Tushar Roy explanation
+    //Take u forward explanation
+    //https://www.geeksforgeeks.org/longest-increasing-subsequence-dp-3/
+    public int lengthOfLIS(int[] nums) {
+        int[] lis = new int[nums.length];
+        int i, j, max = 0;
+        
+        /* Initialize LIS values for all indexes */
+        for(i=0; i<nums.length; i++){
+            lis[i] = 1; //storing min 1 value
+        }
+        
+        /*Compute optimized LIS values in bottom up manner*/
+        for(i= 1; i < nums.length; i++){
+            for(j=0; j<i; j++){
+                //if newer lis is greater, replace it in ith position
+                if(nums[i]> nums[j] && lis[i] < lis[j] + 1){
+                    lis[i] = lis[j] + 1;
+                }
+            }
+        }
+        
+        int maxIndex = 0;
+        /* Pick maximum of all LIS values */
+        for(i=0;i< nums.length; i++){
+            if(max < lis[i]){
+                maxIndex = i;
+                max = lis[i];
+                }
+        }
+        
+        /*
+        Printing longest increasing subsequence
+        Print the maxIndexElement
+        Traverse from last
+        [1 1 2 2 3 4]
+        Whenever there is a drop we need to print
+        at 4 to 3, 3 to 2 and 2 to 1
+        */
+        System.out.println(nums[maxIndex]);
+        while(maxIndex > 0){
+            //System.out.println("index:" + maxIndex);
+            //System.out.println("lis" + lis[maxIndex]);
+            
+            if(lis[maxIndex-1] < lis[maxIndex]){
+                System.out.println(nums[maxIndex-1]);
+            }
+            maxIndex--;
+        }
+        
+        return max;
+    }
+}

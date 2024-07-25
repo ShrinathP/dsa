@@ -1,0 +1,40 @@
+/*
+    Using InsertionSort
+    https://leetcode.com/problems/find-median-from-data-stream/discuss/270084/Simple-Java-Insertion-Sort
+*/
+class MedianFinder {
+    List<Integer> data;
+
+    /** initialize your data structure here. */
+    public MedianFinder() {
+        data = new ArrayList();
+    }
+    
+    //https://www.geeksforgeeks.org/collections-binarysearch-java-examples/
+    public void addNum(int num) {
+        int idx=Collections.binarySearch(data,num);
+        if(idx>=0) {
+            data.add(idx,num);
+        } else {
+		    // JDK document says binary search returns (-(insertion point) - 1)
+            data.add(-idx-1,num);
+        }
+    }
+    
+    public double findMedian() {
+        int len=data.size();
+        int mid=data.get(len/2);
+        if(len%2==1) {
+            return mid;
+        } else {
+            return 1.0*((data.get(len/2-1))+mid)/2;
+        }
+    }
+}
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder obj = new MedianFinder();
+ * obj.addNum(num);
+ * double param_2 = obj.findMedian();
+ */

@@ -1,0 +1,47 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+/*Brute Force Naresh gupta
+
+SELECTION SORT
+==============
+For eact index, iterate ahead
+Find the node minumum of current node
+If found swap the values
+Time complexity O(n square)
+*/
+class Solution {
+    public ListNode sortList(ListNode head) {
+        if(head == null) return head;
+        ListNode current = head;
+        while(current != null){
+            ListNode iter = current;
+            ListNode minNode = iter;
+            
+            //Finding the least value node in the current iteration
+            while(iter != null){
+                if(iter.val < minNode.val){
+                //reassigning minNode
+                    minNode = iter;
+                }
+                iter = iter.next;
+            }
+            
+            //loop breaks and you find the minNode
+            //swap now
+            int temp = current.val;
+            current.val = minNode.val;
+            minNode.val = temp;
+            
+            current=current.next;
+        }
+        return head;
+    }
+}

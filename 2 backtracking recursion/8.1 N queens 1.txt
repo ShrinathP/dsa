@@ -1,0 +1,107 @@
+class Solution {
+    /*
+    Take u forward
+    Brute force solution
+    https://github.com/striver79/SDESheet/blob/main/NQueenBruteJava
+    1. fill all entities with .
+    2. create a recursive function
+    3. create a validate function which will check if its safe to put Q
+    4. in the recursive function:-
+    for every row,
+    - validate if its okay to put Q
+    - if yes, put Q in current column
+    - call rec for col+1
+    - backtrack by removing Q and putting dot(.)
+    //base case, if we have reached end, then construct List of rows and add to result
+    
+    validate function checks if its safe to put
+
+* Fill all the places by dot .
+* Call a recursive function which takes 0 as column number
+- in the rec function
+	1. base case whenever we reach the board length - add the board to the result
+	2. 2nd case, 
+		- check for every row of the column	
+		- check if its safe to put Q at the place
+		- if safe, then add the Q at that place
+		- call rec for next column
+		- backtrack step, remove Q from the place
+
+	3. isSafe function, checks for left top diagonal traversal, left straight , left bottom traversal
+	4. Construct function to construct a List of row string
+    
+    */
+    public List<List<String>> solveNQueens(int n) {
+        char[][] board =    new char[n][n];
+        for(int i=0;i<n;i++)
+            for(int j=0;j<n;j++)
+                board[i][j] = '.';
+        List<List<String>> res = new ArrayList<>();
+        rec(0, board, res);
+        return res;
+    }
+    
+    private boolean validate(char[][] board, int row, int col){
+        int duprow = row;
+        int dupcol = col;
+        
+        //right to left top traversal
+        while(row>=0 && col>=0){
+            if(board[row][col] == 'Q') return false;
+            row--;
+            col--;
+        }
+        
+        row = duprow;
+        col = dupcol;
+        //right left straight traversal
+        while(col>=0){
+            if(board[row][col] == 'Q') return false;
+            col--;
+        }
+        
+        row = duprow;
+        col = dupcol;
+        //right left bottom traversal
+        while(col>=0 && row< board.length){
+            if(board[row][col] == 'Q') return false;
+            col--;
+            row++;
+        }
+        return true;
+        
+    }
+    
+    private void rec(int col, char[][] board, List<List<String>> res){
+        //if column reaches board length, 
+        //add all iterations to result
+        if(col == board.length) {
+            res.add(construct(board));
+            return;
+        }
+        
+        //if not
+        //for every column iterate rows
+        //continue iterating for all rows
+        for(int row=0; row< board.length; row++) {
+            if(validate(board, row, col)){
+                board[row][col] = 'Q';
+                rec(col+1, board, res);
+                //when all successive columns are checked 
+                //remove Q and backtrack
+                board[row][col] = '.';
+            }
+        }
+    }
+    
+    private List<String> construct(char[][] board){
+        List<String> res = new LinkedList<>();
+        for(int i=0; i<board.length; i++) {
+            //Add the whole row
+            //So we have List of rows now in res
+            String s = new String(board[i]);
+            res.add(s);
+        }
+        return res;
+    }
+}

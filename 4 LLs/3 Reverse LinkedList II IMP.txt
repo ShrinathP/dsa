@@ -1,0 +1,46 @@
+//imp tricky
+
+class Solution {
+    //Reverse LinkedList II
+    //Coding Decoded
+  // TC : O(n)
+  public ListNode reverseBetween(ListNode head, int left, int right) {
+    if(head==null || head.next==null){
+      return head;
+    }
+
+    ListNode dummy = new ListNode(-1);
+    dummy.next = head;
+      //Keep moving PrevIt until the left of the first reversed index
+    // till the left index
+    ListNode it = dummy;
+    ListNode prevIt = null;
+    for(int i=0;i<left;i++){
+      prevIt = it;
+      it = it.next;
+    }
+
+    //reverse
+    ListNode itR = it;
+    ListNode prevR = prevIt;
+
+    // reversing a linked list
+    for(int i=left;i<=right;i++){
+      ListNode forward = itR.next;
+      itR.next = prevR;
+      prevR = itR;
+      itR = forward;
+    }
+
+    //connect
+//Check other way of connecting in programcreek solution for
+//https://www.programcreek.com/2014/05/leetcode-reverse-nodes-in-k-group-java/
+//can do this way too and remove the it.next line
+//prevIt.next.next = itR;
+    prevIt.next = prevR;
+    it.next = itR;
+
+    return dummy.next;
+
+  }
+}

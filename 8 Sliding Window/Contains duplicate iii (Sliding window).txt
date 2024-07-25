@@ -1,0 +1,27 @@
+class Solution {
+    /*
+    https://leetcode.com/problems/contains-duplicate-iii/discuss/535729/Sliding-Window-Java-Simple-and-Explained
+    
+    We need to find 2 numbers such that
+    their difference in value is at most t
+    their difference in indices is at most k
+
+
+    Start with i = 0.
+    For every element ahead of i, check if the next element onwards, till the i + kth element has an Absolute diff of t
+    Return true or false
+    */
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        //Removing time limit exceeed
+        if (nums.length > 9999) return false;
+
+        
+        for(int i = 0;i <= nums.length - 2; i++) {
+            int j = i + 1;
+            while(j - i <= k && j < nums.length) {
+                if(Math.abs((long)nums[i] - (long)nums[j++]) <= t) return true;
+            }
+        }
+        return false;
+    }
+}

@@ -1,0 +1,12 @@
+The only difference is 
+the regions on the boundaries should not be sinked
+
+Here we set the Os on the boundary as a special character
+
+//DFS way
+//Check out nick white solution
+
+And the picture solution
+https://leetcode.com/problems/surrounded-regions/discuss/680235/Java-DFS-with-Picture
+https://leetcode.com/problems/surrounded-regions/discuss/680235/Java-DFS-with-Picture
+

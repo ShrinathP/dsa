@@ -1,0 +1,51 @@
+Lintcode question
+https://aaronice.gitbook.io/lintcode/array/partition_array
+
+public class Solution {
+    /** 
+     *@param nums: The integer array you should partition
+     *@param k: As description
+     *return: The index after partition
+     */
+    public int partitionArray(int[] nums, int k) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        return helper(nums, 0, nums.length - 1, k);
+    }
+
+    public void swap(int[] nums, int x, int y){
+        int temp = nums[x];
+        nums[x] = nums[y];
+        nums[y] = temp;
+    }
+    
+    public int helper(int[] nums, int start, int end, int pivot) {
+        int low = start;
+        int high = end;
+        while (low <= high) {
+            while(low <= high && nums[low] < pivot) {
+                low++;
+            }
+            while(low <= high && nums[high] >= pivot) {
+                high--;
+            }
+            if (low <= high) {
+                swap(nums, low, high);
+                low++;
+                high--;
+            }
+        }
+        return low;
+    }
+}
+
+Example number
+1264058
+suppose k is 4
+1 and 2 will be gone in first while loop - 6 found a number greater than pivot
+2nd while loop, 8 and 5 will go - 0 found a number less than pivot
+SWAP 6 and 0
+after swap
+1204658
+return index of 4

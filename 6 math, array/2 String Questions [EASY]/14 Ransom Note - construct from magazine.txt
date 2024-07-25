@@ -1,0 +1,44 @@
+//fill mag reduce ransomnote
+//cue - ransomnote constructed from mag, 
+
+//2 ways , freqarray way and HashMap way
+
+//Construct ransomNote from magazine
+//1st
+//freqArr way
+
+public class Solution {
+    public boolean canConstruct(String ransomNote, String magazine) {
+        int[] arr = new int[26];
+        for (int i = 0; i < magazine.length(); i++) {
+            arr[magazine.charAt(i) - 'a']++;
+        }
+        for (int i = 0; i < ransomNote.length(); i++) {
+            if(arr[ransomNote.charAt(i)-'a']-- < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+
+//2nd way
+//HashMap
+
+class Solution {
+     public boolean canConstruct(String ransomNote, String magazine) {
+        Map<Character, Integer> magM = new HashMap<>();
+        for (char c:magazine.toCharArray()){
+            int newCount = magM.getOrDefault(c, 0)+1;
+            magM.put(c, newCount);
+        }
+        for (char c:ransomNote.toCharArray()){
+            int newCount = magM.getOrDefault(c,0)-1;
+            if (newCount<0)
+                return false;
+            magM.put(c, newCount);
+        }
+        return true;
+    }
+}

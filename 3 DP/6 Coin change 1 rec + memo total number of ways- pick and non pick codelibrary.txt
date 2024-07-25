@@ -1,0 +1,24 @@
+//total ways, 
+/*
+Pick and non pick type
+1st way,consider the coin and dont increase the index
+2nd way, dont consider the coinn and dont increase index
+
+*/
+public totalWays(int arr[], int m, int n) {
+	if(m ==-1 and n>0) {
+	return 0;
+	}
+	
+	if(n == 0){
+	return 1;
+	}
+
+	if(n < 0)
+	return 0;
+
+	if(dp[m][n] != -1) return dp[m][n];
+
+	return dp[m][n] = getWays(arr,m,n-arr[m]) + getWays(arr,m-1,n);
+
+}

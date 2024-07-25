@@ -1,0 +1,39 @@
+//Problem link
+//https://practice.geeksforgeeks.org/problems/subset-sums2234/1
+//Solution Leetcode Subsets sum
+import java.util.*;
+
+public class HelloWorld{
+
+     public static void main(String []args){
+        ArrayList<Integer> list = new ArrayList<Integer>();
+    list.add(2);
+    list.add(3);
+    System.out.println(subsetSums(list, list.size()));
+    }
+     
+     public static ArrayList<Integer> subsetSums(ArrayList<Integer> arr, int N){
+         //code here
+         ArrayList<Integer> sumSubset = new ArrayList<>();
+         func(0, 0, arr, N, sumSubset);
+         Collections.sort(sumSubset);
+         return sumSubset;
+     }
+     
+//Recursion
+     private static void func(int index, int sum, ArrayList<Integer> arr, int N, ArrayList<Integer> sumSubset){
+         
+         //if index reached N, add subset
+         if(index  == N){
+             sumSubset.add(sum);
+             return;
+         }
+         
+         //either pick the element and keep finding sum
+         func(index + 1, sum + arr.get(index), arr, N, sumSubset);
+         //or do not pick the element
+         //and keep finding sum
+         func(index + 1,sum, arr, N, sumSubset);
+     }
+}
+}

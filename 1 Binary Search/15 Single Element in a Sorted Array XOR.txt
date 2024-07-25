@@ -1,0 +1,15 @@
+//1st Solution (XOR ing all numbers)
+//Take U forward
+//XOR of all the element in the array
+//XOR of 2 same numbers is 0
+//So all the numbers XOR will result in giving the single number
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        int result = 0;
+        for(int num: nums){
+            result = result^num;
+        }
+        
+        return result;
+    }
+}

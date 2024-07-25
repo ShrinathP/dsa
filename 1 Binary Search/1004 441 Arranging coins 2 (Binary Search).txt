@@ -1,0 +1,46 @@
+class Solution {
+    //Binary Search
+    //Naresh Gupta
+    //Find the number of Full rows formed
+    	//Sum of all coins until k is k(k+1)/2
+    /*
+    Eg if n is 12
+    a
+    aa
+    aaa
+    aaaa
+    aa
+    
+    full rows are 4
+    As numbers are sorted we can use binary Search
+    */
+    public int arrangeCoins(int n) {
+        long start = 0;
+        long end = n;
+        long k, currSum;
+        while(start <= end) {
+            //start from midpoint
+            k = start + (end - start)/2;
+            currSum = k*(k+1)/2;
+            
+            //if currentSum equals K, return K
+            if(currSum == n){
+                return (int)k;
+            }
+            
+            //if currentSum is lesser, we need to increase start
+            //else decrease end
+            if(currSum < n){
+                start = k + 1;
+            } else {
+                end = k - 1;
+            }
+        }
+        
+        //if loop completes, we did not find the exact 
+        //currSum == n scenario
+        //return int value of end or start
+        return (int)end;
+        
+    }
+}

@@ -1,0 +1,31 @@
+//Codebix
+//codebix
+/*
+Keep holding prefixsum and its occurences in HashMap
+keep adding sum
+When you reach a point where you have a PrefixSum (sum - k) occurence present
+then the answer is 
+sum(k) = (PrefixSum(sum) - PrefixSum(sum - k))
+
+number of ways = freq of sum-k, occurences
+*/
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        HashMap<Integer, Integer> prefixsumMap = new HashMap<>();
+        prefixsumMap.put(0, 1);
+        int sum = 0, result = 0;
+        
+        for(int i=0; i< nums.length; i++){
+            sum += nums[i];
+            if(prefixsumMap.containsKey(sum - k)){
+                result += prefixsumMap.get(sum-k);
+            }
+            
+            //keep increasing the frequency if the seen sums
+            //Prefix sum, Hashmap
+            prefixsumMap.put(sum, prefixsumMap.getOrDefault(sum,0) + 1);
+        }
+        
+        return result;
+    }
+}

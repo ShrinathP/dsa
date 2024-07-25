@@ -1,0 +1,7 @@
+Easy Problems
+
+9. Palindrome Number
+125. Valid Palindrome
+680. Valid Palindrome II
+409. Longest Palindrome
+234. Palindrome LL

@@ -1,0 +1,42 @@
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        //Note you have to find unique triplets
+        
+        //In order to use 2 pointer we need to sort this 
+        Arrays.sort(nums);
+        List<List<Integer>> output_arr = new LinkedList();
+        
+        for(int i=0; i< nums.length-2; i++){
+            if(i==0 || (i>0 && nums[i]!= nums[i-1])){
+              
+                int low = i+1;
+                int high = nums.length-1;
+                
+                int sum = 0- nums[i];
+                //we will be looking for 2 numbers that add upto this sum
+                
+                while(low < high){
+                    if(nums[low] + nums[high] == sum){
+                        output_arr.add(Arrays.asList(nums[i], nums[low], nums[high]));
+                        
+                        //move indices for duplicates
+                        while(low<high && nums[low] == nums[low+1]) low++;
+                        while(low<high && nums[high] == nums[high-1]) high--;
+                        
+                        //move both indices to find the next 2 numbers for the triplet
+                        low++;
+                        high--;
+                        
+                        //if sum is higher , reduce the high pointer
+                    } else if(nums[low] + nums[high] > sum){
+                        high--;
+                        //if sum is lower , increase the lower pointer
+                    } else{
+                        low++;
+                    }
+                }    
+            }
+        }
+        return output_arr;
+    }
+}

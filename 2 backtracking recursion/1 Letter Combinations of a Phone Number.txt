@@ -1,0 +1,44 @@
+class Solution {
+    
+    //Codebix solution
+    //Using HashMap
+    public List<String> letterCombinations(String digits) {
+        List<String> ans = new ArrayList<>();
+        if(digits.length() == 0){
+            return ans; //return empty arrayList
+        }
+        
+        HashMap<Character, String> hm = new HashMap<>();
+        hm.put('2', "abc");
+        hm.put('3', "def");
+        hm.put('4', "ghi");
+        hm.put('5', "jkl");
+        hm.put('6', "mno");
+        hm.put('7', "pqrs");
+        hm.put('8', "tuv");
+        hm.put('9', "wxyz");
+        
+        backtrack(digits, 0, hm, new StringBuilder(), ans);
+        return ans;
+        
+    }
+    
+    private static void backtrack(String digits, int startIndex, HashMap<Character, String> hm, StringBuilder sb, List<String> ans){
+        
+        //if startIndex reaches digits length, add sb to ans;
+        if(startIndex == digits.length()){
+            ans.add(sb.toString());
+            return;
+        }
+//get associated string for the first digit
+        String curr = hm.get(digits.charAt(startIndex));
+//run through each character of the string
+        for(int i = 0 ; i< curr.length(); i++){
+            //keep appending until length has hit
+            sb.append(curr.charAt(i)); 
+            backtrack(digits, startIndex + 1, hm , sb, ans);
+            //remove the last character
+            sb.deleteCharAt(sb.length()-1); 
+        }
+    }
+}

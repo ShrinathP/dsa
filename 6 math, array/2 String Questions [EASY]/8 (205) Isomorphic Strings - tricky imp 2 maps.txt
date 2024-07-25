@@ -1,0 +1,39 @@
+//Coding Decoded
+class Solution {
+    public boolean isIsomorphic(String s, String t) {
+        
+        //base case, if both lengths are not equal, they cannot be isomorphic
+        if(s.length() != t.length()){
+            return false;
+        }
+        
+        //Step 1, maintain 2 maps
+        Map<Character, Character> sTMap = new HashMap<>();
+        Map<Character, Character> tSMap = new HashMap<>();
+        
+        for(int i = 0; i< s.length(); i++) {
+            Character sChar = s.charAt(i);
+            Character tChar = t.charAt(i);
+            //Step 3
+            //if map key already present, check if the value is correct or not
+            if(sTMap.containsKey(sChar)) {
+                if(sTMap.get(sChar) != tChar) {
+                    return false;
+                }
+            }
+            if(tSMap.containsKey(tChar)) {
+                if(tSMap.get(tChar) != sChar) {
+                    return false;
+                }
+            }
+            
+            //Step 2
+            //fill sTMap and tSMap, with corresponding replacement character
+            sTMap.put(sChar, tChar);
+            tSMap.put(tChar, sChar);
+        }
+        
+        return true;
+        
+    }
+}

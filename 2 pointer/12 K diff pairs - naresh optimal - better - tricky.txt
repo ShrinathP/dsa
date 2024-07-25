@@ -1,0 +1,30 @@
+/*
+Other way - Naresh gupta
+Keep a freq map for all the numbers
+Iterate over the keys of the map - as the keys will be unique
+    - 2 cases
+    - if k > 0 (normal case)
+    - then you need to check if the set containsKey currnum + k
+    - if k = 0 (0 gaps)
+    - then you need to check for duplicates, i.e. count > 1
+*/
+class Solution {
+    public int findPairs(int[] nums, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        
+        int result = 0;
+        for(int key : map.keySet()) {
+            
+            if(k > 0 && map.containsKey(key + k)) {
+                result++;
+            } else if (k == 0 && map.get(key) > 1) {
+                result++;
+            }
+        }
+        
+        return result;
+    }
+}

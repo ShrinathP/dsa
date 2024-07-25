@@ -1,0 +1,31 @@
+
+httpsleetcode.comproblemssum-root-to-leaf-numbersdiscuss41531Clean-Java-DFS-solution-(preorder-traversal)
+Better dfs solution
+
+1. Create a total variable
+2. create recursive method, and sum variable, which does sum  10 + root.val
+3. add to total when leaf is reached and return from the loop
+
+class Solution {
+    int total;
+    public int sumNumbers(TreeNode root) {
+        total = 0;
+        helper(root, 0);
+        return total;
+    }
+    
+    void helper(TreeNode root, int sum){
+        if(root == null) return;
+        
+        sum = sum  10 + root.val;
+        
+        if(root.left == null && root.right == null){
+            total += sum;
+            return;
+        }
+        
+        helper(root.left, sum);
+        helper(root.right, sum);
+        
+    }
+}

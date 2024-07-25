@@ -1,0 +1,35 @@
+//Changing iteration ends
+//Backtracking solution, (Same as subsets sum problem)
+//https://leetcode.com/problems/combinations/discuss/27002/Backtracking-Solution-Java
+
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> combs = new ArrayList<>();
+        combine(combs, new ArrayList<Integer>(), 1, n, k);
+        return combs;
+        
+    }
+    
+    private void combine(List<List<Integer>> combs, List<Integer> comb, int start, int n, int k) {
+        if(k ==0){
+            combs.add(new ArrayList<Integer>(comb));
+            return;
+        }
+        
+        /*
+        1st comment of:     https://leetcode.com/problems/combinations/discuss/27002/Backtracking-Solution-Java
+        To save time we traverse only until n-k+1 elements
+        as if we start from later elements( eg. n-k+2) we stand out of the chance of
+        getting k elements*/
+        
+        /*
+For anyone stumped by why this change is necessary, it's because you should not continue exploring (recursing) when you know that there won't be enough numbers left until n to fill the needed k slots. If n = 10, k = 5, and you're in the outermost level of recursion, you choose only i = 1...6 , because if you pick i=7 and go into backTracking() you only have 8,9,10 to pick from, so at most you will get [7,8,9,10]... but we need 5 elements!
+        */
+        for(int i=start; i <= n - k + 1 /*IMP*/; i++){
+            //comsider the current element
+            comb.add(i);
+            combine(combs, comb, i+1, n, k-1);
+            comb.remove(comb.size()-1);
+        }
+    }
+}

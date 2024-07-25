@@ -1,0 +1,63 @@
+//left bottom strategy
+
+//GFG Problem says row wise sorted 
+//and column wise sorted
+//no mention of first elem greater than last of prev elem
+
+/*
+
+[
+[10,20,30,40],
+[11,21,36,43],
+[25,29,39,50],
+[50,60,70,80]
+]
+
+LeetCode 240 problem
+
+Strategy - Left Bottom Strategy 
+Time Complexity N + M
+
+//Step 1 - start from the last column of first row
+and check if the given elem is less than the current element
+//Step 2 - if less traverse left
+//Step 3 - if given element is more than current element
+traverse the column bottom
+Now we are at 21, go down now we have 29,
+given elem is less than 29, so move left, which is 1st column
+25
+
+*/
+
+class Solution{
+
+	public static void main(String[] args){
+	
+	int[][] givenMatrix = //[
+[10,20,30,40],
+[11,21,36,43],
+[25,29,39,50],
+[50,60,70,80]
+]
+	findMatrix(givenMatrix,x);
+	
+}
+
+static int findMatrix(int[][] mat, x){
+int n = mat.length;
+int m = mat[0].length;
+
+ int i =0, j = m-1;
+		while(i<n && j>=0){
+			if(mat[i][j] ==x){
+			System.out.println("Found the index");
+			return 1;
+			}
+		
+		if(mat[i][j] > x)
+			j--;
+		else
+			i++;
+		}
+	}
+}

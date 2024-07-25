@@ -1,0 +1,67 @@
+/*
+Greedy
+------
+Naresh Gupta
+1. Iterate through the string and keep memory of the
+last occured index of all characters
+(We would need this as we need to pop characters if order is not correct)
+2. Keep a visited array, which is a boolean array
+Holds true or false, current character is visited or not value
+3. Iterate through the string, and check for following conditions
+    3.0 If char already seen , do nothing
+    3.1 if current char is less than top of stack
+    3.2 if the character to be popped has index less than lastIndex
+    (so that it could be added again in the last index)
+    3.3 If the stack is not empty
+    
+Check this solution also
+https://leetcode.com/problems/remove-duplicate-letters/discuss/76769/Java-solution-using-Stack-with-comments
+
+Here freq array used, and the freq is reduced with each iteration
+3.2 condition is replaced by if(freq[c-'a'] != 0) i.e.
+if freq left then only pop from stack
+*/
+
+class Solution {
+    public String removeDuplicateLetters(String s) {
+        int[] lastIndex = new int[26];
+        
+        //Step 1, iterate and keeping hold of last indices
+        for(int i=0;i<s.length();i++){
+            lastIndex[s.charAt(i) - 'a'] = i;
+        }
+        
+        //Step 2
+        boolean[] seen = new boolean[26];
+        
+        Stack<Integer> st = new Stack<>();
+        
+        //Step 3
+        for(int i=0;i<s.length();i++){
+            int c = s.charAt(i) - 'a';
+            
+            //if character seen
+            if(seen[c]) continue;
+            
+            //Conditions 3.1, 3.2, 3.3
+            while(!st.isEmpty() && c < st.peek() && i < lastIndex[st.peek()]){
+                //pop the peek and update seen array (both done in one step)
+                seen[st.pop()] = false;
+            }
+            
+            //while loop breaks when we have correct position in the stack
+            //where we can add the current char
+            st.push(c);
+            seen[c] = true;
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        while(!st.isEmpty()){
+            //creating the original character
+            //popped the integer , added a, casted to char
+            sb.append((char)(st.pop() + 'a')); 
+        }
+        return sb.reverse().toString();
+    }
+}
+    

@@ -1,0 +1,20 @@
+
+//Naive way (Naresh gupta)
+//No trim or no inbuilt method
+class Solution {
+    public int lengthOfLastWord(String s) {
+        int n = s.length();
+        
+        //Trimming end spaces
+        while(n>0 && s.charAt(n-1) == ' ') n--;
+        
+        //now we have last index of the last word in n
+        int i = n-1;
+        
+        //Keep going back until you find the first space
+        while(i>=0 && s.charAt(i) != ' ') i--;
+        
+        //n-1-i is the length of last word
+        return n-1-i;
+    }
+}

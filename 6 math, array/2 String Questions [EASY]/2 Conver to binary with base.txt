@@ -1,0 +1,23 @@
+//cue - to binary - bin + rem * 10i
+//https://www.programiz.com/c-programming/examples/binary-decimal-convert
+
+package e2e.cbr.validation.tests.validationTest;
+
+public class Test123 {
+    public static void main(String[] args) {
+        System.out.println(convert(7));;
+    }
+
+    public static long convert(int n) {
+        long bin = 0;
+        int rem, i = 1;
+
+        while (n!=0) {
+            rem = n % 2;
+            n /= 2;
+            bin += rem * i;   //OR //bin = bin + rem*10i
+            i *= 10;
+        }
+        return bin;
+}
+}

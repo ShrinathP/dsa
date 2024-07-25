@@ -1,0 +1,34 @@
+//cue - keep reducing hi - lo with condition
+//2 Pointers
+//https://leetcode.com/problems/find-k-closest-elements/discuss/202785/Very-simple-Java-O(n)-solution-using-two-pointers
+//Coding Simplified solution also good
+
+class Solution {
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        //Start from start and end indices
+        int low = 0;
+        int high = arr.length - 1;
+        
+        //Keep reducing the size i.e. high - low 
+        //until k is reached
+        //compare absolute lengths of x from low and high
+        
+        while(high - low >= k) {
+            if(Math.abs(arr[low] - x) > Math.abs(arr[high] - x)) {
+                //distance of low is grater
+                low++;
+            } else {
+                high--;
+            }
+        }
+        
+        //loop breaks whenever high - low becomes less than k
+        //Add everything to the list and return
+        List<Integer> result = new ArrayList<>(k);
+		for (int i = low; i <= high; i++) {
+			result.add(arr[i]);
+		}
+		return result;
+        
+    }
+}

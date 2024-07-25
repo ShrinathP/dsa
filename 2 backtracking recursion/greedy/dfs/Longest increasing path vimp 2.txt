@@ -1,0 +1,59 @@
+
+
+//Algorithms made easy, DFS way
+//Check Michael Muionis solution also
+//For each position traverse all directions, dfs
+
+//Other good solutions:
+//https://leetcode.com/problems/longest-increasing-path-in-a-matrix/discuss/78423/Neat-Java-DFS-solution-with-Memoization
+//https://leetcode.com/problems/longest-increasing-path-in-a-matrix/discuss/78308/15ms-Concise-Java-Solution
+
+//Time complexity O(m*n)
+//Space complexity O(m*n)
+class Solution {
+    //down ,up, right, left 
+    int[][] dir = {{1,0}, {-1,0}, {0,1}, {0,-1}};
+    public int longestIncreasingPath(int[][] matrix) {
+        if(matrix == null || matrix.length == 0 ) return 0;
+        int rows= matrix.length, cols = matrix[0].length;
+        
+        int[][] mem = new int[rows][cols];
+        int longestPath = 0;
+        
+        //for each position run dfs
+        for(int i=0; i<rows; i++){
+            for(int j=0; j<cols; j++){
+                int path = dfs(matrix, rows, cols, i, j, mem);
+                longestPath = Math.max(path, longestPath);
+            }
+        }
+        return longestPath;
+    }
+    
+    public int dfs(int[][] matrix, int rows, int cols, int i, int j, int[][] mem){
+        
+        //memoization
+        if(mem[i][j] > 0) return mem[i][j];
+        
+        int max = 0;
+        //traverse all directions
+        //dfs in the same direction if the condition satisfies
+        for(int[] d: dir){
+            int x = i+d[0];
+            int y = j+d[1];
+            
+        //dfs in the same direction if the condition satisfies
+            //Checking the bounds
+            //new incremented x and y should be greater than i and j
+            if(x>=0 && y>=0 && x< rows && y<cols && matrix[x][y] > matrix[i][j]){
+                max = Math.max(max, dfs(matrix, rows, cols, x, y, mem));
+            }
+        }
+        
+        //memoization
+        mem[i][j] = max+1;
+        return max + 1;
+        //adding 1 to consider the current position
+        
+    }
+}

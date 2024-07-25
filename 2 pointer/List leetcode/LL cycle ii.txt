@@ -1,0 +1,37 @@
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        
+        //Hare and Tortoise Algorithm
+        //2 pointer solution
+        //Step 1: move fast 2 places , move slow 1 plances
+        //Naresh Gupta
+        ListNode slow = head, fast = head;
+        while(fast != null && fast.next!= null){
+            slow = slow.next;
+            fast = fast.next.next;
+            
+            if(slow == fast){
+                //Step 2: reset the slow to head and move both fast and slow by 
+                //1 places
+                slow = head;
+                while(slow !=fast){
+                    slow=slow.next;
+                    fast=fast.next;
+                }
+                return slow;   
+            }
+        }
+        return null;
+    }
+}

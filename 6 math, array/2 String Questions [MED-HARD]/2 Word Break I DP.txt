@@ -1,0 +1,33 @@
+//Bottom up dp filling
+//https://leetcode.com/problems/word-break/discuss/44011/Java-solution-using-DP
+//with some 2 pointer technique for starting and ending positions
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        if(s == null && wordDict == null){
+            return true;
+        }
+        
+        //if either of them is null
+        if(s == null || wordDict == null){
+            return false;
+        }
+        
+        //smaller problem is 0 to i
+        //dp[i] represents if s.substring(0, i) is wordbreakable.
+        boolean[] dp = new boolean[s.length() + 1];
+        dp[0] = true;
+        
+        //2 pointer
+        for(int i=1; i <= s.length(); i++){
+            for(int j=0; j < i; j++) {
+                if (dp[j] && wordDict.contains(s.substring(j,i))) {
+                    dp[i] = true;
+                    //meaning work is breakable until i
+                    break;
+                }
+            }
+        }
+        return dp[s.length()];
+        
+    }
+}

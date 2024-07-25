@@ -1,0 +1,56 @@
+//2nd solution
+//Take U forward
+//As there are 2 copies of each number
+//2nd copy will end at odd index
+/*
+eg
+indices
+[0,1,2,3,4,5,6]
+Given array
+[1,1,2,2,3,4,4]
+
+At any point we need to check if the current index is odd or even
+if odd -> check if prev instance is the same
+if even -> check if next instance is the same
+
+Solution from here:
+https://leetcode.com/problems/single-element-in-a-sorted-array/discuss/100754/Java-Binary-Search-short-(7l)-O(log(n))-w-explanations
+1st comment
+
+Time complexity O(logN)
+Space O(N)
+*/
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        int lo = 0;
+        int hi = nums.length-2;
+        while(lo <= hi){
+            int mid = lo + (hi - lo)/2;
+            if(mid % 2 == 0) {
+                //mid is even, compare with next
+                if(nums[mid] == nums[mid + 1]){
+                    //if next is good
+                    //move lo to mid + 1s next
+                    lo = mid + 2;
+                } else {
+                    //single number is on left
+                    hi = mid - 1;
+                }
+                
+                
+            } else {
+                //mid is odd
+                //check if prev number is 1st instance
+                if(nums[mid] == nums[mid -1]){
+                    //if prev is good
+                    //move lo to mids next
+                    lo = mid + 1;
+                } else {
+                    hi = mid - 1;
+                }
+            }
+        }
+        
+        return nums[lo];
+    }
+}

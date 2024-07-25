@@ -1,0 +1,21 @@
+Very good link to understand the pattern
+
+https://leetcode.com/problems/subsets/discuss/27281/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partitioning)
+
+Q1. Find All Subsets
+Q2. Find Subsets sum. (take u forward)
+
+Palindrome partitionning
+Find kth permutation
+----------
+
+Permutation of string/array
+N queens problem
+sudoku solver
+
+Rat in a maze
+gfg
+
+--------------
+N meetings in one room gfg
+https://practice.geeksforgeeks.org/problems/n-meetings-in-one-room-1587115620/1

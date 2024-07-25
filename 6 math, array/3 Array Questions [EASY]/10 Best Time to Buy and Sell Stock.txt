@@ -1,0 +1,38 @@
+//cue - single pass - keep hold of sofarmin
+//if curr greater than sofar min calculate profit
+
+//First Solution brute force
+//Run 2 for loops 
+
+/*
+for i to n
+for j=i+1 to n
+
+check if there is a j greater than i
+if yes store the difference in the max variable
+*/
+
+//Optimized solution
+//sofarmin
+
+//https://leetcode.com/problems/best-time-to-buy-and-sell-stock/discuss/39062/My-jave-accepted-solution-with-O(N)-time-and-O(1)-space
+
+class Solution {
+     public int maxProfit(int[] prices) {
+		 if (prices.length == 0) {
+			 return 0 ;
+		 }
+         
+		 int max = 0 ;
+		 int sofarMin = prices[0] ;
+	     for (int i = 0 ; i < prices.length ; ++i) {
+	    	 if (prices[i] > sofarMin) {
+	    		 max = Math.max(max, prices[i] - sofarMin) ;
+	    	 } else{
+                 //current price is less than or equal sofarMin
+	    		sofarMin = prices[i];  
+	    	 }
+	     }	     
+	    return  max ;
+	 }
+}

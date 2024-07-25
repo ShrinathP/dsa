@@ -1,0 +1,61 @@
+//BEst Solution
+//Best solution, same as LL cycle ii
+//HAre and tortoise solution
+//https://leetcode.com/problems/linked-list-cycle/discuss/44694/Accepted-clean-Java-solution
+
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+  ListNode slow = head, fast = head;
+  
+  while (fast != null && fast.next != null) {
+    slow = slow.next;
+    fast = fast.next.next;
+    
+    if (slow == fast) 
+        return true;
+  }
+  
+  return false;
+}
+}
+
+
+//https://www.geeksforgeeks.org/detect-loop-in-a-linked-list/
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        
+        if(head == null) return false;
+        
+        ListNode slow = head;
+        ListNode fast = head.next;
+        
+        while(slow!=fast){
+            
+            if(fast == null || fast.next == null){
+                return false;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return true; 
+    }
+}
+
+//Hare and tortoise way
+public class Solution {
+    public boolean hasCycle(ListNode head) {
+        if(head == null || head.next == null){
+            return false;
+        }
+        ListNode tortoise = head;
+        ListNode hare = head.next;
+        
+        while(hare != tortoise){
+            if(hare == null || hare.next == null)
+                return false;
+            hare = hare.next.next;
+            tortoise = tortoise.next;
+        }
+        return true;
+    }
+}

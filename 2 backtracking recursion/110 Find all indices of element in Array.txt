@@ -1,0 +1,34 @@
+
+//Pepcoding
+count = found so far
+x = target
+idx = current index
+
+
+/*
+Find all Indices of a number
+Put it in an array
+Return the array
+
+Pick and non pick type
+if current 
+*/
+
+
+public static int[] allIndices(int[] arr, int x, int idx, int count) {
+	if(idx = arr.length) {
+		return new int[count];
+	}
+
+//if current number matches
+	if(arr[idx] = x) {
+		//if found increase the count of found so far
+		int[] iarr = allIndices(arr, x, idx + 1, count + 1);
+		iarr[count] = idx;
+		return iarr;
+	} else {
+		int[] iarr = allIndices(arr, x, idx + 1, count);
+		return iarr;
+	}
+
+}

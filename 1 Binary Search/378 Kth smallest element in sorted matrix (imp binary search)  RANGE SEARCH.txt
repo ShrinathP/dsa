@@ -1,0 +1,57 @@
+//This is called binary search on Range and not Index
+//Important Search Space Range
+
+//Other ones are Search Space Index
+
+
+class Solution {
+    int m, n;
+    public int kthSmallest(int[][] matrix, int k) {
+        //https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/discuss/85173/Share-my-thoughts-and-Clean-Java-Code
+        
+        //https://leetcode.com/problems/kth-smallest-element-in-a-sorted-matrix/discuss/1322101/C%2B%2BJavaPython-MaxHeap-MinHeap-Binary-Search-Picture-Explain-Clean-and-Concise
+        m = matrix.length; n=matrix[0].length;
+        
+        int left = matrix[0][0];
+        int right = matrix[m-1][n-1], ans = -1;
+        
+        while(left <= right) {
+            int mid = (left + right) >> 1;
+            
+            //if cnt is greater than k,
+            //we need to move left to find smaller elements
+            if(countLessOrEqual(matrix, mid) >= k) {
+                ans = mid;
+                right = mid -1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return ans;
+        
+    }
+    
+    //Function is used to find numbers in metric which are less
+    //than or equal to x
+    int countLessOrEqual(int[][] matrix, int x) {
+        int cnt = 0, c = n -1; //start from end of column
+        for(int r = 0; r < m; ++r){
+            //check for each row from 0
+            
+            //reduce the column count if the value is greater than x
+            while(c >= 0 && matrix[r][c] > x) {
+                //we need to reduce the count and this number is not
+                //less than or equal to x
+                --c;
+            }
+            //loop breaks when you find a number less than equal to x
+            //add column number to count
+            
+            //Note: if loop execute add n-1 to count as all row numbers
+            //are less than x
+                cnt += (c + 1);
+        }
+        
+        return cnt;
+    }
+}

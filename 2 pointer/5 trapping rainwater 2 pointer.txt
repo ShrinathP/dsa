@@ -1,0 +1,98 @@
+Take u forward
+
+find the maximum height of the left = a
+find the max height on the right = b
+
+find the min of a and b
+min(a, b) - height(currentIndex)
+which will be the max height for the water
+
+Brute Force-
+==========
+Iterate from 0 to currentIndex to find a
+Iterate from index+1 to end to find b
+
+This makes a nested loop
+O(n square)
+Complexity
+
+Better way
+=========
+Calculate Prefix Max
+by traversing from left to right
+And
+Suffix Max array
+by traversing from right to left
+
+Caluclate the result using formula
+min(a, b) - height(currentIndex)
+
+Optimal way
+==========
+2 pointer
+
+
+//Take u forward for explanation/ GFG
+//2 pointer approach
+/*
+1. 2 pointer approach
+2. we move left pointer ahead and right pointer back
+3. if height[left] <= height[right] , we are ensuring there is someone
+    at the right greater than left, so that we can store water
+    
+   3.1 if, current height is greater than maxLeft, no way to store water
+   3.2 else, current height is lesser than maxLeft, maxLeft - currentHeight is amount of
+    stored water
+    
+4. Else height[right] < height[left],  we are ensuring there is someone
+    at the left greater than right, so that we can store water
+    do the same as 3.1 , 3.2
+*/
+class Solution {
+    public int trap(int[] height) {
+        int a_pointer = 0;
+        int b_pointer = height.length-1;
+        int maxLeft = 0;
+        int maxRight = 0;
+        int result = 0;
+        
+        while(a_pointer <= b_pointer){
+            //
+            if(height[a_pointer] <= height[b_pointer]){
+                if(height[a_pointer] >= maxLeft){
+                    //current height greater than maxLeft, no water can be stored
+                    //update maxLeft
+                    maxLeft = height[a_pointer];
+                    
+                } else {
+                    //Calculte the water stored
+                    result += maxLeft - height[a_pointer];
+                }
+                
+                //in any case we have to increase left
+                a_pointer++;
+            }
+            //else b_pointer height is lesser than a_pointer
+            //
+            else{
+                if(height[b_pointer] >= maxRight){
+                    maxRight = height[b_pointer];
+                } else {
+                    //Calculate the watr stored
+                    result += maxRight - height[b_pointer];
+                }
+                
+                //in any case we have to decrease right pointer
+                b_pointer--;
+                
+            }
+        }
+        
+        //return calculated result
+        return result;
+        
+    }
+}
+
+
+

@@ -1,0 +1,38 @@
+/*
+//cue - sort charArrays of each word, put it in hashSet, if already present dont add to the answer
+//same as fun with anagrams
+
+Kevin naughton
+Logic is 
+1. For each string
+2. Convert into charArray
+3. Sort the charArray
+4. Check if the sorted string is present in the Hashmap<String, ListOfAnagrams>
+5. If not, create a new ArrayList , use map.put(newString, new ArrayList())
+6. In any case, add the anagram, use map.get(presentString).add(anagram)
+7. Add all Map values into result
+*/
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        List<List<String>> groupedAnagrams = new ArrayList<>();
+        HashMap<String, List<String>> map = new HashMap<>(); 
+        
+        for(String current: strs){
+            char[] characters = current.toCharArray();
+            Arrays.sort(characters);
+            String sorted = new String(characters);
+            
+            if(!map.containsKey(sorted)){
+                //put a new key
+                map.put(sorted, new ArrayList<>());
+            }
+            
+            //in any case add the anagram to the values
+            map.get(sorted).add(current);
+        }
+        
+        groupedAnagrams.addAll(map.values());
+        return groupedAnagrams;
+        
+    }
+}

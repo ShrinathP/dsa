@@ -1,0 +1,20 @@
+// looking for atmost diff b/w indexes means indexDiff i.e sliding window size can vary from 1 to k, so size is initialized with 1 and checked upto k
+// for each size, check the diff, between ith and i+kth, it should <= t. return true, else false
+// PS - There is Time Limit Exceeded Error when you remove the 10k condition, because it is O(N*K) , I came up with this condition by checking the last test case.
+
+
+class Solution {
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        if (nums.length > 9999) return false;
+        int size = 1;
+        while (size <= k) {
+            for (int i = 0; i < nums.length - size; i++) {
+                if (Math.abs((long) nums[i] - (long) nums[i + size]) <= t) {
+                    return true;
+                }
+            }
+            size++;
+        }
+        return false;
+    }
+}

@@ -1,0 +1,31 @@
+//NICK White
+//NOTE
+//need a while loop for arrays like
+//[8,7,6,5,4,10]
+//now the next greater of all elements 8,7,6,5,4 will be 10, so we need to run a while loop
+
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        
+        HashMap<Integer, Integer> next_greater = new HashMap<>();
+        Stack<Integer> stack = new Stack<>();
+        //Step 1 fill for nums2
+        //Iterate from start, 
+        //1. push first to stack
+        //2. if stack is not empty
+        //3. compare current to stack peeked, if stack peeked is less, update next greater
+        for(Integer nums: nums2) {
+            while(!stack.isEmpty() && stack.peek() < nums) {
+                next_greater.put(stack.pop(), nums);
+            }
+            stack.push(nums);
+        }
+        
+        for(int i=0; i< nums1.length; i++) {
+            nums1[i] = next_greater.getOrDefault(nums1[i], -1);
+        }
+        
+        return nums1;
+    }
+}
+

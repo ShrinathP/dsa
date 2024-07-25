@@ -1,0 +1,53 @@
+/*
+    //1. add first to minHeap
+    //2. Pop the first element of minHeap and add to maxHeap
+    //3. Balance both heaps
+    
+Using Heaps:
+https://www.programcreek.com/2015/01/leetcode-find-median-from-data-stream-java/
+
+https://leetcode.com/problems/find-median-from-data-stream/discuss/346353/Java-Short-Solution-!!!
+
+Can be done using insertion sort
+
+
+*/
+class MedianFinder {
+    
+    PriorityQueue<Integer> pqMin;
+    PriorityQueue<Integer> pqMax;
+
+    /** initialize your data structure here. */
+    public MedianFinder() {
+        pqMin = new PriorityQueue<>();
+        pqMax = new PriorityQueue<>((a,b) -> b-a);
+        pqMax = new PriorityQueue<>((a,b) -> Integer.compare(b,a));
+        pqMax = new PriorityQueue<>(Comparator.reverseOrder());
+        
+    }
+    
+    //1. add first to minHeap
+    //2. Pop the first element of minHeap and add to maxHeap
+    //3. Balance both heaps
+    public void addNum(int num) {
+        pqMin.offer(num);
+        pqMax.offer(pqMin.poll());
+        if(pqMax.size() > pqMin.size()) pqMin.offer(pqMax.poll());
+    }
+    
+    public double findMedian() {
+        if(pqMax.size() == pqMin.size()) {
+            return ((double)pqMax.peek() + (double)pqMin.peek())/2.0;
+         } else {
+             return (double)pqMin.peek();
+         }
+        
+    }
+}
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder obj = new MedianFinder();
+ * obj.addNum(num);
+ * double param_2 = obj.findMedian();
+ */

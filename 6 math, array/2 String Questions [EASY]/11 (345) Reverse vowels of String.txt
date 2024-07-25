@@ -1,0 +1,44 @@
+class Solution {
+    public String reverseVowels(String s) {
+        
+        //2 pointer approach
+        //Logic - Michael Muinos
+        //swap when both pointers are vowels
+        //if any of the pointer is not a vowel move the pointer ahead
+        char[] nums = s.toCharArray();
+        
+        int a_pointer =0 , b_pointer = s.length() -1;
+        
+        while(a_pointer < b_pointer){
+            boolean leftPointer = isVowel(nums[a_pointer]);
+            boolean rightPointer = isVowel(nums[b_pointer]);
+            
+            if(leftPointer && rightPointer){
+                //both are vowels
+                //swap and move pointers
+                char temp = nums[a_pointer];
+                nums[a_pointer] = nums[b_pointer];
+                nums[b_pointer] = temp;
+                a_pointer++;
+                b_pointer--;
+            }
+            
+            //if leftPointer is not vowel move a_pointer ahead
+            if (!leftPointer){
+                a_pointer++;
+            }
+            
+            //if rightPointer is not vowel move b_pointer back
+            if(!rightPointer){
+                b_pointer--;
+            }   
+        }
+        return new String(nums);
+    }
+    
+    private boolean isVowel(char c){
+        //return (c =='a' || c =='e' || c =='i' || c =='o' || c =='o')
+    ArrayList<Character> vowels = new ArrayList<>(Arrays.asList('a','e','i','o','u'));
+        return vowels.contains(Character.toLowerCase(c));
+    }
+}

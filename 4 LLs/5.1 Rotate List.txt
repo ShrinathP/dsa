@@ -1,0 +1,43 @@
+
+//Take u forward
+
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        //Take u forward
+    
+        //Case 1: if k greater than the length of the linkedlist
+        //k can be 1000 also, so we should be able to reduce the number k
+        //Case 1.1 if k is multiple of length of LL, return original LL
+        //Case 1.2 if k % length has some number rotate that number of times
+        
+        //Step 1: Point the last node to the first
+        //Step 2: traverse from last node backwards k times
+        //Step 3: point the head to kth node
+        //Step 4: remove the prev node of the k (length -kth node) and attach it to null
+        
+        //edge cases
+        if(head==null ||head.next==null || k==0)
+            return head;
+        
+        //compute the length
+        ListNode cur = head;
+        int len=1;
+        while(cur.next !=null){
+            len++;
+            cur = cur.next;
+        }
+        
+        //point the last node to head
+        cur.next = head;
+        k = k % len;
+        k = len - k;
+        // keep traversing len-k to reach the new last node
+        while(k-- >0) cur = cur.next;
+        
+        //make the head node and break connection
+        head = cur.next; //new head -will be next of cur
+        cur.next = null; //assigning null to last node
+            
+            return head;
+    }
+}

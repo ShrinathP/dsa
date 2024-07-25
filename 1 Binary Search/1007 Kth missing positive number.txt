@@ -1,0 +1,52 @@
+/*Algorithms made easy
+
+//The count of missing numbers will be
+Current number at that position 
+minus
+Expected number at the position
+
+Current
+[3,5,7,9,10,12]
+Expected
+[1,2,3,4,5,6]
+
+So the missing numbers at last index - 12-6 = 6
+
+At last position of BS
+return arr[i] + k - countatposition
+Result=
+CurrentNumber - missingNumbersTillNow + kthmissingNumber
+
+*/
+
+class Solution {
+    public int findKthPositive(int[] arr, int k) {
+        int n = arr.length;
+        int left = 0;
+        int right = n-1;
+        int missing = compute(arr[n-1], n);
+        
+        //find mid and check if missing number count satisfies there
+        while(left <= right) {
+            int mid = left + (right - left)/2;
+            missing = compute(arr[mid], mid+1);
+            
+            if(missing >=k) {
+                right= mid-1;
+            } else {left = mid +1;}
+        }
+        
+        //Right -1
+        //if right moves back to -1 meaning the first number in array is more than k
+        if(right == -1) return k;
+        return arr[right] - compute(arr[right], right+1)+ k;
+        /*
+        originalNumberswithoutMissing = arr[right] - count(arr[right], right+1);
+        kthmissingNumber = originalNumberswithoutMissing + k
+        */
+    }
+    
+    int compute(int actual, int expected) {
+        return actual - expected;
+    }
+}

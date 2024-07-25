@@ -1,0 +1,42 @@
+class Solution {
+    //Check Prefix sum solution, tricky a bit
+    //O(NlogN) solution here
+    //https://leetcode.com/problems/minimum-size-subarray-sum/discuss/59103/Two-AC-solutions-in-Java-with-time-complexity-of-N-and-NLogN-with-explanation
+    
+    /*
+    s to NLogN solution, logN immediately reminds you of binary search. In this case, you cannot sort as the current order actually matters. How does one get an ordered array then? Since all elements are positive, the cumulative sum must be strictly increasing. Then, a subarray sum can expressed as the difference between two cumulative sum. Hence, given a start index for the cumulative sum array, the other end index can be searched using binary search.*/
+    
+    public int minSubArrayLen(int target, int[] nums) {
+                return solveNLogN(target, nums);
+    }
+    
+    private int solveNLogN(int s, int[] nums) {
+        
+        //Prefix Sum (becomes)
+        int[] sums = new int[nums.length + 1];
+        for (int i = 1; i < sums.length; i++) sums[i] = sums[i - 1] + nums[i - 1];
+        int minLen = Integer.MAX_VALUE;
+        
+        //search in prefix sum array
+        //subarray can be expressed as 
+        //difference between prefix sums array
+        for (int i = 0; i < sums.length; i++) {
+            int end = binarySearch(i + 1, sums.length - 1, sums[i] + s, sums);
+            if (end == sums.length) break;
+            if (end - i < minLen) minLen = end - i;
+        }
+        return minLen == Integer.MAX_VALUE ? 0 : minLen;
+    }
+    
+        private int binarySearch(int lo, int hi, int key, int[] sums) {
+        while (lo <= hi) {
+           int mid = (lo + hi) / 2;
+           if (sums[mid] >= key){
+               hi = mid - 1;
+           } else {
+               lo = mid + 1;
+           }
+        }
+        return lo;
+    }
+}

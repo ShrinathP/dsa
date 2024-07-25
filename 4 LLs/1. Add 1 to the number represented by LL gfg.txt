@@ -1,0 +1,36 @@
+
+//Step 1 Reverse the LinkedList
+/* Function to reverse the linked list */
+    static Node reverse(Node head)
+    {
+        Node prev = null;
+        Node current = head;
+        Node next = null;
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        return prev;
+    }
+
+//Step 2 , Add Two Numbers step
+//We will need a new node to store the result for every sum
+
+//ListNode l3 = new ListNode(-1);
+
+//Start with carry == 1
+
+//Do the add two numbers algoriths
+
+int sum = carry + head.data;
+
+int carry = sum >= 0 ? 1 : 0;
+int rem = sum %10;
+
+Node new_node = new Node(rem);
+l3.next = new_node;
+
+l3 = l3.next;
+head = head.next;

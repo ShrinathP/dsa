@@ -1,0 +1,91 @@
+class Solution {
+    //Similar to climbing stairs
+    //codebix pure recursive in leetcode folder
+    
+    //codebix recursive + memoization
+    public int numDecodings(String s) {
+        //recursive
+        //int ans = numDecodings(s, 0);
+        
+        //memo
+        int[] arr = new int[s.length() + 1];
+        int ans = numDecodingsMemo(s, 0, arr);
+        System.out.println(Arrays.toString(arr));
+        return ans;
+        
+    }
+    
+    
+    private int numDecodingsMemo(String s, int index, int[] arr) {
+        
+        //if there is empty string, 1 way to decode
+        
+        if(index == s.length()){
+            System.out.println("exceeded string size, empty string");
+            return 1;
+        }
+        
+        
+        //0 cannot be mapped
+        if(s.charAt(index) == '0'){
+            return 0;
+        }
+        
+        //if you reached the end of the string 
+        //then there is 1 way to decode which should be added
+        if(index == s.length() -1){
+            System.out.println("reached end");
+            return 1;
+        }
+        
+        //if we have reached the index already
+        if(arr[index] > 0){
+            System.out.println("reached" + index);
+            return arr[index];
+        }
+        
+        //if String is 1141
+        //way 1 picking first integer
+        int way1 = numDecodingsMemo(s, index+1, arr); 
+        
+        //way 2 picking first 2 integer
+        //do only if parsed int is less than 26
+        int way2 = 0;
+        if(Integer.parseInt(s.substring(index, index + 2)) <= 26) {
+            way2 = numDecodingsMemo(s, index + 2, arr);
+        }
+        
+        arr[index] = way1 + way2;
+        return arr[index];
+    }
+
+    /*
+    private int numDecodings(String s, int index) {
+        if(index == s.length()){
+            return 1;
+        }
+        
+        //0 cannot be mapped
+        if(s.charAt(index) == '0'){
+            return 0;
+        }
+        
+        if(index == s.length() -1){
+            return 1;
+        }
+        
+        //if String is 1141
+        //way 1 picking first integer
+        int way1 = numDecodings(s, index+1); 
+        
+        //way 2 picking first 2 integer
+        //do only if parsed int is less than 26
+        int way2 = 0;
+        if(Integer.parseInt(s.substring(index, index + 2)) <= 26) {
+            way2 = numDecodings(s, index + 2);
+        }
+        
+        return way1 + way2;
+    }
+    */
+}

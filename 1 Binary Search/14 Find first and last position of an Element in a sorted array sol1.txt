@@ -1,0 +1,66 @@
+//https://leetcode.com/discuss/study-guide/1233854/a-noobs-guide-to-the-binary-search-algorithm
+//Check this one too
+class Solution {
+    //Binary Search solution //Michael Muinos
+    //Need 2 binary searches O 2logn
+    //Step 1 : At the start - we need to find startIndex -BSearch
+    //Step 2 : Next Step - we need to use the startIndex to find the lastIndex - Bsearch
+    //Note here we move the left to first Index
+    public int[] searchRange(int[] nums, int target) {
+        
+        int first = findFirst(nums, target);
+        
+        //if No first Index return -1 ,-1 as there is no occurence
+        if(first == -1) return new int[]{-1, -1};
+        int last = findLast(nums, target, first);
+        return new int[]{first, last};
+    }
+    
+      //Step1 //Move right to mid - 1
+    private int findFirst(int[] nums,int target){
+        int left = 0, right = nums.length-1;
+        
+        int firstIndex = -1;
+        while(left <= right){
+            int midpoint = left + (right-left)/2;
+            //NOTE
+            //if midpoint is equal to the target, then too
+            //we need to move the end before midpoint
+            //as there can be more occurences of target at left , midpoint -1
+            //eg [1,2,8,8,8,9,10] midpoint= 4, there is one more 8 at index =2
+            if (nums[midpoint] >= target){
+                if(nums[midpoint] == target) firstIndex = midpoint;
+                right = midpoint - 1;
+            } else {
+                left = midpoint + 1;
+            }
+        }
+        return firstIndex;
+    }
+    
+    //Step2 //Move left to mid + 1
+    private int findLast(int[] nums,int target, int first){
+        //We shift our left to firstIndex now as we have to 
+        //search only in the right part
+        int left = first, right = nums.length-1;
+        int lastIndex = first; //in case only 1 occurence seen
+        while(left <= right){
+            int midpoint = left + (right-left)/2;
+            if (nums[midpoint] <= target){ 
+                /*
+                Midpoint Greater than target
+                will there be any case like this??
+                number to the right of firstIndex found
+                can be either equal or greater as the array is sorted */
+                
+                if(nums[midpoint] == target) lastIndex = midpoint;
+                //move left to find the nextIndex
+                left = midpoint + 1;
+            } else {
+                right = midpoint - 1;
+            }
+        }
+        return lastIndex;
+    }
+  
+}

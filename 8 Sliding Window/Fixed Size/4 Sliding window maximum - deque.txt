@@ -1,0 +1,66 @@
+/*DEQUE SOLUTION
+2 CONDITIONS 
+1. Removing out of bounds from the front of the deque
+2. Removing numbers from the last which are less than the current number
+
+3. Store only indices in the Deque
+
+4. Fill the result array from front of the Deque, when window exceeds the range i - k
+
+
+Time COmplexity O(N) + O(N) for removal = O(N)
+
+        //Explanation NeetCode
+        //cd- cherryljr
+	//Take U forward
+*/
+
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        //Brute Force
+        //Run a window of k n times
+        //for each time run loop of k
+        //Time complexity is n*k
+        
+
+        
+        //Deque Solution
+        //[1,1,1,1,4,5] k=3 // Here with brute force we would be repeating
+            //index 2 to 3 elements again , even though we know that 1 is max
+        
+        //Using Deque with sliding window
+        if (nums == null || nums.length ==0){
+            return new int[0];
+        }
+        
+        int len=nums.length;
+        int[] rst = new int[nums.length-k+1]; //num size =3 ,k=2 then result = 3-2+1
+	int index=0; //index of result array
+        Deque<Integer> dq = new ArrayDeque<>();
+        
+        
+        //Deque to store index
+        for(int i= 0; i< len; i++){
+//1 (removing front, out of bounds)
+        //when index equals to (i-k) remove the head of deque, because it's out of range k
+            if(!dq.isEmpty() && dq.getFirst() == i - k){
+                dq.removeFirst();
+            }
+//2 (remove smaller elements)
+            //Monotonically  Decreasing Queue
+            while(!dq.isEmpty() && nums[dq.getLast()] <= nums[i]){
+                dq.removeLast();   
+            }
+
+//3            
+            dq.addLast(i);
+
+//4            
+            if(i >= k-1){
+                rst[index++] = nums[dq.getFirst()];
+            }
+            
+        }
+        return rst;
+    }
+}

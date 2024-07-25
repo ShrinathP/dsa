@@ -1,0 +1,46 @@
+//Codebix 
+//Very good explanation
+
+//To find combinations instead of permutations
+//we need to move the index by one for every next iteration/ new coin to be considered
+//Codebix soln v good explanation
+/*
+Suppose the amount is 5
+and we have an array of [1,2,5]
+if 2 is considered
+then amount will become 5-2 = 3
+now to get 3 , we should use coins only from 2nd index
+i.e. 2 and 5
+coin at index 1 will be ignored
+*/
+
+class Solution {
+    public int change(int amount, int[] coins) {
+        return helper(amount, coins, 0);
+        
+    }
+    
+    private int helper(int amount, int[] coins, int index){
+        if(amount == 0){
+            return 1;
+        }
+        
+        if(amount < 0 || index == coins.length){
+            return 0;
+        }
+        
+        int result = 0;
+        
+        //iterate from index to coins array end
+        for(int i= index; i< coins.length; i++){
+            
+            //calculate only if coin value is less than or equal amount
+            if(amount >= coins[i]){
+                result = result + helper(amount - coins[i], coins, i);
+                //consider index from i in the next iteration
+            }
+        }
+        
+        return result;
+    }
+}

@@ -1,0 +1,44 @@
+class Solution {
+    
+    //Use example test case
+    //)))(())
+    public int longestValidParentheses(String s) {
+        Stack<Integer> stck = new Stack<Integer>();
+        stck.push(-1);
+        int max=0;
+        
+        for(int i=0; i<s.length(); i++){
+            char curr = s.charAt(i);
+            if(curr == '('){
+                stck.push(i);
+                System.out.println("open bracket pushing" + i);
+            } else {
+                //closed bracket pop prev
+                stck.pop();
+                
+                //stack is empty
+                //that means first character pushed was a closed bracket
+                //so we are ignoring that index
+                //and current index    
+                if(stck.isEmpty()){
+                    System.out.println("empty pushing" + i);
+                    
+                    stck.push(i);
+                } else {
+                    //stack is not empty
+                    //calculate max
+                    int len = i - stck.peek();
+                    //For example ")()())"
+                    //0 pop, stack empty, push index
+                    //1 push index
+                    //2 pop 1 and peek will give 0 so 2-0 =1
+                    //2 - 0 index
+                    System.out.println(len);
+                    max = Math.max(max, len);
+                } 
+            }
+        }
+        return max;
+        
+    }
+}

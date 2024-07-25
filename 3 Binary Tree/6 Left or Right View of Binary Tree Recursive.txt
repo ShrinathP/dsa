@@ -1,0 +1,31 @@
+
+//Take u forward
+//Non BFS Java Solution - Recursive
+//1. Recursive function to travel right and left
+//2. Traverse Right first and then left keep increasing the level
+//3. If the level reached is the first time
+//      i.e. its the first element added at the level
+//             add the element to the result
+class Solution {
+    public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> result = new ArrayList<Integer>();
+        rightView(root, result, 0);
+        return result;
+    }
+    
+    public void rightView(TreeNode curr, List<Integer> result, int currDepth){
+        if(curr == null){
+            return;
+        }
+        
+        //3. level reached is the first time
+        if(currDepth == result.size()){
+            result.add(curr.val);
+        }
+        
+        //right view traversal then left view
+        rightView(curr.right, result, currDepth + 1);
+        rightView(curr.left, result, currDepth + 1);
+        
+    }
+}

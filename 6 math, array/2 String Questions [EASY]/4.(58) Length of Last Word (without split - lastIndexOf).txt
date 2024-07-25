@@ -1,0 +1,10 @@
+
+//one line (Naresh gupta)
+//Without using split method
+//we can trim the string and use indexOf
+class Solution {
+    public int lengthOfLastWord(String s) {
+        return s.trim().length() - s.trim().lastIndexOf(" ") - 1;
+        
+    }
+}

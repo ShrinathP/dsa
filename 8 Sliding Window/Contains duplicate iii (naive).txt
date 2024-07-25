@@ -1,0 +1,28 @@
+class Solution {
+    /*
+    Naive Way: Naresh Gupta utube
+    
+    We need to find 2 numbers such that
+    their difference in value is at most t
+    their difference in indices is at most k
+    
+    |i-j| <= k
+    so 2 cases
+    nums[i]-nums[j] can range from -t to +t
+    
+    
+    For each i, check from i+1 to n
+    Time Complexity O(n square)
+    */
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        int n = nums.length;
+        for(int i=0; i<n; i++){
+            for(int j = i+1; j<n; j++){
+                if(Math.abs(1L * nums[i] - nums[j]) <= t && j-i <= k){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}

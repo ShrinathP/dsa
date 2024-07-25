@@ -1,0 +1,59 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+//Kevin Naughton // BFS
+class Solution {
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList();
+        
+        if(root == null){
+            return result;
+        }
+        
+        //Step 1 
+        //create a queue and add root node
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        
+        //Step 2
+        //Run until the queue is not empty
+        
+        //Step  3
+        //For each level
+        //1. remove the element from queue
+        //2. check the left and right elements of the removeed current element
+        //3. if present add to the queue and iterate next
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+            List<Integer> currentLevel = new ArrayList<>();
+//you can use while(size-- > 0) instead of for loop
+            for(int i=0; i<size; i++) {
+                TreeNode current = queue.remove();
+                currentLevel.add(current.val);
+                if(current.left != null){
+                    queue.add(current.left);
+                }
+                if(current.right != null){
+                    queue.add(current.right);
+                }
+            }
+            
+            result.add(currentLevel);
+        }
+        
+        return result;
+    }
+}

@@ -1,0 +1,29 @@
+class Solution {
+    //2 pointer (NickWhite)
+    //Step 1: Move the fast pointer by n nodes 0 to n
+    //Step 2: Then move both pointers until fast becomes null
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode dummy_head = new ListNode(0);
+        dummy_head.next = head;
+        //attaching head of the given Node to dummy_head
+        
+        ListNode slow = dummy_head;
+        ListNode fast = dummy_head;
+        
+        //Step 1
+        for(int i=0; i < n + 1; i++){
+            fast = fast.next;
+        }
+        
+        while(fast!= null){
+            slow = slow.next;
+            fast = fast.next;
+        }
+        
+        //Now slow has reached our desired node
+        //We want to delete the next node of slow now
+        slow.next = slow.next.next;
+        
+        return dummy_head.next;
+    }
+}

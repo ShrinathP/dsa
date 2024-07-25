@@ -1,0 +1,36 @@
+//Algorithms made easy
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode dummy = new ListNode(0, head);
+        ListNode prev = dummy;
+        
+        while(head != null && head.next!= null) {
+
+//Case 1            
+//if the head and head next values are equal
+//keep moving head until head!= head.next
+//Then only assign prev.next to head.next	
+            if(head.val == head.next.val) {
+                //skip nodes whose values are equal
+                while(head.val == head.next.val) {
+                    head = head.next;
+                }
+//Case 1
+//while will break when the last duplicate is not equal to its next unique
+//attach prev next to it (Note do not move prev)
+                prev.next = head.next;
+            }
+
+//Case 2
+//if head val and its next val are unequal ,we can move both prev and head
+//else keep moving prev
+            else{
+                prev = prev.next;
+            }
+            //in every case we have to move head
+            head = head.next;
+        }
+        
+        return dummy.next;
+    }
+}

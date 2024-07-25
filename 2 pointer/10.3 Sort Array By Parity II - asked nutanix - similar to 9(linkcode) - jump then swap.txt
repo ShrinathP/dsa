@@ -1,0 +1,37 @@
+//while - and 
+//Nick White
+class Solution {
+    public int[] sortArrayByParityII(int[] nums) {
+        //2 pointer
+        //jump by 2 indexes for odd index and even index
+        //until you find a discrepency, then swap
+        
+        int e = 0;
+        int o = 1;
+        
+        int N = nums.length;
+        
+        while(e < N && o < N) {
+            //jump even until discrepency found
+            while(e < N && nums[e] % 2 == 0) {
+                e += 2;
+            }
+            
+            //jump odd until discrepency found
+            while(o < N && nums[o] % 2 == 1) {
+                o += 2;
+            }
+            
+           //first discrepency
+            //swap
+            if(e < N && o < N) {
+                int temp = nums[e];
+                nums[e] = nums[o];
+                nums[o] = temp;
+            }
+        }
+        
+        return nums;
+        
+    }
+}

@@ -1,0 +1,24 @@
+Tushary roy DP solution
+=======================
+If there is a ? question mark
+then there can be any 1 character 
+eg a?b = axb
+
+If there is a star 
+then there can be one or more characters 
+a*b = aksdjfwb
+
+We have iterators
+i is the iterator for the given string
+j is the iterator for the given pattern
+
+Condition 1
+if str[i] = pattern[j] OR pattern[j] == ? (question mark)
+Then consider T[i-1][j-1] value
+
+Condition 2
+if pattern of j is a star
+T[i][j] = T[i-1][j] ||  T[i][j-1]
+
+
+

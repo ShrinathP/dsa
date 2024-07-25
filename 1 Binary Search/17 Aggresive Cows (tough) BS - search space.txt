@@ -1,0 +1,68 @@
+https://takeuforward.org/data-structure/aggressive-cows-detailed-solution/
+
+Solution :
+Take U forward
+https://takeuforward.org/data-structure/aggressive-cows-detailed-solution/
+/*
+Solution 2
+Sort the array of input distances
+
+Using Binary Search on range
+Run binary search on a distance array with low=1st distance, high = highest distance-1stdistance
+At Eveery time 
+find mid
+check if that mid length can be achieved as minimum distance
+
+TC O(NlogM)
+*/
+
+
+import java.util.*;
+class TUF {
+    static boolean isPossible(int a[], int n, int cows, int minDist) {
+        int cntCows = 1;
+
+        int lastPlacedCow = a[0];
+        for (int i = 1; i < n; i++) {        ////2 pointer type
+            if (a[i] - lastPlacedCow >= minDist) {
+                cntCows++;
+                lastPlacedCow = a[i];
+            }
+        }
+
+        if (cntCows >= cows) return true;
+        return false;
+
+//Can be possible, no cannot be
+	/*//int lastPlacedCow = a[0];
+        for (int i = 1; i < n; i++) {
+            if (a[i] - a[i-1] >= minDist) {
+                cntCows++;
+                //lastPlacedCow = a[i];
+            }
+        }*/
+
+    }
+
+
+    public static void main(String args[]) {
+        int n = 5, cows = 3;
+        int a[]={1,2,8,4,9};
+        Arrays.sort(a);
+
+        int low = 1, high = a[n - 1] - a[0];
+
+        while (low <= high) {
+            int mid = (low + high) >> 1;
+
+            if (isPossible(a, n, cows, mid)) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        System.out.println("The largest minimum distance is " + high);
+
+
+    }
+}

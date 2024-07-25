@@ -1,0 +1,7 @@
+https://www.geeksforgeeks.org/deletion-circular-linked-list/
+
+//Below one important
+//Delete first
+//Delete last
+//Delete at any position - v imp
+https://www.geeksforgeeks.org/deletion-at-different-positions-in-a-circular-linked-list/

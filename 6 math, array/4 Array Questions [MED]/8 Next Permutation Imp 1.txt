@@ -1,0 +1,85 @@
+1 3 5 4 2 example
+1. Traverse from the back and find an index which breaks increasing sequence i
+2. Traverse from the back and find an index just greater than nums[i]
+3. swap (a[i], a[j])
+4. reverse everything from (index1+1 to last)
+
+
+Find the NEXT PERMUTATION of 132
+
+123
+132
+213
+231
+312
+321
+
+Brute Method
+- In Brute method you need to arrange
+1. GEnerate all possible combos
+2. Linearly Iterate and check
+
+Time Complexity 
+N! *N
+Because there are N! orders and N is the length of every array
+
+
+//Optimal Approach
+Linear Time Complexity
+
+1 3 5 4 2 example
+1. Traverse from the back and find an index 1 where a[i] < a[i + 1]
+2. Traverse from the back and find an index 2 where a[index2] > a[index1]
+3. swap (a[index1], a[index2])
+4. reverse everything from (index1+1 to last)
+
+Intitution behind the algorithm
+is that in every next permutation there is an ascending number train from right to left
+like 
+
+2-4-5 increasing sequence
+13542
+
+Time Complexity
+===============
+O(n) + O(n)//2times travel backward + O(n) //reverse
+
+
+class Solution {
+	public void nextPermutation(int[] A){
+//removing null A and A length 1 cases
+	if(A == null || A.length <=1) return;
+	
+//Step 1 find 1st break point
+	int i = A.length-1-1; //prev index i
+	while(i>=0 && A[i] > A[i+1]) i--;
+
+
+	//if we have found the breakpoint i >=0
+	if(i >=0){		
+//step 2 //find the next element just greater than A[i] to swap
+		int j = A.length - 1;
+//keep moving j until a point where nums[j] becomes greater than i
+//swapping 3 with 4 in 13542
+		while(A[j] <= A[i]) j--;
+		swap(A, i, j);
+	}
+        	reverse(nums, i+1, nums.length-1);
+
+	}
+	
+	public void swap(int[] arr, int i, int j){
+		int temp = arr[j];
+		arr[j] = arr[i];
+		arr[i] = temp;
+	
+	}
+	
+	//Good way to use swaps to reverse..swap ends , increase i , decrease j
+	public void reverse(int[] A, int i, int j){
+		while(i < j) swap(A, i++,j--);
+	}
+	
+	
+	}
+}

@@ -1,0 +1,32 @@
+
+2. Search in rotated Sorted Array I and II
+==========================================
+(At any time be on the sorted part)
+===================================
+3. Find the first and last position
+===================================
+left is find(number), right is find(number + 1)
+4. Square root 
+==============
+(check mid * mid < target or greater than target)
+5. Search in 2D I s
+Divide by column modulo column , strategy, hi will be
+n*m -1
+6. Search in 2D II (gfg left to right, top to bottom sorted)
+Left bottom strategy
+7. 132 Pattern
+==============
+(bottom to top steps)Stack push, peek pop, compare
+8. Min in rotated sorted array I 
+================================
+(no dups, check on non sorted part)
+9.  Min in rotated sorted array II
+==================================
+check naresh soln v good
+(dups, check on non sorted with extra condition, mid==right or left==right)
+10. Valid Perfect square
+========================
+codebix check between 2 to x/2, x/mid, x%mid
+11. Min Size Subarray Sum
+=========================
+sliding window(2 pointer), reduce window from left, when sum exceeds target

@@ -1,0 +1,25 @@
+class Solution {
+    public int mySqrt(int x) {
+        //Terrible Whiteboard
+        //Binary search solution
+        //Find numbers between 1 to x using BS
+        long start = 1;
+        long end = x;
+        
+        //if x is 0 or 1 , return x
+        if(x < 2) return x;
+        
+        while(start < end){
+            long mid = start + (end - start)/2;
+            if(mid * mid == x){
+                return (int)mid;
+                
+            } else if(mid*mid < x){
+                start = mid + 1;
+            } else{
+                end = mid;
+            }
+        }
+        return (int)(start - 1);
+    }
+}

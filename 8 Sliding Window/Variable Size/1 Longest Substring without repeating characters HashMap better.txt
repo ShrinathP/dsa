@@ -1,0 +1,34 @@
+
+//Take u forward //solution
+//HashMap(char, index) way O(N)
+/*
+Here we store the index of the repeating character
+and directly jump the left pointer to index plus 1
+
+That way, moving left by single pointer would be avoided
+
+1. Hold a hashmap
+2. if map containsKey, move left to = max(currleft, indexOfrepeatingCharacter + 1)
+so that the repeating character gets removed from window
+3. at any time, map.put(character, index) , // Updating the last seen value of the character
+
+4. Calculate max at any time (i-left + 1)
+
+*/
+class Solution {
+       public int lengthOfLongestSubstring(String s) {
+        if (s.length()==0) return 0;
+        HashMap<Character, Integer> map = new HashMap<Character, Integer>();
+        int max=0;
+        for (int i=0, j=0; i<s.length(); ++i){
+            //2 //chopp off the front
+            if (map.containsKey(s.charAt(i))){
+                j = Math.max(j,map.get(s.charAt(i))+1);
+            }
+            //3 //4
+            map.put(s.charAt(i),i);
+            max = Math.max(max,i-j+1);
+        }
+        return max;
+    }
+}

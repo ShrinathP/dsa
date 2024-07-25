@@ -1,0 +1,69 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+/*
+https://leetcode.com/problems/reorder-list/discuss/44992/Java-solution-with-3-steps
+This question is a combination of Reverse a linked list I & II. 
+
+Algorithms Made Easy Explanation
+1. Find the middle of the linked list
+2. Reverse the half after middle  1->2->3->4->5->6 to 1->2->3->6->5->4
+3. Merge the list from 1st and middle
+4. Start weaving one by one  1->2->3->6->5->4 to 1->6->2->5->3->4
+*/
+class Solution {
+    public void reorderList(ListNode head) {
+        if(head == null) return; //empty ListNode
+        ListNode slow = head;
+        ListNode fast = head;
+        
+        //1. Finding the middle by fast and slow pointer
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        //2. Reverse from the node after middle
+        ListNode mid = slow;
+        ListNode previous = null, current = slow, temp;
+        while(current != null) {
+            temp = current.next;
+            current.next = previous;
+            previous = current;
+            current = temp;
+        }
+        
+        //the loop breaks when current is null, 
+        //where previous 
+        //element reaches last
+        System.out.println(previous.val);
+        
+        
+        //3. Weave the LinkedList
+        ListNode first=head, second=previous;
+        while(second.next != null) {
+            //store the next of first(as it will be broken)
+            //this will be used later at step 3
+            temp = first.next;
+            //attach the second
+            first.next = second;
+            //attach the stored temp
+            first = temp;
+            
+            //store 2nd next (as it will be broken)
+            temp = second.next;
+            //attach the first
+            second.next = first;
+            //attach the stored temp
+            second = temp;
+        }
+    }
+}

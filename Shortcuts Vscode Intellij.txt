@@ -1,0 +1,42 @@
+VS Code ShortCuts
+Shift + Alt+ Arrow - Expand or Shorten Selection
+Ctrl + P - search any file
+Ctrl + Shift + F - find anything
+Ctrl + shift + O to search mehods, variabled 
+classes
+After Ctrl+ Shift+ O if you type : colon
+all entities are grouped into classes/methods/variables, etc
+
+Handling md files
+ To switch between views, press Ctrl+Shift+V in the editor. You can view the preview side-by-side (Ctrl+K V) 
+Markdown file cheatsheet
+https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+
+
+
+for git commit list
+git cherry -v default DEVBAM-11751_02
+
+
+
+Ctrl + Shift + Alt+ Arrow - Box Selection
+
+
+
+Ctrl + , - Settings
+
+Moving current lines up and down
+Alt + up arrow 
+Alt + down arrow 
+
+To See settings Screen
+https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf
+Ctrl+K Ctrl+S Keyboard Shortcuts
+
+
+Intellij shortcuts
+Double shift to search any file
+Ctrl + Shift + F to search any term
+Ctrl+shift+v to extract variable
+Ctrl+ alt+ O  to remove unused imports
+Junit beforeAll method must be static

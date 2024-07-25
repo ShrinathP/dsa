@@ -1,0 +1,65 @@
+//codebix soln
+//sliding window - freq array
+class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> list = new ArrayList<>();
+        //base case
+        //if p length is greater, no anagram can be found, return empty list
+        if(p.length() > s.length()) {
+            return list;
+        }
+        
+        int N = s.length();
+        int M = p.length();
+        //Step 2, fill freq array for p
+        int[] count = getFreqArr(p);
+        
+        //Step 3, get freqArr for the given String from 0 to 3 length
+        int[] currentCount = getFreqArr(s.substring(0, M));
+        
+        // System.out.println(Arrays.asList(count));
+        // System.out.println(Arrays.asList(currentCount));
+        
+        if(areSame(count, currentCount)){
+            list.add(0);
+        }
+        
+        //Step 4
+        //Traverse from M length to N 
+        //keep updating current count
+        //sliding window
+        for(int i=M ; i<N; i++){
+            //remove at start
+            currentCount[s.charAt(i-M) - 'a']--;
+            //add at front
+            currentCount[s.charAt(i) - 'a']++;
+            
+            //Step 5
+            //check if both freq arrays are same
+            if(areSame(count, currentCount)) {
+                list.add(i - M + 1);
+            }
+        }
+        
+        return list;
+    }
+    
+    //Function to get FreqArr of a String
+    private int[] getFreqArr(String givenString) {
+        int[] count = new int[26];
+        for(int i=0; i < givenString.length(); i++) {
+            count[givenString.charAt(i) - 'a']++;
+        }
+        return count;
+    }
+    
+    //Function to check both Freq arrays are same
+    private boolean areSame(int[] x, int[] y) {
+        for(int i=0; i< 26; i++) {
+            if(x[i] != y[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+}

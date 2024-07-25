@@ -1,0 +1,56 @@
+//2 Ways 
+//Binary Search
+//If mid*mid = true never satisfies
+//over the whole loop
+//then return false
+
+
+//2nd way
+//NEwton solution
+//halve the number to number/2
+//any square root of num will always be within 0 to num/2
+//keep reassigning t
+//t = (t + num / t) /2
+
+
+class Solution {
+    //Solution here:
+    //https://leetcode.com/problems/valid-perfect-square/discuss/83874/A-square-number-is-1%2B3%2B5%2B7%2B...-JAVA-code
+    //Check cdai's solution in comments, also good
+    //
+    public boolean isPerfectSquare(int num) {
+        //Same as square root 69th problem
+        int low = 1;
+        int high = num;
+        while(low <= high) {
+            long mid = (low + high) >>> 1;
+            //changing to long to avoid overflow
+            if(mid * mid == num) {
+                return true;
+            } else if(mid * mid > num) {
+                high = (int)mid - 1;
+            } else {
+                low = (int)mid + 1;
+            }
+            
+        }
+        return false;
+        
+    }
+}
+
+
+//Binary Search Soln
+//Newton solution
+class Solution {
+    
+    public boolean isPerfectSquare(int num) {
+    if (num < 1) return false;
+      if (num == 1) return true;
+      long t = num / 2;
+      while (t * t > num) {
+        t = (t + num / t) / 2;
+      }
+      return t * t == num; 
+}
+}

@@ -1,0 +1,58 @@
+/*
+
+Take U forward
+
+Pick and the non pick way doesnt require for loop
+as we manually run 2 recursion calls
+1. with picking the current element
+2. without picking the current element
+
+   //Take u forward solution
+    //Pick and Non pick way (doesnt require for loop)
+    //2 recursions, pick element, non pick element
+    
+Step 1.
+1. check if number is less than target
+Step 2.
+PICK CASE
+2. if curr number is less than target 
+	2.1 add to a data structure
+	2.2 subtract from target, and backtrack with pick, (same index, decrease the target)
+	2.3 remove the last added element to the data structure
+Step 3.
+NON PICK CASE
+3. backtrack with non pick, increase index, same target
+
+*/
+
+class Solution {
+ 
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        findCombinations(0, candidates, target, result, new ArrayList<>());
+        return result;
+    }
+    
+    private void findCombinations(int index, int[] arr, int target,
+                                 List<List<Integer>> result, List<Integer> ds) {
+        
+        //if we reached end
+        if(index == arr.length){
+            if(target == 0) {
+                result.add(new ArrayList<>(ds));
+            }
+            return;
+        }
+        
+        //Pick
+        // keep picking, if number is less than target
+        if(arr[index] <= target){
+            ds.add(arr[index]);
+            findCombinations(index, arr, target - arr[index], result, ds);
+            ds.remove(ds.size() - 1);
+        }
+        
+        //Dont pick
+        findCombinations(index + 1, arr, target, result, ds);
+    }
+}

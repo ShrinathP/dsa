@@ -1,0 +1,4 @@
+
+for(i to n)
+	for(j=i+2 to n)
+		Check isValid

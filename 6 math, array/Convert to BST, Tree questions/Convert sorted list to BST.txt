@@ -1,0 +1,45 @@
+
+//Algorithms made easy
+//2 approaches
+//1. Convert list to array and convert into BST (will need extra space)
+//2. Find the mid and create tree in List itself
+//We are using 2nd approach, find mid and use recursion for left and right sections
+//IMP: At every midpoint find , break the list at midpoint
+
+//To find a mid in the LinkedList use fast and slow pointer method
+class Solution {
+    public TreeNode sortedListToBST(ListNode head) {
+        if(head == null) return null;
+        
+        ListNode mid = mid(head);
+        TreeNode root = new TreeNode(mid.val);
+        
+        //if the found mid is the head only, there is only 1 element in the list
+        if(head == mid)
+            return root;
+        
+        root.left = sortedListToBST(head);
+        root.right = sortedListToBST(mid.next);
+        return root;
+    }
+    
+    public ListNode mid(ListNode head) {
+        ListNode fast = head;
+        ListNode slow = head;
+        ListNode prev = head;
+        while(fast!= null && fast.next!= null) {
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        //the while loop will complete and prev i.e. slow will
+        //be our midpoint
+        //Now we need to break the list at midpoint
+        if(prev != null) {
+            prev.next = null;
+        }
+        
+        return slow;
+    }
+}

@@ -1,0 +1,100 @@
+//1st way
+//Codebix
+
+    /*
+    codebix => Sliding window + freq array
+    We need to find if s2 has a permutation of s1
+    We will be using an approach with map and sliding window
+    Sliding window size will be s1 string size
+    
+    In this solution using array of fixed size[26]
+    instead of Hashmap, as the strings contains lowercase letters
+    By using the array of fixed size we can keep the space constant
+    
+    */
+class Solution {
+  public boolean checkInclusion(String s1, String s2) {
+    int len1 = s1.length(), len2 = s2.length();
+    if (len1 > len2) return false;
+    
+    int[] count = new int[26];
+      //Fill the count array with all s1 char frequency
+    for (int i = 0; i < len1; i++)
+        count[s1.charAt(i) - 'a']++;
+    
+    //Sliding window
+    for (int i = 0; i < len2; i++) {
+           count[s2.charAt(i) - 'a']--;
+        
+        //if window length is greater than len1
+        //increase the count as, we would be moving the window
+        //start ahead
+        if(i - len1 >= 0)
+          count[s2.charAt(i - len1) - 'a']++;
+        if (allZero(count)) return true;
+    }
+    
+    return false;
+}
+
+  private boolean allZero(int[] count) {
+    for (int i = 0; i < 26; i++) {
+        if (count[i] != 0) return false;
+    }
+    return true;
+}
+}
+
+
+
+
+//2nd way
+//Using frequency Map instead of count array
+//https://leetcode.com/problems/permutation-in-string/discuss/102588/Java-Solution-Sliding-Window
+
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        Map<Character, Integer> map = new HashMap<>();
+        
+        //Fill the count array
+        for(char c: s1.toCharArray()){
+            map.put(c, map.getOrDefault(c,0) + 1);
+        }
+        
+        int matchedCount = 0;
+        for(int i=0; i<s2.length(); ++i){
+            char c = s2.charAt(i);
+            if(map.containsKey(c)){
+                //the letter matches
+                //reduce the count
+                map.put(c, map.get(c)-1);
+                
+                //keep count of unique letters
+                if(map.get(c) == 0){
+                    matchedCount++;
+                }
+            }
+            
+            //reducing window size from start
+            if(i >= s1.length()){
+                //remove i - s1.length letters
+                c = s2.charAt(i - s1.length());
+                if (map.containsKey(c)) {
+                if (map.get(c) == 0) {
+                    matchedCount--;
+                }
+            
+                //increase the reduced count of numbers before i-s1.length
+                    //as these numbers will not be considered in count
+                map.put(c, map.get(c) + 1);
+            }
+                
+            }
+            
+            if (matchedCount == map.keySet().size()) { 
+            return true;}
+        }
+        return false;
+        
+    }
+}

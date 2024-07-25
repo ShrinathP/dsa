@@ -1,0 +1,36 @@
+
+class Solution {
+    
+    /* Naresh gupta
+    //similar to Max Sum Subarray, Kadanes
+    https://leetcode.com/problems/maximum-subarray/
+    
+Each time we need to keep record of 2 entities
+1. prev max number (max of curr number, curr_no*curr_max, curr_no*curr_min)
+2. prev min number
+(We keep record of prev min number because, if prev min is negative
+eg. prev max = 6 and prev min = -9)
+and current number is -2
+then (-9) * (-2) will be maximum number (in next curr_max calculation)
+3. finally result will be math.max of current_max and result
+*/
+    
+    public int maxProduct(int[] nums) {
+        int n = nums.length;
+        int result = nums[0];
+        int curr_max = nums[0];
+        int curr_min = nums[0];
+        for(int i=1; i< nums.length; i++) {
+            int curr_max_prev = curr_max;
+            curr_max = 
+                Math.max(nums[i], Math.max(nums[i]*curr_max, nums[i]*curr_min));
+            curr_min = 
+                Math.min(nums[i], Math.min(nums[i]*curr_max_prev, nums[i]*curr_min));
+            
+            
+            result = Math.max(result, curr_max);
+        }
+        
+        return result;
+    }
+}

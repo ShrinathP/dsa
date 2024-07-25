@@ -1,0 +1,39 @@
+class Solution {
+    /* TECH Dose Logic v good explanation , Programcreek 
+    //DP question
+    //1. Fill the dp for i-j lengths <=2 
+            * Diagonals first will be true as 0,0; 1,1 same letters are palindrome
+            * Also If i and j are same and both are adjacent (j-i <=2) then true
+    //2. Iterate for lengths >= 3 and check for condition
+    
+        str[i] == str[j]
+        && dp[i+1][j-1] should be 1 or true (palindrome)
+    */
+    public String longestPalindrome(String s) {
+        if(s == null || s.length()<=1)
+            return s;
+        int len = s.length();
+        int maxLen = 1;
+        boolean[][] dp = new boolean[len][len];
+        
+        String longest = null;
+        
+        //For every i run j from 0 to l
+        for(int l=0; l<s.length(); l++){
+            for(int i=0; i<len-1; i++){
+                int j = i+l;
+                System.out.println(i + "i");
+                System.out.println(j + "j");
+                if(s.charAt(i) == s.charAt(j) && (j-i<=2 || dp[i+1][j-1]) ){
+                    dp[i][j] = true;
+                    
+                    if(j-i+1 > maxLen){
+                        maxLen = j-1+1;
+                        longest = s.substring(i, j+i);
+                    }
+                }
+            }
+        }
+        return longest;
+    }
+}

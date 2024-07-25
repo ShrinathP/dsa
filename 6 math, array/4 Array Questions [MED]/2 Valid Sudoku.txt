@@ -1,0 +1,23 @@
+class Solution {
+    /*Nick white, gfg */
+    public boolean isValidSudoku(char[][] board) {
+        HashSet<String> seen = new HashSet<>();
+        //as hashset does not allow us to add duplicate values, we can use 
+        //return type of hashset
+        
+        for(int i=0; i<9; i++) {
+            for(int j=0; j<9; j++){
+                char current_val = board[i][j];
+                //check only if current val is not blank
+                if(current_val != '.') {
+                    //if any of the value is repeated in same row, column, sub-box
+                    if(!seen.add(current_val + " found in row " + i) ||
+                       !seen.add(current_val + " found in column " + j) ||
+                       !seen.add(current_val + " found in sub-box " + i/3 + "-" + j/3))
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
+}

@@ -1,0 +1,48 @@
+//Take u forward I solution extension
+//At anytime find the sorted part
+
+class Solution {
+    public boolean search(int[] nums, int target) {
+        int left = 0;
+        int right = nums.length -1;
+        
+        while(left <= right) {
+            int mid = left + (right - left)/2;
+            if(nums[mid] == target) return true;
+            
+//Case 1 //right part is sorted
+//[8901 2 3456]
+            if(nums[left] > nums[mid]){
+                //right part is sorted
+                if(target > nums[mid] && target <= nums[right]){
+                    left = mid + 1;    
+                } else {
+                    //target is in non sorted left part
+                    right = mid - 1;
+                }
+//Case 2 //left part is sorted //else if nums[right] < nums[mid]
+//[456 7 012]
+            } else if(nums[left] < nums[mid]){
+                //left part is sorted
+                if(target >= nums[left] && target < nums[mid]){
+                    right = mid - 1;
+                } else {
+                    //target is in the non sorted right part
+                    left = mid + 1;
+                }
+            
+//Case 3
+            } else {
+                //left and mid are same or mid and right are same
+                //in any case, we can either
+                //increase left OR reduce right
+                left++;
+                //end--;
+            }
+        }
+        
+        //if the whole loop has run and the element is not found
+        return false;
+        
+    }
+}

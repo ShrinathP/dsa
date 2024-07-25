@@ -1,0 +1,3 @@
+Every time you visit a counter increase the counter by 1
+Inorder, preorder, postorder
+Take u fw explnation

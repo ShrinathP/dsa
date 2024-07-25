@@ -1,0 +1,39 @@
+//https://www.geeksforgeeks.org/count-palindromic-subsequence-given-string/
+
+public class HelloWorld{
+
+    static int countPS(String s){
+        
+        //Length of String
+        int N = str.length();
+        
+        //Create a 2D Array to store the count
+        int[][] cps = new int[N][N];
+        
+        //Fill all the diagonals 1
+        for(int i=0; i<N; i++){
+            cps[i][i] = 1;
+        }
+        
+        //For All lengths check subsequences
+         for (int L = 2; L <= N; L++) {
+            for (int i = 0; i <= N-L; i++) {
+                int k = L + i - 1;
+              if (str.charAt(i) == str.charAt(k)) {
+                cps[i][k] = cps[i][k - 1] + cps[i + 1][k] + 1;
+              }else{
+                cps[i][k] = cps[i][k - 1] + cps[i + 1][k]
+                                    - cps[i + 1][k - 1];
+              }
+            }
+        }
+    }
+     public static void main(String []args){
+        
+        String str = "abcb";
+        System.out.println("Total palindromic "
+                           + "subsequence are : "
+                           + countPS(str));
+     }
+}
+

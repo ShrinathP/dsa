@@ -1,0 +1,56 @@
+//cue - find lower of lo and hi heights, caculate water level for lower height
+class Solution {
+    /*
+    0. while loop, Maintain a lo and hi pointer
+    1. Calculate water only for the loweest of lo and hi heights
+    check if height of lo < height hi (ensuring there is a hi > lo) or vice versa for hi
+    2. At any point water will be stored only when 
+    left of lo (maxLeft) is greater than lo
+    right of hi (maxRight) is greater than hi
+    3.
+    Amount of water stored for lo = maxLeft - height of lo
+    Amount of water stored for hi = maxRight - height of hi
+    */
+    
+    public int trap(int[] height) {
+        
+        int lo = 0;
+        int hi = height.length-1;
+        int maxLeft = 0;
+        int maxRight = 0;
+        int result = 0; //storing the amount of water
+        
+        while(lo <= hi){
+            if(height[lo] <= height[hi]){
+                
+                if(height[lo] < maxLeft){
+                    //there is a maxLeft to hold water
+                    result += maxLeft - height[lo];
+                    System.out.println(result);
+                } else{
+                    //left of lo is lesser or equal, water falls off from left
+                    maxLeft = height[lo];
+                }
+                //in both cases increase current lo
+                lo++;
+                
+            } else {
+                //height of hi is less than hi
+                
+                if(height[hi] < maxRight){
+                    result += maxRight - height[hi];   
+                    System.out.println(result);
+                }   else{
+                    //right of hi is lesser or equal, water falls off from right
+                    maxRight = height[hi];
+                }
+                //in both cases reduce current hi
+                hi--;
+                
+            }
+        }
+        
+        return result;
+        
+    }
+}

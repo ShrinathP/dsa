@@ -1,0 +1,75 @@
+
+2nd way
+https://leetcode.com/problems/remove-linked-list-elements/discuss/57324/AC-Java-solution
+//Check using 1 pointer also, 1st comment in
+https://leetcode.com/problems/remove-linked-list-elements/discuss/57324/AC-Java-solution
+
+//Nick white
+//2 ways
+//A lot of people use dummy node approaach
+//because you could have a head which has to get deleted
+//but we have used ** to take care of head deletion
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        
+        //**
+        //to take care of the head
+        while(head!= null && head.val == val ){
+            head = head.next;
+        }
+        
+        ListNode current = head;
+        while(current!=null && current.next!=null){
+            //if current next value is to be removed, assign current next to
+            //current next next, keep doing the same
+            //if not equal, move the current to current next
+            if(current.next.val == val){
+                current.next = current.next.next;
+            } else {
+                current = current.next;
+            }
+        }
+        return head;
+        
+    }
+}
+
+//2nd way, using fakehead
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+//Nick white
+//A lot of people use dummy node approaach
+//Using dummy node approach
+//https://leetcode.com/problems/remove-linked-list-elements/discuss/57324/AC-Java-solution
+
+//because you could have a head which has to get deleted
+//but we have used ** to take care of head deletion
+
+
+class Solution {
+    public ListNode removeElements(ListNode head, int val) {
+        ListNode fakehead = new ListNode(-1);
+        fakehead.next = head;
+        ListNode curr = head, prev = fakehead;
+        while(curr != null){
+            if(curr.val == val){
+                prev.next = curr.next;
+            } else {
+                prev = prev.next;
+            }
+            curr = curr.next;
+        }
+        
+        return fakehead.next;
+        
+    }
+}

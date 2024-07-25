@@ -1,0 +1,48 @@
+
+/*BFS way 
+https://leetcode.com/problems/path-sum/discuss/148852/Java-recursive-BFS-DFS(iterative)-solution
+
+Check BFS way of Nick white also, good soln
+
+2 queue method
+where we have node queue and sum queue
+node queue will hold nodes in level order and sum queue will hold sum in level order
+We maintain 2 queues, one will keeep check of nodes and other will keep check of sums at each level
+
+*/
+
+class Solution {
+    public boolean hasPathSum(TreeNode root, int sum) {
+        if(root == null) return false;
+        
+        Queue<TreeNode> nodeq = new LinkedList();
+        Queue<Integer> sumq = new LinkedList();
+        
+        //Add first root and its value
+        nodeq.add(root);
+        sumq.add(root.val);
+        TreeNode node = null; int currentSum = 0;
+        
+        while(!nodeq.isEmpty()){
+            node = nodeq.poll();
+            currentSum = sumq.poll();
+            if(currentSum == sum && node.left == null && node.right == null){
+                return true;
+            }
+            if(node.left!= null){
+                nodeq.add(node.left);
+                sumq.add(currentSum + node.left.val);
+            }
+            
+            if(node.right!= null){
+                nodeq.add(node.right);
+                sumq.add(currentSum + node.right.val);
+            }
+        }
+        
+        //if stack becomes empty and we come out of all possible scenarios
+        //return false
+        return false;
+        
+    }
+}

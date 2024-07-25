@@ -1,0 +1,51 @@
+//Algorithms made easy
+//Top down solution
+
+/*Time Complexity O(N)^2 where N is the height of the triangle
+    Space O(1) as we are updating the same list
+*/
+
+//Another solution here: v good
+//https://leetcode.com/problems/triangle/discuss/1411470/Java-0ms-Memoization-Approach
+//https://leetcode.com/problems/triangle/discuss/959895/Top-down-and-bottom-up
+
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        for(int i=1; i< triangle.size(); i++){
+            for(int j=0; j < triangle.get(i).size(); j++){
+                int sum=0;
+                
+                //3 cases
+                //if we are at first node
+                //sum will be above row j + current row j
+                if(j == 0) {
+                    sum = triangle.get(i).get(j) + triangle.get(i-1).get(j);
+                }
+                
+                //if we are at last node
+                //sum will be above row last node + current row j
+                else if(j == triangle.get(i).size() - 1) {
+                    sum = triangle.get(i).get(j) + 
+                        triangle.get(i-1).get(triangle.get(i-1).size()-1);
+                }
+                
+                //in all other cases calculate minimum
+                //which will be , minimum of above row j and j-1
+                else {
+                    //Minimum value calculate
+                    int min = Math.min(triangle.get(i-1).get(j),
+                                      triangle.get(i-1).get(j-1));
+                    sum = min + triangle.get(i).get(j);
+                }
+                
+                
+                //Set the sum to the current node value
+                triangle.get(i).set(j, sum);
+                
+            }
+        }
+        
+        //Return the minimum value from the last row
+        return Collections.min(triangle.get(triangle.size()-1));
+    }
+}

@@ -1,0 +1,29 @@
+//pepcoding
+/*
+Check lastIndex from right section of current index
+If not found i.e. -1, then check current number 
+	if current num = target , return current idx
+	else return -1
+If found in right section, return the found index
+
+*/
+
+public static int lastIndex(int[] arr, int idx, int x) {
+//base case
+	if(idx == arr.length) {
+		return -1;
+	}
+
+	int liisa = lastIndex(arr, idx + 1, x);
+	if(liisa == -1) {
+		if(arr[idx] == x) {
+			return idx;
+		} else {
+			return -1;
+		}
+	} else {
+		return liisa;
+	}
+	
+
+}

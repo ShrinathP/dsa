@@ -1,0 +1,49 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+//TC O(N)
+
+class Solution {
+   //2 pointer method
+    //denote 2 pointers before and after having 2 LLs
+    //create 2 dummy nodes and traverse the given LL
+//TC O(N)
+    
+    public ListNode partition(ListNode head, int x) {
+        
+        //designating head with 0 value
+        ListNode before_head = new ListNode(0);
+        ListNode before = before_head; //would be used for traversing
+        ListNode after_head = new ListNode(0);
+        ListNode after = after_head; //would be used for traversing
+        
+        //filling 2 LLs
+        while(head != null){
+            if(head.val < x){
+                before.next = head;
+                before = before.next;
+            }else{
+                after.next = head;
+                after = after.next;
+            }
+            head = head.next;
+        }
+        
+//important step
+        after.next=null; //last node of after is null
+        //joining last node of the before list to the first node of the after list
+        //as afternode is 0 we take after_head.next
+        before.next = after_head.next; 
+        
+        return before_head.next;
+            
+    }
+}

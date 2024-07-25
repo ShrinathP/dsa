@@ -1,0 +1,30 @@
+//low to high/2
+
+//Binary Search Soln
+//Codebix solution
+//Instead of using long and storing it in mid
+//to avoid cases like mid * mid where mid cound be 2 power 16
+//Integer overflow cases avoid
+//we are using mid = num /mid
+
+class Solution {
+    
+    public boolean isPerfectSquare(int x) {
+        if(x < 0) return false;
+        if(x <= 1) return true;
+        
+        int left = 2, right = x / 2;
+        //As any square root of a number is less than half of the given number
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (mid == x / mid  &&   x % mid == 0) {
+                return true;
+            } else if (mid < x /mid) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+                }
+            }
+            return false;
+    }   
+}

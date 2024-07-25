@@ -1,0 +1,56 @@
+//https://practice.geeksforgeeks.org/problems/choose-and-swap0531/1
+//https://www.geeksforgeeks.org/swap-all-occurrences-of-two-characters-to-get-lexicographically-smallest-string/
+
+
+//not Totally Compiled
+import java.util.*;
+
+public class MyClass {
+    
+    public static void main(String[] args){
+        System.out.println(chooseAndSwap("ccad"));
+    }
+    public static String chooseAndSwap(String str){
+        
+       int n = str.length();
+        
+        char[] strchar = str.toCharArray();
+        //Step 1
+        //Create a HashSet and store all unique chars
+        //LinkedHashSet<Character> hs = new LinkedHashSet<>();
+        LinkedHashMap<Character, Integer> hs = new LinkedHashMap();
+        
+        
+        
+        for(int i=0; i<n ; i++){
+            hs.add(strchar[i], 0);
+        }
+        
+        //Step 2
+        for(int i=0; i<n; i++){
+            //remove the current char from set
+            hs.remove(strchar[i]);
+            
+            if(hs.isEmpty()) break; //for cases like abba, a will be removed, then b will be removed, then nothing will be left
+            //so inherently abba is lexicographically correct
+            
+            //top of LinkedHashSet //2nd unique character
+            Character ch = (char) Arrays.asList(hs.keySet().toArray()).get(0);
+            
+            
+            //if 2nd is less than 1st
+            if(ch < strchar[i]){
+                int ch2 = strchar[i];
+                //swap every occurence of strchar with ch
+                for(int j=0; j< strchar.length; j++){
+                    if(strchar[j] == ch) strchar[j] = ch2;
+                    else if(strchar[j] == ch[2]) strchar[j] = ch;
+                }
+                break;
+            }
+            
+        }
+        return strchar.toString();
+        
+    }
+}

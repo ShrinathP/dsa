@@ -1,0 +1,64 @@
+//result = result * 26 + (s.charAt(i) - 'A' + 1);
+
+//Algorithms made easy
+/*
+2 approaches 
+1. traverse from right to left
+Same as converting a binary to an integer
+As you move left you multiply by 26 (as a base) to the number for the corresponding char
+Eg: To convert CDA,
+    3*26*26 + 4*26 + 1
+
+
+2. traverse fro left to right
+    Same as converting digits into a decimal number
+    15 = 1*10 + 5
+    155 = 15*10 + 5, etc
+    number = sum from previous * base  + new digit  
+*/
+
+//1st approach
+class Solution {
+    public int titleToNumber(String columnTitle) {
+        int result = 0;
+        for(int i=0; i< columnTitle.length(); i++){
+            result*= 26;
+            result += (columnTitle.charAt(i)-'A') + 1;
+            //result = result * 26 + (s.charAt(i) - 'A' + 1);
+
+        }
+        return result;
+        
+    }
+}
+
+//naresh gupta
+//above can be compacted using reduce function
+//using reduce function
+
+class Solution {
+	public int titleNumber() {
+		return s.chars().reduce(0, (result, ch) -> result*26 + (ch - 'A' + 1));
+//s.chars gives IntStream, so we need to minus 'A'
+//can be rewrittens as
+//		return IntStream(s).reduce(0, (result, ch) -> result*26 + (ch - 'A' + 1));
+	}
+}
+
+
+
+//2nd approach right to left
+class Solution {
+    public int titleToNumber(String columnTitle) {
+        int result = 0;
+	int factor = 1;
+        for(int i=columnTitle.length()-1; i>=0 ; i++){
+		result += factor * (s.charAt(i) - 'A' + 1);
+		factor *=26;
+        }
+        return result;
+        
+    }
+
+}
+

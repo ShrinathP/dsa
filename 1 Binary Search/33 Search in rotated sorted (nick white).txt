@@ -1,0 +1,58 @@
+
+class Solution {
+//Nick white Solution
+    public int search(int[] nums, int target) {
+        
+        //Step 1 Find the start of the array using
+        //modified binary search
+        //Step 2 Check if the target is on the left of start
+        //or on the right of start
+        //Step 3 Use binary search to find the target
+        
+        if(nums == null || nums.length == 0) return -1;
+        
+        int left =0;
+        int right = nums.length-1;
+        
+        //Step 1
+        //our goal is to find the point at which the array starts
+        //finding the first element of the array
+        //modified binary search
+        while(left < right){
+            int midpoint = left + (right-left)/2;
+            if(nums[midpoint] > nums[right]){
+                left = midpoint + 1;
+            } else {
+                right = midpoint;
+            }
+        }
+        //loop break when left is at the smallest element of the array
+        //now we have the start of the array
+        int start = left;
+        
+        //Step 2
+        //Find which side of the start is the target
+        //do a basic binary search
+        left = 0;
+        right = nums.length -1;
+        //resetting start left to start
+        if(target >= nums[start] && target <= nums[right]){
+            left = start;
+        } else {
+            right = start;
+        }
+        
+        //Step 3
+        while(left <= right){
+            int midpoint  = left + (right-left)/2;
+            if(nums[midpoint] == target){
+                return midpoint;
+            } else if(nums[midpoint] < target){
+                left = midpoint + 1;
+            } else {
+                right = midpoint - 1;
+            }
+        }
+        return -1;
+    }
+}

@@ -1,0 +1,50 @@
+//2 solutions
+
+//Take u forward
+//Single Pass solution
+//2 conditions
+//if current price is less than min
+//if max profit is greater than current
+
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int minPrice = Integer.MAX_VALUE;
+        int maxProfit = 1;
+        for(int i=0; i<prices.length; i++){
+//if current price is less than min
+            if(prices[i] < minPrice) {
+                minPrice = prices[i];
+//if max profit is greater than current
+            } else if(prices[i] - minPrice > maxProfit){
+                maxProfit = prices[i] - minPrice;
+            }
+        }
+        return maxProfit;
+        
+    }
+}
+
+
+//Better Solution
+//https://leetcode.com/problems/best-time-to-buy-and-sell-stock/discuss/39062/My-jave-accepted-solution-with-O(N)-time-and-O(1)-space
+
+class Solution {
+     public int maxProfit(int[] prices) {
+		 if (prices.length == 0) {
+			 return 0 ;
+		 }
+         
+		 int max = 0 ;
+		 int sofarMin = prices[0] ;
+	     for (int i = 0 ; i < prices.length ; ++i) {
+	    	 if (prices[i] > sofarMin) {
+	    		 max = Math.max(max, prices[i] - sofarMin) ;
+	    	 } else{
+                 //current price is less than or equal sofarMin
+	    		sofarMin = prices[i];  
+	    	 }
+	     }	     
+	    return  max ;
+	 }
+}

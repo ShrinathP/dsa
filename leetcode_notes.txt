@@ -1,0 +1,44 @@
+LEetcode solutions GITHUB
+https://github.com/cherryljr/LeetCode
+
+Use coding simplified website and youtube channel
+
+Sliding window template:
+https://github.com/cherryljr/LeetCode/blob/master/Sliding%20Window%20Template.java
+
+
+leetcode 6 zigzag conversion
+https://www.youtube.com/watch?v=LbNLY6Ajs6s
+
+leetcode median sorted array
+Binary Search : Median of two sorted arrays of different sizes.
+https://www.youtube.com/watch?v=LPFhl65R7ww
+https://www.youtube.com/watch?v=LPFhl65R7ww
+
+Regular expression matching - leetcode
+(using dynamic programming)
+https://www.youtube.com/watch?v=l3hda49XcDE
+https://www.youtube.com/watch?v=HAA8mgxlov8 NeetCode
+
+
+Leetcode discussions
+https://leetcode.com/discuss/general-discussion/665604/Important-and-Useful-links-from-all-over-the-Leetcode
+
+leetcode topic wise problems
+https://leetcode.com/discuss/career/448024/Topic-wise-problems-for-Beginners
+
+Leetcode solutions
+https://github.com/black-shadows/LeetCode-Topicwise-Solutions/tree/master/Python
+
+
+Sliding window problems
+https://leetcode.com/discuss/general-discussion/657507/sliding-window-for-beginners-problems-template-sample-solutions/
+https://leetcode.com/problems/find-all-anagrams-in-a-string/discuss/92007/sliding-window-algorithm-template-to-solve-all-the-leetcode-substring-search-problem
+
+Sliding window list
+https://leetcode.com/list/x1lbzfk3/
+
+
+Michael Muinos
+Minimum window problem - algorith explanation
+https://www.youtube.com/watch?v=U1q16AFcjKs

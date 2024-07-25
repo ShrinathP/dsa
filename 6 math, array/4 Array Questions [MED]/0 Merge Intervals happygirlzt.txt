@@ -1,0 +1,40 @@
+//simple logic- if current interval start is less than
+then the end we are holding, end = Math.max(curr.end, end)
+	else add to array
+
+//happy girlzt
+
+public class Interval {
+	int start;
+	int end;
+	Interval() {start= 0; end = 0;}
+}
+
+
+class Solution {
+    public List<Interval> merge(List<Interval> intervals) {
+        List<Interval> res = new ArrayList<>();
+        if (intervals == null || intervals.size() == 0) return res;
+
+        intervals.sort((i1, i2) -> Integer.compare(i1.start, i2.start));
+
+        int start = intervals.get(0).start;
+        int end = intervals.get(0).end;
+
+        for (Interval interval : intervals) {
+            // Overlapped
+            if (interval.start <= end) {
+                end = Math.max(interval.end, end);
+            } else {
+                res.add(new Interval(start, end));
+                start = interval.start;
+                end = interval.end;
+            }
+        }
+
+        res.add(new Interval(start, end));
+
+        return res;
+    }
+}
+         

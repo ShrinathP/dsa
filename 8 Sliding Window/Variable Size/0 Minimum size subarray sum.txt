@@ -1,0 +1,38 @@
+class Solution {
+    public int minSubArrayLen(int target, int[] nums) {
+        
+        //Sliding window type solution
+        //Nick white
+        //Minimum Subarray - 2 pointer
+        //Note there is another Maximum SumArray QNo 53 which uses Kadane's algorithm
+        
+        //2 pointer 
+        //left pointer - "left" to hold the left end of the subarray
+        //right pointer - (i) to traverse right and calculate sum
+        //i -left is the length
+        
+        int left =0;
+        int sum =0;
+        int result = Integer.MAX_VALUE;
+        
+        //traversing right pointer i
+        for(int i = 0; i < nums.length; i++){
+            sum += nums[i];
+            
+            //if sum >=target
+            while(sum >= target){
+                //we found a subarray //save its length
+                result = Math.min(result, i-left+1); 
+                //+1 coz indices start from 0 & we want lenght
+                
+                //slide window
+                //pop out the first element and move first
+                sum -=nums[left];
+                left++;
+            }
+        }
+        
+        //returning 0 if Integer.MAX_VALUE stays the result length
+        return (result != Integer.MAX_VALUE) ? result: 0;
+    }
+}

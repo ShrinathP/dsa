@@ -1,0 +1,27 @@
+/*Naive way is to sort and iterate over an array*/
+
+class Solution {
+    public int findDuplicate(int[] nums) {
+        //Same as Hare and tortoise algorithm
+        //Take u forward
+        //142. Finding cycle in array
+        //2 pointer type
+        
+        int slow = nums[0];
+        int fast = nums[0];
+        
+        do  {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        } while(slow != fast);
+            
+            //move slow/fast pointer at first
+            //and traverse 1 places
+        fast = nums[0];
+        while(fast != slow){
+            fast = nums[fast];
+            slow = nums[slow];
+        }
+        return slow; //or fast any one of it
+    }
+}

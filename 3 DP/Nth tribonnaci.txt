@@ -1,0 +1,22 @@
+class Solution {
+    //There is a basic O(N) and O(1) Space complexity iterative way also
+    //Check coding simplified
+    // DP way
+    //https://leetcode.com/problems/n-th-tribonacci-number/discuss/1488434/My-java-Solution-Top-down-approach
+    
+    public int tribonacci(int n) {
+        if(n < 2)return n;
+        if(n == 2)return 1;
+        int[] dp = new int[n + 1];
+        return helper(n, dp);
+    }
+    
+    int helper(int n, int[] dp){
+        if(n < 2)return n;
+        if(n == 2)return 1;
+        
+        if(dp[n] != 0)return dp[n];
+        
+        return dp[n] = helper(n - 1, dp) + helper(n - 2, dp) + helper(n - 3, dp);
+}
+}

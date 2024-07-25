@@ -1,0 +1,20 @@
+//pepcoding
+//using logarithmic formula - faster
+// x^n = x^n/2 * x^n/2 
+//if n is odd or non divisible then
+//x ^ 17 = x^8 * x^8 *x
+
+public static int power(int x, int n) {
+	if(n == 0) {
+	return 1;
+	}
+
+	int xpnb2 = power(x, n/2);
+	int xn = xpnb2 * xnpb2;
+	
+	if(n % 2 == 1) {
+		xn = xn * x;
+	}
+	
+	return xn;
+}

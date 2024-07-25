@@ -1,0 +1,56 @@
+//2 solutions
+//Using a stack
+//Algorithms made easy
+//Similar to Valid Parenthesis question
+
+//Solution 1
+
+class Solution {
+    /*
+    
+    
+    Step 1- Push (-1) into the stack
+    Step 2 - Traverse the string
+            Case 1- If we encounter an open character ( push the index
+            Case 2- If we encounter a close character ) , pop
+                2.1 If the stack is empty after the pop, push the index
+                2.2 If the stack is not empty after the pop, calculate max
+                max - i - topOfStack
+                Update new max
+                
+                
+                Logic GuruMack utube channel- Longest valid Parenthesis
+                https://www.youtube.com/watch?v=8CYhffMML8o
+                
+                Code- Algorithms Made Easy channel
+                
+                Time O(n) SpaceO(n)
+                
+    */
+    public int longestValidParentheses(String s) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(-1);
+        int max = 0;
+        
+        for(int i=0; i<s.length(); i++){
+            char c= s.charAt(i);
+            if(c == '('){
+                stack.push(i);
+            } else {
+                //c == ')'
+                stack.pop();
+                if(stack.empty()){
+                    //push current index
+                    stack.push(i);
+                } else {
+                    int len = i - stack.peek();
+                    max = Math.max(max, len);
+                }
+            }
+            
+        }
+        return max;
+        
+    }
+}
+

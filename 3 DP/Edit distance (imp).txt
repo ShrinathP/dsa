@@ -1,0 +1,63 @@
+//Same as longest common subsequence
+
+//gfg solution good
+//https://www.geeksforgeeks.org/edit-distance-dp-5/
+//https://www.geeksforgeeks.org/overlapping-subproblems-property-in-dynamic-programming-dp-1/
+//https://www.geeksforgeeks.org/optimal-substructure-property-in-dynamic-programming-dp-2/
+
+//Tushar roy explanation.
+//2 ways bottom-up DP solution
+//or recursive DP solution
+
+class Solution {
+    public int minDistance(String str1, String str2) {
+        int dp[][] = new int[str1.length() + 1][str2.length() + 1];
+        
+        // Fill dp[][] in bottom up manner
+        for(int i=0; i<= str1.length(); i++) {
+            for(int j=0; j<= str2.length(); j++) {
+                //If first string is empty , only option is 
+                //to insert all characters of second string
+                if(i == 0){
+                    dp[i][j] = j; // Min. operations j
+                }
+                
+                //If second string is empty, only options is
+                //to remove all the characters of second string
+                else if(j == 0){
+                    dp[i][j] = i; //Min. operations i
+                }
+                
+                
+                //If last characters are the same, ignore the last
+                //char and recur for the remaining
+                else if(str1.charAt(i-1) == str2.charAt(j-1)) {
+                    //diagonally above
+                    dp[i][j] = dp[i-1][j-1];
+                }
+                
+                //If last character is different, consider all 
+                //possibilities and find minimum
+                else {
+                    dp[i][j] = 1 + 
+                        min(dp[i][j-1], //insert
+                           dp[i-1][j],  //remove 
+                           dp[i-1][j-1]); //replace
+                }
+            }
+        }
+        
+        return dp[str1.length()][str2.length()];
+        
+    }
+    
+    static int min(int x, int y, int z)
+    {
+        if (x <= y && x <= z)
+            return x;
+        if (y <= x && y <= z)
+            return y;
+        else
+            return z;
+    }
+}

@@ -1,0 +1,31 @@
+class Solution {
+    public void rotate(int[][] matrix) {
+        //Using Transpose matrix
+        //Nick White
+        //Swap and flip
+        
+        //Step 1: Swap along the diagonals
+        //Step 2: Flip the matrix horizontally, using 2 pointer
+        
+        int N = matrix.length;
+        
+        //Step 1 - Swap on diagonal
+        for(int i=0; i<N; i++){
+            for(int j=i; j<N; j++){
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
+        
+        //Step 2 - Flipping horizontally
+        for(int i=0; i<N; i++){
+            for(int j=0; j<(N/2); j++){
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[i][N-1-j]; //j from the back
+                matrix[i][N-1-j] = temp;
+            }
+        }
+        
+    }
+}

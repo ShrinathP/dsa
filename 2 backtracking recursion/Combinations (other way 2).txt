@@ -1,0 +1,6 @@
+
+This also is a good solution
+Basically, this solution follows the idea of the mathematical formula C(n,k)=C(n-1,k-1)+C(n-1,k).
+
+
+https://leetcode.com/problems/combinations/discuss/27015/3-ms-Java-Solution

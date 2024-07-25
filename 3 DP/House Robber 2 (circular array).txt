@@ -1,0 +1,43 @@
+/*
+Naresh gupta explanation
+for a circular array 
+you either consider first element and exclude last element
+OR
+you either consider 2nd element and include last element
+
+Soln from here:
+https://leetcode.com/problems/house-robber-ii/discuss/59929/Java-clean-short-solution-DP
+
+This dp solution is also v good
+https://leetcode.com/problems/house-robber-ii/discuss/60044/Good-performance-DP-solution-using-Java
+*/
+
+class Solution {
+    public int rob(int[] nums) {
+        if(nums == null || nums.length == 0){
+            return 0;
+        }
+
+        if(nums.length == 1){
+            return nums[0];
+        }
+        
+        return Math.max(rob(nums, 0, nums.length-2), rob(nums, 1, nums.length-1));
+    }
+    
+    public int rob(int[] nums, int lo, int hi) {
+        int preRob=0, preNotRob=0, rob=0, notRob=0;
+        
+        for(int i=lo; i <= hi; i++){
+            rob = preNotRob + nums[i];
+            notRob = Math.max(preRob, preNotRob);
+            
+            preNotRob = notRob;
+            preRob = rob;
+        }
+        
+        return Math.max(rob, notRob);
+    }
+    
+    
+}

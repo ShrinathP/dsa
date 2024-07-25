@@ -1,0 +1,68 @@
+//Extension of Reverse in between question
+
+class Solution {
+    //https://www.programcreek.com/2014/05/leetcode-reverse-nodes-in-k-group-java/
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if(head==null||k==1)
+            return head;
+
+        ListNode fake = new ListNode(0);
+        fake.next = head;
+        ListNode prev = fake;
+        int i=0;
+
+        ListNode p = head;
+        while(p!=null){
+            i++;
+            //until i is not multiple of k, keep moving the head
+            if(i%k==0){
+                //when i is multiple of k then, reverse the range, and get new prev
+                prev = reverse(prev, p.next);
+                p = prev.next;
+            }else{
+                p = p.next; 
+            }
+        }
+
+        return fake.next; 
+    }
+    
+    //Here prev is fake node
+    //we save 2 nodes current and current.next
+    //until current.next doesnt reach last
+    private ListNode reverse(ListNode prev, ListNode last){
+        ListNode p1 = prev.next;
+        ListNode p2 = p1.next;
+
+        while(p2 != last){
+            ListNode t = p2.next;
+            p2.next = p1;
+            p1 = p2;
+            p2 = t;
+        }
+
+        ListNode rNode = prev.next;
+
+        //reversing everything the the middle 
+        //and assign first and last
+        prev.next.next = last;
+        prev.next = p1;
+
+        return rNode;
+    }
+    
+    //Other way to write reverse
+//     public ListNode reverse(ListNode prev, ListNode next){
+//         ListNode last = prev.next;
+//         ListNode curr = last.next;
+
+//         while(curr != next){
+//             last.next = curr.next;
+//             curr.next = prev.next;
+//             prev.next = curr;
+//             curr = last.next;
+//         }
+
+//         return last; 
+//     }
+}

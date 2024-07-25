@@ -1,0 +1,62 @@
+
+//Nick white
+class Solution {
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        
+        if(head == null){
+            return null;
+        }
+        
+        //we decrement both m and n until m reaches 0
+        //this is where we have to start reversing
+        
+        //before reversing , we need to store , prev node 
+        // in this case it will be 1
+        //we will have to connect 1 to 4 later
+        //and also tail node(to be tail node)
+        // in this case it will be 2 
+        //we will have to connect 2 to 5 later
+        
+        ListNode prev = null;
+        ListNode current_node = head;
+        
+        while(m > 1){
+            prev = current_node;
+            current_node = current_node.next;
+            m--;
+            n--;
+        }
+        
+        //now n still stays above 1
+        
+        //Saving connection and tail
+        ListNode connection = prev;
+        ListNode tail = current_node;
+        
+        //Plain reversing the LL
+        while(n > 0){
+            ListNode next_node = current_node.next;
+            current_node.next = prev;
+            prev = current_node;
+            current_node = next_node;
+            n--;   
+        }
+        
+        /*
+        System.out.println("we have reversed till the point we want : ");
+        System.out.println("prev value: " + prev.val);
+        System.out.println("current value: " + current_node.val);
+        */
+        //reconnecting
+        //connecting 1 to 4
+        if(connection != null){
+            connection.next = prev;
+        } else {
+            head = prev;
+        }
+        
+        //connecting 2 to 5
+        tail.next = current_node;
+        return head;
+    }
+}

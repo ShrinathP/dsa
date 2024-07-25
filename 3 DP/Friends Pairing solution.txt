@@ -1,0 +1,39 @@
+public class TestClass{
+    //https://www.geeksforgeeks.org/friends-pairing-problem/
+    
+    /*
+    For any friends there are 2 options
+    1- nth person remains single, we recur for f(n-1)
+    2- nth persion pairs up with any of the n-1 persons. 
+    We get (n-1) * f(n - 2)
+    f(n-2) is the function run by removing the current pair*/
+
+     public static void main(String []args){
+        System.out.println("Count friends Pairning");
+        int n = 6;
+        System.out.println(countFriendsPairing(n));
+
+     }
+     
+     /*
+     Returns count of ways n people can
+     remain single single or paired */
+     private static int countFriendsPairing(int n){
+         int dp[] = new int[n+1];
+         
+         //Filling dp in bottom up manner using 
+         //recursive formula
+         
+         for(int i=0; i<= n; i++){
+             if(i<=2){
+                 dp[i] = i; //for 0,1 and 2
+             }
+             else {
+                 dp[i] = dp[i-1] + (i-1)*dp[i-2];
+             }
+         }
+         
+         return dp[n];
+         
+     }
+}

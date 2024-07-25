@@ -1,0 +1,56 @@
+//Nick white
+class Solution {
+    //2D matrix traversal
+    //Nick White
+    public List<Integer> spiralOrder(int[][] matrix) {
+        
+        List<Integer> res = new ArrayList<>();
+        
+        if(matrix.length == 0) return res;
+        
+        int rowBegin = 0;
+        int rowEnd = matrix.length-1;
+        int columnBegin = 0;
+        int columnEnd = matrix[0].length -1;
+        
+        while(rowBegin <= rowEnd && columnBegin <= columnEnd){
+            
+            //1
+            //left to right horizontal
+            for(int i= columnBegin; i<= columnEnd; i++){
+                res.add(matrix[rowBegin][i]);
+            }
+            rowBegin++; //move the row index ahead - we no more want first row
+            
+            //2
+            //right virtical top to bottom 
+            for(int i = rowBegin; i<= rowEnd; i++){
+                res.add(matrix[i][columnEnd]);
+            }
+            columnEnd--;
+            
+            //3
+            //horizontal right to left
+            //as we are incrementing rowBegin , we need to check if it does not exceed
+            //rowEnd
+            if(rowBegin<= rowEnd){ //check if 
+                for(int i= columnEnd; i>= columnBegin; i--){
+                    res.add(matrix[rowEnd][i]);
+                }
+            }
+            rowEnd--;
+                
+            //4
+            //vertical bottom to top
+            if(columnBegin <= columnEnd){
+                for(int i = rowEnd; i >= rowBegin; i--){
+                    res.add(matrix[i][columnBegin]);
+                }
+            }
+            
+            columnBegin++; //move the column index ahead - we no more want first column
+        }
+        
+        return res;
+    }
+}

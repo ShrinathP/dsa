@@ -1,0 +1,71 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+
+/*
+Naresh gupta utube
+
+//1. Find the middle node
+//2. break the list at middle
+//3. call same function recursively to find the midde and break
+//4. Create merge function to merge all the parts
+   
+*/
+class Solution {
+    public ListNode sortList(ListNode head) {
+        if(head == null || head.next == null) return head;
+        ListNode mid = middleNode(head);
+        
+        //sort the left part
+        ListNode left =sortList(head);
+        //sort the right part
+        ListNode right =sortList(mid);
+        
+        return merge(left, right);
+    }
+    
+    //Find the middle of the current List
+    //and break the list
+    private ListNode middleNode(ListNode head){
+        ListNode slow = head, fast = head.next;
+        //could we have started fast from head only ?? both pointers from head
+        //Check it , imp
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode mid = slow.next;
+        //breaking node
+        slow.next = null;
+        return mid;
+    }
+    
+    //Merge broken lists
+    private ListNode merge(ListNode l1, ListNode l2){
+        ListNode dummyhead = new ListNode(-1);
+        ListNode current = dummyhead;
+        while(l1!=null && l2!=null){
+            if(l1.val <= l2.val){
+                current.next = l1;
+                l1 = l1.next;
+            } else {
+                current.next = l2;
+                l2 = l2.next;
+            }
+            current = current.next;
+        }
+        
+        //if we break the loop and still some of l1 or l2 is pending 
+        current.next = l1 != null ? l1 : l2;
+        
+        
+        return dummyhead.next;
+    }
+}

@@ -1,0 +1,21 @@
+//cue- chop off prefix, 
+
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if(strs.length == 0) return "";
+        //temp
+        String prefix = strs[0];
+        
+        for(int i=1; i<strs.length; i++){
+            String currString = strs[i];
+            //keep cutting prefix, until it matched
+            while(currString.indexOf(prefix) != 0){
+                prefix = prefix.substring(0, prefix.length() -1);
+                //note substring ignores the last index, so cropped until prefix.length()-1
+            }
+        }
+        
+        return prefix;
+        
+    }
+}

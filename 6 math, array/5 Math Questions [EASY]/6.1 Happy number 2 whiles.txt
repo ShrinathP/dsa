@@ -1,0 +1,44 @@
+/*2 ways
+if a number is not a happy number it will end up in a cycle
+that is the same number will be found again
+
+Kevin Naughton
+1. Hashset way: here we store the sum, if we find the duplicate sum, return false
+we square the current number from units place and add to the sum
+
+2. Cycle finding algorithm: Floyds/ Hare and Tortoise algo
+using fast and slow pointers
+https://www.geeksforgeeks.org/happy-number/
+
+https://leetcode.com/problems/happy-number/discuss/519280/JAVA-(-100-)-using-less-Cycle-finding-algorithm-greater
+
+*/
+
+//1st way
+class Solution {
+    public boolean isHappy(int n) {
+        HashSet<Integer> seen = new HashSet<>();
+        
+        while(n != 1){
+            int current = n;
+            int sum=0;
+            
+            while(current!=0){
+                //squaring the last digit in the current
+                sum += (current % 10) * (current % 10);
+                current /= 10;
+            }
+            
+            if(seen.contains(sum)){
+                return false;
+            }
+            
+            seen.add(sum);
+            n = sum;
+        }
+        
+        //if the loop breaks, we found the happy number
+        return true;
+        
+    }
+}

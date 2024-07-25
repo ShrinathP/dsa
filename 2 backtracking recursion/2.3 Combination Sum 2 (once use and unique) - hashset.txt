@@ -1,0 +1,33 @@
+//USING HASHSET
+
+class Solution {
+    //Backtracking Problem
+    //Non Repeatable numbers
+    //Unique Pairs
+    //Naresh Gupta
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        //Using set as we can remove duplicate pairs of List of Integers
+        Set<List<Integer>> result = new HashSet();
+        Arrays.sort(candidates);
+        
+        backtrack(candidates, 0, target, new ArrayList(), result);
+        
+        //converting the Set back to List
+        return new ArrayList(result);
+    }
+    
+    private void backtrack(int[] cand, int start, int target, List<Integer> list, Set<List<Integer>> result){
+        if(target < 0)
+            return;
+        if(target == 0)
+            result.add(new ArrayList(list));
+        for(int i =start; i<cand.length; i++ ){
+            list.add(cand[i]);
+            //passing i + 1 as we dont have to use duplicates
+            backtrack(cand , i+1, target - cand[i], list, result);
+            
+            //if we reach here , target is < 0, remove the last element of list
+            list.remove(list.size() - 1);
+        }
+    }
+}

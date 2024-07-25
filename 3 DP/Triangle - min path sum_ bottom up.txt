@@ -1,0 +1,33 @@
+//Algorithms made easy
+//Bottom up approach
+//Here we invert the triangle, and we get only 1 solution
+/*
+1. Start from i=last-1i  row
+2. We take minimum of 2 values in the previous row, i.e. last row
+i.e. i+1 th row
+3. */
+class Solution {
+    public int minimumTotal(List<List<Integer>> triangle) {
+        
+        //traversing from bottom to up
+        for(int i= triangle.size()-2; i>=0; i--) {
+            for(int j=0; j < triangle.get(i).size(); j++) {
+                
+                //Min value in i row would be min of j and j+1 nodes
+                int min = Math.min(triangle.get(i+1).get(j),
+                                  triangle.get(i+1).get(j+1));
+                
+                //Calculate the sum by adding min to current node number
+                int sum = min + triangle.get(i).get(j);
+                
+                //set the current number to sum
+                triangle.get(i).set(j, sum);
+                
+            }
+        }
+        
+        //loop will be completed when i=0 i.e. first row
+        // will have the answer
+        return triangle.get(0).get(0);
+    }
+}

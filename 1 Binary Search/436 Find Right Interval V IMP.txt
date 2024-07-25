@@ -1,0 +1,72 @@
+/*
+https://just4once.gitbooks.io/leetcode-notes/content/leetcode/binary-search/436-find-right-interval.html
+
+https://leetcode.com/problems/find-right-interval/discuss/631133/Java-O(n-logn)-solution-HashMap-%2B-Sort-%2B-Binary-Search
+
+https://leetcode.com/problems/find-right-interval/discuss/190441/Java-Two-Solutions-TreeMap-and-Binary-Search
+
+https://leetcode.com/problems/find-right-interval/discuss/1070955/Java-%2B-3-Easy-Solutions-%2B-Easy-to-understand-%2B-Brute-Force-%2B-TreeMap-%2B-Binary-Search
+*/
+
+class Solution {
+    /*
+    Binary Search Way
+    
+    1. we store the starts in an array
+    2. we also store a map which has each interval start and its index
+    3. Sort the starts array (1)
+    4. Now in starts array binary search for each interval end
+    5. If we find an end number matching one of the starts
+    OR greater than one of the starts
+    6. Get the matching start numbers index from map
+    Put it in result array
+    
+    */
+    public int[] findRightInterval(int[][] intervals) {
+        int n = intervals.length;
+        int m = intervals[0].length; //cols
+        int[] res = new int[n];
+        int[] starts = new int[n];
+        Map<Integer, Integer> map = new HashMap<>();
+
+        
+        for(int i=0; i< n; i++) {
+            //1. store starts
+            starts[i] = intervals[i][0];
+            //2. store starts and its index in map
+            map.put(intervals[i][0], i);
+        }
+        
+                
+        Arrays.sort(starts);
+        
+        //find the end number matching one of the starts
+        //or closest greater than one of the starts
+        //4 and 5
+        for(int i=0; i< n; i++) {
+            
+            int j = binarySearch(starts, intervals[i][1], 0, n);
+            res[i] = j == n ? -1 : map.get(starts[j]);
+        }
+        return res;
+    }
+    
+    private int binarySearch(int[] nums, int target, int i, int j) {
+        
+        j--;
+        while(i <= j) {
+            int m = i + ((j-i)/2);
+            if(nums[m] == target) {
+              return m;
+            } else if(nums[m] < target) {
+                i = m + 1;
+            } else {
+                j = m - 1;
+            }
+        }
+        
+        System.out.println(Arrays.toString(nums));
+        System.out.println("Index of target :" + target + "is :" + i);
+        return i;
+    }
+}

@@ -1,0 +1,31 @@
+//Nick white -- while loop imp---
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        /*
+        //**sliding window problem**
+        //2 pointer set in the beginning
+        //both at start
+        //2nd one keeps moving and expanding the window,similarly updating the max size                 whenever it finds the duplicate, we pop out the first pointer data and move the 1st pointer by 1 */
+        
+        int a_pointer=0;
+        int b_pointer=0;
+        int max=0;
+        
+        HashSet<Character> hashset = new HashSet<>();
+        
+        while(b_pointer < s.length()){
+            if(!hashset.contains(s.charAt(b_pointer))){
+                hashset.add(s.charAt(b_pointer));
+                b_pointer += 1; //expand the window
+                max = Math.max(max, hashset.size());
+            } else{
+                hashset.remove(s.charAt(a_pointer));
+                a_pointer += 1; //moving the first pointer by 1
+            }
+        }
+        return max;
+        
+    }
+}
+
+Wreurrerewrdewff

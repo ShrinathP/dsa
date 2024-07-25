@@ -1,0 +1,57 @@
+Every time you visit a counter increase the counter by 1
+Inorder, preorder, postorder
+Take u fw explnation
+
+class Solution {
+    
+    //Naresh Gupta
+    //Step1: need to find the height of the tree by finding height of subtrees(recursion)
+    //Step2: if both left and right height are same 2^h -1
+    //Step 3: if not same then recurse on left and right subtrees
+
+    public int countNodes(TreeNode root) {
+        if(root == null)
+            return 0;
+        
+        int lh = leftHeight(root);
+        int rh = rightHeight(root);
+        //if both heights are same full Binary Tree
+        //, then we node number = 2 power n -1
+        if(lh == rh){
+            return (1 << lh) - 1;
+        }
+        
+        return countNodes(root.left) + countNodes(root.right) + 1;
+        
+    }
+    
+    private int rightHeight(TreeNode root){
+        return root == null ? 0: rightHeight(root.right) + 1;
+    }
+
+/*
+	Other way to calculate height 
+
+	public int getHeightLeft(TreeNode root){
+		int count=0;
+		while(root.left != null){
+		count++;
+		root = root.left;
+		}
+		return count;
+	}
+	
+	public int getHeightRight(TreeNode root){
+		int count=0;
+		while(root.right != null){
+		count++;
+		root = root.right;
+		}
+		return count;
+	}
+*/
+    
+    private int leftHeight(TreeNode root){
+        return root == null ? 0: leftHeight(root.left) + 1;
+    }
+}

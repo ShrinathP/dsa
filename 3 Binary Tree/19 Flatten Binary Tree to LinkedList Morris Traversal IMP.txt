@@ -1,0 +1,54 @@
+/*
+Algorithms made easy
+O(N) solution
+using Morris Traversal
+
+1. Start from the root
+2. if left is not null, go to its extreme right . (here it will be )
+3. attach this node's right to the right of root (1)
+that is 4.right = 5
+4. break right and left root connections , connections of 1
+5. 1.left = null, and 1.right = 2 (node at step 2)
+6. recursively call step 1 to 5
+
+        -1-
+    -2-     -5-
+ 3     4        6
+ 
+ 
+ 1. Check left
+ 2. if not null , go to its rightmost child
+ 3. Connect it to root-> right
+ 4. Connect the whole left to root-> right
+ 5. Make root->left = null
+ 6. Update the root to root-> right
+
+*/
+class Solution {
+    public void flatten(TreeNode root) {
+        if(root == null) return;
+        
+        while(root!= null){
+            if(root.left != null){
+                
+                //Step 2
+                TreeNode left = root.left;
+                TreeNode current = left;
+                while(current.right != null){
+                    current = current.right;
+                }
+                
+                //Step 3 //Morris Traversal main step
+                current.right = root.right;
+                
+                //Step 4 and 5
+                root.right = left;
+                root.left = null;
+                
+            }
+            //Update the root to next iteration, root.right
+            root = root.right;
+        }
+        
+    }
+}

@@ -1,0 +1,139 @@
+
+
+Experienced SDET with a demonstrated history of working 
+in Software Industry.
+Skilled in 
+
+Data structures and algorithms - 
+ 
+Javascript, ReactJS, NodeJs
+Currently reading
+Refactoring by Martin Fowler
+Eloquent Javascript
+
+Skilled in
+Testing Tools: Selenium Webdriver, TestNG, JUnit, API Automation - RestAssured, Protractor, Soap UI
+BDD Tools: Cucumber, Jasmine
+Core Java, SpringBoot, Javascript
+Git, Maven, Gradle
+CI/CD Jenkins.
+
+
+
+Experienced SDET with 6 years of experience spanning across Senior QA Automation Engineer, R & D Engineer Roles.
+Functional Testing to building Automation frameworks, Performance Testing etc.
+Spanning Component Testing to Acceptance Testing.
+
+
+Designed and developed frameworks from scratch using tools like
+Selenium, TestNG, JUnit5, Java, Spring Boot, Spring Data JPA, Maven, Gradle
+Cypress, Javascript 
+API Automation using RestAssured Java, Postman, Jest and Jasmine libraries
+CI CD Tools - Jenkins, Gitlab CI
+Version Control: Git, SVN
+
+
+I have over 6 years of experience working as Quality Analyst,Senior Automation Engineer, R and D 
+Engineer roles.
+ Determining / Early stage bugs to Drawing Test Plans, Test Reports
+Coverage Etc. Spanning from Functional , UI Web Browser Automation
+, API automation, Performance Testing etc.
+Spanning Component Testing to Acceptance Testing.
+Skilled in Java, Javascript, Spring Boot, Data JPA.
+Selenium, Cypress, Jasmine, Jest, RestAssured
+Data Structured and Algorithms
+A wannabe clean coder
+
+#Over 5 years of strong experience with certified ISTQB in quality assurance and automation testing.
+Develop and maintain Selenium web driver Framework/s using Java,TestNG,Eclipse, Jenkins,Maven ,VSTS and splunk. Also, having in-depth level of working knowledge on HP UFT using BPT framework.
+Have also followed Agile methodology in multiple projects.
+
+Summary Highlights
+------------------
+#Well versed in developing Automation Test Scripts for assigned user stories using Selenium Web Driver, Java.
+#Good experience in working with Page Object Model Framework using Selenium with Java.
+#Hands on experience in developing BDD framework using Cucumber with Java.
+#Expertise in locating web elements using XPATH and CSS selectors.
+#Having experience with GIT version control system.
+#Experience in writing test cases and maintaining test scripts as per the business specifications/ functional requirements.
+#Having knowledge of different bug tracking tools like Jira,Hp ALM
+#Hands on experience with all phases of Software Development Life Cycle (SDLC) and Software Test Life Cycle (STLC) and also well versed with Agile/Scrum methodologies.
+#Perform Regression, Smoke, Integration and Functional Testing.
+#Handled many challenging issues while creating, executing and debugging selenium scripts.
+#Excellent problem solving skills with strong technical background
+
+From <https://www.linkedin.com/in/shreya-upadhyay-aa07134b/> 
+
+
+I am a CS grad with around 7 years of experience, hooked into testing stuff I bump into including but not limited to software. I design, implement and enhance test frameworks. Backend intrigues me. Have worked in MNCs as well as Startups, leading teams as well as in individual contributor roles.
+
+From <https://www.linkedin.com/in/shashikumarraja/> 
+
+
+
+Experience :
+
+- Manual QA(4y) => QA Automation (4y) => SDET (2y) total 10+ year of work exp.
+- Major experience is on Unix/Linux based systems and open source technologies.
+- Well versed in the big data domain.
+- Can build test automation layer from scratch.
+- Donned different hats - manual QA , Automation QA, Release manager, Build deployment automation engineer, Test Automation lead.
+
+
+Automation skills:
+#####################################################################
+Scripting knowledge :: Bash/shell scripting , Python
+Programming knowledge :: Python
+Automation framework knowledge :: Pytest, RobotFramework
+CI tool : Jenkins
+Version control tool :: Git, Perforce
+
+Big data skills:
+#####################################################################
+Big data stack :: Hadoop, Hive, Spark, Pig, Hbase (NOSQL), Sqoop
+Big data scripting :: Pig latin, Hadoop streaming, UDF for hive/pig
+
+
+
+
+https://github.com/arpitpattewar?tab=repositories
+https://leetcode.com/arpitp/
+
+
+From <https://www.linkedin.com/in/arpitpattewar/> 
+
+
+Objective: Lead Software Quality Engineer with 14 + years of experience with expertise in Manual Testing and Automation Testing. Interested in obtaining a SDET position, in challenging environment that focuses on Product Development involving large scale data and computations.
+
+Experience Summary:
+• Experience in testing of API’s, Back-end, Web applications and Desktop applications on different environments and platforms.
+• Experience on Core E-Commerce E2E testing flows includes Front End, OMS, Fulfillment, EEI, Returns & Refunds, Catalog and Adobe E2E testing includes E-Commerce, JEM, CRM, ECC, Entitlement, SAO, Licensing, Enterprise, Buying Programs, Admin Console, Reseller, AAUI, Product Activation for all Route to Markets.
+• Designed automation frameworks for couple of projects that involves automation of APIs, databases, Front-end.
+• Good experience on Automation Selenium Web driver, Page Object model, Test NG, JUnit, Maven.
+• Experience on Automating the Web Service Testing (SOAP, REST) using Http Client, Rest
+• Developed the E2E Framework and Scripts for Adobe Individual, Team, Enterprise purchase validations
+• Experience on XML Parsing, JSON Parsing, Database connections (OJDBC) with java.
+• Experience in Manual Testing, Black Box Testing, Functional Testing, Regression Testing, E2E Testing, SIT Testing, Backend Testing, Database Testing, Testing methods, Testing Phases.
+• Experience in testing Retail, E-Commerce, J2EE, .Net, Banking, Portal & ATG Applications
+• Experience in JAVA, UNIX, Jenkins Jobs, GIT
+• Experience in Testing Process, Testing Concepts, SDLC, STLC, Testing Techniques, Testing Methodologies (RUP, Agile, Water Fall), Testing Strategies, Analyzing Test Requirements, Tracking changes and maintenance
+• Proficient in Test management which includes formulating the Test Strategy, Test Planning, Test Case Designing, Test Execution, Test reporting, Defect Tracking & Reporting.
+• Experience in Non- Functional Testing like Certification Testing, Cookie Testing, Session & Usability Testing.
+• Working as individual contributor as well as leading a team.
+
+From <https://www.linkedin.com/in/vijay-sankar-g-47301256/> 
+
+
+Automation Test Engineer with 4.3 years of experience in Information Technology, proficient in Testing Web based applications using Core Java, Selenium WebDriver with POM and BDD (Cucumber) framework approach and also having good knowledge in Rest API testing using postman tool and Rest Assured automation tool, having good knowledge in Warehouse Management System.
+
+From <https://www.linkedin.com/in/vamsi-krishna-mandati-8b208b145/> 
+
+
+
+
+Walmart Global Tech India
+Vmware
+Swiggy
+Microsoft
+Morgan Stanley
+Dream 11

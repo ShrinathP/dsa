@@ -1,0 +1,42 @@
+//Solation for rotated sorted I
+
+//Taoke u forward solution
+
+class Solution {
+    //Other solution, but nick white solution is more explanatory
+    //Take U forward
+    //1 At all the time check which side is sorted
+    //if a side is sorted 
+    //check if target is present on that side
+    //if not change low or high
+    //recalculate everything and check if target is on sorted side
+    
+    public int search(int[] nums, int target) {
+        int low = 0, high = nums.length -1;
+        while(low <= high) {
+            int mid = (low + high) >> 1;
+            if(nums[mid] == target) return mid;
+            
+            //left side is sorted
+            if(nums[low] <= nums[mid]) {
+                if(target >= nums[low] && target <= nums[mid]){
+                    high = mid - 1;
+                } else {
+                    //target is on the non sorted right side
+                    low = mid + 1;
+                }
+            } else {
+                //right side is sorted
+                if(target >= nums[mid] && target <= nums[high]) {
+                    low = mid +1;
+                } else {
+                    //target is on the non sorted left side
+                    high = mid - 1;
+                    //and recalculate 
+                }
+            }
+        }
+        
+        return -1;
+    }
+}

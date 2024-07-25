@@ -1,0 +1,69 @@
+//Take u forward solution
+/*
+Scalar Notes
+            //condition satisfied   	M = [ a  | b]  
+//					N = [ c  | d]
+//Property of the median // a < d and c < b
+Imp keep 1st array smaller, as we are doing BS on 1st array only
+
+Step 1.
+Binary Search on Smalllest length array
+Step 2. 
+find 2 cuts, mid and (N + M + 1) /2
+
+Step 3. Put cuts to find left half and right half of the arr1 using cut1
+Step 4. Put cuts to find left half and right half of the arr2 using cut2
+
+5. Check condition, if left1 < right2 and left2 < right1, satisfied then find median
+	5.1 (check lengths if n1+n2 is even median is avg of lowest of lefts and higest of rights)
+else if left1 > right2, move hi back, else move low ahead
+
+TC - we are doing BS on smaller array so O(log(min(N, M)))
+
+https://takeuforward.org/data-structure/median-of-two-sorted-arrays-of-different-sizes
+*/
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        //1
+        //Try to keep nums1 lesser as its faster to find middle in smaller array
+        if(nums2.length < nums1.length) return findMedianSortedArrays(nums2, nums1);
+        
+        int n1 = nums1.length;
+        int n2 = nums2.length;
+        int low = 0, high = n1;
+        
+        //we need to put 2 cuts where 
+        //left of cut1 is less then right of cut2
+        //and left of cut2 is less than right of cut1
+        
+        while(low <= high) {
+            int cut1 = (low + high) >> 1;
+            int cut2 = (n1 + n2 + 1)/2 - cut1; //removing cut1 length
+            System.out.println(cut1);
+            System.out.println(cut2);
+            
+            int left1 = cut1 == 0 ? Integer.MIN_VALUE : nums1[cut1-1];
+            int left2 = cut2 == 0 ? Integer.MIN_VALUE : nums2[cut2-1];
+            
+            int right1 = cut1 == n1 ? Integer.MAX_VALUE : nums1[cut1];
+            int right2 = cut2 == n2 ? Integer.MAX_VALUE : nums2[cut2];
+            
+
+            if(left1 <= right2 && left2 <= right1){
+                if((n1+n2) % 2 == 0) {
+                    return (Math.max(left1, left2) + Math.min(right1, right2)) / 2.0;
+                }
+                else {
+                    return Math.max(left1, left2);
+                }
+            } else if(left1 > right2) {
+                //we need to move high back
+                high = cut1 - 1;
+            } else {
+                low = cut1 + 1;
+            }
+            
+        }
+        return 0.0;
+    }
+}

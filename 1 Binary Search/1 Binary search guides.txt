@@ -1,0 +1,20 @@
+
+Very good solutions:
+https://just4once.gitbooks.io/leetcode-notes/content/leetcode/binary-search/153-find-minimum-in-rotated-sorted-array.html
+
+
+https://leetcode.com/discuss/study-guide/1233854/a-noobs-guide-to-the-binary-search-algorithm
+
+https://leetcode.com/problems/binary-search/discuss/423162/Binary-Search-101-The-Ultimate-Binary-Search-Handbook
+
+V good article
+
+Binary search most asked questions, with ans
+https://medium.com/techie-delight/binary-search-practice-problems-4c856cd9f26c
+
+Scalar video best guide
+
+Also these questions
+https://igotanoffer.com/blogs/tech/binary-search-interview-questions
+
+

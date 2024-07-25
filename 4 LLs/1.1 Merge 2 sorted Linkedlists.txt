@@ -1,0 +1,32 @@
+class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        
+        //Nick White similar to Merge Sorted Array
+        ListNode dummyNode = new ListNode(0); //for returning the result
+        ListNode currentNode = dummyNode; //for traversal
+        
+        while(l1!=null && l2!=null){
+            
+            if(l1.val < l2.val){
+                currentNode.next =l1;
+                l1 = l1.next;
+            }else{
+                currentNode.next = l2;
+                l2 = l2.next;
+            }
+            currentNode = currentNode.next;
+        }
+        
+        //if either one of those is null and while loop breaks
+        if(l1!= null){
+            currentNode.next =l1;
+            //just attach the l1 to currentNode.next //no need to traverse l1
+        }
+        if(l2!=null){
+            currentNode.next =l2;
+            //just attach the l2 to currentNode.next //no need to traverse l2
+        }
+        
+        return dummyNode.next;
+    }
+}

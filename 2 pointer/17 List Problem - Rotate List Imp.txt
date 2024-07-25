@@ -1,0 +1,55 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+//Take U forward
+
+    public ListNode rotateRight(ListNode head, int k) {
+        
+         //edge cases
+        if(head==null ||head.next==null || k==0)
+            return head;
+        
+        int len = 1;
+        ListNode curr = head;
+        
+        
+        //1 compute the length of the list
+        while(curr.next != null){
+            len++;
+            curr = curr.next;
+        }
+        //now curr.next is null
+        
+        //2. attach curr next to head
+        //making the list circular
+        curr.next = head;
+        
+        //k can be multiple of len + remainder
+        //3. find the remainder when len divided by k
+        k = k % len;
+        
+        //k places rotation means we need to break from len - k places
+        //3. compute the breakpoint
+        k = len - k;
+        
+        //4. find the breakpoint 
+        while(k-- > 0){
+            curr = curr.next;
+        }
+        
+        //5. reassign the head and break curr.next
+        //now we have the breakpoint at curr
+        head = curr.next;
+        curr.next = null;
+        
+        return head;
+    }
+}

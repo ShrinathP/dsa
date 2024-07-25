@@ -1,0 +1,13 @@
+Up down right left all turns allowed
+Lexicographical order Down Left Right Up
+
+Maintain a visited array, which tracks the cell
+which has already been visited
+avoiding infinite loop 
+
+//Check more efficient solution
+//where we are saving i and j movements in an array
+
+Take u forward
+https://www.youtube.com/watch?v=bLGZhJlt4y0&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=61
+23.58 solution

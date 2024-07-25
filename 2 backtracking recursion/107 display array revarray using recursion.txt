@@ -1,0 +1,18 @@
+
+//Display array using recursion
+public static void displayArr(int[] arr, int idx) {
+	System.out.println(arr[dix]);
+	displayArrReverse(arr, idx + 1);
+
+}
+
+
+//Display reverse of array
+public static void displayArrReverse(int[] arr, int idx) {
+	if(idx == arr.length()){
+	return;
+	}
+
+	displayArrReverse(arr, idx + 1);
+	System.out.println(arr[dix]);
+}

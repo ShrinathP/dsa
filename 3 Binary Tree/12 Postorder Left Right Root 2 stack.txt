@@ -1,0 +1,59 @@
+    
+//Here we are using 2 stacks to solve the problm
+/*
+Take U forward
+
+Algorithm
+We first push the first root to stack 1
+while st1 is not empty
+1. pop top of st1 and push the st1 top in st2
+2. if popped node has left push to st1
+3. if popped node has right push to st1
+
+while st2 is not empty
+4. keep popping out st2
+5. and adding int he post order list
+
+Intuition
+# As we are pushing the root first, and then left and right,
+if we pop st1 and push it in st2 we get root at bottom of the stack st2
+
+# Also we push left and then right in st1, which pop to right and left
+which again gets pushed as right and left
+and gets out as left and right
+*/
+
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        
+        List<Integer> postOrder = new ArrayList<Integer>();
+        Stack<TreeNode> st1 = new Stack<TreeNode>();
+        Stack<TreeNode> st2 = new Stack<TreeNode>();
+        
+        if(root == null){
+            return postOrder;
+        }
+        
+        st1.push(root);
+        
+        while(!st1.isEmpty()){
+            //1
+            TreeNode current = st1.pop();
+            st2.push(current);
+            
+            //2
+            if(current.left != null){
+                st1.push(current.left);
+            }
+            if(current.right != null){
+                st1.push(current.right);
+            }
+        }
+        
+        while(!st2.isEmpty()){
+            postOrder.add(st2.pop().val);
+        }
+        
+        return postOrder;
+    }
+}

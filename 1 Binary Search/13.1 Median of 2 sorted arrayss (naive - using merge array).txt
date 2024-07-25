@@ -1,0 +1,53 @@
+//cue - merge using &&, add rem, avg for even length
+
+//https://takeuforward.org/data-structure/median-of-two-sorted-arrays-of-different-sizes
+//Naive way, merge sorted arrays and then take the median
+//Scalar youtube Notes:
+/*
+Time Complexity - O(n + m) to merge 2 sorted arrays, O(1) to find the median
+So total TC - O(n + m +1) =~ O(n + m)
+*/
+
+import java.util.*;
+public class TUF{
+static double median(int arr1[],int arr2[],int m,int n) {
+    int finalArray[]=new int[n+m];
+    int i=0,j=0,k=0;
+//merge using while &&
+    while(i<m && j<n) {
+        if(arr1[i]<arr2[j]) {
+            finalArray[k++] = arr1[i++];
+        }
+        else {
+            finalArray[k++] = arr2[j++];
+        }
+    }
+
+//check for remaining
+    if(i<m) {
+        while(i<m) 
+            finalArray[k++] = arr1[i++];
+    }
+    if(j<n) {
+        while(j<n)
+            finalArray[k++] = arr2[j++];
+    }
+
+//Check for length of the final array, if length is even,
+// return n/2-1 and n/2
+    n = n+m;
+    if(n%2==1) 
+        return finalArray[((n+1)/2)-1];
+    else return ((double)finalArray[(n/2)-1]+(double)finalArray[(n/2)])/2.0;
+}
+
+
+public static void main(String args[]) {
+    int arr1[] = {1,4,7,10,12};
+    int arr2[] = {2,3,6,15};
+    int m=arr1.length;
+    int n =arr2.length;
+   System.out.print("The Median of two sorted array is ");
+    System.out.printf("%.5f",median(arr1,arr2,m,n));
+}
+}

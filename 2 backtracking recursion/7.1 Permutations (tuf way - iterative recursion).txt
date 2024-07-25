@@ -1,0 +1,39 @@
+class Solution {
+    //Take u forward
+    //Using extra space frequency array to not repeate already used integers
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> ds = new ArrayList<>();
+        boolean[] freq = new boolean[nums.length];
+        
+        recurFunction(nums, ds, result, freq);
+        return result;
+    }
+    
+    private void recurFunction(int[] nums, List<Integer> ds, List<List<Integer>> result,
+                      boolean[] freq) {
+        
+        //base case, if the size equals length
+        //we have used up all the numbers
+        if(ds.size() == nums.length) {
+            result.add(new ArrayList<>(ds));
+            return;
+        }
+        
+        //iterate from i to nums.length
+        for(int i=0; i<nums.length; i++) {
+            //check if i has already been used or not
+            if(!freq[i]) {
+                freq[i] = true;
+                ds.add(nums[i]);
+                recurFunction(nums, ds, result, freq);
+                
+                //backtrack section
+                //removing the last element
+                //and setting freq as false
+                ds.remove(ds.size()-1);
+                freq[i] = false;
+            }
+        }
+    }
+}

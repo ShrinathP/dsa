@@ -1,0 +1,89 @@
+https://www.youtube.com/watch?v=LjPx4wQaRIs&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=47
+
+https://practice.geeksforgeeks.org/problems/job-sequencing-problem-1587115620/1#
+
+Deadline is days
+and you cannot perform 2 jobs on a single day
+so no 2 same deadline jobs should be done
+
+//Take u forwrd solution
+
+public class HelloWorld{
+    /*
+    Take U forward:-
+    
+    To perform the most number of jobs
+    we need to pick jobs with max profit ..and try completing at the last
+    deadline time, so that we can perform other jobs in
+    previous days
+    
+    1.Sort all the jobs by descendding profit
+    2.Create a deadline array with the maximum deadline day
+    3. Fill with -1
+    Start traversing - keep addin profits
+    and replace -1 with job id performed in the deadline array
+    4. If you get 2 jobs with deadline of same day
+    perform the next job on a day before
+    eg job id 3 6 80
+    & job id  1 6 70 (perform this on 5th day)
+    
+    Time Complexity O(NlogN) + O(N*M) (for every job id we are checking
+    for empty places)
+    */
+
+     public static void main(String []args){
+        
+     }
+     
+     int[] JobScheduling(Job[] arr, int n){
+         Arrays.sort(arr, (a,b) -> (b.profit - a.profit));
+         
+         //Find the maximum deadline
+         //(Will be used to create deadline array)
+         int maxi = 0;
+         for(int i=0; i<n; i++){
+             if(arr[i].deadline > maxi){
+                 maxi = arr[i].deadline;
+             }
+	//OR
+	//maxi = Math.max(maxi, arr[i].deadline)
+         }
+         
+         //Filling deadline with -1
+         int result[] = new int[maxi+1];
+         for(int i=1; i<result.length; i++){
+             result[i] = -1;
+         }
+         
+         //Start our logic
+         int countJobs=0, jobProfit=0;
+	//Iterate for every JOB ID
+         //Here he is iterating for every job id???????
+         /*
+         //SHOULD HAVE ITERATED SORTED ARR OF JOBS
+         //PULLED ITS DEADLINE
+         //CHECK IF ARR[CURRENTJOB.DEADLINE] == -1
+         //IF YES FILL, IT WITH CURRENTJOB.ID
+         //ADD PROFIT
+         */
+         for(int i=0; i< n; i++){
+             //trying to add first job
+             //Find space from 0 to deadline of added job
+             for(int j = arr[i].deadline, j>0; j--){
+                 if(result[j] == -1){
+                     result[j] = i;
+                     countJobs++;
+                     jobProfit+= arr[i].profit;
+                     break;
+                 }
+                 
+             }
+             
+         }
+         
+         int ans = new int[2];
+         ans[0] = countJobs;
+         ans[1] = jobProfit;
+         return ans;
+     }
+}

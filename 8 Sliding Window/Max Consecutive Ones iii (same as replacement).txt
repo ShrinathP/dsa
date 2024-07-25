@@ -1,0 +1,30 @@
+//Sliding window
+
+class Solution {
+    /*Nick white*/
+    public int longestOnes(int[] nums, int k) {
+        int i = 0;
+        int j = 0; //end point of the slider
+        int ans = 0;
+        
+        while(j < nums.length){
+            if(nums[j] == 0) k--; //decrease the flips, as 0s will require operations
+            
+            //if the flips remaining is negative - pop start elements
+            //we need to move the start of the widow ahead (pop first element)
+            if(k<0){
+                //if the first element is 0, we increase k as we are popping out 0
+                //and will have 1 more flip to spare
+                if(nums[i] == 0){
+                    k++;
+                }
+                i++;
+            }
+            j++;
+            ans = Math.max(ans, j-i);
+        }
+        //Dont we have to calculate Math.max and then return?
+        return ans;
+        
+    }
+}

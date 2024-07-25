@@ -1,0 +1,59 @@
+
+//Take U forward
+
+//2 arrayList approach
+//1. We create 2 ArrayList to hold root to node path for 2 numbers
+//2. we use node to root path formula for both numbers
+//3. once we get 2 filled array lists
+//4. We traverse both until one number is unequal, we return the last equal number
+
+
+//https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/discuss/1595442/JAVA-or-2-approaches.
+class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        List<TreeNode> arr1 = new ArrayList<>();
+        List<TreeNode> arr2 = new ArrayList<>();
+        helper(root, p, arr1);
+        helper(root, q, arr2);
+        
+        int size = Math.min(arr1.size(), arr2.size());
+        //check for the first non matching node, return prev matching
+        for(int i=1;i<size;i++){
+            if(arr1.get(i).val!=arr2.get(i).val){
+                return arr1.get(i-1);
+            }
+        }
+        //or return last of minimum
+        return arr1.get(size-1);
+        
+    }
+    
+    private boolean helper(TreeNode node, TreeNode k, List<TreeNode> list){
+        if(node == null){
+            return false;
+        }
+        
+        list.add(node);
+        
+        //if curr node val matches return
+        if(node.val == k.val){
+            return true;
+        }
+        
+        // if(helper(node.left,k,list)){
+        //     return true;
+        // }
+        // if(helper(node.right,k,list)){
+        //     return true;
+        // }
+        
+        //if you find anywhere on left or right
+        if(helper(node.left, k, list) || helper(node.right, k, list)) {
+            return true; 
+        }
+        
+        list.remove(list.size()-1);
+        return false;
+        
+    }
+}

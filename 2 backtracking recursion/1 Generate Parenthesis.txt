@@ -1,0 +1,28 @@
+//Nick white
+//Check coding simplified solution also
+
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        
+        //Backtracking problem
+        List<String> output_arr = new ArrayList<>();
+        backtrack(output_arr, "", 0, 0, n);
+        //calling the backtrack template method
+        return output_arr;
+        
+    }
+    
+    public void backtrack(List<String> output_arr, String current_string, int open, int close, int max){
+        if(current_string.length() == max*2){
+            output_arr.add(current_string);
+            return;
+        }
+        
+        //Putting the opening parenthesis first
+        if(open < max)backtrack(output_arr, current_string+ "(", open+1, close,max); 
+        
+        //if there is an extra opening brace
+        if(close < open)backtrack(output_arr, current_string+")", open, close+1, max);
+        
+    }
+}

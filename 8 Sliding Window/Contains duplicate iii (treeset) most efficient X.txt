@@ -1,0 +1,43 @@
+class Solution {
+    /*
+    Naive Way: Naresh Gupta utube
+    
+    We need to find 2 numbers such that
+    their difference in value is at most t
+    their difference in indices is at most k
+    
+    |i-j| <= k
+    so 2 cases
+    nums[i]-nums[j] can range from -t to +t
+    
+    For each i, check from i+1 to n
+    Time Complexity O(n square)
+    **************************************
+    
+    Better way- Naresh gupta
+    Note that we need to see only j-i length i.e. k elements
+    We can use TreeSet to store only element upto k eleemts
+    Elements added to the set are sorted
+    - 
+    */
+    public boolean containsNearbyAlmostDuplicate(int[] nums, int k, int t) {
+        if(nums.length == 0 || k<= 0)
+            return false;
+        
+        TreeSet<Long> set = new TreeSet();
+        for(int i=0; i< nums.length; i++){
+            Long floor = set.floor(1L * nums[i] + t);
+            Long ceil = set.ceiling(1L * nums[i] - t);
+            //tree logic, need to understand
+            if(floor!= null && floor>= nums[i] || ceil !=null && ceil<= nums[i]){
+                return true;
+            }
+            set.add(1L * nums[i]);
+            //if gap has reached k, remove set element
+            if(i >= k){
+                set.remove(1L * nums[i-k]);   
+            }
+        }
+        return false;
+    }
+}

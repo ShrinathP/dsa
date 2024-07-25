@@ -1,0 +1,90 @@
+3 ways
+
+
+//2nd way
+//HashSet way
+//https://leetcode.com/problems/longest-palindrome/discuss/89604/Simple-HashSet-solution-Java
+
+class Solution {
+    public int longestPalindrome(String s) {
+        if(s==null || s.length() == 0) return 0;
+        
+        HashSet<Character> hs = new HashSet<Character>();
+
+        int count = 0;
+        for(int i=0; i< s.length(); i++) {
+            
+            //if hs already has the letter, remove and increase the pair count
+            if(hs.contains(s.charAt(i))) {
+                hs.remove(s.charAt(i));
+                count++;
+            } else {
+                hs.add(s.charAt(i));
+            }
+        }
+        
+        //if hs is not empty, some elements still remain
+        //we can pick one element, to set at the centre of palindrome string
+        if(!hs.isEmpty()) return count*2 + 1;
+        
+        //if hashset is empty, there were all even number of letters
+        return count*2;
+        
+    }
+}
+
+//Explaination of the previous code: just count the number of same pairs, then this can be used to put in the different direction to consist of palindrome. Then if there exist more chars, we can put one in the middle.
+
+
+//3rd way
+
+class Solution {
+    public int longestPalindrome(String s) {
+        // Count odd letters --> Set
+        // Edge case
+        if(s == null || s.length() == 0) return 0;
+        
+        Set<Character> set = new HashSet<>();
+        for(char c : s.toCharArray()) {
+            if(set.contains(c)) set.remove(c);
+            else    set.add(c);
+        }
+        return set.size() == 0 ? s.length() : s.length() - set.size() + 1;
+    }
+}
+
+
+//Nick white
+
+//Adding the even part to the result length
+//And holding the odd part
+
+//1st way
+//Nick white
+//Example TC, "aaaaabbbccccccccc"
+class Solution {
+    public int longestPalindrome(String s) {
+        int[] char_counts = new int[128];
+        for (char c: s.toCharArray()) {
+            char_counts[c]++;
+        }
+        
+        int result = 0;
+        for (Integer char_count: char_counts) {
+            result += char_count /2 * 2;
+            //if 9 is the char count, we would be adding 9/2 = 4 * 2 = 8
+            //so adding 8 to the length
+            
+            System.out.println(result);
+            if(result % 2 == 0 && char_count % 2 == 1){
+                System.out.println("inside");
+
+                //if result is an even number
+                //we can add one extra excluded above
+                result += 1;
+                
+            }
+        }
+        return result;
+    }
+}

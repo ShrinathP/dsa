@@ -1,0 +1,31 @@
+//Take u fwd
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> inorder = new ArrayList<Integer>(); 
+        Stack<TreeNode> stack = new Stack<TreeNode>();
+        TreeNode node = root;
+        while(true){
+//Step 1 - LEft left left
+//Keep moving left and keep filling the stack
+            if(node != null){
+                stack.push(node);
+                node = node.left;
+            }
+            else{
+//Step 3 break when stack is empty
+                if(stack.isEmpty()){
+                    break;
+                }
+
+//Step 2 - null at left
+//Take out the top of the stack, print it 
+//And move to the right (check if there is a non null at right)
+
+                node = stack.pop();
+                inorder.add(node.val);
+                node = node.right;
+            }
+        }
+        return inorder; 
+    }
+}

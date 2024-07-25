@@ -1,2 +1,2 @@
-# dsa
-All Problem Solving and Data Structures
+# dsa_practice
+Leetcode/GFG dsa problems practice repository

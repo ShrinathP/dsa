@@ -1,0 +1,32 @@
+class Solution {
+    //Kevin Naughton Recursive solution
+    public boolean canPartition(int[] nums) {
+        int total = 0;
+        for(int i:nums){
+            total+= i;
+        }
+        
+        //if the total is an odd number then it cannot be divided
+        if(total%2 != 0){
+            return false;
+        }
+        
+        //nums, startIndex, sum, total
+        return canPartition(nums, 0 , 0, total);
+        
+    }
+    
+    public boolean canPartition(int[] nums, int index, int sum, int total){
+        if(sum*2 == total){
+            //we have total of total array
+            //we traversed n elements whose sum is half
+            return true;
+        }
+        
+        if(sum > total/2 || index >= nums.length){
+            return false;
+        }
+        
+        return canPartition(nums, index+1, sum, total) || canPartition(nums, index+1, sum+nums[index], total);
+    }
+}

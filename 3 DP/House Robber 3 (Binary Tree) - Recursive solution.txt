@@ -1,0 +1,28 @@
+/*
+Naresh Gupta Recursive solution 
+TC 2 power N
+2 cases
+if you robbed root , go to the grandchild of the root and rob
+if you did not rob root, go to the child of the root and rob*/
+class Solution {
+    
+    //recursive function rob
+    public int rob(TreeNode root) {
+        //base case
+        if(root == null){
+            return 0;
+        }
+        
+        int val =0;
+        if(root.left != null){
+            val += rob(root.left.left) + rob(root.left.right);
+        }
+        if(root.right != null){
+            val += rob(root.right.left) + rob(root.right.right);
+        }
+        
+        //returning max of 1st case, robbed root , so added root value
+        //2nd case dont rob root, rob left and right of root
+        return Math.max(root.val + val, rob(root.left) + rob(root.right));
+    }
+}

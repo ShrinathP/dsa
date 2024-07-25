@@ -1,0 +1,64 @@
+//https://www.geeksforgeeks.org/find-minimum-number-of-coins-that-make-a-change/
+
+/*
+YOu can do this via DP way also
+Coin change problem leetcode
+
+Sort coins by increasing denominations
+
+0. Given a number 49 
+and array of coins [1,2,5,20,50,70]
+1. Start from back and find a number less than 49
+2. Greedy way algo
+keep adding the number lesser than 49
+until you reach greater than 49
+if no move end -1
+
+TC O(N)
+Space COmp O(1)
+
+//Take u forward
+//IMP the next coin should be greater than prev 2 coins
+
+There is a catch here where a greedy algorithm fails
+it fails when adding 2 smaller coins result in
+a successive coin which is not bigger than addition
+eg 5 + 6 > 9 
+if you have coins like
+[1,5,6,9]
+and you need a total of 11
+and you use greedy algorithm
+then you will get 9, 1, 1
+which is not the min nmber of coins
+(min number of coins is 2, 6 + 5)
+
+so denominations are created in such a way
+that greedy does work
+*/
+
+import java.util.*;
+public class HelloWorld{
+
+     public static void main(String []args){
+         Integer givenInteger = 29;
+         findMin(29);
+        
+     }
+     
+     public static void findMin(int V){
+        Vector<Integer> ans = new Vector<>();
+        int deno[] = {1,2,5,10,20,50,100,500,1000};
+        int n = deno.length;
+        
+        for(int i=n-1; i>=0; i--){
+            while(V >= deno[i]){
+                V = V - deno[i];
+                ans.add(deno[i]);
+            }
+        }
+        
+        for(int i=0; i<ans.size(); i++){
+            System.out.println(ans.elementAt(i));
+        }
+     }
+}

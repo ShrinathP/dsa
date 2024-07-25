@@ -1,0 +1,13 @@
+Below are steps to find the previous permutation :
+
+
+https://www.geeksforgeeks.org/lexicographically-previous-permutation-in-c/
+
+keep moving back and check when reducing trend breaks
+Find largest index i such that str[i – 1] < str[i].
+
+From j = i-1, move ahead
+Find a j which is just less than equal to i
+Find largest index j such that j >= i and str[j] < str[i – 1].
+Swap str[j] and str[i – 1].
+Reverse the sub-array starting at str[i].

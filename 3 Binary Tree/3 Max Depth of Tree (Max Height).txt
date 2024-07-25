@@ -1,0 +1,49 @@
+//Recursive One is trivial so expect the interviewer to ask
+//Iterative
+
+//2 Solutions
+//Bottom up approach Nick white
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if (root == null){
+            return 0;
+            }
+        
+        int left_depth = maxDepth(root.left);
+        int right_depth = maxDepth(root.right);
+        return Math.max(left_depth, right_depth) + 1;
+    }
+    
+}
+
+
+//BFS Solution
+
+
+class Solution{
+//Using the BFS solution
+//For every successful queue !empty loop add count
+public int maxDepth(TreeNode root) {
+    if(root == null) {
+        return 0;
+    }
+    Queue<TreeNode> queue = new LinkedList<>();
+    queue.offer(root);
+    int count = 0;
+    while(!queue.isEmpty()) {
+        int size = queue.size();
+        while(size-- > 0) {
+            TreeNode node = queue.poll();
+            if(node.left != null) {
+                queue.offer(node.left);
+            }
+            if(node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+        count++;
+    }
+    return count;
+}
+// 3ms
+}

@@ -1,0 +1,16 @@
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        //check previous solution for 2 pointer solution
+        
+        if(nums.length == 0) return 0;
+        int i =0;
+      
+        for(int elem: nums){
+            if(elem!= val){
+                nums[i] = elem;
+                i++;
+            }
+        }
+        return i;
+    }
+}

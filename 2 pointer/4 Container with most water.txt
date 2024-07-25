@@ -1,0 +1,24 @@
+//Nick white
+//Solved by own
+
+class Solution {
+    public int maxArea(int[] height) {
+        int a_pointer = 0;
+        int b_pointer = height.length -1;
+        int maxArea = 0;
+        int currentArea = 0;
+        
+        while(a_pointer < b_pointer) {
+            currentArea = ((b_pointer - a_pointer)* (Math.min(height[b_pointer],height[a_pointer])));
+            maxArea = Math.max(currentArea, maxArea);
+            if(height[b_pointer] > height[a_pointer]){
+                a_pointer++;
+            } else {
+                b_pointer--;
+            }
+            
+        }
+        return maxArea;
+        
+    }
+}

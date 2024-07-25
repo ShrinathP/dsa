@@ -1,0 +1,38 @@
+//Iterative + dp 2D
+
+class Solution {
+    /*TECH DOSE 2D dp array*/
+    public int coinChange(int[] coins, int amount) {
+        
+        /*
+        //As the coins are shown in increasing order
+        //Approach Include all occurences of a coin and then
+        //move to the next denominator
+        
+        Logic , Inclusion, exclusion case
+            //if we include i                   , if we do not include I
+        
+        min(1 + count(coins, amt - coins[i], i), count(coins, amt, i+1))
+        
+        */
+        
+        int n = coins.length;
+        int[][] dp = new int[n+1][amount+1];
+        
+        for(int i=0; i<=n; ++i){
+            for(int j =0; j<= amount ; ++j){
+                if(j==0)  //Amount = 0
+                dp[i][j] = 0;
+                else if(i == 0) //coins = 0
+                    dp[i][j] = 10000;
+                else if(coins[i-1]>j) //coin amount is greater than total
+                    dp[i][j] = dp[i-1][j]; //paste previous value
+                else
+                    //couns
+                    dp[i][j] = Math.min(1 + dp[i][j-coins[i-1]], dp[i-1][j]);
+      
+            }
+        }
+        return dp[n][amount]>1000 ? -1:dp[n][amount];
+    }
+}

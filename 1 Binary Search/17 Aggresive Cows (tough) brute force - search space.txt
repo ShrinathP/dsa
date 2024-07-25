@@ -1,0 +1,45 @@
+
+Solution :
+Take U forward
+https://takeuforward.org/data-structure/aggressive-cows-detailed-solution/
+/*
+Solution 1
+Sort the array of distances
+2 For loops, 
+1st running for distance
+2nd running for cow length array
+so O(n*m)
+*/
+
+import java.util.*;
+class TUF {
+    static boolean isCompatible(int inp[], int dist, int cows) {
+        int n = inp.length;
+        int k = inp[0];
+        cows--;
+        for (int i = 1; i < n; i++) {
+            if (inp[i] - k >= dist) {
+                cows--;
+                if (cows == 0) {
+                    return true;
+                }
+                k = inp[i];
+            }
+        }
+        return false;
+    }
+    public static void main(String args[]) {
+        int n = 5, m = 3;
+        int inp[] = {1,2,8,4,9};
+        Arrays.sort(inp);
+        int maxD = inp[n - 1] - inp[0];
+        int ans = Integer.MIN_VALUE;
+        for (int d = 1; d <= maxD; d++) {
+            boolean possible = isCompatible(inp, d, m);
+            if (possible) {
+                ans = Math.max(ans, d);
+            }
+        }
+        System.out.println("The largest minimum distance is " + ans);
+    }
+}

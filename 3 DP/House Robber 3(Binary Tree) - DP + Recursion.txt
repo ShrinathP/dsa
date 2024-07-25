@@ -1,0 +1,59 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+/*
+(NOTE : Check the Time Limit Exceeded solution for pure recursive solution)
+Naresh Gupta DP + Recursive solution 
+TC O(N) SC O(N)
+2 cases
+if you robbed root , go to the grandchild of the root and rob
+if you did not rob root, go to the child of the root and rob
+
+Here root.left.left and root.right.right is called
+multiple time
+so we can cache the result of the subproblems
+*/
+class Solution {
+    
+    Map<TreeNode, Integer> map = new HashMap();
+    
+    //recursive function rob
+    public int rob(TreeNode root) {
+        //base case
+        if(root == null){
+            return 0;
+        }
+        
+        //if root already contains the calculated value dont recalculate
+        if(map.containsKey(root)){
+            return map.get(root);
+        }
+        
+        int val =0;
+        if(root.left != null){
+            val += rob(root.left.left) + rob(root.left.right);
+        }
+        if(root.right != null){
+            val += rob(root.right.left) + rob(root.right.right);
+        }
+        
+        //calculate the max at each node and put it in the map
+        map.put(root, Math.max(root.val + val, rob(root.left) + rob(root.right)));
+        //returning max of 1st case, robbed root , so added root value
+        //2nd case dont rob root, rob left and right of root
+        return map.get(root);
+    }
+}

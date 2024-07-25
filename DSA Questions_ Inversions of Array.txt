@@ -1,0 +1,116 @@
+
+Find inversions in an array where 2 pairs 
+satisfy
+
+	i < j  and a[i] > a[j]
+	
+	[8, 4, 2, 1]        (8,4), (8,2), (8,1), (4,2) (4,1) and (2,1)
+	1st method
+	Brute - Linear traversal
+	n traversals
+	n-1 traversal
+	
+	Time complexity O(N sqr) Space complexity O(1)
+
+		Optimal Approach 
+		Merge sort technique
+		
+		While Merge sort 
+		
+		Whenever you are merging back the split part 
+		keep a counter which can count the pairs that could be merged
+		
+		Time Complexity NlogN 
+		Space complexity O(N)
+		
+		Incomplete
+https://www.youtube.com/watch?v=kQ1mJlwW-c0&list=PLgUwDviBIf0rPG3Ictpu74YWBQ1CaBkm2&index=10
+
+
+int merge(int arr[], int temp[], int left, int mid, int right){
+	int i, j , k;
+	int int_count = 0;
+	i=left; /*index for the left subarry*/
+	j= mid; /*index for the right subarray*/
+	k= left / *index of the resultant merged subarry*/
+	
+	while((i <= mid-1) && (j <= right)) {
+		if(arr[i] <= arr[j]){
+			temp[k++] = arr[i++];
+		}
+		else{
+			temp[k++] = arr[j++];
+
+			/****tricky part is**
+2nd array starts at mid
+so from i to mid it can make pairs with all numbers*/
+			inv_count = inv_count + (mid - i);
+		}
+	}
+
+	while(i <= mid -1)
+	temp[k++] = arr[i++];
+
+	while(i <= right)
+	temp[k++] = arr[j++];
+
+}
+
+
+		///////////////////////////////////////////////////////////////////////////////
+	void merge(int[] arr; int l, int m, int r){
+		//find the sizes of the subarray to be merged
+		int n1= m-l + 1;
+		int n2 = r-m;
+		
+		//Create temp arrays
+		int L[] = new int[n1];
+		int R[] = new int[n2];
+		
+		//Copy data into temp arrays
+		for(int i=0; i < n1: i++){
+			L[i] = arr[l+i];
+		}
+		for(int j=0; i < n2; j++){
+			R[j] = arr[m + 1 + j]
+		}
+		
+		
+		//Merge the temp arrays
+		//Initial indexes of the first and 2nd subarrays
+		
+		int k =1;
+		while(i < n1 && j < n2){
+			if(L[i] <= R[j]){
+			arr[k] = L[i];
+			i++;
+			} else{
+				arr[k] = R[j];
+				j++;
+				}
+			k++;
+		}
+		
+		//Copying rmaining elements if any
+		while(i < n1){
+			arr[k] = L[i];
+			i++;
+			k++;
+		}
+		
+		while(j < n2){
+			arr[k] = R[ij;
+			j++;
+			k++;
+		}
+		
+	}
+	
+	
+	//main function that merges
+	
+	void sort(int arr[], int l; int r){
+		if(l < r){
+		
+		}
+	}

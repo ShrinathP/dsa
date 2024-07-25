@@ -1,0 +1,37 @@
+//https://hellohell.gitbooks.io/-shuati/content/partition_array_by_odd_and_even.html
+//Naive way, 
+Nick white
+leetcode problem
+//Sort array by Parity - https://leetcode.com/problems/sort-array-by-parity/
+
+public class Solution {
+    /**
+     * @param nums: an array of integers
+     * @return: nothing
+     */
+    public void partitionArray(int[] nums) {
+	int[] new_arr = new int[nums.length];
+	int counter = 0;
+	
+	for(int i=0; i<nums.length;i++) {
+		if(nums[i] % 2 == 0) {
+		 //add evens
+		new_arr[counter] = nums[i];
+		counter++;
+		}
+	}
+
+
+	for(int i=0; i<nums.length;i++) {
+		if(nums[i] % 2 == 1) {
+		 //add odds
+		new_arr[counter] = nums[i];
+		counter++;
+		}
+	}
+
+	return new_arr;
+
+    }
+
+}

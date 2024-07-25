@@ -1,0 +1,17 @@
+Find all the unique paths for a sum in a Binary tree
+Leetcode 113
+
+1. Can be done via, recursion
+Kevin  naughton solution
+(here we maintain a new ArrayList for every recursion call,
+to ensure we do not reuse same created lsit every where)
+
+2.- Can be done via recursion and backtracking also
+Check program creek solution
+Backtrack solutioin
+https://www.programcreek.com/2014/05/leetcode-path-sum-ii-java/
+
+3. - Can be done via stack
+where we check for all possible cases , if not found
+pop out the added number
+https://leetcode.com/problems/path-sum-ii/discuss/36673/Simple-DFS-Java-Solution

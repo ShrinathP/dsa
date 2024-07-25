@@ -1,0 +1,20 @@
+/*
+Digital root problem
+Algoritms made easy O(1) solution
+
+If you note the digital root gets repeated after every 9 numbers
+eg
+digital root of 
+6 is same as 15 is same as 24 is same as 33
+
+so for 0 digitalroot = 0
+for multiples of 9 it will be 9
+for all other cases it will be num % 9
+*/
+class Solution {
+    public int addDigits(int num) {
+        if(num == 0) return 0;
+        return num % 9 == 0  ? 9: num % 9; 
+        
+    }
+}

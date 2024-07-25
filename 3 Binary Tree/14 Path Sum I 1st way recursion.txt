@@ -1,0 +1,19 @@
+//Return true if there exists a path summing upto the target value
+
+/*Kevin Naughton*/
+class Solution {
+    public boolean hasPathSum(TreeNode root, int sum) {
+        
+//if root is null return false
+        if(root == null){
+            return false;
+//end case, if root is the end and sum - val is 0
+        } else if(root.left  == null && root.right == null && sum - root.val == 0){
+            return true;
+        } else {
+//recursion
+            return  hasPathSum(root.left, sum-root.val) || 
+                    hasPathSum(root.right, sum-root.val);
+        }
+    }
+}

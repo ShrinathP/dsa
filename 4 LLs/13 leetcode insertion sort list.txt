@@ -1,0 +1,44 @@
+/*naresh gupta, algorithms made easy
+In insertion sort,
+we need 2 pointers
+- previous of current
+- and current pointer
+- from the current element 
+we find the next smaller elment on right
+- Whenever we find the element lesser than current
+-  we need to insert that node into in place of current and move current
+- we do it by pointing previous.next to iterated smaller node() found
+- and iterated smaller.next to current node found 
+We need to */
+class Solution {
+    public ListNode insertionSortList(ListNode head) {
+        ListNode dummy = new ListNode(-1);
+        ListNode curr = head;
+        
+        while(curr != null){
+            ListNode temp = curr.next;
+            ListNode prev = dummy;
+            ListNode itr = dummy.next;
+            //Intiial nxt is null
+            
+            while(itr!= null) {
+                if(curr.val < itr.val){
+                    System.out.println(curr.val);
+                    System.out.println(itr.val);
+                    break;
+                    }
+                prev = itr;
+                itr = itr.next;
+            }
+            
+            curr.next = itr;
+            prev.next = curr;
+            curr= temp;
+            
+        }
+        
+        return dummy.next;
+        
+        
+    }
+}

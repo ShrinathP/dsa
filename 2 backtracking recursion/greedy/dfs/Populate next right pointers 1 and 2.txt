@@ -1,0 +1,4 @@
+Algorithms made easy solutions
+NAresh gupta
+
+Prefer BFS way solution

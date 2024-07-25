@@ -1,0 +1,30 @@
+//Code bix
+//recursion with memo
+class Solution {
+    public int numSquares(int n) {
+        int[] memo = new int[n + 1];
+        return rec(n, memo);
+    }
+    
+    int rec(int n, int memo[]){
+        if(n < 0) return Integer.MAX_VALUE;
+        if(n == 0) return 0;
+        
+        //dp
+        if(memo[n] > 0) return memo[n];
+        
+        //base case where 12 = 1*2 + 1^2 + 1^2    12 times
+        int min = n;
+        
+        //do recursion /dfs
+        //for all digits whose squre is less than n
+        for(int i=1;i*i <= n; i++) {
+            
+            //keep finding min subtracting the square of current number
+            min = Math.min(rec(n-(i*i), memo), min);
+        }
+        
+        memo[n] = min + 1;
+        return min + 1;
+    }
+}

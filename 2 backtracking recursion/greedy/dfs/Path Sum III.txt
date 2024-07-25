@@ -1,0 +1,8 @@
+Find all possible subpaths paths for the sum
+No restriction for root and leaf nods
+
+2 solutions
+(Algorithms made easy
+https://www.youtube.com/watch?v=ofMqFAFVcKY)
+1. DFS in DFS
+2. Prefix sum

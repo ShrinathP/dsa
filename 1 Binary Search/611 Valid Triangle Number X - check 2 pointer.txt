@@ -1,0 +1,46 @@
+/*
+To check if its a valid triangle we need to check if
+sum of 2 shorter sides is greater than 3rd side
+(Iteration + binary search)
+Steps
+1. Sort the array in ascending order
+2. Maintain 3 variables
+i for the iterator
+left and right for the values on the left of the iterator
+3. Start iterating from index 2
+4. if sum is greater than i, then add subtraction of indices of i and left to the result
+ AND keep moving right back
+
+*/
+class Solution {
+    //Coding Decoded Solution
+    public int triangleNumber(int[] nums) {
+        int ans = 0;
+        if(nums.length < 3) return ans;
+        
+        //1
+        Arrays.sort(nums);
+        
+	//4
+        for(int i=2; i<nums.length; i++){
+            int left = 0;
+            int right = i-1;
+            
+            while(left < right){
+                if(nums[left] + nums[right] > nums[i]){
+                    ans += (right - left);
+                    //keep moving right back, to find the smaller elements
+                    //for with left + right > i satisfies
+                    right--;
+                } else {
+                    //condition doesnt satisfy
+                    //increase the value of left
+                    //move left ahead
+                    left++;
+                }
+            }
+        }
+        
+        return ans;
+    }
+}

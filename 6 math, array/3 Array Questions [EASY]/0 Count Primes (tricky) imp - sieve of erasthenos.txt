@@ -1,0 +1,46 @@
+//cue- fill all false, 2 for i to isqr and j=i to j=j*i
+//Kevin Naughton
+//Sieve of Erasthenos
+/*There is no prime number greater than the current number square
+if current number is prime, set all its multiples to false
+
+
+Best Explanation with animation
+https://leetcode.com/problems/count-primes/discuss/1200844/C%2B%2BJavaPython-solution-explained-w-Animation-or-Sieve-of-Eratosthenes
+https://leetcode.com/problems/count-primes/discuss/57588/My-simple-Java-solution
+*/
+class Solution {
+    public int countPrimes(int n) {
+        boolean[] primes = new boolean[n];
+        
+        //Step 1
+        //Fill all primes as true
+        for(int i=0; i< primes.length; i++){
+            primes[i] = true;
+        }
+        
+        //Step 2
+        //Max number to search is till i square
+        //Logic to set all multiple of the primes to false
+        for(int i=0; i*i < primes.length; i++){
+            if(primes[i]){
+                 for(int j=i; j*i < primes.length; j++){
+                     primes[i*j] = false;
+                 }
+            }
+        }
+        
+        //Step 3
+        //Count the true primes
+        int primeCount = 0;
+        for(int i=2; i< primes.length; i++){
+            if(primes[i]){
+                primeCount++;
+            }
+        }
+        
+        return primeCount;
+        
+        
+    }
+}

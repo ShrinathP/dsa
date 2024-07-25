@@ -1,0 +1,26 @@
+public class MyClass {
+    public static ListNode (ListNode head) {
+      
+      ListNode curr = head;
+      ListNode prev = null;
+      
+      HashSet<Integer> hs = new HashSet<>();
+      while(curr != null){
+          if(hs.contains(curr.val)){
+              //this is the 2nd value, we need to skip
+              prev.next = curr.next;
+              //pointing prev next to next to current next //hoping currents next is not duplicate
+          } else {
+              //first occurence
+              hs.add(curr.val);
+              //move prev ahead
+              prev = prev.next;
+          }
+          
+          //in all cases we have to move current ahead
+          current = current.next;
+      }
+      
+      return head;
+    }
+}

@@ -1,0 +1,26 @@
+//https://salonikaurone.medium.com/leetcodes-132-problem-explained-fd5e8c2b0b7f
+//TreeSet Solution
+//Adding to the treeset and getting lower element
+class Solution {
+    
+    public boolean find132pattern(int[] input) {
+            int[] minArr = input.clone();
+            for (int i = 1; i < minArr.length; i++) {
+                minArr[i] = Math.min(minArr[i-1], minArr[i]);
+            }
+
+            TreeSet<Integer> tree = new TreeSet<>();
+            for (int i = input.length - 1; i > 0; i--) {
+                int num = input[i];
+                if (tree.lower(num) != null) {
+                    int right = tree.lower(num);
+                    int left = minArr[i-1];
+                    if (left < right) {
+                        return true;
+                    }
+                }
+                tree.add(num);
+            }
+            return false;
+    }
+}

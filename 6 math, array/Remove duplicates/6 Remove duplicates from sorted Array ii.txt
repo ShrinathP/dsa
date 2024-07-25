@@ -1,0 +1,21 @@
+//Algorithms made easy
+//As at lmost 2 duplicates are allowed, i.e. 0 and 1 position can be same
+//we need to start changing from position 2
+
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        //if there are atmost 2 elements directly return
+        if(nums.length < 3) return nums.length;
+        
+        //both pointers in and i at 2
+        int in = 2;
+        for(int i=2; i< nums.length; i++){
+            if(nums[i] != nums[in-2]){
+                nums[in] = nums[i];
+                in++;
+            }
+        }
+        return in;
+        
+    }
+}
