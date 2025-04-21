@@ -43,7 +43,7 @@ class Main {
         
         //Print the first negative integer of the last window
         if(!dq.isEmpty()){
-            res.add(add[dq.peekFirst()]);
+            res.add(arr[dq.peekFirst()]);
         } else {
             res.add(0);
         }
