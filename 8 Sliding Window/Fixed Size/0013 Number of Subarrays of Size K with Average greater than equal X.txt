@@ -1,0 +1,40 @@
+//https://leetcode.com/problems/number-of-sub-arrays-of-size-k-and-average-greater-than-or-equal-to-threshold/
+/*
+Given an array of integers arr and two integers k and threshold, return the number of sub-arrays of size k and average greater than or equal to threshold.
+*/
+//GFG explanation
+
+class Solution {
+    public int numOfSubarrays(int[] arr, int k, int threshold) {
+        int count = 0;
+        int sum = 0;
+            for(int i=0; i<k; i++) {
+                sum+= arr[i];
+            }
+
+            //if k * threshold is sum then average of each element will 
+            //be above threshold
+            if (sum >= k * threshold) {
+                count++;
+            }
+
+            //Start Sliding Window
+            int startIndex = k;
+            while(startIndex < arr.length) {
+                //Remove Previous Element
+                sum-= arr[startIndex - k]; 
+                
+                //Add Next Element
+                sum+= arr[startIndex];
+                startIndex++;
+            
+                //Update the count
+                if(sum >= k*threshold) {
+                    count++;
+                }
+            }
+            
+            return count;
+
+    }
+}
