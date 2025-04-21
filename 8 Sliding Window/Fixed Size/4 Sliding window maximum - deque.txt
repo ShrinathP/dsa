@@ -1,7 +1,9 @@
 /*DEQUE SOLUTION
+
+0. Keep adding the Last Elements
 2 CONDITIONS 
 1. Removing out of bounds from the front of the deque
-2. Removing numbers from the last which are less than the current number
+2. Removing numbers from the last which are less than the current number - Cleaning the Deque if current number is larger
 
 3. Store only indices in the Deque
 
