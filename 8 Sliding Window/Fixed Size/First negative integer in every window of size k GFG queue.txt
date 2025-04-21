@@ -1,0 +1,45 @@
+// First negative integer in every window of size k
+
+
+//GFG naive, plain traversal 
+//Time complexity O(n*k) and O(1) space complexity
+
+class Main {
+    public static void main(String[] args) {
+        int[] arr = {12,-1,-7,8,-15,30,16,28};
+        int k=3;
+        int[] res = firstNegInt(arr, k);
+        System.out.println(Arrays.toString(res));
+    }
+    
+    public static int[] firstNegInt(int[] arr, int k) {
+    List<Integer> res = new ArrayList<Integer>();
+    int n = arr.length;
+    
+    //Loop for each subarray(window) of size k
+    for(int i=0; i<=(n-k); i++) {
+        boolean found = false;
+        
+        //traverse through the current window
+        for(int j=0; j<k; j++) {
+            //if negative integer is found then 
+            //it is the first negative integer for the current
+            //window, set the flag and break
+            if(arr[i+j] < 0) {
+                res.add(arr[i+j]);
+                found = true;
+                break;
+            }
+            
+            //if no negative found, add 0
+            if(!found) {
+                res.add(0);
+            }
+        }
+    }
+    //Convert list to int[]
+    return res.stream().mapToInt(i->i).toArray();
+    }
+}
+    
+ 
