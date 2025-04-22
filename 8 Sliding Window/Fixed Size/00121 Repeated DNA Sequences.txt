@@ -1,0 +1,19 @@
+//https://leetcode.com/problems/repeated-dna-sequences/discuss/926256/window-sliding-java
+//Naresh Explanation
+//We can use Robin Karp ROLLING HASH algorithm as well
+/*
+Given a string s that represents a DNA sequence, 
+return all the 10-letter-long sequences (substrings) that occur more than once in a DNA molecule. 
+*/
+
+class Solution {
+    public List<String> findRepeatedDnaSequences(String s) {
+        Set<String> seen = new HashSet() , repeated = new HashSet();
+        for(int i = 0 ; i < s.length() - 9 ; ++i){
+            String sub = s.substring(i,i+10);
+            if(seen.contains(sub)) repeated.add(sub);
+            seen.add(sub);
+        }
+        return new ArrayList(repeated);
+    }
+}
