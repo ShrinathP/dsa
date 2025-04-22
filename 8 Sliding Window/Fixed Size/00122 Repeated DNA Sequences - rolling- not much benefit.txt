@@ -1,0 +1,37 @@
+// Using Rolling Hash Algorithm - not much benefit
+// https://www.youtube.com/watch?v=BQ9E-2umSWc
+
+class Solution {
+    public List<String> findRepeatedDnaSequences(String s) {
+        if(s.length() < 10) return new ArrayList();
+        
+        Set<String> result = new HashSet();
+
+        int size = 10;
+        int R = 101;
+        Map<Long, List<Integer>> map = new HashMap();
+        long patHash = 0;
+        for (int j = 0; j < size; j++) patHash = (R * patHash + s.charAt(j));
+        map.computeIfAbsent(patHash, k -> new ArrayList()).add(0);
+        
+        // pre-compute R^(m-1) % q for use in removing leading digit
+        long RM = 1;
+        for (int i = 1; i <= size - 1; i++)
+            RM = (R * RM);
+        
+        for (int i = size; i < s.length(); i++) {
+            // Remove leading digit, add trailing digit, check for match.
+            patHash = (patHash - RM * s.charAt(i - size));
+            patHash = (patHash * R + s.charAt(i));
+            if (map.containsKey(patHash)) {
+                for(int index: map.get(patHash)) 
+                    if(s.substring(index, index + size).equals(s.substring(i - size + 1, i + 1)))
+                         result.add(s.substring(i - size + 1, i + 1));
+            } 
+            map.putIfAbsent(patHash, new ArrayList());
+            map.get(patHash).add(i - size + 1);
+        }
+        
+        return new ArrayList(result);
+    }
+}
