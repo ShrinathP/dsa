@@ -1,0 +1,60 @@
+//chatgpt
+// Problem Statement:
+// Given a circular array arr[] and an integer k, find the maximum sum of k consecutive elements, considering wrap-around.
+/* Approach 1: Extend the Array + Sliding Window
+ To simulate the circular nature of the array:
+
+Concatenate the array with itself (i.e., arr + arr)
+
+Then apply the sliding window technique of size k over this extended array, only up to index n + k - 1 (to avoid exceeding one full cycle)
+
+1. Treat circular array by duplicating: arr + arr
+2. Slide a window of size k on the new array
+3. Do not go beyond n + k - 1 indices, to ensure the max window wraps at most once
+*/
+
+
+public class CircularMaxSum {
+
+    public static int maxSumInCircularArray(int[] arr, int k) {
+        int n = arr.length;
+
+        // Edge case: k >= n
+        if (k >= n) {
+            int total = 0;
+            for (int num : arr) total += num;
+            return total;
+        }
+
+        // Create extended array to simulate circularity
+        int[] extended = new int[n + k - 1];
+        for (int i = 0; i < n + k - 1; i++) {
+            extended[i] = arr[i % n];
+        }
+
+        // Sliding window to find max sum of k elements
+        int windowSum = 0, maxSum = 0;
+
+        // Initialize first window
+        for (int i = 0; i < k; i++) {
+            windowSum += extended[i];
+        }
+        maxSum = windowSum;
+
+        // Slide the window
+        for (int i = k; i < n + k - 1; i++) {
+            windowSum += extended[i] - extended[i - k];
+            maxSum = Math.max(maxSum, windowSum);
+        }
+
+        return maxSum;
+    }
+
+    // Test
+    public static void main(String[] args) {
+        int[] arr = {8, -1, 3, 4}; // circular array
+        int k = 2;
+        System.out.println("Max sum of " + k + " consecutive elements in circular array: " + maxSumInCircularArray(arr, k));
+        // Output: 11 (3+8 from circular wrap)
+    }
+}
