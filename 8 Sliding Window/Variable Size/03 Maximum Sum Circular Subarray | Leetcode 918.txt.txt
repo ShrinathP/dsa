@@ -1,0 +1,35 @@
+//Codebix explanation and solution
+1. Find Kadanes
+
+2. find Kadanes again of negative array
+2a. Negate all the signs, also find total during the same, 
+2b. Subtract total from 2a to find negative Kadanes
+
+Check which is highest among 1 and 2
+Note for a case where all elements of subarray is -ve then 2b will be 0, 2b subtraction will be 0 so return the first Kadanes
+
+
+class Solution {
+    private int kadanes(int[] a){
+        int n = a.length;
+        int sum = a[0], answer = a[0];
+        for(int i=1; i<a.length; i++){
+            sum += a[i];
+            if(sum < a[i]) sum = a[i];
+            answer = Math.max(answer, sum);
+        }
+        return answer;
+    }
+    public int maxSubarraySumCircular(int[] A) {
+        if(A.length == 0) return 0;
+        int x = kadanes(A);
+        int y = 0;
+        for(int i=0; i<A.length;i++){
+            y += A[i];
+            A[i] *= -1;
+        }
+        int z = kadanes(A);
+        if(y+z == 0) return x;
+        return  Math.max(x, y+z);
+    }
+}
