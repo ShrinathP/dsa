@@ -1,0 +1,36 @@
+// 1566. Detect Pattern of Length M Repeated K or More Times
+// Given an array of positive integers arr, find if a pattern of length m that is repeated k or more times.
+
+class Solution {
+    //explanation naresh, chgp
+    public boolean containsPattern(int[] arr, int m, int k) {
+        //m length, k times
+        int count = 0;
+        for(int i = 0;i < arr.length - m; i++) {
+            //Compare current element with the one m steps ahead
+            if(arr[i] == arr[i+m]) {
+                count++;
+                //If we have (k-1)*m consecutive matches, return true
+                if(count==(k-1)*m) {
+                    return true;
+                }
+            } else {
+                //no use of all that counts as there is some mismatch
+                //reset count to 0
+                count=0;
+            }
+        }
+        return false;
+    }
+}
+
+/*
+How It Works:
+- Instead of comparing full chunks repeatedly, it compares elements at distance m.
+
+- If the element at i is the same as i + m, it contributes to a repeated pattern.
+
+- To form a pattern of length m repeated k times, we need (k - 1) * m such matching pairs.
+
+- The counter resets on a mismatch.
+*/
