@@ -1,0 +1,44 @@
+
+// Problem Statement:
+// Given a circular array arr[] and an integer k, find the maximum sum of k consecutive elements, considering wrap-around.
+//Optimised - Use modulo to simulate circularity %n - same as 2d Binary Search
+
+//Time: O(n) Space: O(1)
+
+public class CircularMaxSumOptimized {
+
+    public static int maxSumInCircularArray(int[] arr, int k) {
+        int n = arr.length;
+
+        if (k >= n) {
+            int total = 0;
+            for (int num : arr) total += num;
+            return total;
+        }
+
+        // Compute initial window sum (0 to k-1)
+        int windowSum = 0;
+        for (int i = 0; i < k; i++) {
+            windowSum += arr[i];
+        }
+
+        int maxSum = windowSum;
+
+        // Now slide the window around the circular array
+        for (int i = 1; i < n; i++) {
+            // Remove element going out of window, add new element coming in
+            windowSum = windowSum - arr[(i - 1) % n] + arr[(i + k - 1) % n];
+            maxSum = Math.max(maxSum, windowSum);
+        }
+
+        return maxSum;
+    }
+
+    // Test
+    public static void main(String[] args) {
+        int[] arr = {8, -1, 3, 4}; // circular array
+        int k = 2;
+        System.out.println("Max sum of " + k + " consecutive elements in circular array: " + maxSumInCircularArray(arr, k));
+        // Output: 11 (8+3)
+    }
+}
