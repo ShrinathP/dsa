@@ -1,0 +1,27 @@
+class Solution {
+    //Naive - substring way - Fisher coder
+    //Brute force TC (O)(arr.length-m)(m)
+
+    public boolean containsPattern(int[] arr, int m, int k) {
+        for(int i=0;i<arr.length-m;i++) {
+            int[] pattern = Arrays.copyOfRange(arr, i, i+m);
+            int times = 1;
+            for(int j=i+m; i<arr.length; j+=m) {
+                int[] candidate = Arrays.copyOfRange(arr, j, j+m);
+                //if the candidate matches then move j more by m steps 
+                // and check for next times till we reach k
+                if(Arrays.equals(pattern, candidate)){
+                    times++; 
+                    if(times == k) {
+                    return true;
+                    }
+                } else {
+                    break;
+                    //break and go ahead
+                }
+                
+            }
+        }
+        return false;
+    }
+}
