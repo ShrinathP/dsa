@@ -1,0 +1,71 @@
+/*
+https://leetcode.com/problems/sliding-window-median/discuss/1338811/Easy-Java-Solution-sliding-window-technique-MU%3A-less-than-60.53-of-Java-online-submissions
+
+1. Create a list, which will hold numbers of size k,
+and will be used to calculate median
+2. Create a double array which will hold all medians,
+size of this will be nums.length -k + 1
+3. Iterate and hold a sliding window
+i, j are the ends of sliding window
+p is the index of output double array
+4. 
+*/
+class Solution {
+    public double[] medianSlidingWindow(int[] nums, int k) {
+        List<Integer> list = new ArrayList<>();
+        
+        //This will be the median array that should be returned
+        double[] d = new double[nums.length - k + 1];
+        
+        int i=0, j=0, p=0;
+        
+        while(j < nums.length) {
+            list.add(nums[j]);
+            // add number at j and increase the slider front
+            
+            //keep traversing until we reach window size
+            //if size is less than k then keep increasing
+            if(j-i+1 < k){
+                j++;
+            }
+            //if size is k, calculate median
+            //remove the first element nums[i]
+            //As the list is sorted, we need to find nums
+            else if(j-i+1 == k){
+                Collections.sort(list);
+                int mid = list.size()/2;
+                
+                //if k is odd then add mid value
+                //if k is even then calculate average of mid and mid-1
+                if(k%2 != 0){
+                    int first = list.get(mid);
+                    d[p++] = (double)first;
+                } else if(k%2 == 0){
+                    long first = list.get(mid-1);
+                    long second = list.get(mid);
+                    double ans = (double)(first + second);
+                    d[p++] = ans/2;
+                }
+                
+                /*
+                Iterator itr = list.iterator();
+                while(itr.hasNext()) {
+                    int x = (Integer)itr.next();
+                    if(x == nums[i]) {
+                        itr.remove();
+                        break;
+                    }
+                }
+                */
+                
+                list.remove(Integer.valueOf(nums[i]));
+                
+                //to slide the window increent i and j both
+                i++;
+                j++;
+            }
+        
+        }
+        return d;
+    }
+}
