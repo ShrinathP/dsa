@@ -1,0 +1,38 @@
+/*
+IMP Sliding window doesnt work for negative nos
+===============================================
+
+ Sliding Window Doesn't Work for Negative Numbers
+Sliding window works when the window sum always increases as you move the right pointer 
+and always decreases as you move the left pointer — this is only guaranteed when all elements are ≥ 0.
+
+ If all elements are non-negative, then yes, you can use a sliding window.
+
+*/
+
+public class MaxLenSubarraySumK_NonNegatives {
+
+    public int maxSubArrayLen(int[] nums, int k) {
+        int left = 0, sum = 0, maxLen = 0;
+
+        for (int right = 0; right < nums.length; right++) {
+            sum += nums[right];
+
+            while (sum > k) {
+                sum -= nums[left++];
+            }
+
+            if (sum == k) {
+                maxLen = Math.max(maxLen, right - left + 1);
+            }
+        }
+
+        return maxLen;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {1, 2, 1, 1, 1};
+        int k = 4;
+        System.out.println(new MaxLenSubarraySumK_NonNegatives().maxSubArrayLen(nums, k)); // Output: 4
+    }
+}
