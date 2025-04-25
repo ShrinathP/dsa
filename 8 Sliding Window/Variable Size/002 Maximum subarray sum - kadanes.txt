@@ -1,6 +1,14 @@
 //Kadanes
+//IMP- doesnt track the length of the subarray
+
 // https://takeuforward.org/data-structure/kadanes-algorithm-maximum-subarray-sum-in-an-array/
 //Take u forward explanation
+
+//Leetcode 53. Maximum Subarray
+// Given an integer array nums, find the maximum sum of a contiguous subarray.
+
+
+
 
 import java.util.*;
 
