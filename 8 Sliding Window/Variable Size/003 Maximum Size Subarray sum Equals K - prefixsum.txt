@@ -4,6 +4,7 @@
 //https://github.com/just4once/leetcode/blob/master/leetcode/hash-table/325-maximum-size-subarray-sum-equals-k.md
 
 //ProgramCreek Solution
+//Explanation - Algorerhythms - 325. Maximum Size Subarray Sum Equals k - https://www.youtube.com/watch?v=xa_60srQAKo
 /*
 1.
 Run a for loop
