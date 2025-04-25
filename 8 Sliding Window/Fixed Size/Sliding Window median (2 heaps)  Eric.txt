@@ -8,6 +8,7 @@ https://leetcode.com/problems/sliding-window-median/discuss/468794/Java-solution
 1. Keep 2 Heaps, default is minHeap, reversed in maxHeap
 2. add to the maxheap First, also if elem is less than maxheap peek, add to the maxheap
 3. Rebalance the heaps, maxheap size should be equal to minHeap size or minHeap size + 1
+4. Remove logic - remove from maxHeap first if number is less than maxheap peek
 
 
 class Solution {
