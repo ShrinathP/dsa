@@ -1,0 +1,108 @@
+//cue- freqarr->split whenenver you find a letter with freq less than k
+
+/*
+The characters that appear less than k times can never be part of the answer — we can use them to split the string and recursively check left and right parts.
+
+This leads to a Divide and Conquer approach.
+
+For each recursive substring:
+* Count character frequencies.
+* If any character has freq < k, use it as a split point.
+* Recursively evaluate both halves.
+* If all characters have freq ≥ k, return the length of the current substring.
+
+Worst case: O(26 * n) = O(n) per level, and log(n) levels → O(n log n)
+
+Space: O(1) for frequency array + call stack
+
+*/
+
+// Divide and conquer - method
+
+class Solution {
+	    //Check coding decoded youtube solution as well
+
+    //Algorithms made easy    //https://github.com/Sunchit/Coding-Decoded/blob/master/November2020/SubstringWithAtLeastKRepeatingCharacters.java
+    public int longestSubstring(String s, int k) {
+        return helper(s.toCharArray(), 0, s.length(), k);
+    }
+    
+    int helper(char[] ch, int start, int end, int k){
+        if(end-start < k) return 0;
+        
+        //Create a frequency array to fill all characters
+        int[] count = new int[26];
+        for(int i= start; i<end; i++){
+            count[ch[i]-'a']++;
+        }
+        
+        //again iterating and finding the breakpoint
+        //a character where the freq is less than k
+        for(int i=start; i< end; i++){
+            if(count[ch[i] - 'a'] < k){
+                //start index of the next substring
+                int j=i+1;
+                
+                //special case
+                //increment j if the next characters are of 
+                //less than k frequency only
+                //as we would ignore those characters
+                while(j<end && count[ch[j] - 'a'] < k){
+                    j++;
+                }
+                
+                //find maxes of left and right
+                            //1 doubt
+                            //Left part we have already calculated?
+                return Math.max(helper(ch, start, i, k), helper(ch, j, end, k));
+                
+            }
+        }
+        return end - start;
+    }
+}
+
+//============================================================================================================
+
+//chatgp solution
+
+public class LongestSubstringAtLeastK {
+
+    public int longestSubstring(String s, int k) {
+        return helper(s, 0, s.length(), k);
+    }
+
+    private int helper(String s, int start, int end, int k) {
+        // Base case: if substring is smaller than k, cannot satisfy condition
+        if (end - start < k) return 0;
+
+        // Count frequencies
+        int[] freq = new int[26];
+        for (int i = start; i < end; i++) {
+            freq[s.charAt(i) - 'a']++;
+        }
+
+        // Iterate and find split point
+        for (int mid = start; mid < end; mid++) {
+            if (freq[s.charAt(mid) - 'a'] < k) {
+                int next = mid + 1;
+
+                // Skip all consecutive low-frequency chars
+                while (next < end && freq[s.charAt(next) - 'a'] < k) next++;
+
+                // Divide and conquer on both sides
+                return Math.max(helper(s, start, mid, k), helper(s, next, end, k));
+            }
+        }
+
+        // Entire substring is valid
+        return end - start;
+    }
+
+    public static void main(String[] args) {
+        LongestSubstringAtLeastK solver = new LongestSubstringAtLeastK();
+        String s = "aaabb";
+        int k = 3;
+        System.out.println("Length: " + solver.longestSubstring(s, k)); // Output: 3 ("aaa")
+    }
+}
