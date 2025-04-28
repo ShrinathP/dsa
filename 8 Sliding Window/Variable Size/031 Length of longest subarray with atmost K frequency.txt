@@ -19,6 +19,13 @@ class Solution {
             // Shrink window if this number exceeds k frequency
             while(i < j && mp.getOrDefault(nums[j],0) > k) {
                 mp.put(nums[i], mp.getOrDefault(nums[i], 0) - 1);
+                //Below commented portion is not required but good to remove the key record fully
+                /*
+                if(map.get(nums[i]) == 0) {
+                    map.remove(nums[i]);
+                }
+                */
+
                 i++;
             }
             
