@@ -1,5 +1,9 @@
 //Explanation Striver
 
+//code chatgp
+// 1st WAY, 
+// getting only the length 
+
 import java.util.*;
 
 public class LongestSubstringKDistinct {
@@ -41,3 +45,51 @@ public class LongestSubstringKDistinct {
         System.out.println(solver.lengthOfLongestSubstringKDistinct(s, k));  // Output: 3
     }
 }
+
+
+//2nd WAY,
+//getting the substring as well with maxLength
+
+
+import java.util.*;
+
+public class LongestSubstringKDistinct {
+
+    public String longestSubstringKDistinct(String s, int k) {
+        if (s == null || k == 0) return "";
+
+        Map<Character, Integer> map = new HashMap<>(); // char → frequency
+        int left = 0, maxLen = 0, startIdx = 0;
+
+        for (int right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+            map.put(c, map.getOrDefault(c, 0) + 1); // Add char to window
+
+            // Shrink window until we have at most k distinct characters
+            while (map.size() > k) {
+                char leftChar = s.charAt(left);
+                map.put(leftChar, map.get(leftChar) - 1);
+                if (map.get(leftChar) == 0) {
+                    map.remove(leftChar); // Remove char completely if freq = 0
+                }
+                left++;
+            }
+
+            // Update max length and starting index
+            if (right - left + 1 > maxLen) {
+                maxLen = right - left + 1;
+                startIdx = left;
+            }
+        }
+
+        return s.substring(startIdx, startIdx + maxLen);
+    }
+
+    public static void main(String[] args) {
+        LongestSubstringKDistinct solver = new LongestSubstringKDistinct();
+        String s = "eceba";
+        int k = 2;
+        System.out.println("Longest Substring: " + solver.longestSubstringKDistinct(s, k)); // Output: "ece"
+    }
+}
+
