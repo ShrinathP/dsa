@@ -1,0 +1,43 @@
+//Explanation Striver
+
+import java.util.*;
+
+public class LongestSubstringKDistinct {
+
+    public int lengthOfLongestSubstringKDistinct(String s, int k) {
+        if (s == null || k == 0) return 0;
+
+        Map<Character, Integer> map = new HashMap<>(); // char → frequency
+        int left = 0, maxLen = 0;
+
+        for (int right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+            map.put(c, map.getOrDefault(c, 0) + 1); // add current char to window
+
+            // If we exceed k distinct characters, shrink window from left
+            while (map.size() > k) {
+                char leftChar = s.charAt(left);
+                map.put(leftChar, map.get(leftChar) - 1);
+
+                // Remove the char from map if its count drops to 0
+                if (map.get(leftChar) == 0) {
+                    map.remove(leftChar);
+                }
+                left++; // move the window forward
+            }
+
+            // Update max length of valid window
+            maxLen = Math.max(maxLen, right - left + 1);
+        }
+
+        return maxLen;
+    }
+
+    // Test the solution
+    public static void main(String[] args) {
+        LongestSubstringKDistinct solver = new LongestSubstringKDistinct();
+        String s = "eceba";
+        int k = 2;
+        System.out.println(solver.lengthOfLongestSubstringKDistinct(s, k));  // Output: 3
+    }
+}
