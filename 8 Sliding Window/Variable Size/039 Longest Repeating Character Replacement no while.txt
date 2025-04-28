@@ -2,6 +2,8 @@
 //Recalculate maxFrequency at every while
 //striver explanation
 //leetcode - 424. Longest Repeating Character Replacement
+//This can be improvised - as we are seeking for maxer maxFreq - check striver's explanation - below link
+// https://youtu.be/_eNhaDCr6P0?si=7D2LhCbOEoYkUjQH&t=1147
 
 class Solution {
     public int characterReplacement(String s, int k) {
