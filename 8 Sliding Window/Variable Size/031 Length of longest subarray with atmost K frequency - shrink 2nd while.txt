@@ -2,6 +2,7 @@
 //Approach-1 (With Nested Loop - Classic Sliding Window Template)
 //T.C : O(n)
 //S.C : O(n)
+// shrink front with while
 
 class Solution {
     public int maxSubarrayLength(int[] nums, int k) {
