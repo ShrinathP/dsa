@@ -1,0 +1,105 @@
+//chatgp
+/*
+Logic Points
+
+✅ Logic Points
+1. Total Unique Characters
+First, count how many distinct characters exist in the string.
+This helps us loop over all possible targetUnique values from 1 to totalUnique.
+
+2. Outer Loop Over targetUnique
+For each targetUnique, we try to find the longest substring that:
+Has exactly targetUnique distinct characters, and
+All of those characters occur at least k times
+
+3. Sliding Window with HashMap
+Use a HashMap <Character, Integer> to track character frequencies in the current window.
+map.size() automatically gives the number of distinct characters in the window.
+
+4. Track countAtLeastK
+A separate counter countAtLeastK tracks how many distinct characters have appeared at least k times.
+We update this:
+When a char reaches exactly k → increment it
+When a char drops from k → decrement it
+
+5. Window Expansion
+Move right forward, adding new characters into the map.
+Update frequency and countAtLeastK if needed.
+
+6. Window Shrinking (Main Logic in while)
+If the number of unique characters in the window exceeds targetUnique, shrink it from the left:
+Decrease character frequency
+If frequency becomes 0 → remove character from map
+If frequency drops from k → update countAtLeastK
+
+7. Valid Window Check
+
+if (map.size() == targetUnique && countAtLeastK == targetUnique)
+This ensures:
+Exactly targetUnique characters are present
+All of them appear at least k times
+If yes → update maxLen
+
+8. Time Complexity:
+Outer loop: O(26) → all possible distinct char counts
+
+Inner loop: O(n) → each character processed at most twice (expand + shrink)
+
+Total: O(26n) → effectively linear
+*/
+
+
+import java.util.*;
+
+public class LongestSubstringAtLeastK_HashMapImproved {
+
+    public int longestSubstring(String s, int k) {
+        int maxLen = 0;
+        int totalUnique = countTotalUnique(s);
+
+        for (int targetUnique = 1; targetUnique <= totalUnique; targetUnique++) {
+            Map<Character, Integer> freqMap = new HashMap<>();
+            int left = 0, right = 0;
+            int countAtLeastK = 0;
+
+            while (right < s.length()) {
+                // Expand window
+                char rChar = s.charAt(right++);
+                freqMap.put(rChar, freqMap.getOrDefault(rChar, 0) + 1);
+                if (freqMap.get(rChar) == k) countAtLeastK++;
+
+                // Shrink window when unique characters exceed target
+                while (freqMap.size() > targetUnique) {
+                    char lChar = s.charAt(left++);
+                    int freq = freqMap.get(lChar);
+                    if (freq == k) countAtLeastK--;
+                    if (freq == 1) {
+                        freqMap.remove(lChar); // remove completely
+                    } else {
+                        freqMap.put(lChar, freq - 1); // decrease count
+                    }
+                }
+
+                // If all unique chars occur at least k times, it's valid
+                if (freqMap.size() == targetUnique && countAtLeastK == targetUnique) {
+                    maxLen = Math.max(maxLen, right - left);
+                }
+            }
+        }
+
+        return maxLen;
+    }
+
+    private int countTotalUnique(String s) {
+        Set<Character> set = new HashSet<>();
+        for (char c : s.toCharArray()) set.add(c);
+        return set.size();
+    }
+
+    public static void main(String[] args) {
+        LongestSubstringAtLeastK_HashMapImproved solver = new LongestSubstringAtLeastK_HashMapImproved();
+        String s = "aaabbccdde";
+        int k = 2;
+        System.out.println("Length: " + solver.longestSubstring(s, k));  // Output: 6 ("aabbcc")
+    }
+}
