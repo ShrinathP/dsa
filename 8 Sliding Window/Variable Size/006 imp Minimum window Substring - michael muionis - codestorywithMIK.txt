@@ -39,6 +39,7 @@ class Solution {
             //move the begin++ until one of the counter increases to 1
             //now we get the first substring length
             while(counter == 0){
+//keep moving begin as there might be extra useless characters in the prefix of our substring that we might not need
                 char frontChar = s.charAt(begin);
 
 		//increase the counter of frontChar
