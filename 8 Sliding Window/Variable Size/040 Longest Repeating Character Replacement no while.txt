@@ -1,0 +1,26 @@
+//check striver solution
+//check culprit method codewithMIK
+
+424. Longest Repeating Character Replacement
+// We are removing the while loop to trim the left pointer continuously 
+//We only trim by 1, so effectively keeping the max length same if not satisfied
+//if r-l+1 was the largest substring in one of the previous iterations
+//we move both l and r by 1 keeping length same
+//eliminating need of while loop
+
+
+
+class Solution {
+    public int characterReplacement(String s, int k) {
+        int[] cnt = new int[26];
+        int l = 0, mx = 0;
+        int n = s.length();
+        for (int r = 0; r < n; ++r) {
+            mx = Math.max(mx, ++cnt[s.charAt(r) - 'A']);
+            if (r - l + 1 - mx > k) {
+                --cnt[s.charAt(l++) - 'A'];
+            }
+        }
+        return n - l;
+    }
+}
