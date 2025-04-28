@@ -1,5 +1,7 @@
 //cue- freqarr->split whenenver you find a letter with freq less than k
 
+// Divide and conquer - method
+
 class Solution {
 	    //Check coding decoded youtube solution as well
 
