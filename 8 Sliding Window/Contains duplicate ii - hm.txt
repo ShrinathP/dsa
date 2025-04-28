@@ -1,0 +1,21 @@
+class Solution {
+    /*
+    Kevin Naughton
+    Find if there are duplicate values
+    which are atmost k slots apart
+    */
+    public boolean containsNearbyDuplicate(int[] nums, int k) {
+        //Creating a hashmap that stores the number and its occurence
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        for(int i=0;i<nums.length; i++){
+            int current = nums[i];
+            if(hm.containsKey(current) && i - hm.get(current) <= k){
+                return true;
+            } else {
+              hm.put(current, i);  
+            }
+        }
+        return false;
+        
+    }
+}
