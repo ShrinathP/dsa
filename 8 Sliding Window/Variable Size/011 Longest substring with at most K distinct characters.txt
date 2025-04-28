@@ -1,0 +1,48 @@
+//Striver explanation - removing aggresive trimming using while loop and trimming by 1 in each iteration
+//** note adding <= k for maxlength update makes the solution more complete
+//same as 041 040 solutions
+//chatgpt answer
+
+//Longest substring with at most K distinct characters 
+
+import java.util.*;
+
+class Solution {
+    public int lengthOfLongestSubstringKDistinct(String s, int k) {
+        if (k == 0 || s == null || s.isEmpty()) return 0;
+
+        Map<Character, Integer> map = new HashMap<>();
+        int left = 0, maxLen = 0;
+
+        for (int right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+            map.put(c, map.getOrDefault(c, 0) + 1);
+
+            // Shrink the window by 1 if we exceed K distinct characters
+            if (map.size() > k) {
+                char leftChar = s.charAt(left);
+                map.put(leftChar, map.get(leftChar) - 1);
+                if (map.get(leftChar) == 0) {
+                    map.remove(leftChar);
+                }
+                left++;
+            }
+
+            //** you can comment this if statement, because even if max lenth is evaluated, it is redundant as right-left will be 
+//less than or equal to maxLen - same as 041 040 solutions 
+            // ✅ Only update maxLen if window is valid
+            if (map.size() <= k) {
+                maxLen = Math.max(maxLen, right - left + 1);
+            }
+        }
+
+        return maxLen;
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        String s = "eceba";
+        int k = 2;
+        System.out.println("Longest Length: " + sol.lengthOfLongestSubstringKDistinct(s, k)); // Output: 3
+    }
+}
