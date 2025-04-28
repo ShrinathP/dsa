@@ -12,7 +12,7 @@ For each recursive substring:
 * If all characters have freq ≥ k, return the length of the current substring.
 
 Worst case: O(26 * n) = O(n) per level, and log(n) levels → O(n log n)
-
+O(n square ?? or O26n) check once
 Space: O(1) for frequency array + call stack
 
 */
