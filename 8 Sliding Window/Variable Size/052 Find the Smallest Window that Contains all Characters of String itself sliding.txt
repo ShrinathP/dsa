@@ -1,0 +1,66 @@
+//use fixed size int array rather than Hashmap
+//Fixed 26-size Array Version
+
+
+class Solution {
+    public String smallestWindow(String s) {
+        if (s == null || s.length() == 0) return "";
+
+        // Step 1: Find total unique characters
+        boolean[] uniqueSet = new boolean[26];
+        int requiredUnique = 0;
+        for (char c : s.toCharArray()) {
+            if (!uniqueSet[c - 'a']) {
+                uniqueSet[c - 'a'] = true;
+                requiredUnique++;
+            }
+        }
+
+        // Step 2: Sliding window
+        int[] windowCount = new int[26];
+        int left = 0, minLen = Integer.MAX_VALUE, startIdx = 0;
+        int formed = 0;
+
+        for (int right = 0; right < s.length(); right++) {
+            int idx = s.charAt(right) - 'a';
+            windowCount[idx]++;
+
+            if (windowCount[idx] == 1) { // first time this character appears in window
+                formed++;
+            }
+
+            // Shrink window if all unique characters are present
+            while (formed == requiredUnique) {
+            //  Update the answer
+                if (right - left + 1 < minLen) {
+                    minLen = right - left + 1;
+                    startIdx = left;
+                }
+
+            //Shrink from front
+                int leftIdx = s.charAt(left) - 'a';
+                windowCount[leftIdx]--;
+                if (windowCount[leftIdx] == 0) {
+                    formed--;
+                }
+                left++;
+            }
+        }
+
+        return minLen == Integer.MAX_VALUE ? "" : s.substring(startIdx, startIdx + minLen);
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        String s = "aabcbcdbca";
+        System.out.println("Smallest window: " + sol.smallestWindow(s)); 
+        // Output: "dbca"
+    }
+}
+/* Improvements
+| Aspect                | HashMap version            | Array version (`int[26]`) |
+|------------------------|-------------------------- |---------------------------|
+| Space                  | O(k) for k distinct chars | O(26) constant             |
+| Simplicity             | Needs key existence check | Simple `index = c - 'a'` math |
+| Code performance       | Slightly slower | Slightly faster |
+*/
