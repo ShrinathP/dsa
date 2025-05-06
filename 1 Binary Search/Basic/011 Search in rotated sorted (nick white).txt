@@ -15,15 +15,17 @@ class Solution {
         int right = nums.length-1;
         
         //Step 1
+        //find the start of the array
+        //go to the non sorted part
         //our goal is to find the point at which the array starts
         //finding the first element of the array
-        //modified binary search
+        //modified binary search, 
         while(left < right){
             int midpoint = left + (right-left)/2;
             if(nums[midpoint] > nums[right]){
-                left = midpoint + 1;
+                left = midpoint + 1;   //right side is non sorted
             } else {
-                right = midpoint;
+                right = midpoint;  //left side is non sorted
             }
         }
         //loop break when left is at the smallest element of the array
