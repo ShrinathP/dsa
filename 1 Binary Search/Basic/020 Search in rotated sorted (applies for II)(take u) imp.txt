@@ -1,5 +1,12 @@
 
 //Solution for Rotated sorted II
+
+/*
+✅ Key Characteristics:
+The input array may contain duplicates.
+Duplicates make it impossible to determine which half is sorted in some cases (e.g., [2, 2, 2, 3, 4, 2]).
+*/
+
 //Only change is the last else where nums[left] matches nums[mid]
 class Solution {
     public boolean search(int[] nums, int target) {
