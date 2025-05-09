@@ -46,7 +46,7 @@ class Solution {
         int lastIndex = first; //in case only 1 occurence seen
         while(left <= right){
             int midpoint = left + (right-left)/2;
-            if (nums[midpoint] <= target){ 
+            if (nums[midpoint] <= target){  //using <= target instead of upper bound and then moving
                 /*
                 Midpoint Greater than target
                 will there be any case like this??

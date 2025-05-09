@@ -1,0 +1,67 @@
+/*
+Logic: - 
+int[] arr = {1, 2, 4, 4, 4, 6, 7};
+int target = 4;
+
+lowerBound(arr, 4) → index 2  (first 4)
+upperBound(arr, 4) → index 5  (first > 4 i.e. 6)
+
+Lower Bound
+The first index where the element is greater than or equal to the target.
+
+🔹 Mathematically:
+Find first i such that arr[i] ≥ target
+
+Upper Bound
+The first index where the element is strictly greater than the target.
+
+🔹 Mathematically:
+Find first i such that arr[i] > target
+*/
+
+1. Lower Bound Java Code
+
+public class Bounds {
+
+    public static int lowerBound(int[] arr, int target) {
+        int low = 0, high = arr.length - 1;
+        int ans = arr.length; // default if not found
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (arr[mid] >= target) {
+                ans = mid;          // possible answer
+                high = mid - 1;     // try to find smaller index on left
+            } else {
+                low = mid + 1;      // move right
+            }
+        }
+
+        return ans;
+    }
+}
+
+
+2. Upper Bound java Code
+
+public class Bounds {
+
+    public static int upperBound(int[] arr, int target) {
+        int low = 0, high = arr.length - 1;
+        int ans = arr.length; // default if not found
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (arr[mid] > target) {
+                ans = mid;         // possible answer
+                high = mid - 1;    // try to find smaller index on left
+            } else {
+                low = mid + 1;     // move right
+            }
+        }
+
+        return ans;
+    }
+}
