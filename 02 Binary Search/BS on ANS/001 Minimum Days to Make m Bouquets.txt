@@ -14,6 +14,9 @@ Process
 1. Compute Minimum possible day: min(bloomDay)
 2. Maximum possible day: max(bloomDay)
 3. For each day, check: Can we make m bouquets by that day? using min and max run binary search
+
+Time: O(n × log(max bloom day))
+Space: O(1)
 */
 
 
