@@ -1,4 +1,6 @@
 /*
+Leetcode 1283 – Find the Smallest Divisor Given a Threshold is a classic example of Binary Search on Answer (BSOA).
+
 Given an array nums[] and an integer threshold, return the smallest positive integer divisor such that the sum of ceil(nums[i] / divisor)
 across all elements is less than or equal to the threshold.
 
