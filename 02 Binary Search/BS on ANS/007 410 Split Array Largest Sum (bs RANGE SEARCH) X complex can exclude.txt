@@ -1,0 +1,65 @@
+/* Leetcode 410 
+// https://leetcode.com/problems/split-array-largest-sum/description/
+Given an integer array nums and an integer k, split nums into k non-empty subarrays such that the largest sum of any subarray is minimized.
+Return the minimized largest sum of the split.
+
+A subarray is a contiguous part of the array.
+
+In K splits Minimize the max sum of the subarray 
+Logic: 
+Define Search Space:
+The minimum possible largest sum is the maximum element in nums.
+The maximum possible largest sum is the sum of all elements in nums. 
+
+Input: arr[] = [1, 2, 3, 4], k = 3 
+Output: 4 
+Explanation: Optimal Split is [1, 2], [3], [4]. Maximum sum of all subarrays is 4, which is minimum possible for 3 splits.
+
+Input: arr[] = [1, 1, 2], k = 2 
+Output: 2 
+Explanation: Splitting the array as [1, 1] and [2] is optimal. This results is a maximum sum subarray of 2.
+
+
+
+*/
+
+
+class Solution {
+    public int splitArray(int[] nums, int k) {
+        int max = 0;
+        int sum = 0;
+        for (int num : nums) {
+            max = Math.max(max, num); //low of search space
+            sum += num; //high of search space
+        }
+
+        int left = max;
+        int right = sum;
+        int result = 0;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (canSplit(nums, k, mid)) {
+                result = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return result;
+    }
+
+    private boolean canSplit(int[] nums, int k, int maxSum) {
+        int count = 1;
+        int currentSum = 0;
+        for (int num : nums) {
+            if (currentSum + num > maxSum) {
+                count++;
+                currentSum = num;
+            } else {
+                currentSum += num;
+            }
+        }
+        return count <= k;
+    }
+}

@@ -1,0 +1,74 @@
+/*
+Input: arr[] = [5, 10, 30, 20, 15], k = 3
+Output: 35
+Explanation: The most optimal way will be: 
+Painter 1 allocation : [5,10]
+Painter 2 allocation : [30]
+Painter 3 allocation : [20, 15] 
+Job will be done when all painters finish i.e. at time = max(5 + 10, 30, 20 + 15) = 35
+
+Input: arr[] = [10, 20, 30, 40], k = 2
+Output: 60
+Explanation: The most optimal way to paint: 
+Painter 1 allocation : [10, 20, 30]
+Painter 2 allocation : [40]
+Job will be complete at time = 60
+
+Input: arr[] = [100, 200, 300, 400], k = 1
+Output: 1000
+
+Check isPossible function , return false of single board exceeds max time
+if (len > maxTime) {
+                return false; // Single board exceeds maxTime
+}
+*/
+
+
+class Solution {
+    public int paint(int[] arr, int k) {
+        int n = arr.length;
+        if (k > n) {
+            return -1; // More painters than boards
+        }
+
+        int maxBoard = 0;
+        long totalSum = 0;
+        for (int len : arr) {
+            maxBoard = Math.max(maxBoard, len);
+            totalSum += len;
+        }
+
+        long low = maxBoard;
+        long high = totalSum;
+        long res = totalSum;
+
+        while (low <= high) {
+            long mid = low + (high - low) / 2;
+            if (isPossible(mid, arr, k)) {
+                res = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return (int) res;
+    }
+
+    private boolean isPossible(long maxTime, int[] arr, int k) {
+        int painters = 1;
+        long currSum = 0;
+        for (int len : arr) {
+            //good check to add --
+            if (len > maxTime) {
+                return false; // Single board exceeds maxTime
+            }
+            if (currSum + len > maxTime) {
+                painters++;
+                currSum = len;
+            } else {
+                currSum += len;
+            }
+        }
+        return painters <= k;
+    }
+}

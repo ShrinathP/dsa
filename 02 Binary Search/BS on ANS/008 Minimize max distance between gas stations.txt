@@ -1,0 +1,60 @@
+/*
+Leetcode 774 – Minimize Max Distance to Gas Station
+✅ Java Solution (Binary Search on Double Precision)
+
+🧠 Problem Summary:
+You're given:
+
+An array stations[] where each station is at position stations[i] (sorted).
+You can add K extra gas stations anywhere between the existing stations.
+You need to minimize the maximum distance between adjacent gas stations.
+
+Return:
+The minimized maximum distance, up to 6 decimal places precision.
+
+✅ BSOA Key Insight:
+Lower bound = 0 (perfectly zero distance, not possible in practice)
+Upper bound = maximum distance between adjacent stations.
+
+Check:
+For a given distance, can we add at most K stations to make sure no segment > distance?
+
+Input: stations = [1,2,3,4,5,6,7,8,9,10], K = 9
+Output: 0.500000
+*/
+
+
+
+public class Solution {
+
+    public double minmaxGasDist(int[] stations, int K) {
+        int n = stations.length;
+        double low = 0.0, high = stations[n - 1] - stations[0];
+        double eps = 1e-6; // Precision 10^-6
+        
+        while (high - low > eps) {
+            double mid = (low + high) / 2;
+
+            if (canPlace(stations, K, mid)) {
+                high = mid; // Try smaller distance
+            } else {
+                low = mid; // Need bigger distance
+            }
+        }
+
+        return low;
+    }
+
+    // Can we add at most K stations to ensure no distance > maxDist
+    private boolean canPlace(int[] stations, int K, double maxDist) {
+        int count = 0;
+        
+        for (int i = 1; i < stations.length; i++) {
+            double dist = stations[i] - stations[i - 1];
+            //For each gap station check how many gas stations are needed
+            count += (int)(dist / maxDist);  // Number of stations needed in this gap
+        }
+        
+        return count <= K;
+    }
+}

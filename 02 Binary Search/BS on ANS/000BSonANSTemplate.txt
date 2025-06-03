@@ -1,0 +1,62 @@
+✅ Binary Search on Answer — Universal Template
+
+🔧 When to apply:
+You're not searching in the array directly.
+You're searching for the smallest / largest / minimum / maximum value that satisfies a condition.
+
+The problem usually involves phrases like:
+
+* "minimize the maximum"
+* "find the smallest ... that allows ..."
+* "split into subarrays / groups / days / parts ..."
+
+🚀 Template
+
+public int binarySearchOnAnswer() {
+    int low = ...;     // Minimum possible answer
+    int high = ...;    // Maximum possible answer
+
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+
+        if (isValid(mid)) {
+            // mid is a valid candidate → search for a better (smaller) answer
+            high = mid - 1;
+        } else {
+            // mid is invalid → need a larger value
+            low = mid + 1;
+        }
+    }
+
+    return low; // or high+1, depending on boundaries
+}
+
+🚀 Validator Function (isValid())
+private boolean isValid(int mid) {
+    // Logic to check whether 'mid' satisfies the problem condition.
+    // Usually some greedy simulation.
+    return true or false;
+}
+
+| Problem Name                                         | Leetcode # | Category / Variation                        |
+| ---------------------------------------------------- | ---------- | ------------------------------------------- |
+| **Minimum Days to Make m Bouquets**                  | 1482       | Bouquets                                    |
+| **Capacity to Ship Packages Within D Days**          | 1011       | Shipping                                    |
+| **Koko Eating Bananas**                              | 875        | Eating Speed                                |
+| **Split Array Largest Sum**                          | 410        | Subarray Partition                          |
+| **Painters Partition**                               | 849        | Greedy, but sometimes binary search is used |
+| **Smallest Divisor Given a Threshold**               | 1283       | Divisor                                     |
+| **Magnetic Force Between Two Balls**                 | 1552       | Distance Maximization                       |
+| **Minimize Max Distance to Gas Station**             | 774        | Real Numbers (Double Binary Search)         |
+| **Find the Smallest Divisor Given a Threshold**      | 1283       | Similar to divisor category                 |
+| **Minimum Number of Days to Eat N Oranges**          | 1553       | DP + BSOA hybrid                            |
+| **Maximum Running Time of N Computers**              | 2141       | Battery Allocation                          |
+| **Minimum Time to Complete Trips**                   | 2187       | Bus Trip Scheduling                         |
+| **Find Kth Smallest Pair Distance**                  | 719        | Kth Smallest Distance                       |
+| **Find Kth Smallest Number in Multiplication Table** | 668        | Kth Smallest Product                        |
+| **Minimum Speed to Arrive on Time**                  | 1870       | Speed Search                                |
+| **Minimize the Maximum Workload**                    | 1723       | Workload Balancing                          |
+| **Minimize the Maximum Difference of Pairs**         | 2616       | Minimize Max Pairwise Difference            |
+| **Maximize the Minimum Powered Distance**            | 2528       | Real Numbers Variant                        |
+| **Maximize Distance to Closest Person**              | 849        | Greedy, but sometimes binary search is used |
+

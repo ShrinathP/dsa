@@ -1,0 +1,63 @@
+/*
+Leetcode 1011 – Capacity to Ship Packages Within D Days
+Find the minimum ship capacity such that all packages can be shipped within D days.
+Packages must be shipped in order, and a ship cannot carry more than its capacity in a day.
+
+Low - Minimum capacity of the ship should be the maximum of the individual packages otherwise the package wont be shipped
+High - Max is total sum of all packages - can be shipped in 1 shot - 1 day
+
+Monotonic Property:
+Higher capacity → fewer days required
+✅ So we can apply binary search on capacity.
+
+🔍 Logic Flow:
+1️⃣ We try to pack as many packages into each day as possible
+2️⃣ As soon as adding the next package exceeds capacity, we start a new day
+3️⃣ Finally, we verify if total days used ≤ D
+
+*/
+
+public class Solution {
+
+    public int shipWithinDays(int[] weights, int D) {
+        int low = 0, high = 0;
+
+        for (int w : weights) {
+            low = Math.max(low, w);    // Ship capacity should be - At least max of all weights - 
+            high += w;                 // and At most sum of all weights
+        }
+
+        int ans = high;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (canShip(weights, D, mid)) {
+                ans = mid;
+                high = mid - 1; // try smaller capacity
+            } else {
+                low = mid + 1;  // need larger capacity
+            }
+        }
+
+        return ans;
+    }
+
+    // Helper to check if capacity is sufficient
+    private boolean canShip(int[] weights, int D, int capacity) {
+        int days = 1, currentLoad = 0;
+        // If adding this package exceeds today's capacity:
+
+        for (int w : weights) {
+            if (currentLoad + w > capacity) {
+                days++; // Need an extra day
+                currentLoad = 0; // Start fresh for the new day
+            }
+                    // Keep adding current package to today's load
+            currentLoad += w;
+        }
+
+    // After processing all packages, check if we stayed within allowed D days
+        return days <= D;
+    }
+}
