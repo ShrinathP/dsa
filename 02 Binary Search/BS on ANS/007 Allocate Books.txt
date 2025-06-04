@@ -1,0 +1,66 @@
+/*
+You are given an array of book pages and m students. Allocate books to students such that:
+Each student gets contiguous books.
+Minimize the maximum pages assigned to a student.
+
+Similar to Split Array Largest Sum - 
+Split the array to m students such that the largest sum is minimum - also return the largest sum
+
+*/
+
+public class BookAllocation {
+
+    public int splitArray(int[] pages, int m) {
+        int low = getMax(pages);         // Minimum possible max pages
+        int high = getSum(pages);        // Maximum possible max pages
+
+        int result = high;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (isValid(pages, m, mid)) {
+                result = mid;            // Try to minimize further
+                high = mid - 1;
+            } else {
+                low = mid + 1;           // Increase allowed pages
+            }
+        }
+        return result;
+    }
+
+    private boolean isValid(int[] pages, int m, int limit) {
+        int count = 1, total = 0;
+        for (int page : pages) {
+            if (total + page > limit) {
+                count++;
+                total = page;
+            } else {
+                total += page;
+            }
+        }
+        return count <= m;
+    }
+
+    private int getMax(int[] pages) {
+        int max = 0;
+        for (int page : pages) {
+            max = Math.max(max, page);
+        }
+        return max;
+    }
+
+    private int getSum(int[] pages) {
+        int sum = 0;
+        for (int page : pages) {
+            sum += page;
+        }
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        BookAllocation solver = new BookAllocation();
+        int[] books = {12, 34, 67, 90};
+        int students = 2;
+        System.out.println(solver.splitArray(books, students)); // Output: 113
+    }
+}
