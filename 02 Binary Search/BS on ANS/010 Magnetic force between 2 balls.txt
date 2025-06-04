@@ -1,0 +1,52 @@
+/*
+* Maximize the minimum distance between cows - they are aggressive
+
+ This problem is like placing m balls in positions such that the minimum distance between any two balls is maximized.
+*/
+
+
+import java.util.Arrays;
+
+public class MagneticForceBetweenTwoBalls {
+    
+    public int maxDistance(int[] position, int m) {
+        Arrays.sort(position);
+        
+        int low = 1; // minimum possible distance
+        int high = position[position.length - 1] - position[0]; // maximum possible distance
+        int ans = 0;
+        
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            
+            if (canPlaceBalls(position, m, mid)) {
+                ans = mid; // valid distance found, try to find bigger
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return ans;
+    }
+    
+    private boolean canPlaceBalls(int[] position, int m, int dist) {
+        int count = 1; // first ball placed at position[0]
+        int lastPos = position[0];
+        
+        for (int i = 1; i < position.length; i++) {
+            if (position[i] - lastPos >= dist) {
+                count++;
+                lastPos = position[i];
+            }
+            if (count >= m) return true;
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        MagneticForceBetweenTwoBalls solver = new MagneticForceBetweenTwoBalls();
+        int[] position = {1, 2, 3, 4, 7};
+        int m = 3;
+        System.out.println(solver.maxDistance(position, m)); // Output: 3
+    }
+}

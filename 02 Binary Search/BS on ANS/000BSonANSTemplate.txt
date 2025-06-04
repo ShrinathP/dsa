@@ -49,7 +49,8 @@ private boolean isValid(int mid) {
 | **Magnetic Force Between Two Balls**                 | 1552       | Distance Maximization                       |
 | **Minimize Max Distance to Gas Station**             | 774        | Real Numbers (Double Binary Search)         |
 | **Find the Smallest Divisor Given a Threshold**      | 1283       | Similar to divisor category                 |
-| **Minimum Number of Days to Eat N Oranges**          | 1553       | DP + BSOA hybrid                            |
+| **Aggressive Cows**                                  |            | Real Numbers (Double Binary Search)         |
+
 | **Maximum Running Time of N Computers**              | 2141       | Battery Allocation                          |
 | **Minimum Time to Complete Trips**                   | 2187       | Bus Trip Scheduling                         |
 | **Find Kth Smallest Pair Distance**                  | 719        | Kth Smallest Distance                       |
@@ -59,4 +60,5 @@ private boolean isValid(int mid) {
 | **Minimize the Maximum Difference of Pairs**         | 2616       | Minimize Max Pairwise Difference            |
 | **Maximize the Minimum Powered Distance**            | 2528       | Real Numbers Variant                        |
 | **Maximize Distance to Closest Person**              | 849        | Greedy, but sometimes binary search is used |
+| **Minimum Number of Days to Eat N Oranges**          | 1553       | DP + BSOA hybrid                            |
 

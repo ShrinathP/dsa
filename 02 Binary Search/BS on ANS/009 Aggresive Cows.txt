@@ -1,0 +1,69 @@
+/*
+* Maximize the minimum distance between cows - they are aggressive
+
+Problem Understanding
+You have n stalls at different positions (represented by an array).
+You have k aggressive cows.
+The goal is to place the cows in the stalls such that the smallest distance between any two cows is maximized. 
+
+Strategy
+Compute low and high
+int low = 1;
+int high = stalls[stalls.length - 1] - stalls[0];
+
+
+For each distance mid, check:
+Is it possible to place k cows with at least mid distance apart?
+If yes → try for a bigger distance (low = mid + 1)
+If no → reduce distance (high = mid - 1)
+
+Time complexity
+Binary Search: O(log(max distance))
+Each feasibility check (canPlaceCows) is O(n)
+Total: O(n log(max distance))
+*/
+
+
+import java.util.Arrays;
+
+class Solution {
+    public static int aggressiveCows(int[] stalls, int k) {
+        Arrays.sort(stalls);
+        int low = 1;
+        int high = stalls[stalls.length - 1] - stalls[0];
+        int result = 0;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+            if (canPlaceCows(stalls, k, mid)) {
+                result = mid;
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+        return result;
+    }
+
+    private static boolean canPlaceCows(int[] stalls, int k, int distance) {
+        int count = 1;
+        int lastPosition = stalls[0];
+        for (int i = 1; i < stalls.length; i++) {
+            if (stalls[i] - lastPosition >= distance) {
+                count++;
+                lastPosition = stalls[i];
+                if (count == k) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static void main(String[] args) {
+        int[] stalls = {1, 2, 4, 8, 9};
+        int k = 3;
+        int maxDistance = aggressiveCows(stalls, k);
+        System.out.println("Maximum minimum distance: " + maxDistance); // Output: 3
+    }
+}
