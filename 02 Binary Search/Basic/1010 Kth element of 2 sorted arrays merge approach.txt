@@ -1,0 +1,34 @@
+/* Same as Merge Sort - median of 2 sorted using merge
+*/
+
+
+public int findKthElementMerge(int[] nums1, int[] nums2, int k) {
+    int i = 0, j = 0, count = 0;
+    int n = nums1.length, m = nums2.length;
+
+    while (i < n && j < m) {
+        if (nums1[i] < nums2[j]) {
+            count++;
+            if (count == k) return nums1[i];
+            i++;
+        } else {
+            count++;
+            if (count == k) return nums2[j];
+            j++;
+        }
+    }
+
+    while (i < n) {
+        count++;
+        if (count == k) return nums1[i];
+        i++;
+    }
+
+    while (j < m) {
+        count++;
+        if (count == k) return nums2[j];
+        j++;
+    }
+
+    return -1; // if k is invalid
+}

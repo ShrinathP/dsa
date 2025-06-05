@@ -11,6 +11,11 @@ Binary Search on Smalllest length array
 Step 2. 
 find 2 cuts, mid and (N + M + 1) /2
 
+#Logic of cut locations - cut2
+cut2 is half of total length minus the elements taken in cut1
+so cut2 = (n1 + n2)/2 - cut1
+
+
 Step 3. Put cuts to find left half and right half of the arr1 using cut1
 Step 4. Put cuts to find left half and right half of the arr2 using cut2
 

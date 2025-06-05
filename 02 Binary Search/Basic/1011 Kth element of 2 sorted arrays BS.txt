@@ -1,0 +1,61 @@
+/*
+shashcode explanation youtube
+
+Time Complexity:
+O(log(min(n, m)))
+
+BS Condition Logic High and Low
+n = arr1.length
+m = arr2.length
+
+#1 High
+int high = Math.min(k, n); - min k elements to be taken or n (arr1 length) to be taken from arr1
+lets say k = 3
+arr1 = 8
+arr2 = 2
+so you dont have to search till arr1 last element = you can stop till arr1 3rd(kth) element
+
+lets say k = 10
+so have to search till arr1 last element which is n
+
+#2 Low
+Minimum how many elements in 1st array
+int low = Math.max(0, k - m)
+lets say k = 3
+arr1 = 8
+arr2 = 2
+arr2 has only 2 elements, so minimum (3 - 2) = (k - m (arr2.length)) elements is needed from arr1
+So 1 element needed from arr1
+
+# cut2 is k length minus cut1
+int cut2 = k - cut1;
+
+*/
+
+public int findKthElementCuts(int[] nums1, int[] nums2, int k) {
+    if (nums1.length > nums2.length) 
+        return findKthElementCuts(nums2, nums1, k);
+    
+    int n = nums1.length, m = nums2.length;
+    int low = Math.max(0, k - m), high = Math.min(k, n);
+    
+    while (low <= high) {
+        int cut1 = (low + high) / 2;
+        int cut2 = k - cut1;
+        
+        int l1 = (cut1 == 0) ? Integer.MIN_VALUE : nums1[cut1 - 1];
+        int l2 = (cut2 == 0) ? Integer.MIN_VALUE : nums2[cut2 - 1];
+        int r1 = (cut1 == n) ? Integer.MAX_VALUE : nums1[cut1];
+        int r2 = (cut2 == m) ? Integer.MAX_VALUE : nums2[cut2];
+        
+        if (l1 <= r2 && l2 <= r1) {
+            return Math.max(l1, l2);
+        } else if (l1 > r2) {
+            high = cut1 - 1;
+        } else {
+            low = cut1 + 1;
+        }
+    }
+    
+    return -1; // if k is invalid
+}
