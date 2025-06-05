@@ -1,0 +1,47 @@
+
+/* Leetcode 540: Single element in a Sorted Array
+You are given a sorted array where every element appears twice except one element
+ which appears once. Find that single element.
+Example:
+[1, 1, 2, 2, 3, 4, 4, 5, 5]
+Answer: 3
+<!--- If Mid is Odd move 1 back force the mid to be even, then do the validation--->
+*/
+
+//Take U forward
+/*
+Algorithm:
+1. Initialize low = 0, high = nums.length - 1.
+2. While low < high:
+Compute mid = low + (high - low) / 2
+Make sure mid is even:
+if (mid % 2 == 1) mid--; 
+3. Compare nums[mid] with nums[mid + 1]:
+If equal → single element is on right → low = mid + 2
+Else → single element is on left → high = mid
+4. When loop ends, low points to single element.
+
+Time complexity O(logN)
+Space O(N)
+
+--- If Mid is Odd move 1 back ---
+*/
+
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+    int low = 0, high = nums.length - 1;
+
+    while (low < high) {
+        int mid = low + (high - low) / 2;
+        if (mid % 2 == 1) mid--; // force mid to be even
+
+        if (nums[mid] == nums[mid + 1]) {
+            low = mid + 2;
+        } else {
+            high = mid;
+        }
+    }
+
+    return nums[low];
+    }
+}
