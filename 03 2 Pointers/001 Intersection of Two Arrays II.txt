@@ -3,12 +3,16 @@
 //2. Sort both arrays and iterate, maintain a list
 
 
+
 /*
 https://leetcode.com/problems/intersection-of-two-arrays-ii/discuss/282372/Java-solution-with-all-3-follow-up-questions
 https://leetcode.com/problems/intersection-of-two-arrays-ii/discuss/954800/Java-solution-with-explanation-and-pictures
 */
 
 //1st way, 1st link
+Time Complexity: O(m + n)
+Space Complexity: O(min(m, n))
+
 class Solution {
     public int[] intersect(int[] nums1, int[] nums2) {
         
@@ -34,6 +38,10 @@ class Solution {
 
 
 //2nd way, 2nd link
+//Time Complexity
+//Time Complexity: O(m log m + n log n) (due to sorting)
+//Space Complexity: O(1) (excluding output)
+
 class Solution {
     public int[] intersect(int[] nums1, int[] nums2) {
         Arrays.sort(nums1);
