@@ -1,0 +1,49 @@
+
+/*
+You have been given a matrix where each row is sorted
+Find the median of all the numbers in the matrix
+
+Algorithm:
+
+We will use a loop(say i) to select a particular row at a time.
+Next, we will use another loop(say j) for every row to traverse each column.
+Inside the loops, we will store each element, matrix[i][j] to a linear array/list.
+Finally, we will return the middle element of that linear array.
+
+TC - NxM + NxMxlog(NxM)
+*/
+
+
+                                    
+import java.util.*;
+
+public class tUf {
+    public static int median(int matrix[][], int m, int n) {
+        List<Integer> lst = new ArrayList<>();
+
+        // Traverse the matrix and
+        // copy the elements to the list:
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                lst.add(matrix[i][j]);
+            }
+        }
+
+        // Sort the list:
+        Collections.sort(lst);
+        return lst.get((m * n) / 2);
+    }
+
+    public static void main(String[] args) {
+        int matrix[][] = {
+            {1, 2, 3, 4, 5},
+            {8, 9, 11, 12, 13},
+            {21, 23, 25, 27, 29}
+        };
+        int m = matrix.length, n = matrix[0].length;
+        int ans = median(matrix, m, n);
+        System.out.println("The median element is: " + ans);
+    }
+}
+    
+                                    

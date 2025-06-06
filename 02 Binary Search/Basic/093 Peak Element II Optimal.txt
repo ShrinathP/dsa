@@ -1,6 +1,7 @@
 /*
 chatgpt Solution
-Explanation - Take u Forward
+-- Intuition --
+V good Explanation - Take u Forward
 Optimal BS on columns
 This is like doing binary search on columns, and at each step:
 "Among all rows, who has the highest value in this column?"
