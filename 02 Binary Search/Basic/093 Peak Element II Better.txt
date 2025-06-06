@@ -1,0 +1,54 @@
+/*
+Approach: Binary Search on Each Row
+1. On Each Row
+2. Run BS and get the Peak for row
+3. Get the top and bottom value
+4. Get the 
+
+
+Time Complexity:
+
+Outer loop: O(m) (m rows)
+
+Inner loop (binary search): O(log n) (columns)
+
+Total: O(m * log n)
+
+Same as column-wise binary search, but usually slightly slower in practice because it may check more elements.
+*/
+
+
+public class Solution {
+    public int[] findPeakGrid(int[][] mat) {
+        int m = mat.length, n = mat[0].length;
+      // for each row O(m) - where m is number of rows
+        for (int row = 0; row < m; row++) {
+          //BS algorithm on column length O(log n)
+            int colPeak = findRowPeak(mat[row]);
+
+          //Get up and down elements of the row
+            int up = (row > 0) ? mat[row - 1][colPeak] : -1;
+            int down = (row < m - 1) ? mat[row + 1][colPeak] : -1;
+            
+          //compare with the col Peak
+            if (mat[row][colPeak] > up && mat[row][colPeak] > down) {
+                return new int[]{row, colPeak};
+            }
+        }
+        return new int[]{-1, -1}; // should not reach
+    }
+
+    // Binary Search on one row
+    private int findRowPeak(int[] row) {
+        int left = 0, right = row.length - 1;
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (row[mid] < row[mid + 1]) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
+}

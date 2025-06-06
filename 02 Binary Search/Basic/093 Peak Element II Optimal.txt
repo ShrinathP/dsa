@@ -1,0 +1,78 @@
+/*
+chatgpt Solution
+Explanation - Take u Forward
+Optimal BS on columns
+This is like doing binary search on columns, and at each step:
+"Among all rows, who has the highest value in this column?"
+Then check neighbors and decide which half to discard.
+
+Eliminate Rows ---
+0. Column wise Binary Search - left =0th column, right =last column mat[0].length
+1. Find the mid column
+2. Find the rowIndex with max value in the Mid column  // find max row in mid column
+4. compute Left and right of the midColumn in maxRow
+5. if leftValue is greater than max Value, peak is in the left, move left column, recompute
+6. if rightValue is greater than max Value, peak is in the right, move right column, recompute
+
+TC - O(m log n)
+
+
+Key Difference vs Better Code:
+We are not iterating every row here
+Instead of iterating rows → we fix column, and move left/right based on neighbors.
+In practice slightly faster, esp. when n is smaller than m.
+
+✅ In your earlier approach:
+You iterate every row (outer for loop over m)
+For each row, you do O(log n) binary search on columns.
+
+✅ In the optimal approach:
+You directly binary search on columns (log n)
+In each column, you scan all rows (O(m)) only for that column to find the row with max value.
+You do NOT iterate all rows for every column — you only scan once per column move.
+
+👉 So yes:
+We are not looping all rows every time.
+Instead, we eliminate columns based on whether left/right neighbor is bigger.
+Indirectly, rows get eliminated as you move columns.
+
+*/
+
+
+public class Solution {
+    public int[] findPeakGrid(int[][] mat) {
+        int m = mat.length, n = mat[0].length;
+        int left = 0, right = n - 1;
+  
+  //Column wise binary Search
+        while (left <= right) {
+            int midCol = (left + right) / 2;
+
+            // find max row in mid column
+            int maxRowIndex = 0;
+            for (int i = 0; i < m; i++) {
+                if (mat[i][midCol] > mat[maxRowIndex][midCol]) {
+                    maxRowIndex = i;
+                }
+            }
+
+//compute Left and right of the midColumn in maxRowIndex
+            int leftVal = (midCol > 0) ? mat[maxRowIndex][midCol - 1] : -1;
+            int rightVal = (midCol < n - 1) ? mat[maxRowIndex][midCol + 1] : -1;
+
+
+// 5. if leftValue is greater than max Value, peak is in the left, move left column, recompute
+// 6. if rightValue is greater than max Value, peak is in the right, move right column, recompute
+            if (mat[maxRowIndex][midCol] > leftVal && mat[maxRowIndex][midCol] > rightVal) {
+                return new int[]{maxRowIndex, midCol};
+            } else if (leftVal > mat[maxRowIndex][midCol]) {
+              
+                right = midCol - 1;
+            } else {
+                left = midCol + 1;
+            }
+        }
+
+        return new int[]{-1, -1}; // never happens
+    }
+}

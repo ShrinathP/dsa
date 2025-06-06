@@ -1,0 +1,41 @@
+/*
+Brute Approach 
+For loops and search for each on all sides if it is peak or not
+
+Algorithm
+- We will use a loop(say i) to select a particular row at a time
+- Next, we will use another loop(say j) for every row to traverse each column.
+- Inside the loops, we will check if the element i.e. matrix[i][j] is greater than its all four adjacent elements i.e. matrix[i-1][j], matrix[i+1][j], matrix[i][j-1], and matrix[i][j+1].
+- If we find any such element, we will return its location.
+*/
+
+
+
+import java.util.*;
+
+public class tUf {
+    public static int[] findPeakGrid(int[][] g) {
+        int n = g.length;
+        int m = g[0].length;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                // Check all 4 adjacent elements:
+                if (i - 1 >= 0 && g[i][j] <= g[i - 1][j]) continue;
+                if (i + 1 < n && g[i][j] <= g[i + 1][j]) continue;
+                if (j - 1 >= 0 && g[i][j] <= g[i][j - 1]) continue;
+                if (j + 1 < m && g[i][j] <= g[i][j + 1]) continue;
+                return new int[] {i, j};
+            }
+        }
+        // Dummy return statement:
+        return new int[] { -1, -1};
+    }
+
+    public static void main(String[] args) {
+        int[][] g = {{8, 6}, {10, 1}};
+        int[] ans = findPeakGrid(g);
+        System.out.println("The peak element is at: {" + ans[0] + ", " + ans[1] + "}");
+    }
+}
+
