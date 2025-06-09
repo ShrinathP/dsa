@@ -1,6 +1,10 @@
 
 //Single Stack solution
 //Take U forward (can leave)
+// ✅ In fact: this is called the "Modified Morris-style" or "Iterative Left-Right trick".
+//✅ Postorder just adds "check right subtree first before processing."
+
+
 
 class Solution {
 
@@ -13,17 +17,23 @@ class Solution {
         TreeNode current = root;  
         while(current != null || !st1.isEmpty()) {
 //Keep moving left left left left until null
+//if will be executed until first null on left side
             if(current != null){
                 st1.push(current);
                 current = current.left;
             }else{
 //No left, check for right not null
                 TreeNode temp = st1.peek().right;
-//This is the last right
+
+//No right - pop the last and print
+//This is the last right - print it
                 if (temp == null) {
-                    temp = st1.pop();
+                    temp = st1.pop(); //* last temp
                     postOrder.add(temp.val);
-//Keep popping all elements in the right line and adding to the postOrder
+
+//if (right == null || right already visited)
+//going back - check right already visited
+//if the last temp (line 31) was current stack tops right, reassign temp, add this one to postOrder
                     while (!st1.isEmpty() && temp == st1.peek().right) {
                         temp = st1.pop();
                         postOrder.add(temp.val);

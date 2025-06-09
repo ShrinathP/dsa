@@ -1,0 +1,13 @@
+| Traversal | Order | Common Use           |
+| --------- | ----- | -------------------- |
+| Inorder   | L-N-R | BST, Infix           |
+Order: Left → Node → Right
+
+| Preorder  | N-L-R | Clone, Serialize     |
+Order: Node → Left → Right
+
+| Postorder | L-R-N | Delete, Postfix Eval |
+Order: Left → Right → Node
+
+
+

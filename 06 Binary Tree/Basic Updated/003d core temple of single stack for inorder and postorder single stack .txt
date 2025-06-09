@@ -1,0 +1,20 @@
+while (current != null || !stack.isEmpty()) {
+    if (current != null) {
+        // Action while going left
+        stack.push(current);
+        current = current.left;
+    } else {
+        // Action after reaching null left
+        TreeNode temp = stack.peek().right;
+        if (temp == null) {
+            temp = stack.pop();
+            res.add(temp.val);  // Process current node
+            while (!stack.isEmpty() && temp == stack.peek().right) {
+                temp = stack.pop();
+                res.add(temp.val);
+            }
+        } else {
+            current = temp;
+        }
+    }
+}

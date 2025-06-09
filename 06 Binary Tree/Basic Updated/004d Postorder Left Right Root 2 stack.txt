@@ -3,18 +3,32 @@
 /*
 Take U forward
 
-Algorithm
-We first push the first root to stack 1
-while st1 is not empty
-1. pop top of st1 and push the st1 top in st2
-2. if popped node has left push to st1
-3. if popped node has right push to st1
-
-while st2 is not empty
-4. keep popping out st2
-5. and adding int he post order list
-
+* Chatgpt explanation
 Intuition
+Core Idea (Intuition):
+Postorder: Left -> Right -> Root
+We convert it to:
+First do modified preorder: Root -> Right -> Left
+Then reverse the order to get postorder.
+
+Why it works:
+s1 builds reverse postorder by traversing Root → Right → Left.
+s2 reverses that into Left → Right → Root (which is postorder).
+
+chatgpt Algorithm
+Algorithm:
+* 1️⃣ First stack (s1):
+* Push root to s1.
+* While s1 is not empty:
+    - Pop node from s1.
+    - Push node to second stack s2.
+    - Push left child to s1 (if exists).
+    - Push right child to s1 (if exists).
+* 2️⃣ Second stack (s2):
+* Now s2 contains nodes in reverse postorder.
+* Pop all nodes from s2 to get postorder.
+
+
 # As we are pushing the root first, and then left and right,
 if we pop st1 and push it in st2 we get root at bottom of the stack st2
 
