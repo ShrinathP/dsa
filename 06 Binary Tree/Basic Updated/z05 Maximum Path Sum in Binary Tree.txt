@@ -1,0 +1,35 @@
+/*
+Striver Explanation 
+*/
+
+
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int val) { this.val = val; }
+}
+
+class Solution {
+    int maxPathSum = Integer.MIN_VALUE;
+
+    public int maxPathSum(TreeNode root) {
+        maxPathSumHelper(root);
+        return maxPathSum;
+    }
+
+    private int maxPathSumHelper(TreeNode node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int leftSum = Math.max(0, maxPathSumHelper(node.left));
+        int rightSum = Math.max(0, maxPathSumHelper(node.right));
+
+// Calculate the maximum sum in this Path
+        maxPathSum = Math.max(maxPathSum, node.val + leftSum + rightSum);
+
+//return the path of the current node and either left or right, whichever is maximum
+        return node.val + Math.max(leftSum, rightSum);
+    }
+}
