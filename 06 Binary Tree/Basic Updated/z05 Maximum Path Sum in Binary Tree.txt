@@ -29,6 +29,7 @@ class Solution {
 // Calculate the maximum sum in this Path
         maxPathSum = Math.max(maxPathSum, node.val + leftSum + rightSum);
 
+//you know about the max path from this node so
 //return the path of the current node and either left or right, whichever is maximum
         return node.val + Math.max(leftSum, rightSum);
     }
