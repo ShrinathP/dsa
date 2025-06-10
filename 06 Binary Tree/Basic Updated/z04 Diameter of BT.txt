@@ -1,1 +1,3 @@
 longest Path between 2 nodes
+Calculate the leftHeight + rightHeight on each node
+Max of all of these calculations is the longest Path between 2 nodes
