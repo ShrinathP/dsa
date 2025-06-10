@@ -1,3 +1,56 @@
+/*
+Diameter of a Binary Tree
 longest Path between 2 nodes
 Calculate the leftHeight + rightHeight on each node
 Max of all of these calculations is the longest Path between 2 nodes
+Same code as max height of the tree, calculate currentDiameter at each point and
+keep hold of a maxDiameter Variable
+*/
+
+
+class Node {
+    int data;
+    Node left, right;
+
+    public Node(int data) {
+        this.data = data;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+class BinaryTree {
+    Node root;
+    int maxDiameter = 0;
+
+    int calculateDiameter(Node node) {
+        if (node == null) {
+            return 0;
+        }
+
+        int leftHeight = calculateDiameter(node.left);
+        int rightHeight = calculateDiameter(node.right);
+        int currentDiameter = leftHeight + rightHeight;
+
+        maxDiameter = Math.max(maxDiameter, currentDiameter);
+
+        return 1 + Math.max(leftHeight, rightHeight);
+    }
+
+    int getDiameter() {
+        calculateDiameter(root);
+        return maxDiameter;
+    }
+
+
+    public static void main(String[] args) {
+        BinaryTree tree = new BinaryTree();
+        tree.root = new Node(1);
+        tree.root.left = new Node(2);
+        tree.root.right = new Node(3);
+        tree.root.left.left = new Node(4);
+        tree.root.left.right = new Node(5);
+
+        System.out.println("The diameter of the binary tree is: " + tree.getDiameter());
+    }
+}
