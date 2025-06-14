@@ -1,0 +1,49 @@
+/*
+DFS Iterative with Stack
+chatgpt solution
+
+Use Stack of TreeNode Array, Hold Pair of Nodes in TreeNode Array
+Stack<TreeNode[]> stack = new Stack<>();
+
+Time complexity O(N)
+*/
+
+
+// Definition for a binary tree node.
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+class Solution {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+    Stack<TreeNode[]> stack = new Stack<>();
+    stack.push(new TreeNode[]{p, q});
+
+    while (!stack.isEmpty()) {
+        TreeNode[] pair = stack.pop();
+        TreeNode node1 = pair[0], node2 = pair[1];
+
+        if (node1 == null || node2 == null) {
+            if (node1 != node2) return false;
+            continue;
+        }
+
+        if (node1.val != node2.val) return false;
+
+        stack.push(new TreeNode[]{node1.left, node2.left});
+        stack.push(new TreeNode[]{node1.right, node2.right});
+    }
+
+    return true;
+}
+
+}
