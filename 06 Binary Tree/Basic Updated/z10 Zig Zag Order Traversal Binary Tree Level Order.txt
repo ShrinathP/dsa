@@ -1,0 +1,70 @@
+/*
+explanation Striver
+Core logic
+We use a queue for level order traversal and a boolean flag to control the direction.
+
+
+🔍 Step-by-Step:
+1. Initialize:
+Queue<TreeNode> queue → For BFS traversal.
+boolean leftToRight = true → Direction flag.
+2. While the queue is not empty (i.e., more nodes to process):
+Get the size of the current level.
+Create an array row[size] to store values in correct order.
+For each node in the current level:
+Poll the node from the queue.
+Decide index to insert value:
+If leftToRight, insert at i
+Else insert at size - 1 - i
+Add children (left, right) to the queue for the next level.
+Add the completed row (converted to list) to the result.
+Flip the direction (leftToRight = !leftToRight).
+*/
+
+
+// Definition for a binary tree node.
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (root == null) return result;
+
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        boolean leftToRight = true;
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            Integer[] row = new Integer[size];
+
+            for (int i = 0; i < size; i++) {
+                TreeNode node = queue.poll();
+
+                // calculate index based on traversal direction
+                int index = leftToRight ? i : size - 1 - i;
+                row[index] = node.val;
+
+                if (node.left != null) queue.offer(node.left);
+                if (node.right != null) queue.offer(node.right);
+            }
+
+            result.add(Arrays.asList(row));
+            leftToRight = !leftToRight;
+        }
+
+        return result;
+    }
+}
+

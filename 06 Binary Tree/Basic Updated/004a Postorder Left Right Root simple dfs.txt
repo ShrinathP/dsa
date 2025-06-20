@@ -1,6 +1,14 @@
 //Take U forward
 //Left right Node
 
+/*
+Steps - Node is last
+        1. First recur on left subtree
+        2. Then recur on right subtree
+        3. Now deal with the node
+
+*/
+
 
 class Solution {
     private void dfs(TreeNode node, List<Integer> postorder) {

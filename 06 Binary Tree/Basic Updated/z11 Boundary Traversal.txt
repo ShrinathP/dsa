@@ -1,0 +1,91 @@
+/*
+Striver Explanation, code chatgpt
+Logic
+✅ Definition:
+Boundary traversal =
+Left Boundary (excluding leaf)
+All Leaf Nodes (left to right)
+Right Boundary (excluding leaf, in reverse)
+
+
+🧠 Explanation:
+1. Root Node:
+Add root only if it's not a leaf.
+
+2. Left Boundary:
+Start from root.left.
+Keep going left (or right if left is null).
+Add only non-leaf nodes.
+
+3. Leaf Nodes:
+Do DFS and add all leaf nodes (left to right).
+
+4. Right Boundary:
+Start from root.right.
+Keep going right (or left if right is null).
+Add only non-leaf nodes.
+Store in a stack to reverse the order.
+*/
+
+
+// Definition for a binary tree node.
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+class Solution {
+    public List<Integer> boundaryOfBinaryTree(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) return result;
+        if (!isLeaf(root)) result.add(root.val);
+
+        // 1. Left boundary
+        TreeNode node = root.left;
+        while (node != null) {
+            if (!isLeaf(node)) result.add(node.val);
+            node = (node.left != null) ? node.left : node.right;
+        }
+
+        // 2. All leaf nodes
+        addLeaves(root, result);
+
+        // 3. Right boundary (collect then reverse)
+        Stack<Integer> stack = new Stack<>();
+        node = root.right;
+        while (node != null) {
+            if (!isLeaf(node)) stack.push(node.val);
+            node = (node.right != null) ? node.right : node.left;
+        }
+        while (!stack.isEmpty()) result.add(stack.pop());
+
+        return result;
+    }
+
+    //leaf check logic
+    private boolean isLeaf(TreeNode node) {
+        return node.left == null && node.right == null;
+    }
+
+    private void addLeaves(TreeNode node, List<Integer> result) {
+        //check if current node is leaf, then only add
+        if (isLeaf(node)) {
+            result.add(node.val);
+            return;
+        }
+
+        //dfs
+        if (node.left != null) addLeaves(node.left, result);
+        if (node.right != null) addLeaves(node.right, result);
+    }
+}
+
+

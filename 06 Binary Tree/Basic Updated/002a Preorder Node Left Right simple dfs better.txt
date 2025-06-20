@@ -2,8 +2,15 @@
 //Take u forward
 
 //Maintain a List of preorder values
-//Add root value to it
-//Call left and then right
+
+/*
+Steps
+        1. First deal with the node
+        2. Then recur on left subtree (go deep left)
+        3. Finally recur on right subtree
+
+*/
+
 /*
 O(H) where H is the height of the Tree
 */

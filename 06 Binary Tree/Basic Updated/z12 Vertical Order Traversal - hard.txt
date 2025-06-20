@@ -1,0 +1,128 @@
+/*
+Striver Explanation, code chatgpt
+
+1. Consider center vertical line as 0th line
+2. Left of center line as -1, right of center line as 1
+and so on
+-2 -1 0 1 2
+3. For Depth Keep Increasing the Level number
+0
+1
+2
+
+Use any traversal and assign levels for every node
+We are using level order traversal here
+
+Nested TreeMap structure: to hold the x as vertical line key
+TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> map;
+Each TreeMap will have a Treemap for every vertical line level
+Outer key = column (x)
+Inner key = row (y)
+Value = min-heap to store multiple nodes at same (x, y) sorted by value
+
+Why PriorityQueue
+Using a PriorityQueue here ensures:
+Values are stored in natural order (min-heap).
+When we extract them later with poll(), they come out sorted.
+PriorityQueue is used to sort multiple values at the same (x, y).
+
+
+
+BFS Queue
+Queue<Tuple> q = new LinkedList<>();
+BFS ensures top-to-bottom order. We traverse with:
+left → x - 1, y + 1
+right → x + 1, y + 1
+
+
+*/
+
+
+// Definition for a binary tree node.
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+class Tuple {
+    TreeNode node;
+    int row;
+    int col;
+
+    public Tuple(TreeNode _node, int _row, int _col) {
+        node = _node;
+        row = _row;
+        col = _col;
+    }
+}
+
+class Tuple {
+    TreeNode node;
+    int row;
+    int col;
+    public Tuple(TreeNode _node, int _row, int _col) {
+        node = _node;
+        row = _row;
+        col = _col;
+    }
+}
+
+class Solution {
+    public List<List<Integer>> verticalTraversal(TreeNode root) {
+        TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> map = new TreeMap<>();
+        Queue<Tuple> q = new LinkedList<Tuple>();
+        q.offer(new Tuple(root, 0, 0));
+        
+        while (!q.isEmpty()) {
+            Tuple tuple = q.poll();
+            TreeNode node = tuple.node;
+            int x = tuple.row;
+            int y = tuple.col;
+
+// If its the first time for this vertical line, add a TreeMap
+            if (!map.containsKey(x)) {
+                map.put(x, new TreeMap<>());
+            }
+//If its the first time horizontal level inside the vertical line, add min heap          
+            if (!map.get(x).containsKey(y)) {
+                map.get(x).put(y, new PriorityQueue<>());
+            }
+
+//There is already a min Heap, just add
+            map.get(x).get(y).offer(node.val);
+
+//Add left and right
+            if (node.left != null) {
+                q.offer(new Tuple(node.left, x - 1, y + 1));
+            }
+            if (node.right != null) {
+                q.offer(new Tuple(node.right, x + 1, y + 1));
+            }
+        }
+
+//Traverse the treemap
+        List<List<Integer>> list = new ArrayList<>();
+        for (TreeMap<Integer, PriorityQueue<Integer>> ys : map.values()) {
+            list.add(new ArrayList<>());
+            for (PriorityQueue<Integer> nodes : ys.values()) {
+                while (!nodes.isEmpty()) {
+                    System.out.println(nodes.peek());
+                    list.get(list.size() - 1).add(nodes.poll());
+                }
+            }
+        }
+        return list;
+    }
+}
+
+
+
+
