@@ -1,9 +1,13 @@
 /*
-Kevin Naughton
+
+Kevin Naughton / Chatgpt 
 
 As top to bottom is said its a BFS solution
 Add level order elements 
-Pop the last element and add to the result
+Poll or remove the element at the front of the queue
+Check the iterator size - 
+if i reached the size length that means - polled node was the last of the queue
+
 */
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {

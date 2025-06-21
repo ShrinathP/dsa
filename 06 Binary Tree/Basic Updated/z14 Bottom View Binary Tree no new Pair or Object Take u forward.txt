@@ -1,5 +1,7 @@
 //Take u forward
 //Vertical Order Traversal
+//Can be done via a pair class also,
+//Here a new variable hd is added
 
 class Solution
 {
@@ -15,6 +17,11 @@ class Solution
         while(!q.isEmpty()) {
             Node temp = q.remove();
             int hd = temp.hd; 
+            
+            // as subsequent put at this level will replace the old values
+            //no check for null needed, as the last added node at that level will 
+            //be the bottom view
+
             map.put(hd, temp.data); 
             if(temp.left != null) {
                 temp.left.hd = hd - 1; 

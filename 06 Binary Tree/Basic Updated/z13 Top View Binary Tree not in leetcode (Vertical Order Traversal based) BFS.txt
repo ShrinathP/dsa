@@ -37,7 +37,9 @@ class Solution
             Pair it = q.remove();
             int hd = it.hd; 
             Node temp = it.node; 
+
 //if map holds nothing at that level, put the node data there
+//basically the first top view node at that level
             if(map.get(hd) == null) map.put(hd, temp.data); 
 
 //add left and right of current to the queue
