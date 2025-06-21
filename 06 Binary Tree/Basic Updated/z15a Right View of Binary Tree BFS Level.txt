@@ -4,7 +4,7 @@ Kevin Naughton / Chatgpt
 
 As top to bottom is said its a BFS solution
 Add level order elements 
-Poll or remove the element at the front of the queue
+Poll or remove the element at the front of the queue (prefer poll as it throws null)
 Check the iterator size - 
 if i reached the size length that means - polled node was the last of the queue
 
