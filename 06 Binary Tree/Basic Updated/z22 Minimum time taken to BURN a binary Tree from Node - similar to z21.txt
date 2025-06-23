@@ -1,0 +1,94 @@
+/*
+striver explanation
+chatgpt sol
+
+
+🧠 Logic:
+1. Map Parents:
+- Create a parentMap to allow moving upward from any node.
+
+2. Find Target Node:
+- Locate the TreeNode with value = target.
+
+3. BFS from Target:
+- Each BFS level = 1 unit time
+- Traverse neighbors: left, right, parent
+- Use visited set to prevent cycles
+- Increment time only if new nodes are burned in that step
+
+TC - O(N)
+SC - O(N) - Queue + Visited + parentMap
+*/
+
+
+
+
+class Solution {
+    public int minTime(TreeNode root, int target) {
+        Map<TreeNode, TreeNode> parentMap = new HashMap<>();
+        TreeNode targetNode = mapParentsAndFindTarget(root, target, parentMap);
+
+        Queue<TreeNode> q = new LinkedList<>();
+        Set<TreeNode> visited = new HashSet<>();
+        q.offer(targetNode);
+        visited.add(targetNode);
+
+        int time = 0;
+        while (!q.isEmpty()) {
+            int size = q.size();
+            boolean burnt = false;
+
+            for (int i = 0; i < size; i++) {
+                TreeNode node = q.poll();
+
+                // Left child
+                if (node.left != null && !visited.contains(node.left)) {
+                    visited.add(node.left);
+                    q.offer(node.left);
+                    burnt = true;
+                }
+
+                // Right child
+                if (node.right != null && !visited.contains(node.right)) {
+                    visited.add(node.right);
+                    q.offer(node.right);
+                    burnt = true;
+                }
+
+                // Parent
+                TreeNode parent = parentMap.get(node);
+                if (parent != null && !visited.contains(parent)) {
+                    visited.add(parent);
+                    q.offer(parent);
+                    burnt = true;
+                }
+            }
+
+            if (burnt) time++;
+        }
+
+        return time;
+    }
+
+    private TreeNode mapParentsAndFindTarget(TreeNode root, int target, Map<TreeNode, TreeNode> parentMap) {
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+        TreeNode targetNode = null;
+
+        while (!q.isEmpty()) {
+            TreeNode node = q.poll();
+            if (node.val == target) targetNode = node;
+
+            if (node.left != null) {
+                parentMap.put(node.left, node);
+                q.offer(node.left);
+            }
+            if (node.right != null) {
+                parentMap.put(node.right, node);
+                q.offer(node.right);
+            }
+        }
+
+        return targetNode;
+    }
+}

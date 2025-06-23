@@ -1,0 +1,22 @@
+/*
+Check Children sum property of binary tree
+chatgpt solution
+
+A binary tree satisfies the Children Sum Property if every node’s value is equal to the sum of its left and right child values.
+ Leaf nodes are considered valid by default.
+*/
+
+
+class Solution {
+    public boolean isChildrenSum(TreeNode root) {
+        if (root == null || (root.left == null && root.right == null))
+            return true;
+
+        int leftVal = (root.left != null) ? root.left.val : 0;
+        int rightVal = (root.right != null) ? root.right.val : 0;
+
+        return (root.val == leftVal + rightVal)
+            && isChildrenSum(root.left)
+            && isChildrenSum(root.right);
+    }
+}

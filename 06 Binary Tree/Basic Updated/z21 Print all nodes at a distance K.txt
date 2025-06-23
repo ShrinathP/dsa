@@ -1,0 +1,110 @@
+/*
+For a given node there will be nodes at K distance in downward direction
+and also in the upward direction
+
+As we travel down we need to mark parents of the current node
+and hold in a Map
+
+Iterate again, create a visited node as we go down,
+if the node is already visited then we dont have to add it to the queue, it was a parent 
+at a distance of k
+
+🧠 Logic:
+🔹 Step 1: Track Parents
+- Use markParents() to create a mapping: child → parent
+- Enables moving upward during traversal
+
+🔹 Step 2: BFS from target
+- Use BFS to go K levels deep from the target node
+- At each level, traverse: radially outwards
+- left child
+- right child
+- parent
+- Use visited set to avoid cycles
+
+🔹 Step 3: Collect Result
+- When distance K is reached, collect all node values from queue.
+
+** What is the use of visited **
+✅ Prevent Revisiting Nodes
+Without visited, the BFS could cycle between:
+
+A node → its parent → back to the node.
+This would cause:
+Infinite loops
+Repeated nodes in output
+
+       3
+      / \
+     5   1
+    /
+   6
+
+Target = 5, K = 2
+
+→ Step 1: from 5 → visit 6, 3
+→ Step 2: from 3 → revisit 5 ❌ (infinite loop if not tracked)
+*/
+
+
+class Solution {
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
+        Map<TreeNode, TreeNode> parentMap = new HashMap<>();
+        markParents(root, parentMap);
+        
+        Queue<TreeNode> q = new LinkedList<>();
+        Set<TreeNode> visited = new HashSet<>();
+        q.offer(target);
+        visited.add(target);
+
+        int dist = 0;
+        while (!q.isEmpty()) {
+            if (dist == K) break;
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                TreeNode node = q.poll();
+
+                // check left child
+                if (node.left != null && !visited.contains(node.left)) {
+                    visited.add(node.left);
+                    q.offer(node.left);
+                }
+
+                // check right child
+                if (node.right != null && !visited.contains(node.right)) {
+                    visited.add(node.right);
+                    q.offer(node.right);
+                }
+
+                // check parent
+                TreeNode parent = parentMap.get(node);
+                if (parent != null && !visited.contains(parent)) {
+                    visited.add(parent);
+                    q.offer(parent);
+                }
+            }
+            dist++;
+        }
+
+        List<Integer> result = new ArrayList<>();
+        while (!q.isEmpty()) result.add(q.poll().val);
+        return result;
+    }
+
+    private void markParents(TreeNode root, Map<TreeNode, TreeNode> parentMap) {
+        Queue<TreeNode> q = new LinkedList<>();
+        q.offer(root);
+        while (!q.isEmpty()) {
+            TreeNode node = q.poll();
+            if (node.left != null) {
+                parentMap.put(node.left, node);
+                q.offer(node.left);
+            }
+            if (node.right != null) {
+                parentMap.put(node.right, node);
+                q.offer(node.right);
+            }
+        }
+    }
+}
+

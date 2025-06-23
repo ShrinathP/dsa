@@ -1,3 +1,22 @@
+/*
+//Take U forward
+//If you have got both the nodes under you -- you are the LCA
+
+if root.left is not null and root.right is not null, you are the LCA
+// Binary Tree Structure:
+//          1
+//        /   \
+//       2     3
+//     /   \   / \
+//    4     5 8   9
+//         / \
+//        6   7
+
+
+eg lca(4,7)
+Find a node under which both the nodes are there ,here 2
+*/
+
 
 /* Take U forward
 TC O(N) no 2 arraylist solution
@@ -8,10 +27,25 @@ TC O(N) no 2 arraylist solution
     
 if elseif else loop
 */
+
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
 class Solution {
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         
         //base case
+        //return if match case*
         if(root == null || root == p || root == q){
             return root;
         }
@@ -19,6 +53,8 @@ class Solution {
         TreeNode left = lowestCommonAncestor(root.left, p, q);
         TreeNode right = lowestCommonAncestor(root.right, p, q);
         
+        //while coming back from the current node -- if i have non nulls on both sides
+        //i.e. match case has been triggered* return the root
         //result
         if(left == null){
             return right; //check on right
@@ -26,7 +62,7 @@ class Solution {
         } else if(right == null){
             return left;
             
-        } else{
+        } else {
             //both left and right have been checked and are non nulls
             //we found our result
             return root;

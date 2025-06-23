@@ -1,0 +1,72 @@
+/*
+Striver explanation
+Check Children sum property of binary tree
+chat gpt sol
+
+Note at * even else will work as per strivers code because any one of the left or
+right we would be making it equal to the root, so sum would be greater
+
+For every node:
+node.val = (left != null ? left.val : 0) + (right != null ? right.val : 0)
+
+
+
+🔁 Logic Breakdown:
+🔹 1. Top-Down Pass (Preorder):
+At each node:
+- Compute childSum = left.val + right.val
+- If childSum >= root.val → set root.val = childSum
+- Else → push root.val down to children 
+(set left.val = root.val and/or right.val = root.val)
+
+🔹 2. Bottom-Up Pass (Postorder):
+- After the recursion (once children are updated), re-calculate:
+root.val = left.val + right.val
+- This fixes the parent to match new child values after recursive changes.
+
+✅ Why This Works:
+Preorder ensures we don’t violate child sum during traversal
+Postorder fixes parent values after children are adjusted
+
+TC  O(N) - recursive traversal on the nodes
+SC O(H) - height of the tree
+
+
+      50
+     /  \
+    7    2
+   / \    \
+  3   5    1
+
+50 value is assigned to 7 and 2 node values
+*/
+
+
+class Solution {
+    public void changeTree(TreeNode root) {
+        if (root == null) return;
+
+        int childSum = 0;
+        if (root.left != null) childSum += root.left.val;
+        if (root.right != null) childSum += root.right.val;
+
+        if (childSum >= root.val) {
+            root.val = childSum;
+        } else {
+            if (root.left != null) root.left.val = root.val;
+            if (root.right != null) root.right.val = root.val;
+            //*
+        }
+
+        changeTree(root.left);
+        changeTree(root.right);
+
+        //backtrack
+        // Postorder update to ensure final property holds
+        int total = 0;
+        if (root.left != null) total += root.left.val;
+        if (root.right != null) total += root.right.val;
+        if (root.left != null || root.right != null) root.val = total;
+    }
+}
+

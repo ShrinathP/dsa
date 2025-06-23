@@ -1,0 +1,91 @@
+
+//Here we are using 2 queues one to traverse and other to add width at each level
+/*
+Index a binary tree 
+Also index imaginary nodes
+At a given index - subtract righmost minus left most index + 1 - that will be max width
+
+Width of a level = rightmost index - leftmost index + 1
+
+
+Zero based indexing
+if root is indexed 0 
+left node will be 2*i + 1
+right node will be 2*i + 2
+
+One based indexing
+if root is indexed 1
+left node will be 2*i
+right node will be 2*i + 1
+
+
+1. at any level whenever we reach
+2. we get the start and end index to calculate width
+3. we add the qIndex as 2*currentIndex for lefter node and 2*currentIndex+1 for righter
+
+Normalizing indexes
+🎯 Why normalize indices in BFS (e.g., idx = currentIdx - minIndex)?
+✅ 1. Prevent Integer Overflow:
+In deep trees (say depth > 30), using formulas like 2 * idx + 1 can cause values to exceed int range.
+
+Normalizing keeps indices small by resetting the starting index to 0 at each level.
+ Example (without normalization):
+If node at level 30 has index 2^30 = 1,073,741,824, multiplying further may exceed Integer.MAX_VALUE.
+
+*/
+
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+class Pair {
+    TreeNode node;
+    int num;
+    Pair(TreeNode _node, int _num) {
+        num = _num;
+        node = _node;
+    }
+}
+
+class Solution {
+    public int widthOfBinaryTree(TreeNode root) {
+        if (root == null) return 0;
+        int ans = 0;
+        Queue<Pair> q = new LinkedList<>();
+        q.offer(new Pair(root, 0));
+
+        while (!q.isEmpty()) {
+            int size = q.size();
+            int mmin = q.peek().num; // to make the id starting from zero
+            int first = 0, last = 0;
+
+            for (int i = 0; i < size; i++) {
+                int cur_id = q.peek().num - mmin;
+                TreeNode node = q.peek().node;
+                q.poll();
+
+                if (i == 0) first = cur_id;
+                if (i == size - 1) last = cur_id;
+
+                if (node.left != null)
+                    q.offer(new Pair(node.left, cur_id * 2 + 1));
+                if (node.right != null)
+                    q.offer(new Pair(node.right, cur_id * 2 + 2));
+            }
+
+            ans = Math.max(ans, last - first + 1);
+        }
+
+        return ans;
+    }
+}
+
