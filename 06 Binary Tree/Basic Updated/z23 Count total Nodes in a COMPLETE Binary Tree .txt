@@ -1,0 +1,28 @@
+/*
+
+O(N) Solution
+Basic Inorder Traversal
+
+🧠 Why int[] count?
+Java is pass-by-value.
+Using an array allows us to simulate pass-by-reference for primitive types.
+*/
+
+
+
+int countNodes(TreeNode root) {
+    int[] count = new int[1];          // mutable counter
+    inorder(root, count);
+    return count[0];
+}
+
+void inorder(TreeNode node, int[] count) {
+    if (node == null)
+        return;
+
+    count[0]++;                         // count current node
+    inorder(node.left, count);         // recurse left
+    inorder(node.right, count);        // recurse right
+}
+
+

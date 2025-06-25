@@ -1,0 +1,60 @@
+/*
+Striver explanation, chatgpt Sol
+Use complete tree property
+Calculate height of the tree - number of nodes is 2 raised to height  minus 1
+
+✅ Key Idea:
+For each subtree:
+If left height == right height, it's a perfect binary subtree → node count = 2^h - 1
+Else, recurse on left and right.
+
+Traverse the tree
+Check for complete subtrees of every node
+if its a complete subtree then it has 2 raised to height  minus 1 nodes
+Current root (1) + left height of tree + right height of tree
+
+Time complexity = O(log N) whole square
+Height of tree at any instance will not be more than log N
+Also we are not traversing all nodes, only log N nodes
+
+⏱ Time Complexity: O(log² N)
+O(log N) to compute height.
+At most log N levels in recursion.
+
+
+*/
+
+class Solution {
+    public int countNodes(TreeNode root) {
+        if (root == null) return 0;
+
+        int leftHeight = getLeftHeight(root);
+        int rightHeight = getRightHeight(root);
+
+        // If both heights are equal → it's a perfect tree
+        if (leftHeight == rightHeight)
+            return (1 << leftHeight) - 1;
+
+        // if not equal again go deep
+        // Otherwise, recurse on both subtrees
+        return 1 + countNodes(root.left) + countNodes(root.right);
+    }
+
+    private int getLeftHeight(TreeNode node) {
+        int height = 0;
+        while (node != null) {
+            node = node.left;
+            height++;
+        }
+        return height;
+    }
+
+    private int getRightHeight(TreeNode node) {
+        int height = 0;
+        while (node != null) {
+            node = node.right;
+            height++;
+        }
+        return height;
+    }
+}
