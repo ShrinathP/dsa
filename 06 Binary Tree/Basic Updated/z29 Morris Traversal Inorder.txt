@@ -27,19 +27,21 @@ class Solution {
         TreeNode curr = root;
 
         while (curr != null) {
-            //1st No lefts of the root
+            //1st Case -  No lefts of the root
             if (curr.left == null) {
                 res.add(curr.val);
                 curr = curr.right;
             } else {
+                //2nd Case - rightmost node in left subtree - create conn
                 // Find the rightmost node in left subtree (predecessor)
                 
                 TreeNode prev = curr.left; //left subtree root, pree of curr
                 //keep moving right in this left subtree
-                while (prev.right != null && prev.right != curr) {
+                while (prev.right != null && prev.right != curr) { //***
                     prev = prev.right;
                 }
                 
+                //create a thread connection
                 //once null is reached, point it to curr, move the curr to left
                 if (prev.right == null) {
                     // Make a temporary thread to current node
@@ -47,7 +49,9 @@ class Solution {
                     curr = curr.left;
                 } else {
 
-                    //prev.right is pointed to curr, in the above if block, remove the connection, add curr
+                    //3rd case - delete connection   
+                    //prev.right is pointed to curr, //* while breaks at //***
+                    // in the above if block, remove the connection, add curr
                     // Left subtree done → remove thread, visit curr
                     pre.right = null;
                     res.add(curr.val);
