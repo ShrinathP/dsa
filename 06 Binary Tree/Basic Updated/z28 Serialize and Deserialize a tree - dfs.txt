@@ -1,0 +1,69 @@
+/*
+//chatgpt dfs solution
+We can serialize using any method
+dfs or level order traversal
+Serialize the tree to a string using Stringbuilder
+
+Now Use the Serialized String and
+ a Queue to deserialize the string
+
+ 🧠 Logic Explanation:
+✅ Serialization
+Perform preorder traversal.
+Append "null" for empty children to capture structure.
+    1
+   / \
+  2   3
+     / \
+    4   5
+
+serialized → "1,2,null,null,3,4,null,null,5,null,null,"
+
+✅ Deserialization
+Split string into tokens.
+Rebuild recursively:
+null token → return null
+otherwise → build node, then left & right children
+*/
+
+
+public class Codec {
+
+    // Serializes a tree to a single string.
+    public String serialize(TreeNode root) {
+        StringBuilder sb = new StringBuilder();
+        buildString(root, sb);
+        return sb.toString();
+    }
+
+    //dfs preorder
+    private void buildString(TreeNode node, StringBuilder sb) {
+        if (node == null) {
+            sb.append("null,");
+            return;
+        }
+        sb.append(node.val).append(",");
+        buildString(node.left, sb);
+        buildString(node.right, sb);
+    }
+
+    // Deserializes your encoded data to tree.
+    public TreeNode deserialize(String data) {
+        String[] nodes = data.split(",");
+        Queue<String> queue = new LinkedList<>(Arrays.asList(nodes));
+        return buildTree(queue);
+    }
+
+    //for the first it will create a root treenode
+    private TreeNode buildTree(Queue<String> queue) {
+        String val = queue.poll();
+        if (val.equals("null")) return null;
+
+        TreeNode node = new TreeNode(Integer.parseInt(val));
+        node.left = buildTree(queue);
+        node.right = buildTree(queue);
+        return node;
+    }
+}
+
+

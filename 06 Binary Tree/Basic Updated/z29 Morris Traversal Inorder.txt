@@ -1,0 +1,64 @@
+/*
+Todo - print to understand the traversal Visually
+No stack, no recursion traversal
+🧠 Explanation:
+✅ Idea:
+
+Traverse tree without recursion or stack, by creating temporary links (threads) to predecessors in the tree.
+
+✅ How it works:
+🌳 1st case: if left is null, print current node and go right - no lefts of the node
+🌳 2nd case: before going left, make right most node on left subtree connected to current node, then go left
+🌳 3rd case: modified: connection already exists
+if curr's right most node on the left subtree is pointing to curr itself 
+i)print curr
+ii)remove thread
+iii)move curr to right
+Thread already exists → remove it → visit current → go right.
+
+✅ Key insight:
+By temporarily modifying the tree with threads, you avoid extra space.
+*/
+
+
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        TreeNode curr = root;
+
+        while (curr != null) {
+            //1st No lefts of the root
+            if (curr.left == null) {
+                res.add(curr.val);
+                curr = curr.right;
+            } else {
+                // Find the rightmost node in left subtree (predecessor)
+                
+                TreeNode prev = curr.left; //left subtree root, pree of curr
+                //keep moving right in this left subtree
+                while (prev.right != null && prev.right != curr) {
+                    prev = prev.right;
+                }
+                
+                //once null is reached, point it to curr, move the curr to left
+                if (prev.right == null) {
+                    // Make a temporary thread to current node
+                    prev.right = curr;
+                    curr = curr.left;
+                } else {
+
+                    //prev.right is pointed to curr, in the above if block, remove the connection, add curr
+                    // Left subtree done → remove thread, visit curr
+                    pre.right = null;
+                    res.add(curr.val);
+                    curr = curr.right;
+                }
+            }
+        }
+        return res;
+    }
+}
+
+
+
+

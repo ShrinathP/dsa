@@ -1,0 +1,90 @@
+/*
+chatgpt explanation
+Striver Explanation
+
+IMP: First element of the preorder is the root
+
+📌 Key Insight:
+preStart + 1 → preStart + leftSize:
+Covers elements in preorder corresponding to left subtree.
+
+preStart + leftSize + 1 → preEnd:
+Covers elements in preorder corresponding to right subtree.
+
+GIVEN
+preorder: A [B D E] [C F G]
+inorder:  [D B E] A [F C G]
+          | left |root| right|
+
+1. first element in the preorder is the root of the subtree
+2. find that element in the inorder, the left of this elements
+will all be part of the left subtree
+Calculate the size of the left subtree - root - start of inorder
+3. the right of this element will all be part of the right subtree
+
+Given:
+
+Preorder: [A, B, D, E, C, F, G]
+Inorder: [D, B, E, A, F, C, G]
+
+✅ Step 1: Identify root
+First element in current preorder segment → root.
+Here, A (preorder[0]) → root of whole tree.
+
+✅ Step 2: Find root in inorder
+A found at inorder index 3 → splits inorder into:
+Left subtree: inorder[0:2] → [D, B, E]
+Right subtree: inorder[4:6] → [F, C, G]
+Size of left subtree = inRootIdx - inStart = 3 - 0 = 3.
+
+✅ Step 3: Build left subtree
+Left subtree preorder segment immediately follows root:
+preStart = preStart + 1
+preEnd = preStart + leftSize
+Here: preStart=1, preEnd=3 → [B, D, E]
+Left subtree inorder segment: inStart to inRootIdx-1:
+inStart=0, inEnd=2 → [D, B, E]
+
+✅ Step 4: Build right subtree
+Right subtree preorder segment follows left subtree:
+preStart = preStart + leftSize + 1
+preEnd = original preEnd
+Here: preStart=4, preEnd=6 → [C, F, G]
+Right subtree inorder segment: inRootIdx+1 to inEnd:
+inStart=4, inEnd=6 → [F, C, G]
+
+ 
+*/
+
+
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        Map<Integer, Integer> inorderIndexMap = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++)
+            inorderIndexMap.put(inorder[i], i);
+        
+        return build(preorder, 0, preorder.length - 1,
+                     inorder, 0, inorder.length - 1,
+                     inorderIndexMap);
+    }
+
+    private TreeNode build(int[] preorder, int preStart, int preEnd,
+                           int[] inorder, int inStart, int inEnd,
+                           Map<Integer, Integer> inorderIndexMap) {
+        if (preStart > preEnd || inStart > inEnd)
+            return null;
+
+        int rootVal = preorder[preStart];
+        TreeNode root = new TreeNode(rootVal);
+        int inRootIdx = inorderIndexMap.get(rootVal);
+        int leftSize = inRootIdx - inStart;
+
+        root.left = build(preorder, preStart + 1, preStart + leftSize,
+                          inorder, inStart, inRootIdx - 1, inorderIndexMap);
+
+        root.right = build(preorder, preStart + leftSize + 1, preEnd,
+                           inorder, inRootIdx + 1, inEnd, inorderIndexMap);
+
+        return root;
+    }
+}

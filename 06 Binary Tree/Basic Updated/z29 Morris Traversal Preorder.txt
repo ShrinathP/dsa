@@ -1,0 +1,50 @@
+/*
+Striver Explanation
+As it it preorder, only change needed is
+While marking/creating the thread connection, 
+Add the curr node to array list
+*/
+
+
+class Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        TreeNode curr = root;
+
+        while (curr != null) {
+            //1st No lefts of the root
+            if (curr.left == null) {
+                res.add(curr.val);
+                curr = curr.right;
+            } else {
+                // Find the rightmost node in left subtree (predecessor)
+                
+                TreeNode prev = curr.left; //left subtree root, pree of curr
+                //keep moving right in this left subtree
+                while (prev.right != null && prev.right != curr) {
+                    prev = prev.right;
+                }
+                
+                //once null is reached, point it to curr, move the curr to left
+                if (prev.right == null) {
+                    // Make a temporary thread to current node
+                    prev.right = curr;
+                    // res.add(curr.val); // for preorder, when we make thread connection, print
+                    curr = curr.left;
+                } else {
+
+                    //prev.right is pointed to curr, in the above if block, remove the connection, add curr
+                    // Left subtree done → remove thread, visit curr
+                    pre.right = null;
+                    res.add(curr.val); // move this to line to 30 for preorder
+                    curr = curr.right;
+                }
+            }
+        }
+        return res;
+    }
+}
+
+
+
+

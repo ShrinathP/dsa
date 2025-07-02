@@ -1,0 +1,50 @@
+/*
+chatgpt explanation
+Striver Explanation
+
+IMP: Last element of the postorder is the root
+
+🧠 Logic:
+✅ Postorder → last element in segment is the root of current subtree.
+✅ Locate root in inorder:
+Left subtree: inorder[inStart : inRootIdx-1]
+Right subtree: inorder[inRootIdx+1 : inEnd]
+✅ Calculate left subtree size to set postorder ranges:
+left subtree in postorder → postStart to postStart + leftSize - 1
+right subtree in postorder → postStart + leftSize to postEnd - 1
+✅ Recurse for left and right children. 
+*/
+
+
+class Solution {
+    public TreeNode buildTree(int[] inorder, int[] postorder) {
+        Map<Integer, Integer> inorderIndexMap = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++)
+            inorderIndexMap.put(inorder[i], i);
+        
+        return build(postorder, 0, postorder.length - 1,
+                     inorder, 0, inorder.length - 1,
+                     inorderIndexMap);
+    }
+
+    private TreeNode build(int[] postorder, int postStart, int postEnd,
+                           int[] inorder, int inStart, int inEnd,
+                           Map<Integer, Integer> inorderIndexMap) {
+        if (postStart > postEnd || inStart > inEnd)
+            return null;
+
+        int rootVal = postorder[postEnd];                  // last element is root
+        TreeNode root = new TreeNode(rootVal);
+        int inRootIdx = inorderIndexMap.get(rootVal);
+        int leftSize = inRootIdx - inStart;
+
+        root.left = build(postorder, postStart, postStart + leftSize - 1,
+                          inorder, inStart, inRootIdx - 1, inorderIndexMap);
+
+        root.right = build(postorder, postStart + leftSize, postEnd - 1,
+                           inorder, inRootIdx + 1, inEnd, inorderIndexMap);
+
+        return root;
+    }
+}
+
