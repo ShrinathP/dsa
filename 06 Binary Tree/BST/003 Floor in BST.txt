@@ -1,0 +1,42 @@
+/*
+Striver explanation - 
+*/
+
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+public class Solution {
+
+    public static int findFloor(TreeNode<Integer> root, int key) {
+
+        int floor = -1;
+        while (root != null) {
+            if (root.data == key) {
+                floor = root.data;
+                return floor;
+            }
+//root data is less than key, save and move right
+//to find the next closer floor
+            if (root.data < key) {
+                floor = root.data;
+                root = root.right;
+
+            } else {
+                root = root.left;
+            }
+        }
+        return floor;
+    }
+}
+
+

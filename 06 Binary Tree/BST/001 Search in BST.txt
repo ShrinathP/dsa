@@ -1,0 +1,30 @@
+/*
+Striver explanation - 
+In BST all lefts of the current node is lesser than
+current node value - same applies in subtrees
+
+If value is less than current root, move left
+If value is greater, move right
+*/
+
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+class Solution {
+    public TreeNode searchBST(TreeNode root, int val) {
+        while (root != null && root.val != val) {
+            root = val < root.val ? root.left : root.right;
+        }
+        return root;
+    }
+}
