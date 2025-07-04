@@ -1,0 +1,103 @@
+/*
+Striver Explanation
+
+To Delete a node - remove the node
+create a new connection in 2 different ways
+Check images 005b 005c
+
+Edge Cases - 
+If there exists left and right of the node to be deleted - 
+you need to reconnect
+If there doesnt exists left and right, you do not have to reconnect
+
+helper function
+Create a helper function which points to the node which has to be deleted
+
+
+helper function logic:-
+✅ Three Cases
+🔹 1) No left child
+If there’s no left, just return the right child (can be null or a subtree).
+E.g., deleting node 5 with only right child 7 → 5 is replaced with 7.
+
+🔹 2) No right child
+If there’s no right, return the left child.
+E.g., deleting node 5 with only left child 2 → 5 is replaced with 2.
+
+🔹 3) Both children exist
+Find the rightmost node in left subtree (largest in left subtree → inorder predecessor).
+Attach the deleted node’s right subtree as the right child of this rightmost node.
+Finally, return left child to connect it with parent.
+*/
+
+
+class Solution {
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null) {
+            return null;
+        }
+        if (root.val == key) {
+            return helper(root);
+        }
+
+        //keep hold of the root, search for the key
+        TreeNode dummy = root;
+        while (root != null) {
+            if (root.val > key) {
+                if (root.left != null && root.left.val == key) {
+                    root.left = helper(root.left);
+                    break;
+                } else {
+                    root = root.left;
+                }
+            } else {
+                if (root.right != null && root.right.val == key) {
+                    root.right = helper(root.right);
+                    break;
+                } else {
+                    root = root.right;
+                }
+            }
+        }
+        return dummy;
+    }
+
+//helper function
+    public TreeNode helper(TreeNode root) {
+        if (root.left == null) {
+            return root.right;
+        } else if (root.right == null) {
+            return root.left;
+        } else {
+            //root has left and right - findLastRight
+            TreeNode rightChild = root.right;
+            TreeNode lastRight = findLastRight(root.left);
+            lastRight.right = rightChild;
+            return root.left;
+        }
+    }
+
+    public TreeNode findLastRight(TreeNode root) {
+        if (root.right == null) {
+            return root;
+        }
+        return findLastRight(root.right);
+    }
+}
+
+
+public class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode() {}
+    TreeNode(int val) { this.val = val; }
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+
+
