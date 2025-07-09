@@ -1,0 +1,62 @@
+/* 
+1. Inorder Traversal of BST is always sorted
+We can print inorder traversal and then find the Kth smallest Element
+Or
+While traversing Inorder - Keep the count 
+
+2. Reverse Inorder Traversal of BST is always reverse sorted/ decreasing order sorted
+While Traversing Reverse Inorder - Keep the count
+Solution after Kth Smallest Solution
+*/
+
+//Kth Smallest Solution
+
+class Solution {
+    int count = 0;
+    int result = -1;
+
+    public int kthSmallest(TreeNode root, int k) {
+        inorder(root, k);
+        return result;
+    }
+
+    private void inorder(TreeNode node, int k) {
+        if (node == null) return;
+
+        inorder(node.left, k);
+
+        count++;
+        if (count == k) {
+            result = node.val;
+            return;
+        }
+
+        inorder(node.right, k);
+    }
+}
+
+//Kth Largest Solution
+
+class Solution {
+    int count = 0;
+    int result = -1;
+
+    public int kthLargest(TreeNode root, int k) {
+        reverseInorder(root, k);
+        return result;
+    }
+
+    private void reverseInorder(TreeNode node, int k) {
+        if (node == null) return;
+
+        reverseInorder(node.right, k);
+
+        count++;
+        if (count == k) {
+            result = node.val;
+            return;
+        }
+
+        reverseInorder(node.left, k);
+    }
+}
