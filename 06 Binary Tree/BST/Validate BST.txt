@@ -1,0 +1,42 @@
+/*
+Striver explanation
+
+A Binary Search Tree (BST) must satisfy:
+Left subtree contains only nodes with values less than the current node.
+Right subtree contains only nodes with values greater than the current node.
+Both left and right subtrees must also be BSTs.
+
+🔍 Very IMP - Problem with Local Checks:
+Only checking node.left.val < node.val < node.right.val fails in deeper levels.
+Example of failure:
+
+    5
+   / \
+  1   6
+     /
+    4  ← invalid (4 < 5 but is in right subtree)
+
+As you go deep keep note of Range Check needed
+✅ Correct Logic: Use Min/Max Bounds
+As you traverse:
+- Track the allowed value range (min, max) for each node.
+- Root: allowed range is (-∞, ∞)
+- Left child: range is (-∞, node.val)
+- Right child: range is (node.val, ∞)
+
+*/
+
+
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return validate(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean validate(TreeNode node, long min, long max) {
+        if (node == null) return true;
+        if (node.val <= min || node.val >= max) return false;
+
+        return validate(node.left, min, node.val) &&
+               validate(node.right, node.val, max);
+    }
+}
