@@ -1,0 +1,49 @@
+
+/*
+Striver explanation
+
+Every time we go left - update the upper bound to root val
+If we go right - then pass the upper bound as it is
+
+You're using int[] i as a mutable integer wrapper to simulate a pass-by-reference behavior for the index i
+In Java:
+Primitives (like int) are passed by value, so updating an int i in recursive calls won't reflect outside.
+Using a 1-element array (int[] i = new int[]{0}) allows you to share and update the same index across all recursive calls.
+
+Passing ub upper bound from prev MAX_VALUE
+
+IMP:  why only one bound works ? Only uses upper bound (bound)
+=======
+
+No explicit lower bound is passed
+1. This works because preorder traversal ensures order:
+2. The left subtree is built with bound = root.val (so values must be < root)
+3. IMP -- The right subtree is built with same upper bound but starts after all left-side values are consumed
+4. Since preorder guarantees root → left → right, values violating lower bound never appear
+
+This works because all the lesser than root values are consumed in dfs traversal
+*/
+
+class TreeNode {
+    int val;
+    TreeNode left, right;
+    TreeNode(int x) { val = x; }
+}
+
+class Solution {
+    public TreeNode bstFromPreorder(int[] A) {
+        return bstFromPreorder(A, Integer.MAX_VALUE, new int[]{0});
+    }
+
+    private TreeNode bstFromPreorder(int[] A, int bound, int[] i) {
+        if (i[0] == A.length || A[i[0]] > bound) return null;
+
+        TreeNode root = new TreeNode(A[i[0]++]);
+        root.left = bstFromPreorder(A, root.val, i);
+        root.right = bstFromPreorder(A, bound, i);
+        return root;
+    }
+}
+
+
+

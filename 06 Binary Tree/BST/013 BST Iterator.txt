@@ -1,0 +1,88 @@
+
+/*
+Striver explanation
+
+🧠 Core Idea:
+Use a stack to store the path to the next smallest node.
+- Initially, push all left children from root to leftmost node.
+- On next():
+    - Pop the top node (current smallest)
+    - Push left path of its right child (if exists)
+    - This ensures the stack top always points to the next node in inorder.
+
+
+BSTIterator(TreeNode root):
+Push all left nodes from root to stack
+
+hasNext():
+Return true if stack is not empty
+
+next():
+1. Pop top node
+2. Push all left nodes from its right child
+3. Return popped node’s value
+
+*/
+
+import java.util.Stack;
+
+class TreeNode {
+    int val;
+    TreeNode left, right;
+    TreeNode(int x) { val = x; }
+}
+
+class BSTIterator {
+    private Stack<TreeNode> stack = new Stack<>();
+
+    public BSTIterator(TreeNode root) {
+        pushLeft(root);
+    }
+
+    private void pushLeft(TreeNode node) {
+        while (node != null) {
+            stack.push(node);
+            node = node.left;
+        }
+    }
+
+    public int next() {
+        TreeNode curr = stack.pop();
+        pushLeft(curr.right);
+        return curr.val;
+    }
+
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Build the BST:       7
+        //                    /   \
+        //                   3     15
+        //                        /  \
+        //                       9    20
+
+        TreeNode root = new TreeNode(7);
+        root.left = new TreeNode(3);
+        root.right = new TreeNode(15);
+        root.right.left = new TreeNode(9);
+        root.right.right = new TreeNode(20);
+
+        BSTIterator iterator = new BSTIterator(root);
+
+        while (iterator.hasNext()) {
+            System.out.print(iterator.next() + " ");
+        }
+        // Output: 3 7 9 15 20
+    }
+}
+
+
+
+
+
+
+

@@ -1,0 +1,46 @@
+
+/*
+Inorder Successor
+The first value your encounter which is greater than given value - is the answer
+
+1. Initialize: successor = null
+2. While root ≠ null:
+   a. If p.val < root.val:
+       → root may be successor → store it
+       → move to root.left
+   b. Else:
+       → move to root.right
+3. Return successor
+
+🧠 Logic:
+Traverse from root:
+If p.val < root.val, go left, update successor
+If p.val > root.val, go right, update predecessor
+*/
+
+class TreeNode {
+    int val;
+    TreeNode left, right;
+    TreeNode(int x) { val = x; }
+}
+
+
+public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
+    TreeNode successor = null;
+
+    while (root != null) {
+        if (p.val < root.val) {
+            successor = root;         // potential successor
+            root = root.left;
+        } else {
+            root = root.right;
+        }
+    }
+
+    return successor;
+}
+
+
+
+
+

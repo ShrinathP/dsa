@@ -1,0 +1,79 @@
+
+/*
+Chatgpt solution
+Using a MONOTONIC Stack
+
+✅ Logic: Construct BST from Preorder Traversal (Using Stack)
+We use a monotonic stack to simulate BST insertion, leveraging the preorder property:
+Root → Left → Right
+
+🔹 Idea:
+Keep a stack of (node, upper bound) pairs
+Each new value is inserted either:
+As left child (if smaller than top of stack)
+Or, pop until it fits as right child of a valid ancestor
+
+🧠 Step-by-Step Algorithm:
+1. Initialize root with preorder[0]
+2. Push (root, ∞) into stack → means root can have right children up to ∞
+3. For each value in preorder[1:]:
+If value < stack.top.node.val:
+    - It must be the left child of stack.top.node
+    - Push (newNode, stack.top.node.val)
+Else:
+- Pop stack until value < top.bound (means we found the parent)
+- Insert as right child of the last valid node
+- Push (newNode, parent’s bound)
+*/
+
+class TreeNode {
+    int val;
+    TreeNode left, right;
+    TreeNode(int x) { val = x; }
+}
+
+class Pair {
+    TreeNode node;
+    int bound;
+
+    Pair(TreeNode node, int bound) {
+        this.node = node;
+        this.bound = bound;
+    }
+}
+
+class Solution {
+    public TreeNode bstFromPreorder(int[] preorder) {
+        if (preorder.length == 0) return null;
+
+        TreeNode root = new TreeNode(preorder[0]);
+        Stack<Pair> stack = new Stack<>();
+        //push root
+        stack.push(new Pair(root, Integer.MAX_VALUE));
+
+        for (int i = 1; i < preorder.length; i++) {
+            int val = preorder[i];
+            TreeNode newNode = new TreeNode(val);
+
+            //if curr node val is less - attach and push to stack
+            //this will keep happening for 5 4 3 1 
+            if (val < stack.peek().node.val) {
+                stack.peek().node.left = newNode;
+                stack.push(new Pair(newNode, stack.peek().node.val));
+            } else {
+                //keep popping until curr node val is greater than bound and add to right
+                while (!stack.isEmpty() && val > stack.peek().bound) {
+                    stack.pop();
+                }
+                stack.peek().node.right = newNode;
+                stack.push(new Pair(newNode, stack.peek().bound));
+            }
+        }
+
+        return root;
+    }
+}
+
+
+
+
