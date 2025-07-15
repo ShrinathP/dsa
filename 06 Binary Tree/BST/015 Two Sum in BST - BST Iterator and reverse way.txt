@@ -1,0 +1,86 @@
+
+/*
+2 BST Iterators - 
+Striver explanation
+
+✅ BST Iterator-Based Two Pointer – Java Solution (O(H) space)
+Use two custom iterators:
+- LeftIterator → simulates inorder (smallest → largest)
+- RightIterator → simulates reverse inorder (largest → smallest)
+
+🧠 Logic:
+left moves forward (inorder)
+right moves backward (reverse inorder)
+Stop when left >= right
+
+🔹 Time: O(N)
+🔹 Space: O(H) each for both stacks
+*/
+
+
+class BSTIterator {
+    Stack<TreeNode> stack = new Stack<>();
+    boolean forward;
+
+    public BSTIterator(TreeNode root, boolean forward) {
+        this.forward = forward;
+        pushAll(root);
+    }
+
+    private void pushAll(TreeNode node) {
+        while (node != null) {
+            stack.push(node);
+            node = forward ? node.left : node.right;
+        }
+    }
+
+    public int next() {
+        TreeNode node = stack.pop();
+        if (forward) // if forwards, go right push all lefts
+            pushAll(node.right);
+        else  // if reverse, go left push all rights
+            pushAll(node.left);
+        return node.val;
+    }
+
+    public boolean hasNext() {
+        return !stack.isEmpty();
+    }
+}
+
+public boolean findTarget(TreeNode root, int k) {
+    if (root == null) return false;
+
+    BSTIterator l = new BSTIterator(root, true);  // Inorder
+    BSTIterator r = new BSTIterator(root, false); // Reverse inorder
+
+    int left = l.next();
+    int right = r.next();
+
+    while (left < right) {
+        int sum = left + right;
+        if (sum == k) return true;
+        else if (sum < k) left = l.next();
+        else right = r.next();
+    }
+
+    return false;
+}
+
+
+class TreeNode {
+    int val;
+    TreeNode left, right;
+    TreeNode(int x) { val = x; }
+}
+
+
+
+
+
+
+
+
+
+
+
