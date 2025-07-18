@@ -1,0 +1,50 @@
+// USING HASHSET
+//chatgpt soln
+// Pending check how Time complexity - 2 ^ n
+/*
+Algorithm
+1. Sort candidates[]
+2. Start recursion from index 0 with empty list and full target
+3. At each step:
+   a. If target == 0 → add path to result set
+   b. If target < 0 or index >= n → return
+4. Two recursive paths:
+   - Include cand[index] → call with index + 1 and target - cand[index]
+   - Exclude cand[index] → skip to next index with a different value (skip duplicates)
+   In the exclusion path, instead of blindly going to index + 1, we skip all duplicate values.
+5. Use HashSet to avoid duplicate combinations
+6. Convert HashSet to List<List<Integer>> at the end
+
+*/
+
+import java.util.*;
+
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Set<List<Integer>> resultSet = new HashSet<>();
+        Arrays.sort(candidates);  // Required to handle duplicates in order
+        backtrack(candidates, 0, target, new ArrayList<>(), resultSet);
+        return new ArrayList<>(resultSet);
+    }
+
+    private void backtrack(int[] cand, int index, int target, List<Integer> path, Set<List<Integer>> result) {
+        if (target == 0) {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+
+        if (index >= cand.length || target < 0) return;
+
+        // Include current number
+        path.add(cand[index]);
+        backtrack(cand, index + 1, target - cand[index], path, result);
+        path.remove(path.size() - 1);  // backtrack
+
+        //IMP
+        // Skip current number and move to next distinct number
+        int next = index + 1;
+        while (next < cand.length && cand[next] == cand[index]) next++;
+        
+        backtrack(cand, next, target, path, result);
+    }
+}
