@@ -2,7 +2,8 @@
 //Take u forward
 //NOTE Pick and Non Pick way, run 2 recursions
 
-//https://www.youtube.com/watch?v=rYkfBRtMJr8&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=53
+//For any number of array the number of subsets will be 2 to the power of N
+Brute Force - Power Set way 2^n * N - check this
 //https://practice.geeksforgeeks.org/problems/subset-sums2234/1
 
 //Time Complexity
