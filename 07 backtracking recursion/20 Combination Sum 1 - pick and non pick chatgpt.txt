@@ -1,3 +1,10 @@
+/*
+Find all the combinations of the numbers in candidates array that sum to a specific target number
+
+Note
+Each number in the candidates can be used any number of times
+*/
+
 import java.util.*;
 
 public class CombinationSum {
