@@ -1,5 +1,6 @@
-//USING HASHSET
+// USING HASHSET
 // ✅ Code (Backtracking + Sorting + Skip Duplicates):
+// Pending check how Time complexity - 2 ^ n
 
 class Solution {
     //Backtracking Problem, chatgpt solution
@@ -23,11 +24,13 @@ class Solution {
         if(target == 0)
             result.add(new ArrayList(list));
         for(int i =start; i<cand.length; i++ ){
+/*            
             //Additional check1 - optional
-            // if (i > start && cand[i] == cand[i - 1]) continue; // skip duplicates
+            if (i > start && cand[i] == cand[i - 1]) continue; // skip duplicates
             // if not using Set we can skip duplicates by checking
             //Additional check2 - optional
-            // if (cand[i] > target) break; // prune if the candidate array value is greater than target
+            if (cand[i] > target) break; // prune if the candidate array value is greater than target
+*/
 
             list.add(cand[i]);
             //passing i + 1 as we dont have to use duplicates
