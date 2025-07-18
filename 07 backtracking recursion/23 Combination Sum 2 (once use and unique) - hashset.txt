@@ -25,6 +25,7 @@ class Solution {
             result.add(new ArrayList(list));
         for(int i =start; i<cand.length; i++ ){
 /*            
+IMP: if you use List<List> then you can skip duplicates using below line check1 and optimize using check2
             //Additional check1 - optional
             if (i > start && cand[i] == cand[i - 1]) continue; // skip duplicates
             // if not using Set we can skip duplicates by checking
