@@ -1,15 +1,16 @@
 //USING HASHSET
+// ✅ Code (Backtracking + Sorting + Skip Duplicates):
 
 class Solution {
-    //Backtracking Problem
+    //Backtracking Problem, chatgpt solution
     //Non Repeatable numbers
-    //Unique Pairs
     //Naresh Gupta
+
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         //Using set as we can remove duplicate pairs of List of Integers
         Set<List<Integer>> result = new HashSet();
+        // Sort to handle duplicates
         Arrays.sort(candidates);
-        
         backtrack(candidates, 0, target, new ArrayList(), result);
         
         //converting the Set back to List
@@ -22,6 +23,12 @@ class Solution {
         if(target == 0)
             result.add(new ArrayList(list));
         for(int i =start; i<cand.length; i++ ){
+            //Additional check1 - optional
+            // if (i > start && cand[i] == cand[i - 1]) continue; // skip duplicates
+            // if not using Set we can skip duplicates by checking
+            //Additional check2 - optional
+            // if (cand[i] > target) break; // prune if the candidate array value is greater than target
+
             list.add(cand[i]);
             //passing i + 1 as we dont have to use duplicates
             backtrack(cand , i+1, target - cand[i], list, result);
