@@ -1,0 +1,76 @@
+/*
+Tuf
+
+Striver explanation - check the hashing indexing
+/*
+✅ Problem:
+Place N queens on an N×N chessboard so that no two queens attack each other (no same row, column, or diagonal).
+Return all distinct solutions.
+*/
+
+/*
+As we traverse - keep hold of 3 arrays for 3 directions
+leftRow[] → to check same row
+lowerDiagonal[] → for / diagonal (row + col)
+upperDiagonal[] → for \ diagonal (n - 1 + col - row)
+
+*/
+
+
+import java.util.*;
+
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> ans = new ArrayList<>();
+
+        // Create an empty board filled with '.'
+        char[][] board = new char[n][n];
+        for (char[] row : board) Arrays.fill(row, '.');
+
+        // Hash arrays to track safety
+        int[] leftRow = new int[n];           // to track rows
+        int[] lowerDiagonal = new int[2 * n - 1];  // ↘ diagonal (row + col)
+        int[] upperDiagonal = new int[2 * n - 1];  // ↖ diagonal (n - 1 + col - row) - imp for upper diagonal
+
+        solve(0, board, ans, leftRow, upperDiagonal, lowerDiagonal, n);
+        return ans;
+    }
+
+    private void solve(int col, char[][] board, List<List<String>> ans,
+                       int[] leftRow, int[] upperDiagonal, int[] lowerDiagonal, int n) {
+
+        // Base case: placed queens in all columns
+        if (col == n) {
+            List<String> temp = new ArrayList<>();
+            for (char[] row : board) temp.add(new String(row));
+            ans.add(temp);
+            return;
+        }
+
+        // Try placing queen in each row of this column
+        for (int row = 0; row < n; row++) {
+            // Check if it's safe to place a queen at (row, col)
+            // ↘ diagonal: row + col → always unique and in [0, 2n-2]
+            // ↖ diagonal: (col - row + n - 1) → to make it positive
+            if (leftRow[row] == 0 &&
+                lowerDiagonal[row + col] == 0 &&
+                upperDiagonal[n - 1 + col - row] == 0) {
+
+                // Place queen
+                board[row][col] = 'Q';
+                leftRow[row] = 1;
+                lowerDiagonal[row + col] = 1;
+                upperDiagonal[n - 1 + col - row] = 1;
+
+                // Recurse for next column
+                solve(col + 1, board, ans, leftRow, upperDiagonal, lowerDiagonal, n);
+
+                // Backtrack
+                board[row][col] = '.';
+                leftRow[row] = 0;
+                lowerDiagonal[row + col] = 0;
+                upperDiagonal[n - 1 + col - row] = 0;
+            }
+        }
+    }
+}

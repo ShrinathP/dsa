@@ -2,6 +2,29 @@
 Tuf
 Naresh Gupta , Arrays.fill
 
+/*
+✅ Problem:
+Place N queens on an N×N chessboard so that no two queens attack each other (no same row, column, or diagonal).
+Return all distinct solutions.
+*/
+
+/*
+    Take u forward
+    Brute force solution
+    https://github.com/striver79/SDESheet/blob/main/NQueenBruteJava
+    1. fill all entities with .
+    2. create a recursive function
+    3. create a validate function which will check if its safe to put Q
+    4. in the recursive function:-
+    for every row,
+    - validate if its okay to put Q
+    - if yes, put Q in current column
+    - call rec for col+1
+    - backtrack by removing Q and putting dot(.)
+    //base case, if we have reached end, then construct List of rows and add to result
+    
+    validate function checks if its safe to put
+
 * Fill all the places by dot .
 * Call a recursive function which takes 0 as column number
 - in the rec function
@@ -15,8 +38,13 @@ Naresh Gupta , Arrays.fill
 
 	3. isSafe function, checks for left top diagonal traversal, left straight , left bottom traversal
 	4. Construct function to construct a List of row string
- 
-*/
+    
+
+Time: O(N!)
+Space: O(N^2) for board + recursion stack
+    */
+
+
 class Solution {
     public List<List<String>> solveNQueens(int n) {
         
