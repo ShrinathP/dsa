@@ -1,0 +1,87 @@
+
+/*
+
+Striver explanation
+
+If its the first violation store the first as prev
+
+1. A valid BST has an inorder traversal in sorted order.
+2. If two nodes are swapped:
+    - The inorder sequence will show violations (prev.val > curr.val)
+    - We detect these violations to identify the swapped nodes:
+        - first = first node where the violation is detected
+        - middle = node after first (if adjacent)
+        - last = second node causing violation (if not adjacent)
+Finally, swap first ↔ last (or first ↔ middle if only one violation)
+
+*/
+
+
+
+
+class Solution {
+    TreeNode first = null, middle = null, last = null;
+    TreeNode prev = new TreeNode(Integer.MIN_VALUE);  // prev pointer for inorder traversal
+
+    public void recoverTree(TreeNode root) {
+        inorder(root);
+
+        // Case 1: non-adjacent nodes swapped (e.g., 3 and 1 in [3, 2, 1])
+        //2nd violation happened
+        if (first != null && last != null) {
+            int temp = first.val;
+            first.val = last.val;
+            last.val = temp;
+        }
+        // Case 2: adjacent nodes swapped (e.g., 2 and 1 in [1, 2])
+        else if (first != null && middle != null) {
+            int temp = first.val;
+            first.val = middle.val;
+            middle.val = temp;
+        }
+    }
+
+    private void inorder(TreeNode root) {
+        if (root == null) return;
+
+        // Traverse left subtree
+        inorder(root.left);
+
+        // Detect a violation of BST property (prev.val > root.val)
+        if (prev.val > root.val) {
+            // First violation: store 'first' and 'middle'
+            if (first == null) {
+                first = prev;
+                middle = root;
+            }
+            // Second violation: store 'last'
+            else {
+                last = root;
+            }
+        }
+
+        prev = root;  // Update prev for next comparison
+
+        // Traverse right subtree
+        inorder(root.right);
+    }
+}
+
+
+
+class TreeNode {
+    int val;
+    TreeNode left, right;
+    TreeNode(int x) { val = x; }
+}
+
+
+
+
+
+
+
+
+
+
+
