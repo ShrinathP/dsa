@@ -1,0 +1,89 @@
+//swapping way
+//at every index swap the current index with subsequent indexes
+//Striver code and explanation - algo and step by step permutations from chatgpt
+/*
+
+✅ Algorithm Steps:
+1. Base Case:
+If index == nums.length, we've formed a complete permutation.
+→ Add a copy of nums[] to the result list.
+
+2. Recursive Case:
+- For i = index to n - 1:
+- Swap nums[i] with nums[index] to bring element i to the current index.
+- Recurse: recurPermute(index + 1, nums, ans) - keep swapping at subsequent indexes
+- Backtrack: Swap back to restore original state (nums[i] ↔ nums[index])
+
+IMP: Step by Step Permutations
+
+Initial: [1, 2, 3]
+
+Fix index 0:
+├── Swap 0 with 0 → [1, 2, 3]
+│   └─ Fix index 1:
+│       ├── Swap 1 with 1 → [1, 2, 3]
+│       │   └── Fix index 2:
+│       │       ├── Swap 2 with 2 → [1, 2, 3] ✅
+│       └── Swap back 1 with 1 → [1, 2, 3]
+│
+│       └── Swap 1 with 2 → [1, 3, 2]
+│           └── Fix index 2:
+│               ├── Swap 2 with 2 → [1, 3, 2] ✅
+│           └── Swap back → [1, 2, 3]
+│
+├── Swap 0 with 1 → [2, 1, 3]
+│   └─ Fix index 1:
+│       ├── Swap 1 with 1 → [2, 1, 3]
+│       │   └── Swap 2 with 2 → [2, 1, 3] ✅
+│       └── Swap back → [2, 1, 3]
+│
+│       └── Swap 1 with 2 → [2, 3, 1]
+│           └── Swap 2 with 2 → [2, 3, 1] ✅
+│           └── Swap back → [2, 1, 3]
+│
+├── Swap 0 with 2 → [3, 2, 1]
+│   └─ Fix index 1:
+│       ├── Swap 1 with 1 → [3, 2, 1]
+│       │   └── Swap 2 with 2 → [3, 2, 1] ✅
+│       └── Swap back → [3, 2, 1]
+│
+│       └── Swap 1 with 2 → [3, 1, 2]
+│           └── Swap 2 with 2 → [3, 1, 2] ✅
+│           └── Swap back → [3, 2, 1]
+
+*/
+
+
+import java.util.*;
+
+class Solution {
+    private void recurPermute(int index, int[] nums, List<List<Integer>> ans) {
+        if (index == nums.length) {
+            // Copy the ds to ans
+            List<Integer> ds = new ArrayList<>();
+            for (int i = 0; i < nums.length; i++) {
+                ds.add(nums[i]);
+            }
+            ans.add(new ArrayList<>(ds));
+            return;
+        }
+
+        for (int i = index; i < nums.length; i++) {
+            swap(i, index, nums);
+            recurPermute(index + 1, nums, ans);
+            swap(i, index, nums); // backtrack // swap back to restore the original state
+        }
+    }
+
+    private void swap(int i, int j, int[] nums) {
+        int t = nums[i];
+        nums[i] = nums[j];
+        nums[j] = t;
+    }
+
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> ans = new ArrayList<>();
+        recurPermute(0, nums, ans);
+        return ans;
+    }
+}

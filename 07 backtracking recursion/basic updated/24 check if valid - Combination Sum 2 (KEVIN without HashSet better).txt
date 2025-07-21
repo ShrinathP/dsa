@@ -1,4 +1,9 @@
 //Kevin Naughton Solution
+// another way to skip duplicates at the same level in for loop is 
+// if( i==ind || arr[i] != arr[i-1]){ // ✅ skip duplicates at same level
+// if first index go ahead, for other indexes skip duplicates
+// Kevin Naughton - combination sum 2 solution - skip duplicates
+
 class Solution {
     //Constraint1: Unique combinations
     //Constraint2: Each Number in the list can be used only once
@@ -22,7 +27,7 @@ class Solution {
         }
         
         for(int i=ind; i<arr.length; i++){
-            if(i==ind || arr[i]!=arr[i-1]){
+            if(i==ind || arr[i]!=arr[i-1]){ // ✅ skip duplicates at same level
             ds.add(arr[i]);
             findCombinations(i+1, arr, target-arr[i], ans, ds);
             ds.remove(ds.size() - 1);

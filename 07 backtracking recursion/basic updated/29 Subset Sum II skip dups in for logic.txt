@@ -8,6 +8,11 @@ if(i>idx&&nums[i]==nums[i-1]) continue;
 place in the starting of the loop and you will fine. 
 the whole tricks lies arounds not picking the same element at the same level
 
+// another way to skip duplicates at the same level in for loop is 
+// if( i==ind || arr[i] != arr[i-1]){ // ✅ skip duplicates at same level
+// if first index go ahead, for other indexes skip duplicates
+// Kevin Naughton - combination sum 2 solution - skip duplicates
+
 */
 
 Suppose we have a sorted array, for the same level we pick everything
