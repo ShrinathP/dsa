@@ -1,0 +1,51 @@
+/*
+
+Chatgpt soln
+Given int[] nums (may contain duplicates), return all unique subsets.
+
+The input array may contain duplicates.
+You need to return all unique subsets (not just subset sums).
+
+
+✅ Algorithm Steps:
+1. Sort the array:
+Helps detect duplicates (e.g., [1,2,2] → sorted remains same).
+2. Start backtracking:
+At each index:
+- You can include the element.
+- Or skip to the next.
+3. Skip duplicates:
+- When looping, if nums[i] == nums[i-1] and i > index, skip nums[i].
+- This ensures that from a given recursive level, duplicate numbers don't start new identical subsets.
+4. Add current subset to result at every call.
+
+✅ Why i > index is necessary:
+It ensures we only skip duplicates at the same recursive level, not across levels.
+IMP: Check skip duplicates logic in 28 file number
+*/
+
+
+import java.util.*;
+
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums); // Needed to skip duplicates
+        backtrack(nums, 0, new ArrayList<>(), result);
+        return result;
+    }
+
+    private void backtrack(int[] nums, int index, List<Integer> temp, List<List<Integer>> result) {
+        result.add(new ArrayList<>(temp));
+
+        for (int i = index; i < nums.length; i++) {
+            // Skip duplicates at the same recursive level
+            if (i > index && nums[i] == nums[i - 1]) continue;
+
+            temp.add(nums[i]);
+            backtrack(nums, i + 1, temp, result);
+            temp.remove(temp.size() - 1); // backtrack
+        }
+    }
+}
+

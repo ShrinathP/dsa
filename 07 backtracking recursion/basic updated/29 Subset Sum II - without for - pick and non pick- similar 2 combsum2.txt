@@ -1,0 +1,53 @@
+/*
+
+Chatgpt soln
+Given int[] nums (may contain duplicates), return all unique subsets.
+
+The input array may contain duplicates.
+You need to return all unique subsets (not just subset sums).
+
+✅ Key Idea (Pick / Not Pick without loop):
+- Sort input to group duplicates.
+- At each index, pick or skip the element.
+- On skip: skip all duplicates to avoid duplicate subsets.
+
+IMP: Solution is similar to Combination Sum II - without target tracking
+✅ Code Delta:
+From Subset Sum II (pick/non-pick) → to Combination Sum II:
+    Add a target parameter.
+    Track current sum.
+    When sum == target → add to result.
+    When sum > target → return early.
+*/
+
+
+import java.util.*;
+
+class Solution {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        Arrays.sort(nums); // important to group duplicates
+        backtrack(nums, 0, new ArrayList<>(), result);
+        return result;
+    }
+
+    private void backtrack(int[] nums, int index, List<Integer> path, List<List<Integer>> result) {
+        if (index == nums.length) {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+
+        // ✅ PICK the current element
+        path.add(nums[index]);
+        backtrack(nums, index + 1, path, result);
+        path.remove(path.size() - 1); // backtrack
+
+        // ❌ SKIP current element and all its duplicates
+        int next = index + 1;
+        while (next < nums.length && nums[next] == nums[index]) next++;
+
+        backtrack(nums, next, path, result);
+    }
+}
+
+

@@ -21,7 +21,10 @@ class Solution {
         }
 
         for (int i = start; i < cand.length; i++) {
+            
             if (i > start && cand[i] == cand[i - 1]) continue; // skip duplicates no set needed
+            // Ensure to skip duplicates at the same recursive level, not across levels.
+            
             if (cand[i] > target) break; // prune
 
             temp.add(cand[i]);

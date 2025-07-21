@@ -1,0 +1,67 @@
+/*
+
+Skip duplicates logic Explanation
+if (i > index && nums[i] == nums[i - 1]) continue;
+
+remeber this as a formula for duplicates 
+if(i>idx&&nums[i]==nums[i-1]) continue; 
+place in the starting of the loop and you will fine. 
+the whole tricks lies arounds not picking the same element at the same level
+
+*/
+
+Suppose we have a sorted array, for the same level we pick everything
+Then at subsequent combinations of the same level we start skipping
+     
+
+✅ Sorted array:
+[1, 2, 2]
+
+** RECURSION TREE
+
+Call: index = 0, path = []
+└─ i = 0 (nums[0] = 1) ✅ include
+   └── path = [1], index = 1
+       ├─ i = 1 (nums[1] = 2) ✅ include
+       │   └── path = [1,2], index = 2
+       │       ├─ i = 2 (nums[2] = 2) ✅ include
+       │       │   └── path = [1,2,2], index = 3 → ✅ add to result
+       │       └── backtrack
+       └─ i = 2 (nums[2] = 2) 🔥 skip
+           ↳ Because:
+             - `i = 2`, `index = 1`
+             - `nums[2] == nums[1]` ✅ duplicate
+             - `i > index` ✅ same level → **SKIP**
+       └── backtrack
+
+Call: index = 0, path = []
+└─ i = 1 (nums[1] = 2) ✅ include
+   └── path = [2], index = 2
+       ├─ i = 2 (nums[2] = 2) ✅ include
+       │   └── path = [2,2], index = 3 → ✅ add to result
+       └── backtrack
+
+Call: index = 0, path = []
+└─ i = 2 (nums[2] = 2) 🔥 skip
+    ↳ Because:
+      - `i = 2`, `index = 0`
+      - `nums[2] == nums[1]` ✅ duplicate
+      - `i > index` ✅ same level → **SKIP**
+
+
+✅ Final Result:
+    []
+    [1]
+    [1, 2]
+    [1, 2, 2]
+    [2]
+    [2, 2]
+
+
+🔁 Summary of Skip Logic:
+Only skip when:
+- Duplicate value: nums[i] == nums[i-1]
+- At same recursive level: i > index
+This prevents duplicate branches like multiple [1,2] or [2,2].
+
+
