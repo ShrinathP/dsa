@@ -1,0 +1,56 @@
+ /*
+ Striver Explanation
+ ✅ Algorithm Steps
+  1. Function: partition(s)
+  2. Start recursion with: backtrack(start = 0)
+  3. For each end(j) from start to s.length - 1:
+    3.1 If s[start..end] is a palindrome:
+        - Add substring to path
+        - Recurse: backtrack(end + 1)
+        - Remove last substring (backtrack)
+  4. If start == s.length, (reached end) add path to result (valid partition)
+ */
+
+class Solution {
+    //Take u forward solution
+    //Pure recursion
+    public List<List<String>> partition(String s) {
+        List<List<String>> res = new ArrayList<>();
+        List<String> path = new ArrayList<>();
+        func(0, s, path, res);
+        return res;
+    }
+    
+    void func(int index, String s, List<String> path, List<List<String>> res) {
+        //base case
+        if(index == s.length()){
+            res.add(new ArrayList<>(path));
+            return;
+        }
+            
+    //iterating over the string
+        //1. Check if index to j is palindrome, if yes
+        //2. add the index to j substring to path
+        //3. call again func from index j
+        //4. Note: backtrack call tricky step 
+        //remember to remove the last index from the path List
+   
+        for(int j = index; j < s.length(); ++j) {
+            if(isPalindrome(s, index, j)){
+                path.add(s.substring(index, j+1));
+                func(j+1, s, path, res);
+                //backtrack step
+                //removing the last element
+                path.remove(path.size() -1);
+            }
+        }
+    }
+    
+    boolean isPalindrome(String s, int start, int end) {
+        while(start <= end) {
+            if(s.charAt(start++) != s.charAt(end--))
+                return false;
+        }
+        return true;
+    }
+}
