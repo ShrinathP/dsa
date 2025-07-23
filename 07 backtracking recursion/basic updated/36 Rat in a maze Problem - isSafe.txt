@@ -1,0 +1,76 @@
+
+
+/*
+✅ Problem Statement
+Given an n x n maze (grid) with 1s as open cells and 0s as blocked, 
+find all possible paths from the top-left cell (0,0) to the bottom-right cell (n-1,n-1) using only moves in Down (D), Left (L), Right (R), Up (U) directions.
+
+✅ Algorithm Steps:
+1. Start from (0,0) with an empty path string "".
+2. At each cell (row, col):
+  - If it's the destination (n-1, n-1), add the path to the result list.
+  - Else:
+      - Mark cell as visited.
+      - Recursively try all 4 directions in D, L, R, U order:
+        - Move only if the next cell is within bounds, has value 1, and is not visited.
+      - Backtrack: Unmark the cell before returning.
+3. Repeat until all paths are explored.
+
+✅ Direction Safety Check:
+Before moving to (nextRow, nextCol):
+isSafe = (nextRow and nextCol in bounds) &&
+         maze[nextRow][nextCol] == 1 &&
+         !visited[nextRow][nextCol]
+*/
+
+//chatgpt soln
+import java.util.*;
+
+class Solution {
+    public List<String> findPath(int[][] maze, int n) {
+        List<String> result = new ArrayList<>();
+        if (maze[0][0] == 0) return result;
+
+        boolean[][] visited = new boolean[n][n];
+        backtrack(0, 0, maze, n, "", visited, result);
+        return result;
+    }
+
+    private void backtrack(int row, int col, int[][] maze, int n,
+                           String path, boolean[][] visited, List<String> result) {
+
+        if (row == n - 1 && col == n - 1) {
+            result.add(path);
+            return;
+        }
+
+        visited[row][col] = true;
+
+        // Down
+        if (isSafe(row + 1, col, maze, visited, n)) {
+            backtrack(row + 1, col, maze, n, path + "D", visited, result);
+        }
+
+        // Left
+        if (isSafe(row, col - 1, maze, visited, n)) {
+            backtrack(row, col - 1, maze, n, path + "L", visited, result);
+        }
+
+        // Right
+        if (isSafe(row, col + 1, maze, visited, n)) {
+            backtrack(row, col + 1, maze, n, path + "R", visited, result);
+        }
+
+        // Up
+        if (isSafe(row - 1, col, maze, visited, n)) {
+            backtrack(row - 1, col, maze, n, path + "U", visited, result);
+        }
+
+        visited[row][col] = false; // backtrack
+    }
+
+    private boolean isSafe(int row, int col, int[][] maze, boolean[][] visited, int n) {
+        return row >= 0 && row < n && col >= 0 && col < n &&
+               maze[row][col] == 1 && !visited[row][col];
+    }
+}
