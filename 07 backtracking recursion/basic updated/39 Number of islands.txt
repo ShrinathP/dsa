@@ -1,0 +1,52 @@
+/*
+Similar to Word Search 
+Also called Flood Fill
+✅ Problem Summary:
+Given a 2D grid of '1' (land) and '0' (water), count how many disconnected islands exist.
+Islands are connected horizontally or vertically.
+
+✅ Algorithm Steps:
+1. Initialize count = 0.
+2. Traverse the grid:
+  - For each cell (i, j):
+    - If grid[i][j] == '1':
+    - Call dfs(i, j)
+    - Increment count++
+3. In the dfs():
+  - Check if (i, j) is out of bounds or water ('0') → return.
+  - Mark current cell as visited → grid[i][j] = '0'
+  - Recurse in 4 directions: up, down, left, right
+
+
+*/
+class Solution {
+    public int numIslands(char[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        int count = 0;
+
+        for (int row = 0; row < m; row++) {
+            for (int col = 0; col < n; col++) {
+                if (grid[row][col] == '1') {
+                    dfs(grid, row, col, m, n);
+                    count++; // found one island
+                }
+            }
+        }
+
+        return count;
+    }
+
+    private void dfs(char[][] grid, int row, int col, int m, int n) {
+        // Boundary & visited check
+        if (row < 0 || col < 0 || row >= m || col >= n || grid[row][col] == '0')
+            return;
+
+        grid[row][col] = '0'; // mark visited
+
+        // Explore all 4 directions
+        dfs(grid, row + 1, col, m, n);
+        dfs(grid, row - 1, col, m, n);
+        dfs(grid, row, col + 1, m, n);
+        dfs(grid, row, col - 1, m, n);
+    }
+}
