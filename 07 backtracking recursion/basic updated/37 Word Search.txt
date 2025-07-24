@@ -4,14 +4,16 @@ Given a 2D board and a word, return true if the word exists in the grid.
 You can move horizontally or vertically to adjacent cells, and each cell can be used once per path.
 
 Recursive DFS
+nick white
 
 ✅ Algorithm Steps:
+
 1. Loop over each cell in the grid:
-  - If board[i][j] == word.charAt(0) → start DFS.
+  - If board[i][j] == word.charAt(0) → start DFS. - start when you find the first letter
 2. In DFS:
   - Base case: If index == word.length() → entire word matched → return true.
   - If out of bounds OR already visited OR mismatch → return false.
-  - Mark board[i][j] = '#' (visited).
+  - Mark board[i][j] = '#' (or use a visited array).
   - Recurse in 4 directions:
     - Down → i+1, j
     - Up → i-1, j
