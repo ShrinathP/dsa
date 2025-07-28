@@ -7,6 +7,10 @@ Count how many subsequences sum to K
 3. return 0 - condition does not satisfy
 4. left and right functions call this recursive call
 5. return left + right
+
+✅ Time & Space Complexity:
+Time: O(2^n) — all subsequences
+Space: O(n) recursion depth
 */
 
 //chatgpt soln
@@ -16,6 +20,11 @@ class Solution {
     }
 
     private int solve(int index, int sum, int[] arr, int k) {
+        //can add one more base case if improve the TC
+        //condition not satisfied
+        //strictly done if array contains positives only
+        if(sum > k) return 0;
+            
         if (index == arr.length) {
           //condition satisfied
           if(sum == k) {
