@@ -1,0 +1,45 @@
+// 19c Print any 1 subsequence with sum equals K.txt
+Modifications in 19b code
+1. The recursive function in 19b now will return a boolean
+2. In base case if sum == k the return true, else return false
+3. Put Pick method in if check == true, return true
+4. Put Non Pick method in if check == true, return true
+5. Else if nothing satisfied return false
+
+class Solution {
+    public boolean printOneSubsequenceWithSumK(int[] arr, int k) {
+        List<Integer> ds = new ArrayList<>();
+        return solve(0, 0, arr, ds, k);
+    }
+
+    private boolean solve(int index, int sum, int[] arr, List<Integer> ds, int k) {
+        if (index == arr.length) {
+            //base case - condition satisfied
+            if (sum == k) {
+                System.out.println(ds); //Print the subsequence
+                return true; // found one
+            }
+            //base case - condition not satisfied
+            return false;
+        }
+
+        // Pick
+        ds.add(arr[index]);
+        if (solve(index + 1, sum + arr[index], arr, ds, k) == true) {
+          return true;
+        }
+        
+        ds.remove(ds.size() - 1); // backtrack
+
+        // Not pick
+        if (solve(index + 1, sum, arr, ds, k)) {
+          return true;
+        }
+
+        return false;
+    }
+
+    public static void main(String[] args) {
+        new Solution().printOneSubsequenceWithSumK(new int[]{1, 2, 1}, 2);
+    }
+}
