@@ -1,0 +1,40 @@
+/*
+Count number of subsequences which sum to K
+Count how many subsequences sum to K 
+
+1. In the recursive call base case, when we reach end
+2. return 1 - condition satisfies
+3. return 0 - condition does not satisfy
+4. left and right functions call this recursive call
+5. return left + right
+*/
+
+//chatgpt soln
+class Solution {
+    public int countSubsequencesWithSumK(int[] arr, int k) {
+        return solve(0, 0, arr, k);
+    }
+
+    private int solve(int index, int sum, int[] arr, int k) {
+        if (index == arr.length) {
+          //condition satisfied
+          if(sum == k) {
+            return 1;
+          } else return 0; //condition not satisfied
+        }
+
+        // Pick current element
+        int pick = solve(index + 1, sum + arr[index], arr, k);
+
+        // Not pick current element
+        int notPick = solve(index + 1, sum, arr, k);
+
+        return pick + notPick; //add both count and return
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 1};
+        int k = 2;
+        System.out.println(new Solution().countSubsequencesWithSumK(arr, k)); // Output: 2
+    }
+}
