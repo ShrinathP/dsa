@@ -1,5 +1,5 @@
 // 19c Print any 1 subsequence with sum equals K.txt
-Modifications in 19b code
+Modifications in 19b code - (Avoid future recursion calls)
 1. The recursive function in 19b now will return a boolean
 2. In base case if sum == k the return true, else return false
 3. Put Pick method in if check == true, return true
