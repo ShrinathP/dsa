@@ -1,0 +1,50 @@
+/*
+Java solution for printing all subsequences of an array or string using recursion on subsequences
+*/
+// Recursion on Subsequences | Printing Subsequences
+
+// Printing Subsequences of an int[]
+
+class Solution {
+    public void printSubsequences(int[] arr) {
+        List<Integer> ds = new ArrayList<>();
+        solve(0, arr, ds);
+    }
+
+    private void solve(int index, int[] arr, List<Integer> ds) {
+        if (index == arr.length) {
+            System.out.println(ds);
+            return;
+        }
+
+        // Pick the element
+        ds.add(arr[index]);
+        solve(index + 1, arr, ds);
+
+        // Not pick the element
+        ds.remove(ds.size() - 1);
+        solve(index + 1, arr, ds);
+    }
+
+    public static void main(String[] args) {
+        new Solution().printSubsequences(new int[]{1, 2, 3});
+    }
+}
+
+//✅ For Strings:
+
+private void solve(int index, String s, StringBuilder sb) {
+    if (index == s.length()) {
+        System.out.println(sb.toString());
+        return;
+    }
+
+    // Pick
+    sb.append(s.charAt(index));
+    solve(index + 1, s, sb);
+
+    // Not pick
+    sb.deleteCharAt(sb.length() - 1);
+    solve(index + 1, s, sb);
+}
+
