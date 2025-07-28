@@ -1,0 +1,35 @@
+
+/*
+//Print all Subsequences whose sum equals K
+✅ Time & Space Complexity:
+Time: O(2^n) — each element is either picked or not
+Space: O(n) recursion + output subsequences
+*/
+
+class Solution {
+    public void printSubsequencesWithSumK(int[] arr, int k) {
+        List<Integer> ds = new ArrayList<>();
+        solve(0, 0, arr, ds, k);
+    }
+
+    private void solve(int index, int sum, int[] arr, List<Integer> ds, int k) {
+        if (index == arr.length) {
+            if (sum == k) {
+                System.out.println(ds);
+            }
+            return;
+        }
+
+        // Pick current element
+        ds.add(arr[index]);
+        solve(index + 1, sum + arr[index], arr, ds, k);
+
+        // Not pick current element
+        ds.remove(ds.size() - 1);
+        solve(index + 1, sum, arr, ds, k);
+    }
+
+    public static void main(String[] args) {
+        new Solution().printSubsequencesWithSumK(new int[]{1, 2, 1}, 2);
+    }
+}
