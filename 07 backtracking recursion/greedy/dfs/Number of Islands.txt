@@ -1,5 +1,0 @@
-We need to sink the current 1 and all the adjacent 1s
-touching top bottom right and left
-(Same like minesweeper)
-Check the solution of Nick White
-Good solution
