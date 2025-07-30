@@ -1,0 +1,27 @@
+/*
+Leetcode 45
+Problem Summary:
+Each child has a greed factor g[i], and each cookie has a size s[i]. One cookie can be assigned to at most one child. A child can be satisfied if the cookie size is ≥ greed factor. 
+Maximize the number of content children.
+Time Complexity = O(N log N + M log N + min(M, N))
+*/
+
+import java.util.Arrays;
+
+public class Solution {
+    public int findContentChildren(int[] g, int[] s) {
+        Arrays.sort(g);  // Greed factors (children)
+        Arrays.sort(s);  // Cookie sizes
+
+        int child = 0; // index for g
+        int cookie = 0; // index for s
+
+        while (child < g.length && cookie < s.length) {
+            if (s[cookie] >= g[child]) {
+                child++; // satisfy this child
+            }
+            cookie++; // move to next cookie
+        }
+        return child;
+    }
+}
