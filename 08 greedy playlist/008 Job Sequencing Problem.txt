@@ -1,0 +1,89 @@
+/*
+Striver Explanation
+
+💼 Problem Summary:
+Each job has: id, deadline, profit.
+Only one job can be scheduled per slot, and each job takes 1 unit of time.
+Maximize total profit, schedule jobs before or on their deadline.
+
+IMP
+Logic: Try to Perform most amount of jobs on the deadline(/later) days, so that previous days can be kept empty for other jobs
+Use Descending order of deadlines to perform jobs
+
+
+Strategy:
+- Greedy choice: Always pick the most profitable job first.
+- Try to schedule it at the latest available time slot ≤ deadline.
+- Use a slot array to keep track of occupied time slots.
+
+// Step 1: Sort all jobs by descending order of profit
+// Step 2: Find maximum deadline to size the time slots array
+// Step 3: Create time slots array (index 1 to maxDeadline), -1 = free, fill with -1 , // All slots are initially free
+For every job
+// Step 4: Try to schedule each job
+//         Try all slots from job.deadline to 1, if empty assign and move to next job
+// Step 5: Return result
+*/
+
+import java.util.*;
+
+// Define Job class with id, deadline, and profit
+class Job {
+    int id, deadline, profit;
+
+    Job(int id, int deadline, int profit) {
+        this.id = id;
+        this.deadline = deadline;
+        this.profit = profit;
+    }
+}
+
+public class JobSequencing {
+
+    // Main logic to find max number of jobs done and total profit
+    public static int[] jobScheduling(Job[] jobs) {
+        // Step 1: Sort all jobs by descending order of profit
+        Arrays.sort(jobs, (a, b) -> b.profit - a.profit);
+
+        // Step 2: Find maximum deadline to size the time slots array
+        int maxDeadline = 0;
+        for (Job job : jobs)
+            maxDeadline = Math.max(maxDeadline, job.deadline);
+
+        // Step 3: Create time slots array (index 1 to maxDeadline), -1 = free
+        int[] slots = new int[maxDeadline + 1];
+        Arrays.fill(slots, -1);  // All slots are initially free
+
+        int count = 0, totalProfit = 0;
+
+        // Step 4: Try to schedule each job
+        for (Job job : jobs) {
+            // Try all slots from job.deadline to 1
+            for (int slot = job.deadline; slot > 0; slot--) {
+                if (slots[slot] == -1) {
+                    // Assign job to this slot
+                    slots[slot] = job.id;
+                    count++;
+                    totalProfit += job.profit;
+                    break; // Move to next job
+                }
+            }
+        }
+
+        // Step 5: Return result
+        return new int[]{count, totalProfit};
+    }
+
+    // Driver code
+    public static void main(String[] args) {
+        Job[] jobs = {
+            new Job(1, 4, 20),
+            new Job(2, 1, 10),
+            new Job(3, 1, 40),
+            new Job(4, 1, 30)
+        };
+
+        int[] res = jobScheduling(jobs);
+        System.out.println("Jobs done: " + res[0] + ", Total Profit: " + res[1]);
+    }
+}
