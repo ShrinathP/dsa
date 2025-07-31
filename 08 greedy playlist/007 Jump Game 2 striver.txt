@@ -1,0 +1,38 @@
+//
+//striver soln
+/*
+
+While loop from right to end of array
+At each point check the farthest 
+
+level-wise BFS-style greedy
+
+✅ What Your Code Does Right:
+Treats each [left, right] window as a jump range.
+
+From all positions in this range, finds the farthest reachable index.
+
+If farthest == right, it means you're stuck, so return -1.
+
+
+⏱️ Time Complexity:
+Worst case: O(n²) if right - left is large every time (due to nested loop).
+
+But for typical inputs, it behaves near O(n) in practice.
+
+*/
+
+public static int jump(int[] nums) {
+    int right = 0, jump = 0,  jump = 0;
+    while (right < nums.length - 1) {
+        int farthest = Integer.MIN_VALUE;
+        for (int i = left; i <= right; i++) {
+            farthest = Math.max(farthest, i + nums[i]);
+        }
+        if (farthest == right) return -1;
+        jump++;
+        left = right + 1;
+        right = farthest;
+    }
+    return jump;
+}

@@ -1,0 +1,62 @@
+
+
+//2 solutions
+//we are being greedy and finding the maximum reachable position
+//Striver explanation and solution
+//2nd one better
+
+
+//Tech dose solution
+//where we calculate maxReachable jump
+//if at any moment reachable becomes less than index we are iterating
+//means we cannot reach that index
+//return false
+
+class Solution {
+    //TechDose recursive
+    
+    public boolean canJump(int[] nums) {
+        
+        int n = nums.length;
+        int reachable = 0;
+        
+        for(int i=0; i< n; i++) {
+            if(reachable < i) return false;
+            reachable = Math.max(reachable, i + nums[i]);    
+        }
+        
+        return true;    
+    }
+}
+
+
+
+
+//Nick white solution
+//Where we traverse reverse and check if the index can be reached
+
+
+class Solution {
+    /* Nick white solution - reverse thinking
+    //Tricky Greedy solution
+    //Step 1: Traverse backwards - set lastgood position as the last index
+    (This is where we want to reach)
+    //Step 2: go back and check if ,
+    current index + number at current index(max jump) is greater than last good position
+    i.e. we can reach last index
+    //Step 3: If yes - reassign the lastGood position and go back
+    //Do until lastGood becomes 0
+    */
+    public boolean canJump(int[] nums) {
+        
+        int lastGoodIndexPosition = nums.length-1;
+        for(int i = nums.length - 1; i >= 0; i--){
+            if( i + nums[i] >= lastGoodIndexPosition){ //current index + maxjump
+                System.out.println(i + " " + nums[i]);
+                lastGoodIndexPosition = i;
+            }
+        }
+        return lastGoodIndexPosition == 0;
+    }
+}
+
