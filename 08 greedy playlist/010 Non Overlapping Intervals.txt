@@ -1,0 +1,59 @@
+/*
+🧩 Problem Summary:
+Given n intervals, remove the minimum number of intervals to make the rest non-overlapping.
+
+Similar to N meetings in one room solution
+Soln from Google AI Gemini
+
+🔁 Logic Explanation:
+1. Sort intervals by end time to keep the one that frees up earliest.
+2. Keep track of prevEnd of the last non-overlapping interval.
+3. If current start < prevEnd, it's overlapping → increment removal count.
+4. Else, update prevEnd.
+
+⏱️ Time Complexity:
+O(n log n) → for sorting
+O(n) → for checking overlaps
+Total: O(n log n)
+*/
+
+
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+class Solution {
+    public int eraseOverlapIntervals(int[][] intervals) {
+        if (intervals.length == 0) {
+            return 0;
+        }
+
+        // Sort intervals by their ending points.
+        // If ending points are the same, sort by starting points.
+        Arrays.sort(intervals, new Comparator<int[]>() {
+            @Override
+            public int compare(int[] a, int[] b) {
+                if (a[1] != b[1]) {
+                    return Integer.compare(a[1], b[1]);
+                }
+                return Integer.compare(a[0], b[0]);
+            }
+        });
+
+        int end = intervals[0][1]; // The end point of the last chosen non-overlapping interval
+        int count = 1; // Number of non-overlapping intervals found
+
+        // Iterate from the second interval
+        for (int i = 1; i < intervals.length; i++) {
+            // If the current interval's start is greater than or equal to the end
+            // of the last chosen non-overlapping interval, then it does not overlap.
+            if (intervals[i][0] >= end) {
+                end = intervals[i][1]; // Update the end point
+                count++; // Increment the count of non-overlapping intervals
+            }
+        }
+
+        // The minimum number of intervals to remove is total intervals - non-overlapping intervals
+        return intervals.length - count;
+    }
+}
