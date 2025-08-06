@@ -1,0 +1,35 @@
+//cue - if open push to stack, if close checkpop, imp return stack.isEmpty()
+// Stack Way
+
+class Solution {
+
+  public boolean isValid(String s) {
+      
+      Map<Character, Character> hm = new HashMap<>();
+      hm.put('}','{');
+      hm.put(']','[');
+      hm.put(')','(');
+      
+    // Initialize a stack to be used in the algorithm.
+    Stack<Character> stack = new Stack<Character>();
+
+    for (int i = 0; i < s.length(); i++) {
+      char c = s.charAt(i);
+
+        //open bracket
+      if(hm.containsValue(c)){
+          stack.push(c);
+      } else {
+          //closed bracket
+          
+          //if stack not empty, check if stack pop has opposite of open
+          if(stack.isEmpty() || stack.pop() != hm.get(c)){
+              return false;
+          }
+         
+      }
+    }
+
+    return stack.isEmpty();
+  }
+}

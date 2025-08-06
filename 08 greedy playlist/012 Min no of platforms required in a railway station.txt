@@ -1,0 +1,75 @@
+/*
+The Minimum Number of Platforms problem is a common interview question, where you are given arrival and departure times of trains, and the task is to find the minimum number of platforms required to handle all trains at the station without any train having to wait.
+Striver Explanation
+chatgpt code
+
+✅ Problem Explanation:
+Given two arrays:
+arrival[]: The arrival times of the trains.
+departure[]: The departure times of the trains.
+Objective: Calculate the minimum number of platforms needed so that no train has to wait.
+
+✅ Greedy Strategy:
+1. Sort both arrival[] and departure[].
+2. Use two pointers (or indices) to track the current arrival and departure.
+3. Iterate through the trains, incrementing the number of platforms required whenever a train arrives before the previous one departs.
+4. Track the maximum number of platforms required at any point.
+
+
+💡 Explanation:
+1. Sort the arrival[] and departure[] arrays.
+2. Two pointers (i for arrival[] and j for departure[]):
+    - Track the current train arrival and current train departure.
+3. If a train arrives before the previous train departs, we need an extra platform.
+4. If a train departs before the next one arrives, free up a platform.
+5. Track the maximum number of platforms required during the process.
+*/
+
+
+import java.util.Arrays;
+
+import java.util.Arrays;
+
+public class Solution {
+    public int findPlatform(int[] arrival, int[] departure, int n) {
+        // Sort arrival and departure arrays
+        Arrays.sort(arrival);
+        Arrays.sort(departure);
+
+        int platforms = 0, maxPlatforms = 0;
+        int i = 0, j = 0;
+
+        // Traverse through all arrival and departure times
+        while (i < n) {
+            //if the arrival of the train is less than departure, 
+            // we need an extra platform
+            if (arrival[i] <= departure[j]) {
+                platforms++;
+                i++;
+            }
+
+            //if the arrival of the train is greater than departure
+            // a platform will get empty, so reduce the platform
+            else if (arrival[i] > departure[j]) {
+                platforms--;
+                j++;
+            }
+
+            // Calculate maxPlatforms at each instance
+            maxPlatforms = Math.max(maxPlatforms, platforms);
+        }
+
+        return maxPlatforms;
+    }
+
+    public static void main(String[] args) {
+        int[] arrival = {10, 15, 20, 25, 30};
+        int[] departure = {12, 17, 25, 30, 40};
+        int n = arrival.length;
+
+        Solution sol = new Solution();
+        System.out.println("Minimum platforms required: " + sol.findPlatform(arrival, departure, n));
+    }
+}
+
+
