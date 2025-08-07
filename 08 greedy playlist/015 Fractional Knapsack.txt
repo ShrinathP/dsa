@@ -1,0 +1,76 @@
+/*
+
+There are weights and values
+you have  a knapsack of certain weight
+
+you can take fractional weights also
+
+eg values[] = {60,100,120}
+weight[] = {10,20,30}
+//value/ weight = 6, 5,4
+
+====================================================================
+Solution:---
+Step 1. sort the items by value/weight ratio, in descending order
+Step 2: iterate for every weight
+	2.1 Check if weight + currweight <= targetWeight
+		if yes add the currweight and its value to finalValue
+	2.2 if not, find the remainingWeight
+		calculate fraction and add to finalValue
+
+TC - NlogN for sorting and N for traversal
+Space complxity O(1)
+====================================================================
+Take u forward soluton
+*/
+
+public class Solve{
+    
+    /*
+    1. Sort using descending value/per weight
+    2. Run a loop
+    2. If current weight + new weight added <= TotalKnapsack
+        Add the whole weight
+        Else, add only a fraction of weight
+    */
+    double fractionalKnapsack(int W, Item[] arr, int n){
+
+//Step 1, value by weight ratio
+        Arrays.sort(arr, new itemComparator());
+        int curWeight=0;
+        double finalValue=0.0;
+        
+        for(int i=0;i<n;i++){
+            //we can easily accomodate the whole nonfractional weight
+            if(curWeight + arr[i].weight <= W){
+                curWeight += arr[i].weight;
+                finalValue += arr[i].value;
+            } else {
+                //find the remaining
+                //find the value per weight of current item
+                //* by remaining weight
+                int remainingWeight = W - curWeight;
+                finalValue += ((double)arr[i].value/(double)arr[i].weight) * (double)remainingWeight;
+                break;
+            }
+        }
+        
+        return finalValue;
+    
+}    
+    public static void main(String []args){
+        System.out.println("Hello World");
+     }
+}
+
+class itemComparator implements Comparator<Item>{
+    @override
+    public int compare(Item a, Item b){
+        double r1 = (double)(a.value) / (double)(a.weight);
+        double r2 = (double)(.bvalue) / (double)(b.weight);
+        
+        if(r1< r2) return 1;
+        else if(r1>r2) return -1;
+        else return 0;
+    }
+}
