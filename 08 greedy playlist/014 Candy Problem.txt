@@ -14,6 +14,9 @@ Striver Explanation, google ai code
 2. Why two passes?:
   - The first pass ensures that we correctly handle increasing sequences.
   - The second pass ensures that we handle decreasing sequences while adjusting the candies given to children when needed.
+
+TC - O(3N) - 3 for loops
+SC - O(2N) - 2 arrays
 */
 
 
