@@ -1,0 +1,48 @@
+//Chatgptp soln - optimized
+//while traversiong from left to right, check if right is greater
+//while traversiong from right to left, check if the lefts are greater - if yes
+    - math.max of current left or add just one to the right of the left
+ 
+public class Solution {
+    public int candy(int[] ratings) {
+        int n = ratings.length;
+        if (n == 0) return 0;
+
+        // Step 1: Create a candy array with at least 1 candy for each child
+        int[] candies = new int[n];
+        for (int i = 0; i < n; i++) {
+            candies[i] = 1;
+        }
+
+        // Step 2: Traverse from left to right
+        for (int i = 1; i < n; i++) {
+            if (ratings[i] > ratings[i - 1]) {
+                candies[i] = candies[i - 1] + 1; // Increase candies for higher rated child
+            }
+        }
+
+        // Step 3: Traverse from right to left and adjust candies
+        for (int i = n - 2; i >= 0; i--) {
+            if (ratings[i] > ratings[i + 1]) {
+                candies[i] = Math.max(candies[i], candies[i + 1] + 1); // Adjust candies for higher rated child
+            }
+        }
+
+        // Step 4: Calculate total candies
+        int totalCandies = 0;
+        for (int candy : candies) {
+            totalCandies += candy;
+        }
+
+        return totalCandies;
+    }
+
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int[] ratings = {1, 0, 2};
+        System.out.println("Minimum candies required: " + solution.candy(ratings)); // Output: 5
+
+        ratings = new int[]{1, 2, 2};
+        System.out.println("Minimum candies required: " + solution.candy(ratings)); // Output: 4
+    }
+}
