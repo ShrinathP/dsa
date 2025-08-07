@@ -1,0 +1,69 @@
+//Take u forward
+//https://practice.geeksforgeeks.org/problems/minimum-platforms-1587115620/1#
+
+//https://practice.geeksforgeeks.org/problems/minimum-platforms-1587115620/1#
+
+//https://www.youtube.com/watch?v=dxVcMDI7vyI&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=46
+//JAVA solution
+
+import java.util.*;
+public class HelloWorld{
+
+//Ask the interviewer if the starting time is sorted or not
+/*
+1. Sort the start time by ascending order
+2. Sort the end time by ascending order
+3. Traverse the start time array, until the start time
+    > end time [1]
+    increase the count of max railway stations
+    Store it in a variable
+4. When end time > start time , you can departure a train
+from a platform, reduce temp number
+5. When start time > end time , increase temp number
+At every instance update the max number
+TC - O(2NlogN) (2 sorts) + 2N (2 traversals)
+*/
+
+     public static void main(String []args){
+        int arr[] = {900,940,950,1100,1500,1800};
+        int dep[] = {910,1200,1120,1130,1900,2000};
+        int n = arr.length;
+        int maxPlatform = findPlatform(arr, dep, n);
+        System.out.println(maxPlatform);
+    
+     }
+     
+     static int findPlatform(int arr[], int dep[], int n) {
+         Arrays.sort(arr);
+         Arrays.sort(dep);
+         
+         int plat_needed = 1, result =1;
+         int i=1, j=0;
+//i = 1 considering first arrival train has already occupied 1 platform
+         //i is for start times
+         //j is for end times
+
+//Start from
+//2nd arrival train and 1st departure train
+         
+         while(i< n && j<n){
+             //considering equalt to as if both times are equal 
+             //then too we need to add a platform
+             if(arr[i] <= dep[j]){
+                 plat_needed++;
+                 i++;
+                }
+//vacate one platform as one train can be departed
+             else if(arr[i] > dep[j]) {
+                 plat_needed--;
+                 j++;
+                }
+
+//update max platform needed
+             if(plat_needed > result){
+                 result = plat_needed;
+                }
+             }
+             return result;
+         }
+}
