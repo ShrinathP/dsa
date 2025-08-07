@@ -17,46 +17,49 @@ Striver Explanation, google ai code
 */
 
 
-public class Solution {
+import java.util.Arrays;
+
+class Solution {
     public int candy(int[] ratings) {
-        int n = ratings.length;
-        if (n == 0) return 0;
-
-        // Step 1: Create a candy array with at least 1 candy for each child
-        int[] candies = new int[n];
-        for (int i = 0; i < n; i++) {
-            candies[i] = 1;
+        final int n = ratings.length;
+        if (n == 0) {
+            return 0; // No children, no candies needed
         }
 
-        // Step 2: Traverse from left to right
-        for (int i = 1; i < n; i++) {
+        // Initialize two arrays to store candy counts based on left and right comparisons
+        int[] left = new int[n];
+        int[] right = new int[n];
+
+        // Fill both arrays with 1, as each child must receive at least one candy
+        Arrays.fill(left, 1);
+        Arrays.fill(right, 1);
+
+        // First pass: Left-to-right
+        // If current child has a higher rating than the one to their left,
+        // they get one more candy than the left neighbor.
+        for (int i = 1; i < n; ++i) {
             if (ratings[i] > ratings[i - 1]) {
-                candies[i] = candies[i - 1] + 1; // Increase candies for higher rated child
+                left[i] = left[i - 1] + 1;
             }
         }
 
-        // Step 3: Traverse from right to left and adjust candies
-        for (int i = n - 2; i >= 0; i--) {
+        // Second pass: Right-to-left
+        // If current child has a higher rating than the one to their right,
+        // they get one more candy than the right neighbor.
+        for (int i = n - 2; i >= 0; --i) {
             if (ratings[i] > ratings[i + 1]) {
-                candies[i] = Math.max(candies[i], candies[i + 1] + 1); // Adjust candies for higher rated child
+                right[i] = right[i + 1] + 1;
             }
         }
 
-        // Step 4: Calculate total candies
+        // Calculate the total minimum candies
         int totalCandies = 0;
-        for (int candy : candies) {
-            totalCandies += candy;
+        for (int i = 0; i < n; ++i) {
+            // For each child, the final candy count is the maximum of the
+            // candies determined by the left and right passes.
+            totalCandies += Math.max(left[i], right[i]);
         }
 
         return totalCandies;
-    }
-
-    public static void main(String[] args) {
-        Solution solution = new Solution();
-        int[] ratings = {1, 0, 2};
-        System.out.println("Minimum candies required: " + solution.candy(ratings)); // Output: 5
-
-        ratings = new int[]{1, 2, 2};
-        System.out.println("Minimum candies required: " + solution.candy(ratings)); // Output: 4
     }
 }
