@@ -1,32 +1,33 @@
 /*
 Problem Statement:
 Given an array of integers arr and an integer k representing the desired subarray size, the task is to find:
-Maximum Sum Subarray of Size K:
+1. Maximum Sum Subarray of Size K:
 The maximum sum among all subarrays of arr that have a length of exactly k.
-Minimum Sum Subarray of Size K:
+2. Minimum Sum Subarray of Size K:
 The minimum sum among all subarrays of arr that have a length of exactly k.
+3. Start index of the Maximum Sum Subarray of Size K
 */
 
 public class SubarraySizeK {
 
-    // Max sum of any contiguous subarray of size k
+    //1. Max sum of any contiguous subarray of size k
     public static int maxSumOfSizeK(int[] a, int k) {
         if (a == null || k <= 0 || k > a.length) throw new IllegalArgumentException();
         int windowSum = 0;
         
         // Calculate the sum of the first window
         for (int i = 0; i < k; i++) windowSum += a[i];
-        int maxSum = windowSum;
+        int maxSum = windowSum; // Initialize maxSum with the first window's sum
 
-        // slide window
+        // Slide the window across the array
         for (int r = k; r < a.length; r++) {
-            windowSum += a[r] - a[r - k];   // add right, remove left
-            if (windowSum > maxSum) maxSum = windowSum;
+            windowSum += a[r] - a[r - k];   // add right new element, remove left element
+            if (windowSum > maxSum) maxSum = windowSum; // Update maxSum if current sum is greater
         }
         return maxSum;
     }
 
-    // Min sum of any contiguous subarray of size k
+    //2. Min sum of any contiguous subarray of size k
     public static int minSumOfSizeK(int[] a, int k) {
         if (a == null || k <= 0 || k > a.length) throw new IllegalArgumentException();
         int windowSum = 0;
@@ -40,7 +41,7 @@ public class SubarraySizeK {
         return minSum;
     }
 
-    // (Optional) return start index of max-sum window
+    //3. (Optional) return start index of max-sum window
     public static int maxSumStartIndex(int[] a, int k) {
         if (a == null || k <= 0 || k > a.length) throw new IllegalArgumentException();
         int windowSum = 0;
@@ -49,6 +50,7 @@ public class SubarraySizeK {
 
         for (int r = k; r < a.length; r++) {
             windowSum += a[r] - a[r - k];
+            // while updating maxSum, update start index as well
             if (windowSum > maxSum) { maxSum = windowSum; start = r - k + 1; }
         }
         return start;
