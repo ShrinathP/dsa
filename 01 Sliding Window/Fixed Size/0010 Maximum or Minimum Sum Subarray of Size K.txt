@@ -1,0 +1,56 @@
+/*
+Problem Statement:
+Given an array of integers arr and an integer k representing the desired subarray size, the task is to find:
+Maximum Sum Subarray of Size K:
+The maximum sum among all subarrays of arr that have a length of exactly k.
+Minimum Sum Subarray of Size K:
+The minimum sum among all subarrays of arr that have a length of exactly k.
+*/
+
+public class SubarraySizeK {
+
+    // Max sum of any contiguous subarray of size k
+    public static int maxSumOfSizeK(int[] a, int k) {
+        if (a == null || k <= 0 || k > a.length) throw new IllegalArgumentException();
+        int windowSum = 0;
+        
+        // Calculate the sum of the first window
+        for (int i = 0; i < k; i++) windowSum += a[i];
+        int maxSum = windowSum;
+
+        // slide window
+        for (int r = k; r < a.length; r++) {
+            windowSum += a[r] - a[r - k];   // add right, remove left
+            if (windowSum > maxSum) maxSum = windowSum;
+        }
+        return maxSum;
+    }
+
+    // Min sum of any contiguous subarray of size k
+    public static int minSumOfSizeK(int[] a, int k) {
+        if (a == null || k <= 0 || k > a.length) throw new IllegalArgumentException();
+        int windowSum = 0;
+        for (int i = 0; i < k; i++) windowSum += a[i];
+        int minSum = windowSum;
+
+        for (int r = k; r < a.length; r++) {
+            windowSum += a[r] - a[r - k];
+            if (windowSum < minSum) minSum = windowSum;
+        }
+        return minSum;
+    }
+
+    // (Optional) return start index of max-sum window
+    public static int maxSumStartIndex(int[] a, int k) {
+        if (a == null || k <= 0 || k > a.length) throw new IllegalArgumentException();
+        int windowSum = 0;
+        for (int i = 0; i < k; i++) windowSum += a[i];
+        int maxSum = windowSum, start = 0;
+
+        for (int r = k; r < a.length; r++) {
+            windowSum += a[r] - a[r - k];
+            if (windowSum > maxSum) { maxSum = windowSum; start = r - k + 1; }
+        }
+        return start;
+    }
+}
