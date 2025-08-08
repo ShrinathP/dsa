@@ -1,0 +1,27 @@
+//chatgpt soln
+public class Solution {
+    public int maxSumCircular(int[] arr, int k) {
+        int n = arr.length;
+
+        // Step 1: Calculate sum of the first k elements
+        int windowSum = 0;
+        for (int i = 0; i < k; i++) {
+            windowSum += arr[i];
+        }
+
+        // Step 2: Store this as max sum
+        int maxSum = windowSum;
+
+        // Step 3: Slide the window through the array
+        for (int i = k; i < n + k; i++) {
+            // Remove the element that is leaving the window (i - k)
+            // Add the new element that is entering the window (i % n)
+            windowSum += arr[i % n] - arr[(i - k) % n];
+
+            // Update maxSum if we found a larger sum
+            maxSum = Math.max(maxSum, windowSum);
+        }
+
+        return maxSum;
+    }
+}
