@@ -1,0 +1,19 @@
+// Single for loop solution using substring and saving in a map
+// Save in HashMap and increase the count
+
+import java.util.HashMap;
+
+public class Solution {
+    public boolean containsPattern(String s, int M, int K) {
+        HashMap<String, Integer> patternCount = new HashMap<>();
+        
+        for (int i = 0; i <= s.length() - M; i++) {
+            String pattern = s.substring(i, i + M);
+            patternCount.put(pattern, patternCount.getOrDefault(pattern, 0) + 1);
+            if (patternCount.get(pattern) >= K) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
