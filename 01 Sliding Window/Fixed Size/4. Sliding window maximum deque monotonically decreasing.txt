@@ -1,0 +1,53 @@
+//Chatgpt soln - striver explanation
+/*
+Goal:
+Given an array nums and an integer k, the task is to find the maximum value in each sliding window of size k as it moves from the beginning to the end of the array.
+
+Approach:
+We use a deque (double-ended queue) to store indices of the elements in the current window. The deque will help us efficiently track the maximum element for each window.
+
+1. Initialization: Use a deque to store indices of elements in the current window. The deque is maintained such that the values corresponding to the indices are in decreasing order.
+2. Window Adjustment:
+  - For each element in the array:
+    - Remove Out-of-Bounds Elements: If the index at the front of the deque is outside the current window, remove it.
+    - Remove Smaller Elements: From the back of the deque, remove elements smaller than the current element, as they cannot be part of the maximum in future windows.
+    (Maintain a monotonique decreasing queue)
+3. Add Current Element: Add the current element’s index to the deque.
+4. Store Maximum: Once the window reaches size k, the maximum of the current window is at the front of the deque. Store this value in the result array.
+
+*/
+
+
+import java.util.*;
+
+public class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if (nums == null || nums.length == 0) return new int[0];
+        
+        int n = nums.length;
+        int[] result = new int[n - k + 1];
+        Deque<Integer> deque = new LinkedList<>();
+
+        for (int i = 0; i < n; i++) {
+            // Remove elements outside the window
+            if (!deque.isEmpty() && deque.peekFirst() < i - k + 1) {
+                deque.pollFirst();
+            }
+
+            // Remove smaller elements from the deque
+            while (!deque.isEmpty() && nums[deque.peekLast()] < nums[i]) {
+                deque.pollLast();
+            }
+
+            // Add the current element to the deque
+            deque.offerLast(i);
+
+            // Add the maximum element (first element of deque) to the result
+            if (i >= k - 1) {
+                result[i - k + 1] = nums[deque.peekFirst()];
+            }
+        }
+
+        return result;
+    }
+}
