@@ -1,0 +1,58 @@
+/*
+Similar to Maximum Size Subarray sum equals K - Prefix Sum + Hash
+GFG Problem - 
+Given an array arr[] consisting of both positive and negative integers, 
+find the length of the longest subarray whose elements sum is zero.
+
+https://www.geeksforgeeks.org/dsa/find-the-largest-subarray-with-0-sum/
+
+
+The idea is based on the observation that for two different indices i and j (where j > i) 
+if the prefix sums Si and Sj are equal, 
+it means that the sum of the elements between indices i+1 and j is zero. This is because:
+
+Sj - Si = arr[i+1] + arr[i+2] + …... + arr[j]
+If Si = Sj, then:  arr[i+1] + arr[i+2] + …... + arr[j] = 0. [ The subarray sum from i+1 to j is 0. ]
+*/
+
+
+import java.util.HashMap;
+import java.util.Map;
+
+class GfG {
+    public static int maxLength(int[] arr) {
+        int n = arr.length;
+
+        // prefixSum -> first index
+        Map<Integer, Integer> firstSeen = new HashMap<>();
+        int prefixSum = 0;
+        int maxLen = 0;
+
+        // insert prefix sum 0 at index -1
+        // to handle sum from start
+        firstSeen.put(0, -1);
+
+        for (int i = 0; i < n; i++) {
+            prefixSum += arr[i];
+
+            // prefix sum has been seen before - that means - 
+            // the array from current i to the prev found same prefixSum - sums to 0
+            if (firstSeen.containsKey(prefixSum)) {
+                int prevIndex = firstSeen.get(prefixSum);
+                int length = i - prevIndex;
+                maxLen = Math.max(maxLen, length);
+            } else {
+                
+                // Store first occurrence of this prefix sum
+                firstSeen.put(prefixSum, i);
+            }
+        }
+
+        return maxLen;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {15, -2, 2, -8, 1, 7, 10};
+        System.out.println(maxLength(arr));
+    }
+}
