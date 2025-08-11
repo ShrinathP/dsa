@@ -5,6 +5,31 @@
 //Explanation
 //Yogesh & Shailesh (CodeLibrary)
 //Solution chatgpt
+/*
+Problem Summary:
+We need to find the first negative number in every sliding window of size K in an array of integers. If there's no negative number in a window, we return 0 for that window.
+
+🧠 Key Idea:
+Use a queue to store the indices of negative numbers in the current window of size K.
+As we slide the window, the queue helps us efficiently keep track of the first negative number in each window.
+
+🧠 Algorithm Explanation:
+1. Deque to Store Indices of Negative Numbers:
+    - The deque is used to store the indices of negative numbers in the current window of size k.
+    - We keep the first negative number's index at the front of the deque, ensuring we can quickly retrieve the first negative number for each window.
+
+2. Sliding Window:
+    - We move through the array, starting from index 0 to n-1.
+    - For each element:
+        - If it's negative, add its index to the back of the deque.
+        - If the index of the first element in the deque is out of the current window (i - k), remove it from the deque.
+    - After processing each window, if there’s at least one negative number, we add the first negative number (i.e., the element at the front of the deque) to the result list.
+    - If the deque is empty (no negative numbers in the current window), we add 0 to the result list
+
+3. Sliding the Window:
+    - The window starts from index 0 and slides by incrementing the index.
+    - After reaching index k-1, we start adding the first negative number in the current window (or 0 if there’s no negative number).
+*/
 
 import java.util.*;
 
