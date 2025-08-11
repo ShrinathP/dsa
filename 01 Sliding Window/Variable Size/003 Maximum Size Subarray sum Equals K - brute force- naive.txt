@@ -1,5 +1,10 @@
 ////325 locked
 //https://github.com/just4once/leetcode/blob/master/leetcode/hash-table/325-maximum-size-subarray-sum-equals-k.md
+/*
+Problem description:
+Given an array arr[] of size n containing integers, the task is to find the length of the longest subarray having sum equal to the given value k.
+*/
+
 class Solution {
 
     
