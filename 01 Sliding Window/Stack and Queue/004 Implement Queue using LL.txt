@@ -1,0 +1,85 @@
+/*
+Striver Explanation
+1. at start both start = end = null
+2. push (enqueue) - initially if end = null, point both start and end to the new node, start = end = newnode
+        - if end != null, point next of current end to new node, 'end.next = newNode' and move end to new node, 'end = newNode'
+3. pop (dequeue) - keep printing front.data and point front to front.next, front = front.next
+4. peek - is simply front.data
+
+enqueue(): Adds an element to the rear of the queue. If the queue is empty, both front and rear are set to the new node.
+dequeue(): Removes the front element of the queue. The front pointer is moved to the next node. If the queue becomes empty, rear is also set to null.
+peek(): Returns the front element without removing it from the queue.
+*/
+
+class Queue {
+    private Node front, rear; // Front and rear of the queue
+
+    // Node class for Linked List
+    private class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    // Constructor
+    public Queue() {
+        front = rear = null; // Initially, both front and rear are null (empty queue)
+    }
+
+    // Enqueue operation (add element to the rear of the queue)
+    public void enqueue(int value) {
+        Node newNode = new Node(value);
+        if (rear == null) {
+            front = rear = newNode; // If the queue is empty, front and rear point to the same node
+            return;
+        }
+        rear.next = newNode; // Add the new node at the end of the queue
+        rear = newNode; // Update the rear pointer to the new node
+    }
+
+    // Dequeue operation (remove element from the front of the queue)
+    public int dequeue() {
+        if (isEmpty()) {
+            System.out.println("Queue is Empty");
+            return -1;
+        }
+        int dequeuedValue = front.data;
+        front = front.next; // Move front to the next node
+        if (front == null) {
+            rear = null; // If the queue becomes empty, set rear to null
+        }
+        return dequeuedValue;
+    }
+
+    // Peek operation (view front element)
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Queue is Empty");
+            return -1;
+        }
+        return front.data;
+    }
+
+    // Check if the queue is empty
+    public boolean isEmpty() {
+        return front == null;
+    }
+}
+
+// Demo
+public class Main {
+    public static void main(String[] args) {
+        Queue queue = new Queue();
+
+        queue.enqueue(10);
+        queue.enqueue(20);
+        queue.enqueue(30);
+
+        System.out.println(queue.dequeue());  // 10
+        System.out.println(queue.peek());     // 20
+    }
+}
