@@ -1,4 +1,15 @@
-//Striver
+//Striver explanation
+/*
+Explanation:
+- initialize queue array start, end = -1
+- start points to the first element in the queue.
+- end points to the last element.
+- curSize points current filled Size of the arr
+- enqueue() / push: Adds an element at the rear. If the queue is empty, front and end set to 0, else increment end
+- dequeue() / pop: Removes an element from the start. After removing, if the queue becomes empty, both front and rear are reset to -1, else increment the start
+- Circular Queue: The rear and front wrap around the array using modulo (%), so that when rear or front reaches the end, they return to the beginning.
+*/
+
 class Queue {
 
     private int arr[];
@@ -24,9 +35,10 @@ class Queue {
         }
         if (end == -1) {
             start = 0;
-            end = 0;
-        } else
+            end = 0; // not needed, if we remove below else
+        } else {
             end = (end + 1) % maxSize;
+        }
         arr[end] = newElement;
         System.out.println("The element pushed is " + newElement);
         currSize++;
