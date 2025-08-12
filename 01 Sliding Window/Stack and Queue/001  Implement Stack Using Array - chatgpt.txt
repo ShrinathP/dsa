@@ -1,7 +1,13 @@
 /*
+
 Striver Explanation
-use top from -1
-increase the top value and then keep adding to the stack Array
+/*
+- maintain a top equal to -1
+- push - check if top = size - 1 , return Stack Overflow, else increase top and then add to the stackArray
+- pop - check if top = -1 , return Underflow as there are no elements, else return array[top] and then reduce top, top--
+- peek - check if top = -1 , return Underflow as there are no elements, else just return array[top], no need to reduce
+*/
+
 
 chatgpt Soln
 */
