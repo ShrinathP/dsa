@@ -1,0 +1,86 @@
+//gpt soln
+/*
+Explanation:
+- front points to the first element in the queue.
+- rear points to the last element.
+- enqueue(): Adds an element at the rear. If the queue is empty, front is also set to 0.
+- dequeue(): Removes an element from the front. After removing, if the queue becomes empty, both front and rear are reset to -1.
+- Circular Queue: The rear and front wrap around the array using modulo (%), so that when rear or front reaches the end, they return to the beginning.
+*/
+
+class Queue {
+    private int[] queueArray;
+    private int front, rear, size;
+
+    // Constructor to initialize the queue
+    public Queue(int size) {
+        this.size = size;
+        queueArray = new int[size];
+        front = rear = -1; // Indicates an empty queue
+    }
+
+    // Enqueue operation (insert element into queue)
+    public void enqueue(int value) {
+        if (isFull()) {
+            System.out.println("Queue is Full");
+            return;
+        }
+        if (front == -1) {
+            front = 0; // If it's the first element, set front to 0
+        }
+        rear = (rear + 1) % size; // Circular increment
+        queueArray[rear] = value;
+    }
+
+    // Dequeue operation (remove element from queue)
+    public int dequeue() {
+        if (isEmpty()) {
+            System.out.println("Queue is Empty");
+            return -1;
+        }
+        int dequeuedValue = queueArray[front];
+        if (front == rear) {
+            front = rear = -1; // Queue becomes empty
+        } else {
+            front = (front + 1) % size; // Circular increment
+        }
+        return dequeuedValue;
+    }
+
+    // Peek at the front element of the queue
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Queue is Empty");
+            return -1;
+        }
+        return queueArray[front];
+    }
+
+    // Check if the queue is empty
+    public boolean isEmpty() {
+        return front == -1;
+    }
+
+    // Check if the queue is full
+    public boolean isFull() {
+        return (rear + 1) % size == front;
+    }
+}
+
+// Demo
+public class Main {
+    public static void main(String[] args) {
+        Queue queue = new Queue(5);
+
+        queue.enqueue(10);
+        queue.enqueue(20);
+        queue.enqueue(30);
+
+        System.out.println(queue.dequeue());  // 10
+        System.out.println(queue.peek());     // 20
+        queue.enqueue(40);
+        queue.enqueue(50);
+
+        System.out.println(queue.dequeue());  // 20
+    }
+}
