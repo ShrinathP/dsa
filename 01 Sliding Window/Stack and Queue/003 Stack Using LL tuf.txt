@@ -1,0 +1,84 @@
+/*
+Striver Explanation
+Chatgpt solution
+push - create a new node, Keep updating the top to new node, using, newNode.next = prevTop, newTop = newNode
+pop - will be top.data, print it (or return it), and point top = top.next
+
+Explanation:
+- Node: Represents a node in the linked list. Each node contains data and a pointer (next) to the next node.
+- top: The top element of the stack. Initially, it’s set to null (empty stack).
+- push(): Adds an element to the stack. A new node is created and points to the current top, then top is updated to the new node.
+- pop(): Removes the top element of the stack. The top pointer is moved to the next node.
+- peek(): Returns the top element without removing it.
+- isEmpty(): Checks if the stack is empty by checking if top is null.
+*/
+
+class Stack {
+    private Node top; // Top of the stack
+
+    // Node class for Linked List
+    private class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    // Constructor
+    public Stack() {
+        top = null; // Initially, the stack is empty
+    }
+
+    // Push operation (add element to the stack)
+    public void push(int value) {
+        Node newNode = new Node(value);
+        if (top == null) {
+            top = newNode;
+        } else {
+            newNode.next = top; // Point the new node to the current top
+            top = newNode; // Update top to new node
+        }
+    }
+
+    // Pop operation (remove element from the stack)
+    public int pop() {
+        if (isEmpty()) {
+            System.out.println("Stack Underflow");
+            return -1;
+        }
+        int poppedValue = top.data;
+        top = top.next; // Move top to the next node
+        return poppedValue;
+    }
+
+    // Peek operation (view top element)
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Stack is Empty");
+            return -1;
+        }
+        return top.data;
+    }
+
+    // Check if the stack is empty
+    public boolean isEmpty() {
+        return top == null;
+    }
+}
+
+// Demo
+public class Main {
+    public static void main(String[] args) {
+        Stack stack = new Stack();
+
+        stack.push(10);
+        stack.push(20);
+        stack.push(30);
+
+        System.out.println(stack.pop());  // 30
+        System.out.println(stack.peek()); // 20
+    }
+}
