@@ -1,7 +1,7 @@
 /*
 Striver Explanation
 Chatgpt solution
-push - create a new node, Keep updating the top to new node, using, newNode.next = prevTop, newTop = newNode
+push - create a new node, Keep updating the top to new node using, newNode.next = prevTop, newTop = newNode
 pop - will be top.data, print it (or return it), and point top = top.next
 
 Explanation:
