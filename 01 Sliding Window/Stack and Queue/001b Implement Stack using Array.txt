@@ -1,0 +1,83 @@
+/*
+GFG Solution
+
+- Top or Peek Operation in Stack:
+Returns the top element of the stack.
+
+Before returning the top element from the stack, we check if the stack is empty.
+If the stack is empty (top == -1), we simply print “Stack is empty”.
+Otherwise, we return the element stored at index = top .
+
+
+- isEmpty Operation in Stack:
+Returns true if the stack is empty, else false.=
+Check for the value of top in stack.
+If (top == -1) , then the stack is empty so return true .
+Otherwise, the stack is not empty so return false .
+
+- isFull Operation in Stack :
+Returns true if the stack is full, else false.
+Check for the value of top in stack.
+If (top == capacity-1), then the stack is full so return true .
+Otherwise, the stack is not full so return false.
+
+*/
+
+// Java program to create a stack with given capacity
+class Stack { 
+    int top, cap; 
+    int[] a; 
+
+    public Stack(int cap) { 
+        this.cap = cap; 
+        top = -1; 
+        a = new int[cap]; 
+    } 
+
+    public boolean push(int x) { 
+        if (top >= cap - 1) { 
+            System.out.println("Stack Overflow"); 
+            return false; 
+        } 
+        a[++top] = x; 
+        return true; 
+    } 
+
+    public int pop() { 
+        if (top < 0) { 
+            System.out.println("Stack Underflow"); 
+            return 0; 
+        } 
+        return a[top--]; 
+    } 
+
+    public int peek() { 
+        if (top < 0) { 
+            System.out.println("Stack is Empty"); 
+            return 0; 
+        } 
+        return a[top]; 
+    } 
+
+    public boolean isEmpty() { 
+        return top < 0; 
+    } 
+} 
+
+public class Main { 
+    public static void main(String[] args) { 
+        Stack s = new Stack(5); 
+        s.push(10); 
+        s.push(20); 
+        s.push(30); 
+        System.out.println(s.pop() + " popped from stack"); 
+
+        System.out.println("Top element is: " + s.peek()); 
+
+        System.out.print("Elements present in stack: "); 
+        while (!s.isEmpty()) { 
+            System.out.print(s.peek() + " "); 
+            s.pop(); 
+        } 
+    } 
+}
