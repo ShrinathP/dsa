@@ -1,0 +1,71 @@
+/*
+Striver Explanation
+use top from -1
+increase the top value and then keep adding to the stack Array
+
+chatgpt Soln
+*/
+
+class Stack {
+    private int maxSize;
+    private int[] stackArray;
+    private int top;
+
+    // Constructor
+    public Stack(int size) {
+        maxSize = size;
+        stackArray = new int[maxSize];
+        top = -1; // Empty stack
+    }
+
+    // Push element onto stack
+    public void push(int value) {
+        if (isFull()) {
+            System.out.println("Stack Overflow");
+            return;
+        }
+        stackArray[++top] = value;
+    }
+
+    // Pop element from stack
+    public int pop() {
+        if (isEmpty()) {
+            System.out.println("Stack Underflow");
+            return -1;
+        }
+        return stackArray[top--];
+    }
+
+    // Peek at top element
+    public int peek() {
+        if (isEmpty()) {
+            System.out.println("Stack is Empty");
+            return -1;
+        }
+        return stackArray[top];
+    }
+
+    // Check if stack is empty
+    public boolean isEmpty() {
+        return top == -1;
+    }
+
+    // Check if stack is full
+    public boolean isFull() {
+        return top == maxSize - 1;
+    }
+}
+
+// Demo
+public class Main {
+    public static void main(String[] args) {
+        Stack stack = new Stack(5);
+
+        stack.push(10);
+        stack.push(20);
+        stack.push(30);
+
+        System.out.println(stack.pop());  // 30
+        System.out.println(stack.peek()); // 20
+    }
+}
