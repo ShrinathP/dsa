@@ -1,0 +1,39 @@
+/*
+Keep pushing opening brackets to the stack
+else
+if its not an opening bracket
+  - if stack is empty, return false
+  - if stack.pop doesnt match the opposite of opening bracket, return false
+*/
+
+class Solution {
+    public boolean isValid(String s) {
+        //Check O(1) solution also by Algorithms Made Easy
+        //Algorithms Made Easy Solution
+        
+        Map<Character,Character> mp = new HashMap<>();
+        mp.put(')', '(');
+        mp.put('}', '{');
+        mp.put(']', '[');
+        
+        Stack<Character> stack = new Stack<>();
+        
+        for(int i=0; i<s.length(); i++){
+            char c = s.charAt(i);
+            
+            //if open bracket then push
+            if(mp.containsValue(c)){
+                stack.push(c);
+            } else {
+                //st.isEmpty and first character is close bracket then invalid
+                //stack.pop should be equal to an open bracket, if not invalid
+                if(stack.isEmpty() || stack.pop() != mp.get(c) ){
+                    return false;
+                }
+            }
+        }
+        
+        //for loop run over without return false
+        return stack.isEmpty(); //stack should be empty   
+    }
+}
