@@ -1,5 +1,5 @@
 // Implement Stack using 2 Queues - Leetcode 73
-//chatgpt soln
+//chatgpt soln - Striver explanation
 /*
 We are using queue2 as a helper queue, and queue1 is the main queue
 - Push Operation: 
@@ -12,6 +12,8 @@ At every point we are, adding first to queue2, emptying queue1 into queue2, swap
 
 - Pop Operation: Simply dequeue from queue1 (the stack top).
 
+Good explaantion
+https://www.geeksforgeeks.org/dsa/implement-stack-using-queue/
 
 */
 
