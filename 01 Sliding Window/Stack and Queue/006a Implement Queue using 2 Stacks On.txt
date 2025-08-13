@@ -1,0 +1,86 @@
+//https://takeuforward.org/data-structure/implement-queue-using-stack/
+//Striver explanation and code
+// Solution 1: Using two Stacks where push operation is O(N)
+/*
+Use 2 stacks s1 and s2 where, 
+1. before adding to s1, empty everything from s1 to s2, until s1 is empty
+2. push the element to s1
+3. now empty everything from s2 to s1, this will keep the previously added numbers to the front of the Stack
+This way we will have the first added numbers to the top to stack
+
+TC- O(N) ~ O(2N) as we are moving s1 -> s2 and then s2-> s1 back
+
+Steps
+s1 -> s2
+x  -> s1
+s2 -> s1
+
+*/
+
+import java.util.*;
+
+class MyQueue {
+    Stack < Integer > input = new Stack < > ();
+    Stack < Integer > output = new Stack < > ();
+    /** Initialize your data structure here. */
+    public MyQueue() {
+
+    }
+
+    /** Push element x to the back of queue. */
+    public void push(int x) {
+        while (input.empty() == false) {
+            output.push(input.peek());
+            input.pop();
+        }
+        // Insert the desired element in the stack input
+        System.out.println("The element pushed is " + x);
+        input.push(x);
+        // Pop out elements from the stack output and push them into the stack input
+        while (output.empty() == false) {
+            input.push(output.peek());
+            output.pop();
+        }
+
+    }
+
+    /** Removes the element from in front of queue and returns that element. */
+    public int pop() {
+        // shift input to output 
+        if (input.empty()) {
+            System.out.println("Stack is empty");
+
+        }
+        int val = input.peek();
+        input.pop();
+        return val;
+
+    }
+
+    /** Get the front element. */
+    public int peek() {
+        // shift input to output 
+        if (input.empty()) {
+            System.out.println("Stack is empty");
+
+        }
+        return input.peek();
+    }
+
+
+    int size() {
+        return input.size();
+    }
+}
+class TUF {
+    public static void main(String args[]) {
+        MyQueue q = new MyQueue();
+        q.push(3);
+        q.push(4);
+        System.out.println("The element poped is " + q.pop());
+        q.push(5);
+        System.out.println("The top element is " + q.peek());
+        System.out.println("The size of the queue is " + q.size());
+
+    }
+}
