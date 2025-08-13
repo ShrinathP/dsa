@@ -1,0 +1,121 @@
+//2 solutions
+//Using a stack - 1st one is better
+//Algorithms made easy - 2 traversal way
+
+//Solution 1
+
+class Solution {
+    /*
+    
+    
+    Step 1- Push (-1) into the stack
+    Step 2 - Traverse the string
+            Case 1- If we encounter an open character ( push the index
+            Case 2- If we encounter a close character ) , pop
+                2.1 If the stack is empty after the pop, push the index
+                2.2 If the stack is not empty after the pop, calculate max
+                max - i - topOfStack
+                Update new max
+                
+                
+                Logic GuruMack utube channel- Longest valid Parenthesis
+                https://www.youtube.com/watch?v=8CYhffMML8o
+                
+                Code- Algorithms Made Easy channel
+                
+                Time O(n) SpaceO(n)
+                
+    */
+    public int longestValidParentheses(String s) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(-1);
+        int max = 0;
+        
+        for(int i=0; i<s.length(); i++){
+            char c= s.charAt(i);
+            if(c == '('){
+                stack.push(i);
+            } else {
+                //c == ')'
+                stack.pop();
+                if(stack.empty()){
+                    //push current index
+                    stack.push(i);
+                } else {
+                    int len = i - stack.peek();
+                    max = Math.max(max, len);
+                }
+            }
+            
+        }
+        return max;
+        
+    }
+}
+
+
+//Solution 2, 2 traversals from 0 to N and from N to 0
+//O(N)
+class Solution {
+    /*
+    
+     
+   Another solution in O(1) Space
+    Time Complexity O(n)
+    Code- Algorithms Made Easy channel      
+    
+    Traverse from 0 to N
+    Traverse from N to 0
+    */
+    public int longestValidParentheses(String s) {
+        //Traverse from 0 to N
+        int open =0, close =0;
+        int max=0;
+        //0..N
+        for(int i=0;i< s.length();i++){
+            char c = s.charAt(i);
+            if(c=='('){
+                open++;
+            } else {
+                close++;
+            }
+            
+            //string is valid
+            if(open == close){
+                //length of string is open paran + close paran
+                int len = open + close;
+                max = Math.max(max, len);
+            } else if(close > open) {
+                //invalid string
+                open = close = 0;
+            }
+            
+        }
+        System.out.println(max + "----");
+        
+        open = close =0;
+        //N..0
+        for(int i=s.length()-1;i>=0;i--){
+            char c = s.charAt(i);
+            if(c=='('){
+                open++;
+            } else {
+                close++;
+            }
+            
+            //string is valid
+            if(open == close){
+                //length of string is open paran + close paran
+                int len = open + close;
+                max = Math.max(max, len);
+            } else if(open > close) {
+                //invalid string
+                open = close = 0;
+            }
+            
+        }
+        System.out.println(max);
+        return max;
+        
+    }
+}
