@@ -3,6 +3,8 @@
 
 // Monotonically Increasing Stack - from left to right
 
+//Visualize using Tree height - striver explanation
+
 /*
 Problem
 Given an array arr[] of integers, 
