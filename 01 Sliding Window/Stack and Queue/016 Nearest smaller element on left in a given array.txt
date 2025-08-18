@@ -1,0 +1,51 @@
+//Monotonically increasing stack - left to right traversal
+//striver explanation, chatgpt soln
+//Any greater elements than the current arr[i], remove it. so that the monotonic decreasing stack is maintained
+/*
+\
+  \
+    \
+      \
+*/
+import java.util.*;
+
+public class NearestSmallerToLeft {
+
+    public int[] nearestSmallerElement(int[] nums) {
+        // Result array to store the nearest smaller element for each number
+        int[] result = new int[nums.length];
+        
+        // Stack to keep track of elements (monotonic decreasing stack)
+        Stack<Integer> stack = new Stack<>();
+        
+        // Traverse the array
+        for (int i = 0; i < nums.length; i++) {
+            // Pop elements from the stack while they are greater than or equal to the current element
+            while (!stack.isEmpty() && stack.peek() >= nums[i]) {
+                stack.pop();
+            }
+            
+            // If the stack is empty, no smaller element exists, so we set result[i] to -1
+            if (stack.isEmpty()) {
+                result[i] = -1;
+            } else {
+                // The top of the stack is the nearest smaller element
+                result[i] = stack.peek();
+            }
+            
+            // Push the current element onto the stack for future comparisons
+            stack.push(nums[i]);
+        }
+        
+        return result;
+    }
+
+    // Test the solution
+    public static void main(String[] args) {
+        NearestSmallerToLeft solution = new NearestSmallerToLeft();
+        
+        int[] nums = {4, 5, 2, 10, 8};
+        
+        int[] result = solution.nearestSmallerElement(nums);
+        
+        // Output the r
