@@ -36,6 +36,20 @@ class GfG {
             }
         }
 
+//Can do the for in for with j=i+1 as well, check below for loop
+/*
+        // Iterate for all the elements of the array
+        for (int i = 0; i < n; i++) {
+            for (int j = i+1; j < i+n-1; j++) {
+                // Checking for next greater element
+                if (arr[i] < arr[(j) % n]) {
+                    res[i] = arr[(j) % n];
+                    break;
+                }
+            }
+        }
+*/
+
         ArrayList<Integer> result = new ArrayList<>();
         for (int val : res) {
             result.add(val);
