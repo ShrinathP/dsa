@@ -1,6 +1,8 @@
 
 
 /*
+https://takeuforward.org/data-structure/trapping-rainwater/
+
 Intuition: We are taking O(N) for computing leftMax and rightMax at each index. 
 The complexity can be boiled down to O(1) if we precompute the leftMax and rightMax at each index.
 
