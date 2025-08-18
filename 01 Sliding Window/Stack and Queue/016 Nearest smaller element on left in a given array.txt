@@ -1,4 +1,4 @@
-//Monotonically increasing stack - left to right traversal
+//Monotonically decreasing stack - left to right traversal
 //striver explanation, chatgpt soln
 //Any greater elements than the current arr[i], remove it. so that the monotonic decreasing stack is maintained
 /*
