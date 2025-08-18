@@ -1,0 +1,54 @@
+
+/*
+Traverse front to back 
+Maintain a monotonically decreasing stack
+\
+  \
+    \
+      \
+chatgpt soln. explanation same as Next Greater element I leetcode solution
+*/
+
+
+import java.util.*;
+
+public class NextGreaterElement2 {
+
+    public int[] nextGreaterElements(int[] nums) {
+        int n = nums.length;
+        int[] result = new int[n];
+        Stack<Integer> stack = new Stack<>();
+        
+        // Initialize result array with -1 (default value when no greater element exists)
+        Arrays.fill(result, -1);
+
+        // Traverse the array twice to handle the circular nature
+        for (int i = 0; i < 2 * n; i++) {
+            int currentVal = nums[i % n];  // Get the current element considering wrap-around
+            
+            // Pop elements from the stack if the current value is greater
+            while (!stack.isEmpty() && nums[stack.peek()] < currentVal) {
+                int idx = stack.pop();  // Get the index of the element whose NGE we found
+                result[idx] = currentVal;  // Assign the current value as NGE for the element at the index
+            }
+            
+            // Push the current index onto the stack for future comparison
+            if (i < n) {
+                stack.push(i);  // We only want to push indices for the first round of traversal
+            }
+        }
+        
+        return result;
+    }
+
+    // Test the solution
+    public static void main(String[] args) {
+        NextGreaterElement2 solution = new NextGreaterElement2();
+        
+        int[] nums = {1, 2, 1};
+        
+        int[] result = solution.nextGreaterElements(nums);
+        
+        System.out.println(Arrays.toString(result));  // Output: [2, -1, 2]
+    }
+}
