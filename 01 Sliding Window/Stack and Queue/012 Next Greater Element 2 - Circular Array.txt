@@ -4,6 +4,7 @@ Given a circular array arr[] of size n with distinct elements,
 find the next greater element for each element in the array.
 
 Striver Explanation, gfg soln
+https://www.geeksforgeeks.org/dsa/find-the-next-greater-element-in-a-circular-array/
 Circular Array - modulo way
 
 Naive Solution, 
