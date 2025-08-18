@@ -1,5 +1,8 @@
+//Striver explanation
+// Monotonically Decreasing Stack - from right to left, or
 
-// Monotonically Decreasing Queue - from right to left
+// Monotonically Increasing Stack - from left to right
+
 /*
 Problem
 Given an array arr[] of integers, 
