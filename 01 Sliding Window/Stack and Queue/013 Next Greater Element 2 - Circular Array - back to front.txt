@@ -40,6 +40,17 @@ class GfG {
                 res[i] = stk.peek();
             }
 
+//or remove the array fill -1 and use below
+/*
+            if (i < n) {
+                   if(!stk.isEmpty()) {
+                      res[i] = stk.peek();
+                   } else {
+                      res[i] = -1;
+                   }
+            }
+*/
+
             stk.push(curr);
         }
 
