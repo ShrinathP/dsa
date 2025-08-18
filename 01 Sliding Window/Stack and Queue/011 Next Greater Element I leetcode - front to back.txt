@@ -1,7 +1,17 @@
 //NICK White, chatgpt soln
 
 //IMP: Maintain a monotonic decreasing stack
+/*
+\
+  \
+    \
+      \
+IMP: Current element to be pushed has to be the smallest in the stack in order to maintain the monotonic decreasing sequence.
+So remove everything which is smaller than the current element
+
+
 //If the current num is greater than stack peek, we pop the stack, else we keep pushing, hence maintaining the Monotonic decreasing stack
+*/
 
 /*
 Visualizing the Monotonic Stack:
