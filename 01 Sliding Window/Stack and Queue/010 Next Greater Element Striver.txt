@@ -1,0 +1,59 @@
+
+// Monotonically Decreasing Queue - from right to left
+/*
+Problem
+Given an array arr[] of integers, 
+the task is to find the Next Greater Element for each element of the array in order of their appearance in the array.
+*/
+
+//Reverse backward Traversal
+//Striver Explanation - Monotonically Decreasing Queue, from right to left
+//chatgpt soln or gfg soln
+4,12,5,3,1
+//As you traverse back , for every element, remove all the elements from the stack which are lesser than curr element
+Visualize as height of tree, 
+
+import java.util.*;
+
+public class NextGreaterElementReverseTraversal {
+
+    public int[] nextGreaterElement(int[] nums) {
+        // Result array to store the next greater element for each number
+        int[] result = new int[nums.length];
+        
+        // Stack to keep track of the elements
+        Stack<Integer> stack = new Stack<>();
+        
+        // Traverse the array from right to left
+        for (int i = nums.length - 1; i >= 0; i--) {
+            // Pop elements from the stack while they are smaller than or equal to the current element
+            while (!stack.isEmpty() && stack.peek() <= nums[i]) {
+                stack.pop();
+            }
+            
+            // If the stack is empty, no next greater element exists
+            if (stack.isEmpty()) {
+                result[i] = -1;
+            } else {
+                // The next greater element is at the top of the stack
+                result[i] = stack.peek();
+            }
+            
+            // Push the current element onto the stack for future comparisons
+            stack.push(nums[i]);
+        }
+        
+        return result;
+    }
+
+    // Test the solution
+    public static void main(String[] args) {
+        NextGreaterElementReverseTraversal solution = new NextGreaterElementReverseTraversal();
+        
+        int[] nums = {4, 3, 2, 1};
+        
+        int[] result = solution.nextGreaterElement(nums);
+        
+        System.out.println(Arrays.toString(result));  // Output: [-1, 4, 3, 2]
+    }
+}
