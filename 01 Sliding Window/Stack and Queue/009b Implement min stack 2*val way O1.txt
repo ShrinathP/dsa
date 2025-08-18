@@ -1,0 +1,107 @@
+/*
+Striver explanation 
+Chatgpt soln
+
+Approach:
+
+The idea is to store the difference between the current element and the minimum value in the stack using the formula 2 * value - min. 
+This allows us to efficiently get both the element and the minimum value while maintaining space complexity.
+
+1.  Push Operation: For each new element:
+  - If the element is smaller than or equal to the current minimum, 
+we update the current minimum and use the formula 2 * value - min to store the new value in the stack.
+if newval < min, stack.push(2*newval - min), update min
+  - Otherwise, just push the value onto the stack as is.
+
+2. Pop Operation: When popping an element: 
+  - If the popped value is smaller than the current minimum, 
+it means the previous minimum is being removed, 
+and we need to revert the minimum back to the previous value.
+if pop.val < currmin, newmin = 2 * min - top;
+
+3. Get Min Operation: The current minimum can be directly retrieved from the mini variable
+*/
+
+import java.util.*;
+
+class MinStack {
+    private Stack<Integer> stack;
+    private int min;
+
+    // Constructor
+    public MinStack() {
+        stack = new Stack<>();
+    }
+
+    // Push operation (add element to the stack)
+    public void push(int value) {
+        if (stack.isEmpty()) {
+            stack.push(value);
+            min = value; // Set the first element as the minimum
+        } else {
+            if (value <= min) {
+                stack.push(2 * value - min); // Store the "encoded" value
+                min = value; // Update the new minimum
+            } else {
+                stack.push(value); // Push the value directly
+            }
+        }
+    }
+
+    // Pop operation (remove element from the stack)
+    public void pop() {
+        if (stack.isEmpty()) {
+            System.out.println("Stack is Empty");
+            return;
+        }
+
+        int top = stack.pop();
+        if (top <= min) {
+            min = 2 * min - top; // Restore the previous minimum
+        }
+    }
+
+    // Peek operation (view top element of the stack)
+    public int peek() {
+        if (stack.isEmpty()) {
+            System.out.println("Stack is Empty");
+            return -1;
+        }
+        int top = stack.peek();
+        return top <= min ? min : top; // If top is encoded, return min
+    }
+
+    // Get Min operation (get the minimum element in the stack)
+    public int getMin() {
+        if (stack.isEmpty()) {
+            System.out.println("Stack is Empty");
+            return -1;
+        }
+        return min; // Return the current minimum
+    }
+
+    // Check if the stack is empty
+    public boolean isEmpty() {
+        return stack.isEmpty();
+    }
+}
+
+// Demo
+public class Main {
+    public static void main(String[] args) {
+        MinStack minStack = new MinStack();
+
+        minStack.push(10);
+        minStack.push(20);
+        minStack.push(5);
+        minStack.push(15);
+
+        System.out.println(minStack.getMin());  // 5
+        minStack.pop();
+        System.out.println(minStack.getMin());  // 5
+        minStack.pop();
+        System.out.println(minStack.getMin());  // 10
+    }
+}
+
+
