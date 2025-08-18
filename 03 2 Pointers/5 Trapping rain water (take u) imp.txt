@@ -1,4 +1,5 @@
 //cue - find lower of lo and hi heights, caculate water level for lower height
+// https://takeuforward.org/data-structure/trapping-rainwater/
 class Solution {
     /*
     0. while loop, Maintain a lo and hi pointer
