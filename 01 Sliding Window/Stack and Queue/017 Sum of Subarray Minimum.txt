@@ -1,0 +1,64 @@
+/*
+Naive - 2 for loop solution - striver explanation - chatgpt soln
+
+Problem Description: Sum of Subarray Minimums
+
+The problem asks you to compute the sum of minimums of all subarrays of a given array. A subarray is any contiguous part of the array. You need to find the sum of the minimums of each possible subarray and return that sum.
+
+Problem Details:
+You are given an integer array arr.
+For each subarray in the array, find the minimum element and then add that minimum to the total sum.
+The result should be returned modulo 10^9 + 7.
+
+Example:
+
+Given the array arr = [3, 1, 2, 4]:
+Subarrays and their minimums:
+Subarray [3]: minimum = 3
+Subarray [1]: minimum = 1
+Subarray [2]: minimum = 2
+Subarray [4]: minimum = 4
+Subarray [3, 1]: minimum = 1
+Subarray [1, 2]: minimum = 1
+Subarray [2, 4]: minimum = 2
+Subarray [3, 1, 2]: minimum = 1
+Subarray [1, 2, 4]: minimum = 1
+Subarray [3, 1, 2, 4]: minimum = 1
+Sum of all minimums = 3 + 1 + 2 + 4 + 1 + 1 + 2 + 1 + 1 + 1 = 17
+
+Use of modulo - for a manageable sum
+sum = (1000000006 + 10) % 1000000007;
+sum = 1000000016 % 1000000007;
+sum = 9;
+*/
+
+
+import java.util.*;
+
+public class SumOfSubarrayMinimums {
+
+    public static int sumSubarrayMins(int[] arr) {
+        int n = arr.length;
+        int sum = 0;
+        int MOD = 1000000007; // To avoid integer overflow, as per LeetCode convention
+        
+        // Traverse all subarrays
+        for (int i = 0; i < n; i++) {
+            int minVal = arr[i]; // Start with first element in subarray
+            for (int j = i; j < n; j++) {
+                // Update minimum for current subarray
+                minVal = Math.min(minVal, arr[j]);
+                
+                // Add the minimum of current subarray to sum
+                sum = (sum + minVal) % MOD;
+            }
+        }
+        
+        return sum;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {3, 1, 2, 4};
+        System.out.println(sumSubarrayMins(arr)); // Output: 17
+    }
+}
