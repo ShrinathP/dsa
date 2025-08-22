@@ -1,0 +1,101 @@
+
+/*
+
+Striver explanation, chatgpt soln
+Optimized Approach:
+
+Next Smaller Element (NSE) and Previous Smaller Element (PSE):
+
+For each element arr[i], calculate:
+
+Previous Smaller Element (PSE): The closest element before arr[i] which is smaller than arr[i].
+
+Next Smaller Element (NSE): The closest element after arr[i] which is smaller than arr[i].
+
+Contribution of each element:
+
+For each element arr[i], the number of subarrays in which arr[i] is the minimum can be computed by finding how many subarrays can end at arr[i] (using PSE) and how many can start at arr[i] (using NSE).
+
+Specifically, for element arr[i]:
+
+previous[i] (distance from PSE) tells how many subarrays end at arr[i].
+
+next[i] (distance from NSE) tells how many subarrays start at arr[i].
+
+Sum Calculation:
+
+The total contribution of arr[i] to the final sum is:
+
+arr[i] * previous[i] * next[i]
+
+
+From front to back, maintain a monotonic increasing stack
+      /
+    /
+  /
+/
+From back to front, maintain a monotonic decreasing stack
+      /
+    /
+  /
+/
+*/
+
+import java.util.*;
+
+public class SumOfSubarrayMinimums {
+
+    public int sumSubarrayMins(int[] arr) {
+        int MOD = 1000000007;
+        int n = arr.length;
+        
+        // Arrays to store previous smaller and next smaller elements
+        int[] prev = new int[n];
+        int[] next = new int[n];
+        
+        // Monotonic stack for Previous Smaller Element (PSE)
+        Stack<Integer> stack = new Stack<>();
+        
+        // Fill prev[] with indices of the previous smaller elements
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && arr[stack.peek()] >= arr[i]) {
+                stack.pop();
+            }
+            prev[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(i);
+        }
+        
+        // Monotonic stack for Next Smaller Element (NSE)
+        stack.clear();  // Clear the stack for next smaller element
+        
+        // Fill next[] with indices of the next smaller elements
+        for (int i = n - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {
+                stack.pop();
+            }
+            next[i] = stack.isEmpty() ? n : stack.peek();
+            stack.push(i);
+        }
+        
+        // Now calculate the sum of subarray minimums
+        long sum = 0;
+        for (int i = 0; i < n; i++) {
+            long left = i - prev[i];  // Number of subarrays that end at arr[i]
+            long right = next[i] - i;  // Number of subarrays that start at arr[i]
+            sum = (sum + arr[i] * left * right) % MOD;  // Contribution of arr[i]
+        }
+        
+        return (int) sum;
+    }
+
+    // Test the solution
+    public static void main(String[] args) {
+        SumOfSubarrayMinimums solution = new SumOfSubarrayMinimums();
+        
+        int[] arr = {3, 1, 2, 4};
+        
+        int result = solution.sumSubarrayMins(arr);
+        
+        System.out.println(result);  // Output: 17
+    }
+}
