@@ -1,0 +1,44 @@
+/*
+Total Triplets
+*/
+
+import java.util.HashMap;
+
+public class StockTriplets {
+
+    public static int countTriplets(int[] arr, int d) {
+        int n = arr.length;
+        int totalTriplets = 0;
+
+        // Iterate through each element arr[j] as the middle element of the triplet
+        for (int j = 1; j < n - 1; j++) {
+            int leftSmallerCount = 0;
+            int rightLargerCount = 0;
+
+            // Count elements to the left of arr[j] that are smaller than arr[j]
+            for (int i = 0; i < j; i++) {
+                if (arr[i] < arr[j]) {
+                    leftSmallerCount++;
+                }
+            }
+
+            // Count elements to the right of arr[j] that are larger than arr[j]
+            for (int k = j + 1; k < n; k++) {
+                if (arr[k] > arr[j]) {
+                    rightLargerCount++;
+                }
+            }
+
+            // Add the product of leftSmallerCount and rightLargerCount to totalTriplets
+            totalTriplets += (leftSmallerCount * rightLargerCount);
+        }
+
+        return totalTriplets;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {3, 3, 4, 7, 8};
+        int d = 5;
+        System.out.println("Total number of valid triplets: " + countTriplets(arr, d)); // Output: 3
+    }
+}
