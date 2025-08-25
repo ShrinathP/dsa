@@ -28,17 +28,21 @@ The total contribution of arr[i] to the final sum is:
 
 arr[i] * previous[i] * next[i]
 
+PSE
+From front to back, maintain 
+When we push values onto the stack, they go in increasing order, but the stack top to bottom represents a monotonic decreasing order of elements. so stack wise  - a monotonic decreasing stack
+      /
+    /
+  /
+/
 
-From front to back, maintain a monotonic increasing stack
-      /
-    /
-  /
-/
-From back to front, maintain a monotonic decreasing stack
-      /
-    /
-  /
-/
+NSE
+From back to front, when we push, we push increasing squence of elements, 
+but the stack wise top to bottom it is monotonic decreasing as well
+\
+  \
+    \
+      \
 */
 
 import java.util.*;
