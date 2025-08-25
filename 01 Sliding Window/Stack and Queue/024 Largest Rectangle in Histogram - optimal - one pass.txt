@@ -1,0 +1,64 @@
+/*
+Striver explanation - chatgpt soln
+
+Explanation of the Solution:
+Iterate through the histogram bars:
+  - For each bar (or sentinel 0 at the end), we check if the current bar is smaller than the bar at the top of the stack.
+  - If it is smaller, we pop the stack to compute the area of the rectangle formed by the bar at the top of the stack (since it will act as the smallest bar for that rectangle).
+  - We continue to do this until the current bar is not smaller than the top of the stack (or the stack becomes empty).
+Calculating the area:
+  - When we pop from the stack, we calculate the area of the rectangle with the height of the popped bar.
+  - The width is determined by the difference between the current index (i) and the index of the new top element in the stack. 
+    If the stack is empty, the width spans from the start of the array to the current index.
+  For each bar popped from the stack:
+  - Height of rectangle = heights[stack.pop()] (height of the bar).
+  - Width of rectangle = i - stack.peek() - 1 if the stack is not empty, or i if the stack is empty (this means the bar extends to the beginning of the array).
+Sentinel Value:
+  - We append a 0 at the end of the histogram to force the calculation for the remaining bars in the stack once the traversal of the array is done.
+*/
+
+//IMP:  push: this will continuously happen if the current height of bar is greater than previous in stack
+// IMP: pop and area count: this will happen only when the curr bar's height is lesser than the stack.peek bar - (height decreased)
+
+
+import java.util.*;
+
+public class LargestRectangleHistogram {
+
+    public int largestRectangleArea(int[] heights) {
+        int n = heights.length;
+        Stack<Integer> stack = new Stack<>();
+        int maxArea = 0;
+        
+        // Traverse through all bars of the histogram
+        for (int i = 0; i <= n; i++) {
+            // Use 0 as a sentinel to trigger calculation for the last remaining bars in the stack
+            int currHeight = (i == n) ? 0 : heights[i];
+
+            // IMP: this will happen only when the curr bar's height is lesser than the stack.peek bar - (height decreased)
+            // Calculate the area for bars in the stack
+            while (!stack.isEmpty() && currHeight < heights[stack.peek()]) {
+                int height = heights[stack.pop()];
+                // If stack is empty, it means the width spans from the beginning to the current index (i)
+                int width = (stack.isEmpty()) ? i : i - stack.peek() - 1;
+                maxArea = Math.max(maxArea, height * width);
+            }
+            
+            // Push the current bar's index to the stack
+            stack.push(i);
+            //IMP:  this will continuously happen if the current height of bar is greater than previous in stack
+
+        }
+        
+        return maxArea;
+    }
+
+    // Test the solution
+    public static void main(String[] args) {
+        LargestRectangleHistogram solution = new LargestRectangleHistogram();
+        
+        int[] heights = {2, 1, 5, 6, 2, 3};
+        
+        System.out.println(solution.largestRectangleArea(heights));  // Output: 10
+    }
+}
