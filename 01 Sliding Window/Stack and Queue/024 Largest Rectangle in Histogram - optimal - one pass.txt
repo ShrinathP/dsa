@@ -20,6 +20,14 @@ Sentinel Value:
 //IMP:  push: this will continuously happen if the current height of bar is greater than previous in stack
 // IMP: pop and area count: this will happen only when the curr bar's height is lesser than the stack.peek bar - (height decreased)
 
+/*
+TC
+Final Time Complexity:
+O(n) for traversing the array.
+O(n) for push and pop operations (since each element is pushed and popped at most once).
+Thus, the overall time complexity is O(2n) ~ O(n).
+*/
+
 
 import java.util.*;
 
