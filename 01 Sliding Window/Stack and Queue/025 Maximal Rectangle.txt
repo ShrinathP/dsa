@@ -1,0 +1,88 @@
+/*
+Maximal Rectangle
+Pre-requisite - Largest Rectangle in Histogram
+
+Given a 2d binary matrix mat[][], the task is to find the maximum size rectangle binary-sub-matrix with all 1's. 
+
+Striver Explanation - chatgpt code/ google gemini ai code
+
+Using Largest Rectangular Area in a Histogram Approach
+
+
+Time complexity:- O(n*m) Time and O(m) Space
+
+For each row, 
+- traverse through columns 
+- and find the column height
+- fill the heights array = heights[j]
+- Compute the largestRectangle Area at that level
+*/
+
+
+import java.util.*;
+
+public class MaximalRectangle {
+
+    // Function to compute the largest rectangle area in a histogram
+    public int largestRectangleArea(int[] heights) {
+        int n = heights.length;
+        Stack<Integer> stack = new Stack<>();
+        int maxArea = 0;
+        
+        for (int i = 0; i <= n; i++) {
+            int currHeight = (i == n) ? 0 : heights[i];  // Sentinel value 0 to compute remaining areas
+            while (!stack.isEmpty() && currHeight < heights[stack.peek()]) {
+                int height = heights[stack.pop()];
+                int width = (stack.isEmpty()) ? i : i - stack.peek() - 1;
+                maxArea = Math.max(maxArea, height * width);
+            }
+            stack.push(i);
+        }
+        
+        return maxArea;
+    }
+
+    // Main function to compute maximal rectangle in the binary matrix
+    public int maximalRectangle(char[][] matrix) {
+        if (matrix.length == 0 || matrix[0].length == 0) {
+            return 0;
+        }
+
+        int n = matrix.length;    // Number of rows
+        int m = matrix[0].length; // Number of columns
+        int[] heights = new int[m];
+        int maxArea = 0;
+
+        // Iterate through the rows
+        for (int i = 0; i < n; i++) {
+            // Update the histogram (heights) for each row
+            for (int j = 0; j < m; j++) {
+                // If matrix[i][j] is 1, add it to the height, otherwise reset to 0
+                if (matrix[i][j] == '1') {
+                    heights[j] = heights[j] + 1;
+                } else {
+                    heights[j] = 0; // Reset height if '0' is encountered
+                }
+            }
+
+            // Compute the largest rectangle area for this histogram (row)
+            maxArea = Math.max(maxArea, largestRectangleArea(heights));
+        }
+
+        return maxArea;
+    }
+
+    // Test the solution
+    public static void main(String[] args) {
+        MaximalRectangle solution = new MaximalRectangle();
+
+        char[][] matrix = {
+            {'1', '0', '1', '0', '0'},
+            {'1', '0', '1', '1', '1'},
+            {'1', '1', '1', '1', '1'},
+            {'1', '0', '0', '1', '0'}
+        };
+
+        System.out.println(solution.maximalRectangle(matrix));  // Output: 6
+    }
+}
