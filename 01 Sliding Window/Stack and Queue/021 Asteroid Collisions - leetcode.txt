@@ -18,6 +18,8 @@ we can pop the current stack peek, otherwise the current stack peek stays
 if(stack.peek()> 0 && a<0) {
   stack.peek() <= abs(a) , then only need to pop
 }
+
+Only if the current stack peek is greater than equal to abs(-ve a element) we are able to explode the a
 */
 
 
