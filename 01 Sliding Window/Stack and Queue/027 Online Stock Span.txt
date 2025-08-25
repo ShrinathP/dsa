@@ -1,0 +1,64 @@
+/*
+Striver explanation, chatgpt
+https://www.geeksforgeeks.org/dsa/the-stock-span-problem/
+The stock span problem is a financial problem where we have a series of daily price quotes for a stock denoted by an array arr[] and the task is to calculate the span of the stock's price for all days. 
+The span of the stock's price on ith day represents the maximum number of consecutive days leading up to ith day (including the current day) where the stock's price was less than or equal to its price on day i.
+
+View as a height of integer array,
+Previous greater element - solution
+
+Maximum Consecutive days for which the price of stock is less than equal to the current price
+
+Maintain a decreasing adding sequence, (so monotonic increasing stack from top of the stack to bottom)
+
+\
+  \
+    \
+      \
+        \
+
+For any peek less than current price, we need to pop, keep popping and calculate the days 
+*/
+
+
+
+import java.util.*;
+
+public class StockSpan {
+
+    // Function to calculate the stock span for each day
+    public int[] calculateSpan(int[] prices) {
+        int n = prices.length;
+        int[] span = new int[n];
+        Stack<Integer> stack = new Stack<>();
+        
+        // Traverse the prices array
+        for (int i = 0; i < n; i++) {
+            // Pop elements from the stack while current price is greater or equal to the price at stack's top
+            while (!stack.isEmpty() && prices[stack.peek()] <= prices[i]) {
+                stack.pop();
+            }
+            
+            // If the stack is empty, it means the price is higher than all previous prices, so span is i+1
+            span[i] = (stack.isEmpty()) ? i + 1 : i - stack.peek();
+            
+            // Push the current index onto the stack
+            stack.push(i);
+        }
+        
+        return span;
+    }
+
+    // Test the solution
+    public static void main(String[] args) {
+        StockSpan solution = new StockSpan();
+        
+        int[] prices = {100, 80, 60, 70, 60, 75, 85};
+        
+        int[] span = solution.calculateSpan(prices);
+        
+        // Output the span array
+        System.out.println(Arrays.toString(span));  // Output: [1, 1, 1, 2, 1, 4, 6]
+    }
+}
+
