@@ -1,0 +1,52 @@
+//Striver explanation, and code
+/*
+using two arrays, knows_me and i_know, to track:
+knows_me[i]: How many people know person i.
+i_know[i]: How many people person i knows.
+
+TC is O(N square) + O(N)
+*/
+
+public class CelebrityProblem {
+
+    public int findCelebrity(int[][] matrix) {
+        int n = matrix.length;  // Get the number of people (matrix size)
+        int[] knows_me = new int[n];
+        int[] i_know = new int[n];
+
+        // Step 1: Populate the knows_me and i_know arrays
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == 1) {
+                    knows_me[j]++;
+                    i_know[i]++;
+                }
+            }
+        }
+
+        // Step 2: Find the celebrity
+        for (int i = 0; i < n; i++) {
+            // The celebrity must be known by everyone (knows_me[i] == n - 1) 
+            // and should not know anyone (i_know[i] == 0)
+            if (knows_me[i] == n - 1 && i_know[i] == 0) {
+                return i; // Person i is the celebrity
+            }
+        }
+
+        // If no celebrity is found
+        return -1;
+    }
+
+    public static void main(String[] args) {
+        CelebrityProblem solution = new CelebrityProblem();
+
+        int[][] matrix = {
+            {0, 1, 0, 0},
+            {0, 0, 0, 1},
+            {0, 1, 0, 0},
+            {0, 1, 1, 0}
+        };
+
+        System.out.println(solution.findCelebrity(matrix));  // Output: 1 (celebrity is person 1)
+    }
+}
