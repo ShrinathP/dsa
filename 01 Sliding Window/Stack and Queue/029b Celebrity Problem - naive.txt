@@ -1,0 +1,63 @@
+//Optimized solution, based on 2 pointer
+//Striver Explanation, striver code, verified in chatgptp
+
+// 2D matrix, top and down row numbers, point 2 end of the rows
+//2 pointers both and either end of the row
+
+public int CelebrityProblem() {
+    int top = 0;
+    int down = n-1;
+
+    while(top < down) {
+        //top knows down, top cannot be celebrity
+        if(matrix[top][down] == 1) {
+            top = top + 1;
+        }
+
+        //down knows top, down cannot be celebrity
+        else if(matrix[down][top] == 1) {
+            down = down - 1;
+        }
+
+        else {
+            //both are zero, top doesnt know down and down doesnt know top
+            //neither of those can be celebrity, someone has to know the other one
+            top--;
+            down--;
+        }
+    }
+
+    //top crosses down, no celebrity
+    if(top > down) return -1;
+
+    //here there is someone , need to check
+    //top == down
+    for(int i=0; i<n; i++) {
+        if(i==top) { // dont check for the same top
+            continue;
+        }
+        //every element in the top row should be zero, top shouldnt know anyone
+        if(matrix[top][i] == 0 
+            //every element in the column of the top index should be 1, everyone should know top
+            && matrix[i][top] == 1) {
+            // this top condition is still valid
+        } else {
+            return -1;
+        }
+    }
+/*
+  // Step 2: Verify the candidate (top == down)
+        for (int i = 0; i < n; i++) {
+            if (i != top) {
+                // Check if the candidate (top) doesn't know anyone
+                // and everyone knows the candidate
+                if (matrix[top][i] == 1 || matrix[i][top] == 0) {
+                    return -1; // Not a celebrity
+                }
+            }
+        }
+*/
+    return top;
+
+
+}
