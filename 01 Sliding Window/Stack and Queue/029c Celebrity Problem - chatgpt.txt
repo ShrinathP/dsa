@@ -1,0 +1,54 @@
+//chatgpt soln
+
+public class CelebrityProblem {
+
+    public int CelebrityProblem(int[][] matrix, int n) {
+        int top = 0;
+        int down = n - 1;
+
+        // Step 1: Eliminate non-celebrities
+        while (top < down) {
+            // If top knows down, top cannot be the celebrity
+            if (matrix[top][down] == 1) {
+                top++;
+            }
+            // If down knows top, down cannot be the celebrity
+            else if (matrix[down][top] == 1) {
+                down--;
+            } else {
+                // If both don't know each other, eliminate both
+                top++;
+                down--;
+            }
+        }
+
+        // Step 2: Verify the candidate (top == down)
+        for (int i = 0; i < n; i++) {
+            if (i != top) {
+                // Check if the candidate (top) doesn't know anyone
+                // and everyone knows the candidate
+                if (matrix[top][i] == 1 || matrix[i][top] == 0) {
+                    return -1; // Not a celebrity
+                }
+            }
+        }
+
+        // If all checks pass, return the celebrity index
+        return top;
+    }
+
+    public static void main(String[] args) {
+        CelebrityProblem solution = new CelebrityProblem();
+
+        // Test matrix
+        int[][] matrix = {
+            {0, 1, 0, 0},
+            {0, 0, 0, 1},
+            {0, 1, 0, 0},
+            {0, 1, 1, 0}
+        };
+        int n = 4;
+
+        System.out.println(solution.CelebrityProblem(matrix, n));  // Output: 1 (person 1 is the celebrity)
+    }
+}
