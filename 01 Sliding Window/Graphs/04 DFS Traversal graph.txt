@@ -2,6 +2,8 @@
 Striver explanation, google ai gemini code
 'dfs graph java'
 Keep going into the depth for every depth element, run a for loop for the adjacent elements, for each element run dfs
+
+TC - O(N) + 2(E)
 */
 
 import java.util.ArrayList;
