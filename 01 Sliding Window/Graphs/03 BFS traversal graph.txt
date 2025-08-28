@@ -1,0 +1,65 @@
+//Striver explanation , chatgpt code
+// Considering a node 0 
+// We need to traverse Distance wise
+//BFS for connected graphs
+
+/*
+Space Complexity- o(3N) - 1 adjacency list, 1 visited node and 1 bfs list
+TC -  Queue will run for O(N) + the inner for loop will run for total degrees i.e. (2E) twice the number of edges
+*/
+
+
+import java.util.*;
+
+class Graph {
+    private final int n;
+    private final List<List<Integer>> adj;
+
+// initialize a graph
+// for n node, create n ArrayLists and add it to adjancency 
+    Graph(int n) {
+        this.n = n;
+        adj = new ArrayList<>(n);
+        for (int i = 0; i < n; i++) adj.add(new ArrayList<>());
+    }
+
+    // undirected=true for undirected graphs; false for directed
+    void addEdge(int u, int v, boolean undirected) {
+        adj.get(u).add(v);
+        if (undirected) adj.get(v).add(u);
+    }
+
+    // BFS from a single source
+    List<Integer> bfs(int src) {
+        List<Integer> bfs = new ArrayList<>();
+        boolean[] vis = new boolean[n];
+        Deque<Integer> q = new ArrayDeque<>();
+        vis[src] = true;
+        q.add(src);
+
+        while (!q.isEmpty()) {
+            int u = q.remove();
+            bfs.add(u);
+            for (int v : adj.get(u)) {
+                if (!vis[v]) {
+                    vis[v] = true;
+                    q.add(v);
+                }
+            }
+        }
+        return bfs;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Graph g = new Graph(6);
+        g.addEdge(0, 1, true);
+        g.addEdge(0, 2, true);
+        g.addEdge(1, 3, true);
+        g.addEdge(2, 4, true);
+        g.addEdge(4, 5, true);
+
+        System.out.println("BFS from 0: " + g.bfs(0));     // e.g., [0, 1, 2, 3, 4, 5]
+    }
+}
