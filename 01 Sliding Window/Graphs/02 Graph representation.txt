@@ -52,8 +52,24 @@ for (int i =1; i< n; i++) {
   }
 }
 
+IMP: For directed graph, add one edge only.
+
 =========================
 Storing a weighted graph
 Edges with weights
 =========================
+In the matrix
+Fill edge weights instead of filling 1
+Store Pairs in ArrayList
+(nodevalue, edgeweight)
 
+
+Connected Components
+====================
+graphs can be non connected
+
+
+Visited Array for traversals
+============================
+Use Visited Array to run traversal algorithms
+Maintain a visited array, for each array index, run a traversal algorithm
