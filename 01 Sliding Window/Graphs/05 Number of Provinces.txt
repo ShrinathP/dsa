@@ -5,6 +5,8 @@ and isConnected[i][j] = 0 if they are not. Your task is to find the number of pr
 */
 
 /*  - Striver explanation  - chatgpt code
+IMP:- treat the isConnected matrix as an adjacency matrix 
+
 Logic
 A dfs call will mark all the connected components index in the visited array as 1
 So every new dfs call from the line 21 will mean we have an unvisited province
