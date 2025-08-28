@@ -7,6 +7,9 @@ Step-by-Step Approach:
   - Each city (node) will have a list of connected cities (nodes).
 2. Perform DFS on the adjacency list:
   - Each time we start DFS from an unvisited node, it means we've found a new province (connected component).
+
+SC - O(N) + O(N) - visited array and recursion stack space
+TC - O(N) + O(V + 2E) ~ O(N)  -check striver explanation
 */
 
 class Solution {
