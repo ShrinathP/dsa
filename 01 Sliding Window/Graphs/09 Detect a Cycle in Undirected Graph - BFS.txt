@@ -14,6 +14,7 @@ if their adjacents have been visited,
   i.e. you found a cycle
 
 IMP
+NOte: For Disconnected Components, we say a graph is a cycle if any of the components is a cycle
 For Disconnected components, we need to create one more visited array and call detectCycle for every element of the array
 Check hasCycle function
 
