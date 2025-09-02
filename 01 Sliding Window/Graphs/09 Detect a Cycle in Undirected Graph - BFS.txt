@@ -50,7 +50,8 @@ public class CycleDetectionBFS {
                     q.add(new Pair(neighbor, node)); // Add neighbor with current node as its parent
                 } else if (neighbor != parent) {
                     // If the neighbor is visited and not the parent of the current node,
-                    // it means a cycle is detected.
+                    // it means someone has already visited this neighbor
+                    // i.e. a cycle is detected.  
                     return true;
                 }
             }
