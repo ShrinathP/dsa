@@ -13,6 +13,10 @@ if their adjacents have been visited,
   check if the adjacents is not a parent, if not a parent, then someone has already visited the adjacent from another path
   i.e. you found a cycle
 
+IMP
+For Disconnected components, we need to create one more visited array and call detectCycle for every element of the array
+Check hasCycle function
+
 */
 
 import java.util.ArrayList;
