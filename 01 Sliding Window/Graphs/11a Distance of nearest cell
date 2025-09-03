@@ -1,0 +1,102 @@
+/*
+Striver explanation - striver type solution - chatgpt soln
+Distance of nearest cell having 1 in a binary matrix
+
+Given a binary grid of n*m. Find the distance of the nearest 1 in the grid for each cell.
+The distance is calculated as |i1  - i2| + |j1 - j2|, where i1, j1 are the row number and column number of the current cell, 
+and i2, j2 are the row number and column number of the nearest cell having value 1. 
+There should be at least one 1 in the grid.
+
+1. In the Queue,
+  - Push all elements which already have 1, the nearest 1 is themselves, so the distance will be 0
+  - Push i, j and distance
+2. While Queue is not empty
+  For Each Pair pushed, 
+  - check in all 4 directions, 
+  - if there is a 0, if there is a 0, updated the visited array to true, 
+  - update the distance matrix to prevDistance + 1
+*/
+
+import java.util.*;
+
+class Solution {
+
+    // Pair class to store row, col, and distance
+    static class Pair {
+        int row, col, dist;
+
+        Pair(int row, int col, int dist) {
+            this.row = row;
+            this.col = col;
+            this.dist = dist;
+        }
+    }
+
+    public int[][] nearest(int[][] mat) {
+        int rows = mat.length;
+        int cols = mat[0].length;
+
+        int[][] dist = new int[rows][cols];        // Result matrix
+        boolean[][] visited = new boolean[rows][cols];
+
+        Queue<Pair> queue = new LinkedList<>();
+
+        // Step 1: Push all 1-cells into the queue as starting points
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (mat[i][j] == 1) {
+                    queue.add(new Pair(i, j, 0));
+                    visited[i][j] = true;
+                } else {
+                    visited[i][j] = false;
+                }
+            }
+        }
+
+        // 4 possible directions: up, down, left, right
+        int[] dRow = {-1, 1, 0, 0};
+        int[] dCol = {0, 0, -1, 1};
+
+        // Step 2: BFS traversal
+        while (!queue.isEmpty()) {
+            Pair current = queue.poll();
+            int r = current.row;
+            int c = current.col;
+            int d = current.dist;
+
+            dist[r][c] = d; // Store distance for this cell
+
+            // Explore neighbors
+            for (int i = 0; i < 4; i++) {
+                int newRow = r + dRow[i];
+                int newCol = c + dCol[i];
+
+                // Check bounds and if not visited
+                if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols
+                        && !visited[newRow][newCol]) {
+                    queue.add(new Pair(newRow, newCol, d + 1));
+                    visited[newRow][newCol] = true;
+                }
+            }
+        }
+
+        return dist;
+    }
+
+    // Driver method to test the solution
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+
+        int[][] mat = {
+            {0, 0, 0},
+            {0, 1, 0},
+            {0, 0, 0}
+        };
+
+        int[][] result = sol.nearest(mat);
+
+        for (int[] row : result) {
+            System.out.println(Arrays.toString(row));
+        }
+    }
+}
