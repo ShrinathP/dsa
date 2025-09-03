@@ -3,6 +3,9 @@
 DFS Solution
 Striver Explanation - striver code
 
+Problem Statement - 
+https://www.geeksforgeeks.org/dsa/given-matrix-o-x-replace-o-x-surrounded-x/
+
 Given a matrix where every element is either ‘O’ or ‘X’, 
 replace 'O' with 'X' if surrounded by 'X'. 
 A 'O' (or a set of 'O') is considered to be surrounded by 'X' if there are 'X' at locations 
