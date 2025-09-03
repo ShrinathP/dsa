@@ -10,6 +10,9 @@ just below, just above, just left, and just right of it.
 
 O Should be surrounded by X on all sides, not even 1 side should be missing
 
+Time Complexity - DFS - in the worst case - for all Os in a matrix -DFS will run for O(NXM)X4 directions
+and for loops will run for O(N)
+So O(N) row traverse + O(N) col traverse + O(NXMX4) DFS + NXM (filling all inner elements)
 */
 
 
