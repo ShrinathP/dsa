@@ -1,0 +1,96 @@
+/*
+Bipartite Graph - BFS Implementation
+https://takeuforward.org/graph/bipartite-graph-bfs-implementation/
+
+Striver Explanation and Solution
+Definition
+If you can color a graph with 2 colors, in such a way that no 2 adjacent nodes have the same color
+Then it is called as a bipartite graph
+
+1. In a graph with no cycles, its always a Bipartite graph
+2. Any graph with even cycle lengths can also be a bipartite graph
+3. Any graph with odd cycle lengths canNOT be a bipartite graph
+
+Time Complexity: O(V + 2E), Where V = Vertices, 2E is for total degrees as we traverse all adjacent nodes.
+Space Complexity: O(3V) ~ O(V), Space for queue data structure, colour array and an adjacency list.
+
+
+The algorithm steps are as follows:
+- For BFS traversal, we need a queue data structure and a visited array (in this case colour array). 
+- Take the source node and push it into the Queue. Whenever we try to put it in the queue, we assign a colour to the node. We will try to colour with 0 and 1, but you can choose other colours as well. We will start with the colour 0, you can start with 1 as well, just make sure for the adjacent node, it should be opposite of what the current node has. 
+- Start the BFS traversal, pop out an element from the queue every time and travel to all its uncoloured neighbours using the adjacency list. 
+- For every uncoloured node, initialise it with the opposite colour to that of the current node, and push it into the Q data structure, for further traversals.
+- Repeat the steps either until the queue becomes empty.
+- If at any moment, we get an adjacent node from the adjacency list which is already coloured and has the same colour as the current node, we can say it is not possible to colour it, hence it cannot be bipartite. Thereby we will stop the check here, and return a false, without visiting any further nodes. 
+- If the queue becomes empty, the graph is coloured and no two adjacent nodes have the same colour then return value 1 indicating it is a bipartite graph.
+*/
+
+import java.util.*;
+
+class Solution
+{
+    private boolean check(int start, int V, 
+    ArrayList<ArrayList<Integer>>adj, int color[]) {
+        Queue<Integer> q = new LinkedList<Integer>();
+	    q.add(start); 
+	    color[start] = 0; 
+	    while(!q.isEmpty()) {
+	        int node = q.peek();
+	        q.remove(); 
+	        
+	        for(int it : adj.get(node)) {
+	            // if the adjacent node is yet not colored
+	            // you will give the opposite color of the node 
+	            if(color[it] == -1) {
+	                
+	                color[it] = 1 - color[node]; 
+	                q.add(it); 
+	            }
+	            // is the adjacent guy having the same color 
+	            // someone did color it on some other path 
+	            else if(color[it] == color[node]) {
+	                return false; 
+	            }
+	        }
+	    }
+	    return true; 
+    }
+
+    public boolean isBipartite(int V, ArrayList<ArrayList<Integer>>adj)
+    {
+        int color[] = new int[V]; 
+	    for(int i = 0;i<V;i++) color[i] = -1; 
+	    
+	    for(int i = 0;i<V;i++) {
+	        if(color[i] == -1) {
+	            if(check(i, V, adj, color) == false) {
+	                return false; 
+	            }
+	        }
+	    }
+	    return true; 
+    }
+    public static void main(String[] args)
+    {
+        // V = 4, E = 4
+        ArrayList < ArrayList < Integer >> adj = new ArrayList < > ();
+        for (int i = 0; i < 4; i++) {
+            adj.add(new ArrayList < > ());
+        }
+        adj.get(0).add(2);
+        adj.get(2).add(0);
+        adj.get(0).add(3);
+        adj.get(3).add(0);
+        adj.get(1).add(3);
+        adj.get(3).add(1);
+        adj.get(2).add(3);
+        adj.get(3).add(2);
+
+        Solution obj = new Solution();
+        boolean ans = obj.isBipartite(4, adj);
+        if(ans)
+            System.out.println("1");
+        else System.out.println("0");
+    }
+
+}
