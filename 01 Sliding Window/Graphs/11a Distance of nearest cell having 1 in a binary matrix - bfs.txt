@@ -20,6 +20,8 @@ There should be at least one 1 in the grid.
 TC - 
 time complexity is N X M for 2 for loops, N X M X 4 for queue as in worst case it can have N X M number of elements and for each element we will be traversing 4 directions
 
+SC - 3 NXM - visited array, distance array and a queue 
+
 */
 
 import java.util.*;
