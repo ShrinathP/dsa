@@ -16,6 +16,10 @@ There should be at least one 1 in the grid.
   - check in all 4 directions, 
   - if there is a 0, if there is a 0, updated the visited array to true, 
   - update the distance matrix to prevDistance + 1
+
+TC - 
+time complexity is N X M for 2 for loops, N X M X 4 for queue as in worst case it can have N X M number of elements and for each element we will be traversing 4 directions
+
 */
 
 import java.util.*;
