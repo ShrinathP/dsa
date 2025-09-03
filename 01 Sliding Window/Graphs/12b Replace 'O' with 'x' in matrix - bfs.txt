@@ -16,6 +16,8 @@ Use Queue inside the bfs algorithm
   - ,poll the queue, check in all 4 directions
 
 TC will be the same as the dfs solution
+
+IMP - Note - we dont fill all the Os in the Queue like in the previous solution 
 */
 
 
