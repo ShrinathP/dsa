@@ -9,6 +9,8 @@ Chatgpt solution
 
 Enqueue everything at once
 Multi Source BFS
+
+TC = N X M X 4 
 */
 
 
@@ -75,6 +77,22 @@ class Solution {
                 vis[i][n - 1] = 1;
             }
         }
+
+//A better way to enqueue would be 
+/*
+        // Enqueue all 'O' cells from the boundary (first and last row and column)
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                // first row, first col, last row, last col
+                if(i == 0 || j == 0 || i == n-1 || j == m-1) {
+                    if(grid[i][j] == 1) {
+                        q.push(new int[]{i, j});  // Add the boundary land cell to the queue
+                        vis[i][j] = 1;  // Mark it as visited
+                    }
+                }
+            }
+        }
+*/
 
         // Perform BFS for all boundary 'O' cells initially enqueued
         bfs(queue, vis, grid);
