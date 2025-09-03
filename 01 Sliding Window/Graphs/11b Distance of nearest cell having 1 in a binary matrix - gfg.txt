@@ -1,0 +1,85 @@
+/*
+GFG Solution, 
+https://www.geeksforgeeks.org/dsa/distance-nearest-cell-1-binary-matrix/
+
+here we are filling the distance(ans) array to Integer.MAX_VALUE, 
+and checking if the arr value is Integer.MAX_VALUE its not visited
+and proceed with increasing the distance and adding it to Queue
+*/
+
+
+// Function to find the distance of nearest cell
+// having 1 for each cell of the matrix
+import java.util.*;
+
+class GfG {
+
+    // Function to find the distance of nearest cell
+    // having 1 for each cell of the matrix
+    static int[][] nearest(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        
+        // to store the answer
+        int[][] ans = new int[n][m];
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(ans[i], Integer.MAX_VALUE);
+        }
+        
+        // to store the indices of the cells having 1
+        Queue<int[]> q = new LinkedList<>();
+        
+        // visit each cell of the grid
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                // if the cell has 1, 
+                // then the distance is 0
+                if (grid[i][j] == 1) {
+                    ans[i][j] = 0;
+                    q.add(new int[]{i, j});
+                }
+            }
+        }
+        
+        // iterate over all the cells
+        // and find the distance of the nearest 1
+        while (!q.isEmpty()) {
+            int len = q.size();
+            
+            for (int i = 0; i < len; i++) {
+                int[] cell = q.poll();
+                int x = cell[0];
+                int y = cell[1];
+                
+                // check all the four directions
+                int[][] directions = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+                
+                for (int j = 0; j < directions.length; j++) {
+                    int dx = directions[j][0];
+                    int dy = directions[j][1];
+                    
+                    // if the cell is within the grid 
+                    // and the distance is not calculated yet
+                    if (x + dx >= 0 && x + dx < n && 
+                        y + dy >= 0 && y + dy < m && 
+                        ans[x + dx][y + dy] == Integer.MAX_VALUE) {
+                        ans[x + dx][y + dy] = ans[x][y] + 1;
+                        q.add(new int[]{x + dx, y + dy});
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+    
+    public static void main(String[] args) {
+        int[][] grid = {{0, 1, 1, 0}, {1, 1, 0, 0}, {0, 0, 1, 1}};
+        int[][] ans = nearest(grid);
+        for (int i = 0; i < ans.length; i++) {
+            for (int j = 0; j < ans[i].length; j++) {
+                System.out.print(ans[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
