@@ -3,6 +3,8 @@
 Problem Statement: A directed graph of V vertices and E edges is given in the form of an adjacency list adj.
 Each node of the graph is labeled with a distinct integer in the range 0 to V - 1. 
 
+https://takeuforward.org/data-structure/find-eventual-safe-states-bfs-topological-sort-g-25/
+
 Striver Explanation and Solution, "minor change you need to do in the cycle detection solution"
 - Terminal Node
 A node is a terminal node if there are no outgoing edges. 
