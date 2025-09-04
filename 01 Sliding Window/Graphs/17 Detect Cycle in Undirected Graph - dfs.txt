@@ -26,6 +26,7 @@ import java.util.*;
 
 class Solution {
     private boolean dfsCheck(int node, ArrayList<ArrayList<Integer>> adj, int vis[], int pathVis[]) {
+        // set visited node to 1, and path Visited to 1
         vis[node] = 1; 
         pathVis[node] = 1; 
         
@@ -42,7 +43,8 @@ class Solution {
                 return true; 
             }
         }
-        
+
+        //set the pathVis back to 0 once the whole dfs is done and we arent able to find the cycle
         pathVis[node] = 0; 
         return false; 
     }
