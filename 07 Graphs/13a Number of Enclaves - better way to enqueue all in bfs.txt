@@ -1,0 +1,70 @@
+
+// Better way (Striver soln) to enqueue, line number 43, this can be used in 12c solution as well
+// Striver explanation and Solution
+import java.util.*;
+
+class Solution {
+    // Directions for 4 possible moves (Up, Right, Down, Left)
+    static int[] delRow = {-1, 0, 1, 0};
+    static int[] delCol = {0, 1, 0, -1};
+
+    // Helper function for BFS
+    static void bfs(Queue<int[]> queue, int[][] vis, int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            int r = current[0], c = current[1];
+
+            // Explore all 4 directions
+            for (int i = 0; i < 4; i++) {
+                int nRow = r + delRow[i];
+                int nCol = c + delCol[i];
+
+                // Check bounds and if the cell is land ('1') and not visited
+                if (nRow >= 0 && nRow < m && nCol >= 0 && nCol < n 
+                    && grid[nRow][nCol] == 1 && vis[nRow][nCol] == 0) {
+                    queue.offer(new int[]{nRow, nCol});
+                    vis[nRow][nCol] = 1;
+                }
+            }
+        }
+    }
+
+    // Main function to count number of enclaves
+    public int numEnclaves(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int[][] vis = new int[m][n]; // To track visited cells
+        Queue<int[]> q = new LinkedList<>();
+
+        // Enqueue all 'O' cells from the boundary (first and last row and column)
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                // first row, first col, last row, last col
+                if(i == 0 || j == 0 || i == n-1 || j == m-1) {
+                    if(grid[i][j] == 1) {
+                        q.push(new int[]{i, j});  // Add the boundary land cell to the queue
+                        vis[i][j] = 1;  // Mark it as visited
+                    }
+                }
+            }
+        }
+
+        // Perform BFS for all boundary 'O' cells initially enqueued
+        bfs(q, vis, grid);
+
+        // Count the remaining land cells ('1') which are not connected to the boundary
+        int count = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1 && vis[i][j] == 0) {
+                    count++;
+                }
+            }
+        }
+
+        return count; // Number of enclaves
+    }
+}

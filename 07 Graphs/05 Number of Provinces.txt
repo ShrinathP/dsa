@@ -1,0 +1,63 @@
+/*
+Problem Statement
+You are given an n x n 2D array isConnected where isConnected[i][j] = 1 if the i-th city is directly connected to the j-th city, 
+and isConnected[i][j] = 0 if they are not. Your task is to find the number of provinces in the graph.
+*/
+
+/*  - Striver explanation  - chatgpt code
+IMP:- treat the isConnected matrix as an adjacency matrix 
+
+Logic
+A dfs call will mark all the connected components index in the visited array as 1
+So every new dfs call from the line 21 will mean we have an unvisited province
+and we need to increment the number
+*/
+
+
+class Solution {
+    public int findCircleNum(int[][] isConnected) {
+        int n = isConnected.length; // number of cities (nodes)
+        boolean[] visited = new boolean[n];
+        int provinces = 0;
+
+        // Perform DFS for each unvisited node
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                // Start a DFS for this node
+                dfs(isConnected, visited, i, n);
+                provinces++; // Every DFS call means one connected component (province)
+            }
+        }
+        
+        return provinces;
+    }
+
+    // Depth-First Search helper function
+    // for a specific node 
+    - set it to visited
+    - check what all other nodes are connected to it and are not visited
+    - if not visited - run dfs on it again
+
+    private void dfs(int[][] isConnected, boolean[] visited, int node, int n) {
+        visited[node] = true; // mark the current node as visited
+        
+        // Traverse all the connected nodes
+        for (int i = 0; i < n; i++) {
+            if (isConnected[node][i] == 1 && !visited[i]) { // if connected and not visited
+                dfs(isConnected, visited, i, n);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        
+        int[][] isConnected = {
+            {1, 1, 0},
+            {1, 1, 0},
+            {0, 0, 1}
+        };
+
+        System.out.println(sol.findCircleNum(isConnected)); // Output: 2
+    }
+}

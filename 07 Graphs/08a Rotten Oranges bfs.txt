@@ -1,0 +1,85 @@
+/*
+Striver Explanation and Code
+Problem Statement
+Given a matrix of dimension mxn, where each cell in the matrix can have values 0, 1 or 2 which has the following meaning:  
+
+0: Empty cell
+1: Cells have fresh oranges
+2: Cells have rotten oranges
+The task is to find the minimum time required so that all the oranges become rotten. 
+A rotten orange at index (i,j) can rot other fresh oranges which are its neighbors (up, down, left, and right).
+
+*/
+
+import java.util.*;
+
+class Pair {
+    int row, col, tm;
+    Pair(int _row, int _col, int _tm) {
+        this.row = _row;
+        this.col = _col;
+        this.tm = _tm;
+    }
+}
+
+class Solution {
+    // Function to find minimum time required to rot all oranges.
+    public int orangesRotting(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        
+        // Initialize the queue and visited array
+        Queue<Pair> q = new LinkedList<>();
+        int[][] vis = new int[n][m];
+        int cntFresh = 0;
+        
+        // Traverse grid to find initial rotten oranges and count fresh ones
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] == 2) {
+                    q.add(new Pair(i, j, 0));  // Rotten orange with time 0
+                    vis[i][j] = 2;  // Mark as visited (rotten)
+                } else {
+                    vis[i][j] = 0;  // Mark as unvisited
+                }
+                if (grid[i][j] == 1) {
+                    cntFresh++;  // Count fresh oranges
+                }
+            }
+        }
+
+        // If there are no fresh oranges, return 0 (nothing to rot)
+        if (cntFresh == 0) return 0;
+
+        // Directions for moving in 4 directions (up, down, left, right)
+        int[] rowDir = {-1, 0, 1, 0};
+        int[] colDir = {0, 1, 0, -1};
+        int tm = 0;
+
+        // BFS traversal
+        while (!q.isEmpty()) {
+            Pair p = q.poll();
+            int row = p.row, col = p.col, time = p.tm;
+            tm = Math.max(tm, time);  // Update the time to the max encountered
+
+            // Traverse all 4 directions
+            for (int i = 0; i < 4; i++) {
+                int newRow = row + rowDir[i];
+                int newCol = col + colDir[i];
+
+                // Check bounds and whether the cell is fresh and unvisited
+                if (newRow >= 0 && newRow < n && newCol >= 0 && newCol < m
+                        && grid[newRow][newCol] == 1 && vis[newRow][newCol] == 0) {
+                    q.add(new Pair(newRow, newCol, time + 1));  // Add to queue with updated time
+                    vis[newRow][newCol] = 2;  // Mark as visited (rotten)
+                    cntFresh--;  // Decrease fresh orange count
+                }
+            }
+        }
+
+        // If there are still fresh oranges left, return -1 (impossible to rot all oranges)
+        if (cntFresh > 0) return -1;
+
+        return tm;  // Return the maximum time taken for all oranges to rot
+    }
+}

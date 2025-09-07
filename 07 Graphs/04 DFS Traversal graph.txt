@@ -1,0 +1,57 @@
+/*
+Striver explanation, google ai gemini code
+'dfs graph java'
+Keep going into the depth for every depth element, run a for loop for the adjacent elements, for each element run dfs
+
+TC - O(N) + 2(E)
+*/
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class DFSGraph {
+
+    // Adjacency list representation of the graph
+    private List<List<Integer>> adj;
+    private boolean[] visited;
+
+    public DFSGraph(int V) {
+        adj = new ArrayList<>(V);
+        for (int i = 0; i < V; i++) {
+            adj.add(new ArrayList<>());
+        }
+        visited = new boolean[V];
+    }
+
+    // Add an edge to the graph
+    public void addEdge(int u, int v) {
+        adj.get(u).add(v);
+        // For an undirected graph, add the reverse edge as well
+        // adj.get(v).add(u); 
+    }
+
+    // DFS traversal starting from a given source vertex
+    public void dfs(int u) {
+        visited[u] = true;
+        System.out.print(u + " "); // Process the current node
+
+        for (int v : adj.get(u)) {
+            if (!visited[v]) {
+                dfs(v); // Recursively call DFS for unvisited neighbors
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int V = 5; // Number of vertices
+        DFSGraph graph = new DFSGraph(V);
+
+        graph.addEdge(0, 1);
+        graph.addEdge(0, 2);
+        graph.addEdge(1, 3);
+        graph.addEdge(2, 4);
+
+        System.out.println("DFS Traversal starting from vertex 0:");
+        graph.dfs(0); // Start DFS from vertex 0
+    }
+}

@@ -1,0 +1,94 @@
+
+
+/* - Chatgpt -code
+Problem Statement
+Given a matrix of dimension mxn, where each cell in the matrix can have values 0, 1 or 2 which has the following meaning:  
+
+0: Empty cell
+1: Cells have fresh oranges
+2: Cells have rotten oranges
+The task is to find the minimum time required so that all the oranges become rotten. 
+A rotten orange at index (i,j) can rot other fresh oranges which are its neighbors (up, down, left, and right).
+
+
+GFG Explanation - Chatgpt code - better is to use visited Array, rather than updating the existing matrix as shown in gfg code
+// https://www.geeksforgeeks.org/dsa/minimum-time-required-so-that-all-oranges-become-rotten/
+
+To take care of the number of Iterations
+Hold a timegrid and keep updating the time at i,j when this orange was rotten
+Keep incrementing the time value
+Subsequent DFSes after one, we keep passing the incremented time value
+
+
+*/
+
+
+class Solution {
+    // Helper function for DFS to rot adjacent fresh oranges and track time
+    private void dfs(int row, int col, int[][] grid, int[][] timeGrid, int[] rowDirs, int[] colDirs, int time) {
+        grid[row][col] = 2;  // Mark this orange as rotten
+        timeGrid[row][col] = time;  // Record the time when this orange becomes rotten
+
+        // Traverse all 4 directions (up, down, left, right)
+        for (int i = 0; i < 4; i++) {
+            int newRow = row + rowDirs[i];
+            int newCol = col + colDirs[i];
+
+            // Check bounds and whether the cell has a fresh orange
+            if (newRow >= 0 && newRow < grid.length && newCol >= 0 && newCol < grid[0].length
+                    && grid[newRow][newCol] == 1 && timeGrid[newRow][newCol] == 0) {
+                // Propagate the rot to the fresh orange and pass the updated time
+                dfs(newRow, newCol, grid, timeGrid, rowDirs, colDirs, time + 1);  // Increment time
+            }
+        }
+    }
+
+    // Main function to find the minimum time to rot all fresh oranges
+    public int orangesRotting(int[][] grid) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        int[][] timeGrid = new int[rows][cols];  // Store the time at which each orange rots
+        int freshCount = 0;
+        int maxTime = 0;
+
+        // Directions for moving in 4 directions (up, down, left, right)
+        int[] rowDirs = {-1, 1, 0, 0};
+        int[] colDirs = {0, 0, -1, 1};
+
+        // Count initial number of fresh oranges and start DFS from rotten oranges
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == 1) {
+                    freshCount++;  // Count fresh oranges
+                } else if (grid[i][j] == 2 && timeGrid[i][j] == 0) {
+                    // Start DFS from rotten oranges with initial time as 1
+                    dfs(i, j, grid, timeGrid, rowDirs, colDirs, 1);
+                }
+            }
+        }
+
+        // If there are no fresh oranges, return 0 (nothing to rot)
+        if (freshCount == 0) return 0;
+
+        // Check if there are any remaining fresh oranges after DFS (indicating impossible to rot all)
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == 1) {  // If there is still a fresh orange
+                    return -1;  // Impossible to rot all fresh oranges
+                }
+            }
+        }
+
+        // Find the maximum time it takes for all oranges to rot
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == 2) {  // If it was rotted
+                    maxTime = Math.max(maxTime, timeGrid[i][j]);
+                }
+            }
+        }
+
+        return maxTime - 1; // The time units are in levels, subtract 1 to adjust for the initial rotten orange
+    }
+}
+

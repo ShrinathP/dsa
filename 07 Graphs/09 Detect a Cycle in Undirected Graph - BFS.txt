@@ -1,0 +1,121 @@
+/*
+Striver Explanation - Google code, Chatgpt code
+To detect a cycle in an undirected graph using Breadth-First Search (BFS) in Java, 
+the algorithm leverages the concept of tracking visited nodes and their parents.
+
+Add the source node to the Queue with -1 as parent
+
+Given a source node, 
+mark it has visited, and check its adjacents in adjacency list - 
+if their adjacents havent been visited, add it to the queue , mark it as visited
+else case
+if their adjacents have been visited,
+  check if the adjacents is not a parent, if not a parent, then someone has already visited the adjacent from another path
+  i.e. you found a cycle
+
+IMP
+NOte: For Disconnected Components, we say a graph is a cycle if any of the components is a cycle
+For Disconnected components, we need to create one more visited array and call detectCycle for every element of the array
+Check hasCycle function
+
+*/
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class CycleDetectionBFS {
+
+    // Inner class to store a node and its parent in the BFS traversal
+    static class Pair {
+        int node;
+        int parent;
+
+        Pair(int node, int parent) {
+            this.node = node;
+            this.parent = parent;
+        }
+    }
+
+    // Function to detect a cycle in a single connected component
+    private static boolean detectCycleBFS(int startNode, ArrayList<ArrayList<Integer>> adj, boolean[] visited) {
+        Queue<Pair> q = new LinkedList<>();
+        q.add(new Pair(startNode, -1)); // Add the starting node with no parent (-1)
+        visited[startNode] = true;
+
+        while (!q.isEmpty()) {
+            Pair current = q.poll();
+            int node = current.node;
+            int parent = current.parent;
+
+            // Iterate through all adjacent nodes
+            for (int neighbor : adj.get(node)) {
+                if (!visited[neighbor]) {
+                    visited[neighbor] = true;
+                    q.add(new Pair(neighbor, node)); // Add neighbor with current node as its parent
+                } else if (neighbor != parent) {
+                    // If the neighbor is visited and not the parent of the current node,
+                    // it means someone has already visited this neighbor
+                    // i.e. a cycle is detected.  
+                    return true;
+                }
+            }
+        }
+        return false; // No cycle found in this component
+    }
+
+    // Main function to detect cycle in the entire graph (handling disconnected components)
+    public static boolean hasCycle(int V, ArrayList<ArrayList<Integer>> adj) {
+        boolean[] visited = new boolean[V]; // Keep track of visited nodes
+
+        // Iterate through all nodes to handle disconnected components
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                if (detectCycleBFS(i, adj, visited)) {
+                    return true; // Cycle found in one of the components
+                }
+            }
+        }
+        return false; // No cycle found in the entire graph
+    }
+
+    public static void main(String[] args) {
+        // Example Graph 1 (with cycle)
+        // 0 -- 1
+        // |    |
+        // 2 -- 3
+        ArrayList<ArrayList<Integer>> adj1 = new ArrayList<>();
+        int V1 = 4;
+        for (int i = 0; i < V1; i++) {
+            adj1.add(new ArrayList<>());
+        }
+        adj1.get(0).add(1);
+        adj1.get(1).add(0);
+        adj1.get(0).add(2);
+        adj1.get(2).add(0);
+        adj1.get(1).add(3);
+        adj1.get(3).add(1);
+        adj1.get(2).add(3);
+        adj1.get(3).add(2);
+
+        System.out.println("Graph 1 has cycle: " + hasCycle(V1, adj1)); // Expected: true
+
+        // Example Graph 2 (without cycle - a tree)
+        // 0 -- 1 -- 2
+        // |
+        // 3
+        ArrayList<ArrayList<Integer>> adj2 = new ArrayList<>();
+        int V2 = 4;
+        for (int i = 0; i < V2; i++) {
+            adj2.add(new ArrayList<>());
+        }
+        adj2.get(0).add(1);
+        adj2.get(1).add(0);
+        adj2.get(1).add(2);
+        adj2.get(2).add(1);
+        adj2.get(0).add(3);
+        adj2.get(3).add(0);
+
+        System.out.println("Graph 2 has cycle: " + hasCycle(V2, adj2)); // Expected: false
+    }
+}

@@ -1,0 +1,124 @@
+
+/*
+Problem Statement: A directed graph of V vertices and E edges is given in the form of an adjacency list adj.
+Each node of the graph is labeled with a distinct integer in the range 0 to V - 1. 
+
+https://takeuforward.org/data-structure/find-eventual-safe-states-bfs-topological-sort-g-25/
+
+Striver Explanation and Solution, "minor change you need to do in the cycle detection solution"
+- Terminal Node
+A node is a terminal node if there are no outgoing edges. 
+- Safe Node
+A node is a safe node if every possible path starting from that node leads to a terminal node.
+You have to return an array containing all the safe nodes of the graph. The answer should be sorted in ascending order.
+
+
+Terminal Node - Outdegree should be - 0
+- Any Node that is part of a cycle can never be a safe node
+- If Any Node has an incoming edge going to the cycle - leades to a cycle - that also cannot be a safe node
+
+In the previous Solution - we used visited Array and pathVisited array - we will use the same dfs technique for this as well
+
+Explanation:
+1. DFS Traversal:
+  We use DFS to traverse the graph and check for cycles. A node is marked as part of the current DFS path with pathVis[] (if it's in the recursion stack). If we encounter a node that is already part of the path, it means we found a cycle.
+2. Cycle Detection:
+  If a node is part of a cycle, it is marked as unsafe. Otherwise, it’s marked as safe.
+3. Check Array:
+  The check[] array stores the final state of each node:
+  1 means safe.
+  0 means unsafe (part of a cycle).
+4. DFS for Each Node:
+  We call the dfsCheck() method for each unvisited node to start DFS and check if the node is safe or not.
+5. Safe Nodes:
+  After DFS traversal for all nodes, we gather all the safe nodes in the safeNodes list and return it.
+*/
+
+
+import java.util.*;
+
+// User function Template for Java
+
+class Solution {
+    private boolean dfsCheck(int node, List<List<Integer>> adj, int vis[], 
+    int pathVis[], int check[]) {
+        vis[node] = 1;
+        pathVis[node] = 1;
+        check[node] = 0;
+        // traverse for adjacent nodes
+        for (int it : adj.get(node)) {
+            // when the node is not visited
+            if (vis[it] == 0) {
+                if (dfsCheck(it, adj, vis, pathVis, check) == true) {
+                    // cycle found, this node cannot be a cycle
+                    check[node] = 0;
+                    return true;
+                }
+            }
+            // if the node has been previously visited
+            // but it has to be visited on the same path in order to be safeNode
+            else if (pathVis[it] == 1) {
+                //cannot be a safeNode
+                check[node] = 0;
+                return true;
+            }
+        }
+        //can be a safeNode as there was no already pathVisited
+        check[node] = 1;
+        pathVis[node] = 0;
+        return false;
+    }
+
+    List<Integer> eventualSafeNodes(int V, List<List<Integer>> adj) {
+        int vis[] = new int[V];
+        int pathVis[] = new int[V];
+        int check[] = new int[V];
+        for (int i = 0; i < V; i++) {
+            //if not visited, start the dfs Call
+            if (vis[i] == 0) {
+            //we do not break out of the dfsCheck whenever we get true, 
+            //like we used to do the prev solutions, as we need to fill all the safe Nodes in check array
+                dfsCheck(i, adj, vis, pathVis, check);
+            }
+        }
+
+        //fill all check = 1 in safeNodes ArrayList and return
+        List<Integer> safeNodes = new ArrayList<>();
+        for (int i = 0; i < V; i++) {
+            if (check[i] == 1)
+                safeNodes.add(i);
+        }
+        return safeNodes;
+        // Your code here
+    }
+}
+
+public class tUf {
+    public static void main(String[] args) {
+        int V = 12;
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < V; i++) {
+            adj.add(new ArrayList<>());
+        }
+        adj.get(0).add(1);
+        adj.get(1).add(2);
+        adj.get(2).add(3);
+        adj.get(3).add(4);
+        adj.get(3).add(5);
+        adj.get(4).add(6);
+        adj.get(5).add(6);
+        adj.get(6).add(7);
+        adj.get(8).add(1);
+        adj.get(8).add(9);
+        adj.get(9).add(10);
+        adj.get(10).add(8);
+        adj.get(11).add(9);
+
+        Solution obj = new Solution();
+        List<Integer> safeNodes = obj.eventualSafeNodes(V, adj);
+        for (int node : safeNodes) {
+            System.out.print(node + " ");
+        }
+        System.out.println("");
+    }
+}

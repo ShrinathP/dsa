@@ -1,0 +1,16 @@
+Nodes/Vertices
+Edges
+Directed / Non Directed Graph
+Directed Cyclic Graph
+Path - each of the nodes should be reachable
+Degree of Node - the number of edges that come into or go outside of the Node
+
+For Undirected Graph
+Total degree of a graph is equal to twice the number of edges - as every edge is connected to 2 nodes
+
+For Directed Graph
+Indegree(node) - incoming edges
+Outdegree(node) - outgoing edges
+
+Edge weights - 
+All edges can have some weights assigned

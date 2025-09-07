@@ -1,0 +1,75 @@
+N - number of nodes
+M - number of edges
+Edges can be represented as 1,2 or 2,1
+
+Store
+Adjancy Matrix
+Adjancy List
+
+Adjancy Matrix - 
+1 based indexing in graph
+matrix[n+1][n+1]
+
+1 2
+3 1
+2 4 
+3 4
+
+Fill the matrix [1,2] and [2,1]
+Fill the matrix [3,1] and [2,4]
+Fill the matrix [3,4] and [4,3]
+
+Not used widely because it takes O(N*N) Time complexity
+
+
+==============
+Adjacency List
+==============
+ArrayList<ArrayList <>>
+For 1 based indexing, add exactly n+1 Arraylist
+Every Arraylist at an index should contain its neighbours
+So for 1,2 at index 1 , we store 2 in the arraylist, at index 2, we store 1 in the arraylist
+Space complexity - O(2M) - for every edge 2 nodes we are storing
+
+ArrayList<ArrayList <Integer>> adj  = new ArrayList<ArrayList<Integer>>();
+
+for (int i=0; i<=n; i++) {
+adj.add(new ArrayList<Integer>());
+}
+
+//edge 1---2
+adj.get(1).add(2)
+adj.get(2).add(1)
+
+//edge 2---3
+adj.get(2).add(3)
+adj.get(3).add(2)
+
+//print all the edges
+for (int i =1; i< n; i++) {
+  for (int j=0; j< adj.get(i).size(); j++) {
+    System.out.println(adj.get(i).get(j) + " ")
+  }
+}
+
+IMP: For directed graph, add one edge only.
+
+=========================
+Storing a weighted graph
+Edges with weights
+=========================
+In the matrix
+Fill edge weights instead of filling 1
+Store Pairs in ArrayList
+(nodevalue, edgeweight)
+
+
+Connected Components
+====================
+graphs can be non connected
+
+
+Visited Array for traversals
+============================
+Use Visited Array to run traversal algorithms
+Maintain a visited array, for each array index, run a traversal algorithm

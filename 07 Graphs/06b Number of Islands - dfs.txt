@@ -1,0 +1,72 @@
+// Number of islands
+/*
+Problem Statement:
+Given a m x n grid of '1's (land) and '0's (water), find the number of islands.
+An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
+
+Explanation:
+DFS Traversal:
+For each unvisited land cell ('1'), we start DFS.
+  - Mark the cell as visited.
+  - Explore all 4 directions recursively. - using dfs
+  - This ensures we mark the entire connected component (island) as visited.
+Counting Islands:
+  - Each DFS call from an unvisited land cell represents one island.
+  - Increment the numIslands counter.
+*/
+
+// Number of connected components
+
+class Solution {
+    private int rows;
+    private int cols;
+
+    public int numIslands(char[][] grid) {
+        if (grid == null || grid.length == 0) return 0;
+
+        rows = grid.length;
+        cols = grid[0].length;
+        boolean[][] visited = new boolean[rows][cols];
+        int numIslands = 0;
+
+        // Traverse all cells
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                // If the cell is land and not visited, start a DFS
+                if (grid[i][j] == '1' && !visited[i][j]) {
+                    dfs(grid, visited, i, j);
+                    numIslands++; // Found a new island
+                }
+            }
+        }
+
+        return numIslands;
+    }
+
+    private void dfs(char[][] grid, boolean[][] visited, int i, int j) {
+        // Check bounds
+        if (i < 0 || j < 0 || i >= rows || j >= cols) return;
+        if (grid[i][j] == '0' || visited[i][j]) return;
+
+        visited[i][j] = true;
+
+        // Explore all 4 directions: up, down, left, right
+        dfs(grid, visited, i + 1, j);
+        dfs(grid, visited, i - 1, j);
+        dfs(grid, visited, i, j + 1);
+        dfs(grid, visited, i, j - 1);
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+
+        char[][] grid = {
+            {'1','1','0','0','0'},
+            {'1','1','0','0','0'},
+            {'0','0','1','0','0'},
+            {'0','0','0','1','1'}
+        };
+
+        System.out.println(sol.numIslands(grid)); // Output: 3
+    }
+}

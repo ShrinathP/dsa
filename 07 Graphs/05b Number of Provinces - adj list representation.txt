@@ -1,0 +1,73 @@
+/*
+Converting adjacency matrix to an adjacency list
+Striver explanation - chatgpt code
+
+Step-by-Step Approach:
+1. Convert the adjacency matrix to an adjacency list:
+  - Each city (node) will have a list of connected cities (nodes).
+2. Perform DFS on the adjacency list:
+  - Each time we start DFS from an unvisited node, it means we've found a new province (connected component).
+
+SC - O(N) + O(N) - visited array and recursion stack space
+TC - O(N) + O(V + 2E) ~ O(N)  -check striver explanation
+*/
+
+class Solution {
+    public int findCircleNum(int[][] isConnected) {
+        int n = isConnected.length; // number of cities (nodes)
+        
+        // Step 1: Convert adjacency matrix to adjacency list
+        List<List<Integer>> adjList = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            adjList.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (isConnected[i][j] == 1 && i != j) {
+                    adjList.get(i).add(j);  // Add connection from i to j
+                }
+            }
+        }
+
+        // Step 2: DFS on adjacency list to find connected components
+        boolean[] visited = new boolean[n];
+        int provinces = 0;
+
+        // Perform DFS for each unvisited node
+        for (int i = 0; i < n; i++) {
+            if (!visited[i]) {
+                // Start a DFS for this node
+                dfs(adjList, visited, i);
+                provinces++; // Every DFS call means one connected component (province)
+            }
+        }
+
+        return provinces;
+    }
+
+    // Depth-First Search helper function
+    private void dfs(List<List<Integer>> adjList, boolean[] visited, int node) {
+        visited[node] = true; // mark the current node as visited
+        
+        // Traverse all the connected nodes
+        for (int neighbor : adjList.get(node)) {
+            if (!visited[neighbor]) {
+                dfs(adjList, visited, neighbor);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        
+        int[][] isConnected = {
+            {1, 1, 0},
+            {1, 1, 0},
+            {0, 0, 1}
+        };
+
+        System.out.println(sol.findCircleNum(isConnected)); // Output: 2
+    }
+}
+

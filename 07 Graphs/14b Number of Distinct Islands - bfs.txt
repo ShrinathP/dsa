@@ -1,0 +1,68 @@
+//BFS Solution - chatgpt solution
+// Add the current row, col element to the queue, set visited to 1
+// while queue is not empty, poll from the queue, subtract base coords, add to the arrayList
+//move all 4 directions, keep adding the the queue and set visited to 1
+
+import java.util.*;
+
+public class Solution {
+    // Directions for 4 possible moves (Up, Right, Down, Left)
+    static int[] delRow = {-1, 1, 0, 0};
+    static int[] delCol = {0, 0, -1, 1};
+
+    // Helper function for BFS
+    private void bfs(int row, int col, int[][] vis, int[][] grid, ArrayList<String> vec, int row0, int col0) {
+        int m = grid.length;
+        int n = grid[0].length;
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{row, col});
+        vis[row][col] = 1;
+
+        while (!queue.isEmpty()) {
+            int[] current = queue.poll();
+            int r = current[0], c = current[1];
+
+            // Record the relative position of the cell in the island
+            vec.add(toString(r - row0, c - col0));  // Using toString instead of String.format
+
+            // Explore all 4 directions
+            for (int i = 0; i < 4; i++) {
+                int nRow = r + delRow[i];
+                int nCol = c + delCol[i];
+
+                // Check bounds and if the cell is land ('1') and not visited
+                if (nRow >= 0 && nRow < m && nCol >= 0 && nCol < n 
+                    && grid[nRow][nCol] == 1 && vis[nRow][nCol] == 0) {
+                    queue.offer(new int[]{nRow, nCol});
+                    vis[nRow][nCol] = 1;
+                }
+            }
+        }
+    }
+
+    // toString method used to generate a coordinate string
+    private String toString(int r, int c) {
+        return r + "-" + c;  // Using simple string concatenation
+    }
+
+    // Main function to count number of distinct islands
+    public int countDistinctIslands(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+        int[][] vis = new int[m][n]; // To track visited cells
+        HashSet<HashSet<String>> st = new HashSet<>();  // A set of sets to track unique island shapes
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 1 && vis[i][j] == 0) {
+                    ArrayList<String> vec = new ArrayList<>();
+                    bfs(i, j, vis, grid, vec, i, j);
+                    // Add the shape of the island to the set (convert it to a HashSet for unique islands)
+                    st.add(new HashSet<>(vec));
+                }
+            }
+        }
+
+        return st.size();  // The number of distinct islands
+    }
+}

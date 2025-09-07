@@ -1,0 +1,67 @@
+/*
+Chatgpt Optimized solution of 08b
+in the optimized dfs code above i can keep hold of one more variable like cnt
+whenver i am updating grid[row][col] = 2; inside dfs 
+// Check if there are any remaining fresh oranges after DFS (indicating impossible to rot all)
+for (int i = 0; i < rows; i++) { for (int j = 0; j < cols; j++) { if (grid[i][j] == 1) 
+{ // If there is still a fresh orange return -1; 
+// Impossible to rot all fresh oranges } } 
+if freshCount != cnt, then return -1, no need of 2 for loops } 
+here i can compare cnt to countFresh - if both are not equal then there are some fresh oranges remaining
+*/
+
+
+class Solution {
+    // Helper function for DFS to rot adjacent fresh oranges and track time
+    private void dfs(int row, int col, int[][] grid, int[] rowDirs, int[] colDirs, int n, int m, int[] cnt) {
+        grid[row][col] = 2;  // Mark this orange as rotten
+        cnt[0]++;  // Increment the count of rotted oranges
+
+        // Traverse all 4 directions (up, down, left, right)
+        for (int i = 0; i < 4; i++) {
+            int newRow = row + rowDirs[i];
+            int newCol = col + colDirs[i];
+
+            // Check bounds and whether the cell has a fresh orange
+            if (newRow >= 0 && newRow < n && newCol >= 0 && newCol < m
+                    && grid[newRow][newCol] == 1) {
+                // Propagate the rot to the fresh orange
+                dfs(newRow, newCol, grid, rowDirs, colDirs, n, m, cnt);
+            }
+        }
+    }
+
+    // Main function to find the minimum time to rot all fresh oranges
+    public int orangesRotting(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+        int cntFresh = 0;
+        int[] cnt = new int[1];  // To track the number of rotted oranges
+
+        // Directions for moving in 4 directions (up, down, left, right)
+        int[] rowDirs = {-1, 1, 0, 0};
+        int[] colDirs = {0, 0, -1, 1};
+
+        // Count initial number of fresh oranges and start DFS from rotten oranges
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] == 1) {
+                    cntFresh++;  // Count fresh oranges
+                } else if (grid[i][j] == 2) {
+                    // Start DFS from rotten oranges
+                    dfs(i, j, grid, rowDirs, colDirs, n, m, cnt);
+                }
+            }
+        }
+
+        // If there are no fresh oranges, return 0 (nothing to rot)
+        if (cntFresh == 0) return 0;
+
+        // Check if the number of rotted oranges matches the initial fresh count
+        if (cnt[0] != cntFresh) {
+            return -1;  // Impossible to rot all fresh oranges
+        }
+
+        return cnt[0];  // Return the total time taken (or the number of rotted oranges)
+    }
+}
