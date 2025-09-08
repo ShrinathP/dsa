@@ -2,6 +2,11 @@
 Striver explanation and code from tuf
 https://takeuforward.org/data-structure/topological-sort-algorithm-dfs-g-21/
 
+NOTE: Should be acyclic graph - otherwise topological sort is not possible
+
+Problem Statement: Given a Directed Acyclic Graph (DAG) with V vertices and E edges, 
+Find any Topological Sorting of that Graph.
+Note: In topological sorting, node u will always appear before node v if there is a directed edge from node u towards node v(u -> v).
 Linear ordering of vertices such that if there is an edge between u and v
 u appears before v in that ordering
 
