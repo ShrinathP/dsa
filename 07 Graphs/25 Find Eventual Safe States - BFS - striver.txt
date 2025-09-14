@@ -1,0 +1,100 @@
+/*
+Problem Statement: A directed graph of V vertices and E edges is given in the form of an adjacency list adj.
+Each node of the graph is labeled with a distinct integer in the range 0 to V - 1. 
+
+https://takeuforward.org/data-structure/find-eventual-safe-states-bfs-topological-sort-g-25/
+
+The node with outdegree 0 is considered to be a terminal node but the topological sort algorithm deals with the indegrees of the nodes. 
+So, to use the topological sort algorithm, we will reverse every edge of the graph. 
+Now, the nodes with indegree 0 become the terminal nodes. After this step, we will just follow the topological sort algorithm as it is.
+
+✅ How it works:
+1. Reverse the graph: edges u->v become v->u.
+2. Count outdegrees for original graph (indegree in reversed graph).
+3. Initialize a queue with nodes having outdegree 0.
+4. BFS / Topological Sort:
+    - Remove node from queue → it is safe.
+    - Reduce indegree of its neighbors in reversed graph.
+    - If indegree becomes 0 → enqueue neighbor.
+5. Sort the resulting nodes to return in ascending order.
+*/
+
+
+import java.util.*;
+
+class Solution {
+    List<Integer> eventualSafeNodes(int V, List<List<Integer>> adj) {
+        
+        //Create a reversed adjacency list, 
+        List<List<Integer>> adjRev = new ArrayList<>();
+        for (int i = 0; i < V; i++) {
+            adjRev.add(new ArrayList<>());
+        }
+
+        // fill the adjacency list reversed
+        // increase the indegree of i as the outdegree will be reversed now into i, from outto i
+        int indegree[] = new int[V];
+        for (int i = 0; i < V; i++) {
+            // i -> it
+            // it -> i
+            for (int it : adj.get(i)) {
+                adjRev.get(it).add(i);
+                indegree[i]++;
+            }
+        }
+        //reverse logic
+        //for every node, get its adjacents, for every adjacent add the current node as adjacent
+
+        Queue<Integer> q = new LinkedList<>();
+        List<Integer> safeNodes = new ArrayList<>();
+        for (int i = 0; i < V; i++) {
+            if (indegree[i] == 0) {
+                q.add(i);
+            }
+        }
+
+        while (!q.isEmpty()) {
+            int node = q.peek();
+            q.remove();
+            safeNodes.add(node);
+            for (int it : adjRev.get(node)) {
+                indegree[it]--;
+                if (indegree[it] == 0) q.add(it);
+            }
+        }
+        Collections.sort(safeNodes);
+        return safeNodes;
+    }
+}
+
+public class tUf {
+    public static void main(String[] args) {
+        int V = 12;
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < V; i++) {
+            adj.add(new ArrayList<>());
+        }
+        adj.get(0).add(1);
+        adj.get(1).add(2);
+        adj.get(2).add(3);
+        adj.get(2).add(4);
+        adj.get(3).add(4);
+        adj.get(3).add(5);
+        adj.get(4).add(6);
+        adj.get(5).add(6);
+        adj.get(6).add(7);
+        adj.get(8).add(1);
+        adj.get(8).add(9);
+        adj.get(9).add(10);
+        adj.get(10).add(8);
+        adj.get(11).add(9);
+
+        Solution obj = new Solution();
+        List<Integer> safeNodes = obj.eventualSafeNodes(V, adj);
+
+        for (int node : safeNodes) {
+            System.out.print(node + " ");
+        }
+        System.out.println("");
+    }
+}

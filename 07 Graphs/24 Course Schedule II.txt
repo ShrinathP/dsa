@@ -1,0 +1,94 @@
+/*
+Course Schedule II is basically finding a valid topological order of courses (if possible), 
+given prerequisites. 
+If there’s a cycle, return an empty array. We can solve it using BFS (Kahn’s Algorithm)
+//pre-requisite int 2D array consists of the prerequisite tasks required to complete a task
+*/
+
+
+import java.util.*;
+
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        // Step 1: Build adjacency list, 
+        // for every number of courses add a new ArrayList for adjacents
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < numCourses; i++) {
+            adj.add(new ArrayList<>());                
+        }
+
+        //pre-requisite int 2D array consists of the prerequisite tasks required to complete a task
+        // fill the adjacency list using - for each prereq - this the the course prereq -> task
+        for (int[] pre : prerequisites) {
+            int course = pre[0];
+            int prereq = pre[1];
+            adj.get(prereq).add(course); // prereq -> course
+        }
+
+        
+        // Step 2: Compute in-degree of each course
+        // For each course calculate incoming prerequisite, increase its count
+        int[] indegree = new int[numCourses];
+        for (int i = 0; i < numCourses; i++) {
+            for (int neighbor : adj.get(i)) {
+                indegree[neighbor]++;
+            }
+        }
+
+        // Step 3: Initialize queue with courses having in-degree 0
+        //push to the queue all the indices where indegree is zero
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < numCourses; i++) {
+            if (indegree[i] == 0) q.offer(i);
+        }
+
+        // Step 4: Process courses (BFS / Kahn's Algorithm)
+        // standard Kahns
+        List<Integer> topoOrder = new ArrayList<>();
+        while (!q.isEmpty()) {
+            int course = q.poll();
+            topoOrder.add(course);
+
+            for (int neighbor : adj.get(course)) {
+                indegree[neighbor]--;
+                if (indegree[neighbor] == 0) {
+                    q.offer(neighbor);
+                }
+            }
+        }
+
+        // Step 5: If topoOrder contains all courses, return it; else return empty array
+        if (topoOrder.size() != numCourses) return new int[0];
+
+        // Convert List<Integer> to int[]
+        int[] order = new int[numCourses];
+        for (int i = 0; i < numCourses; i++) order[i] = topoOrder.get(i);
+        return order;
+    }
+}
+
+public class tUf {
+    public static void main(String[] args) {
+        int numCourses = 4;
+        int[][] prerequisites = {
+            {1, 0},
+            {2, 0},
+            {3, 1},
+            {3, 2}
+        };
+
+        Solution obj = new Solution();
+        int[] order = obj.findOrder(numCourses, prerequisites);
+
+        if (order.length == 0) {
+            System.out.println("No valid course order (cycle exists)");
+        } else {
+            System.out.println("Valid course order:");
+            for (int course : order) {
+                System.out.print(course + " ");
+            }
+        }
+        System.out.println();
+    }
+}
+

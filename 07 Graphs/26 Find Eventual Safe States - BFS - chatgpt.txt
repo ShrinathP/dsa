@@ -1,0 +1,88 @@
+/*
+Problem Statement: A directed graph of V vertices and E edges is given in the form of an adjacency list adj.
+Each node of the graph is labeled with a distinct integer in the range 0 to V - 1. 
+
+https://takeuforward.org/data-structure/find-eventual-safe-states-bfs-topological-sort-g-25/
+
+The node with outdegree 0 is considered to be a terminal node but the topological sort algorithm deals with the indegrees of the nodes. 
+So, to use the topological sort algorithm, we will reverse every edge of the graph. 
+Now, the nodes with indegree 0 become the terminal nodes. After this step, we will just follow the topological sort algorithm as it is.
+
+✅ How it works:
+1. Reverse the graph: edges u->v become v->u.
+2. Count outdegrees for original graph (indegree in reversed graph).
+3. Initialize a queue with nodes having outdegree 0.
+4. BFS / Topological Sort:
+    - Remove node from queue → it is safe.
+    - Reduce indegree of its neighbors in reversed graph.
+    - If indegree becomes 0 → enqueue neighbor.
+5. Sort the resulting nodes to return in ascending order.
+*/
+
+
+import java.util.*;
+
+class Solution {
+    public List<Integer> eventualSafeNodes(int V, List<List<Integer>> graph) {
+        // Step 1: Create reverse graph
+        List<List<Integer>> revGraph = new ArrayList<>();
+        for (int i = 0; i < V; i++) {
+            revGraph.add(new ArrayList<>());                
+        }
+        
+        int[] indegree = new int[V]; // indegree in reversed graph = outdegree in original
+
+        for (int u = 0; u < V; u++) {
+            for (int v : graph.get(u)) {
+                revGraph.get(v).add(u); // reverse edge
+                indegree[u]++;          // original outdegree
+            }
+        }
+        //reverse logic
+        //for every node, get its adjacents, for every adjacent add the current node as adjacent
+
+        // Step 2: Initialize queue with nodes having indegree 0 (originally outdegree 0)
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < V; i++) {
+            if (indegree[i] == 0) q.offer(i);
+        }
+
+        // Step 3: BFS / Topological Sort
+        List<Integer> safeNodes = new ArrayList<>();
+        while (!q.isEmpty()) {
+            int node = q.poll();
+            safeNodes.add(node);
+
+            for (int neighbor : revGraph.get(node)) {
+                indegree[neighbor]--;
+                if (indegree[neighbor] == 0) q.offer(neighbor);
+            }
+        }
+
+        // Step 4: Return sorted list
+        Collections.sort(safeNodes);
+        return safeNodes;
+    }
+}
+
+public class tUf {
+    public static void main(String[] args) {
+        int V = 7;
+        List<List<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < V; i++) graph.add(new ArrayList<>());
+
+        // Example graph
+        graph.get(0).add(1);
+        graph.get(0).add(2);
+        graph.get(1).add(2);
+        graph.get(1).add(3);
+        graph.get(2).add(5);
+        graph.get(3).add(0);
+        graph.get(4).add(5);
+        graph.get(5).add(6);
+
+        Solution obj = new Solution();
+        List<Integer> safeNodes = obj.eventualSafeNodes(V, graph);
+        System.out.println("Eventual Safe States: " + safeNodes);
+    }
+}
