@@ -74,30 +74,38 @@ class Solution {
     }
     st.add(node);
   }
+
+
+
   public int[] shortestPath(int N, int M, int[][] edges) {
     ArrayList < ArrayList < Pair >> adj = new ArrayList < > ();
     for (int i = 0; i < N; i++) {
       ArrayList < Pair > temp = new ArrayList < Pair > ();
       adj.add(temp);
     }
-    //We create a graph first in the form of an adjacency list.
-
+    
+    // We create a graph first in the form of an adjacency list.
+    // for every node, create an adjacency list, with u taking v and weights
     for (int i = 0; i < M; i++) {
       int u = edges[i][0];
       int v = edges[i][1];
       int wt = edges[i][2];
       adj.get(u).add(new Pair(v, wt));
     }
+    
+    // Create a visited array
     int vis[] = new int[N];
     //Now, we perform topo sort using DFS technique 
     //and store the result in the stack st.
 
-    Stack < Integer > st = new Stack < > ();
+    Stack <Integer> st = new Stack <>();
     for (int i = 0; i < N; i++) {
       if (vis[i] == 0) {
         topoSort(i, adj, vis, st);
       }
     }
+
+    // Step 
     //Further, we declare a vector ‘dist’ in which we update the value of the nodes’
     //distance from the source vertex after relaxation of a particular node.
     int dist[] = new int[N];
@@ -110,6 +118,7 @@ class Solution {
       int node = st.peek();
       st.pop();
 
+//for every adjacents, update the distance array
       for (int i = 0; i < adj.get(node).size(); i++) {
         int v = adj.get(node).get(i).first;
         int wt = adj.get(node).get(i).second;
