@@ -1,0 +1,110 @@
+/*
+https://takeuforward.org/graph/g-30-word-ladder-ii/
+Very complex - check the explanation once again
+Here we do not remove the word from the Set
+
+Striver explanation
+Algorithm Steps:
+
+Initialize Data Structures:
+
+Set st: A set to store all words in the wordList. This allows for quick lookup to check if a word is part of the dictionary.
+
+Queue q: A queue to store the current path (sequence of words) being explored.
+
+ArrayList usedOnLevel: An ArrayList to track words visited on the current level of BFS.
+
+Integer level: To track the current depth of BFS.
+
+ArrayList ans: To store the resulting valid sequences of words (paths from startWord to targetWord).
+
+Add Start Word to Queue:
+
+Add the startWord to the queue q as the initial word sequence.
+
+Mark startWord as visited by adding it to usedOnLevel.
+
+Breadth-First Search (BFS) Loop:
+
+While the queue q is not empty:
+
+Dequeue a sequence (vec) from the front of the queue.
+
+Check if the length of vec (current sequence length) is greater than the current level. If so, increment the level and mark all words from usedOnLevel as unvisited in the set st (i.e., remove them from the set).
+
+Check if the Target Word is Found:
+
+If the last word in the sequence vec is the targetWord:
+
+If it's the first time reaching the targetWord, add the sequence vec to ans.
+
+If the sequence has the same length as the first one in ans, also add this sequence vec.
+
+Generate New Words by Changing One Letter:
+
+For each character in the current word (word):
+
+Try replacing the character with every letter from 'a' to 'z'.
+
+For each valid replacement that exists in st (the word is part of the dictionary):
+
+Add the new word to the current sequence vec.
+
+Create a copy of the current sequence and enqueue it to q for further exploration.
+
+Mark the new word as visited by adding it to usedOnLevel.
+
+Return the Result:
+
+After the BFS completes, return the ans list containing the valid sequences (paths) from startWord to targetWord.
+*/
+
+
+class Solution {
+    public ArrayList<ArrayList<String>> findSequences(String startWord, String targetWord, String[] wordList) {
+        Set<String> st = new HashSet<String>();
+        int len = wordList.length;
+        for (int i = 0; i < len; i++) st.add(wordList[i]);
+        Queue<ArrayList<String>> q = new LinkedList<>();
+        ArrayList<String> ls = new ArrayList<>();
+        ls.add(startWord);
+        q.add(ls);
+        ArrayList<String> usedOnLevel = new ArrayList<>();
+        usedOnLevel.add(startWord);
+        int level = 0;
+        ArrayList<ArrayList<String>> ans = new ArrayList<>();
+        while (!q.isEmpty()) {
+            ArrayList<String> vec = q.peek();
+            q.remove();
+            if (vec.size() > level) {
+                level++;
+                for (String it: usedOnLevel) {
+                    st.remove(it);
+                }
+            }
+            String word = vec.get(vec.size() - 1);
+            if (word.equals(targetWord)) {
+                // the first sequence where we reached end
+                if (ans.size() == 0) ans.add(vec);
+                else if (ans.get(0).size() == vec.size()) ans.add(vec);
+            }
+            for (int i = 0; i < word.length(); i++) {
+                for (char c = 'a'; c <= 'z'; c++) {
+                    char replacedCharArray[] = word.toCharArray();
+                    replacedCharArray[i] = c;
+                    String replacedWord = new String(replacedCharArray);
+                    if (st.contains(replacedWord) == true) {
+                        vec.add(replacedWord);
+                        // Java works by reference,
+                        ArrayList<String> temp = new ArrayList<>(vec);
+                        q.add(temp);
+                        // mark as visited on the level
+                        usedOnLevel.add(replacedWord);
+                        vec.remove(vec.size() - 1);
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+}
