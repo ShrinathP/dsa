@@ -1,0 +1,82 @@
+/*
+Chatgpt solution
+1. BFS for Shortest Path: Use BFS to explore all possible words at each level, starting from the initial word.
+2. Word Transformations: For each word, generate all possible valid transformations by changing one letter at a time. For example, "hit" can be transformed to "hot", "dot", and "lot".
+3. Tracking Visited Words: To avoid cycles and redundant calculations, we maintain a set of visited words.
+4. End Condition: When we reach the target word, we can stop and return the length of the path.
+*/
+
+import java.util.*;
+
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        // Convert wordList to a set for fast lookup
+        Set<String> wordSet = new HashSet<>(wordList);
+        
+        // If endWord is not in the word list, no possible transformation
+        if (!wordSet.contains(endWord)) {
+            return 0;
+        }
+        
+        // BFS setup: Queue for processing nodes (words) and level counter
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(beginWord);
+        
+        // Keep track of visited words to avoid revisiting
+        Set<String> visited = new HashSet<>();
+        visited.add(beginWord);
+        
+        int level = 1;  // Start with level 1 (the beginWord itself)
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            
+            // Process all words at the current level
+            for (int i = 0; i < size; i++) {
+                String currentWord = queue.poll();
+                
+                // Try all possible transformations
+                for (int j = 0; j < currentWord.length(); j++) {
+                    char[] wordArray = currentWord.toCharArray();
+                    
+                    // Try changing each character to every letter a-z
+                    for (char c = 'a'; c <= 'z'; c++) {
+                        wordArray[j] = c;
+                        String newWord = new String(wordArray);
+
+                        // If the new word is the endWord, return the result
+                        if (newWord.equals(endWord)) {
+                            return level + 1;
+                        }
+
+                        // If the new word is valid and not visited, add it to the queue
+                        if (wordSet.contains(newWord) && !visited.contains(newWord)) {
+                            queue.offer(newWord);
+                            visited.add(newWord);
+                        }
+                    }
+                }
+            }
+
+            // Increase the level after processing all words at the current level
+            level++;
+        }
+
+        // No possible transformation
+        return 0;
+    }
+}
+
+public class WordLadder {
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        
+        // Example usage
+        String beginWord = "hit";
+        String endWord = "cog";
+        List<String> wordList = Arrays.asList("hot", "dot", "dog", "lot", "log", "cog");
+        
+        int result = sol.ladderLength(beginWord, endWord, wordList);
+        System.out.println("Shortest transformation length: " + result);
+    }
+}
