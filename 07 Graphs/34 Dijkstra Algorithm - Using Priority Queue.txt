@@ -1,0 +1,61 @@
+/*
+Google gemini Java solution
+Striver explanation and code, also very good
+*/
+
+class Pair {
+    int node;
+    int distance;
+
+    public Pair(int distance, int node) {
+        this.node = node;
+        this.distance = distance;
+    }
+}
+
+
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+
+class Solution {
+    static int[] dijkstra(int V, ArrayList<ArrayList<ArrayList<Integer>>> adj, int S) {
+// USe a distance array to store the minimum distances from the sournce node,
+// Mark the source as 0 , rest of the nodes as infinite
+        int[] dist = new int[V];
+        for (int i = 0; i < V; i++) {
+            dist[i] = Integer.MAX_VALUE;
+        }
+        dist[S] = 0;
+
+// Create a Priority Queue which holds a min Heap based on min distance
+// add a source node at 0 distance into the queue
+        PriorityQueue<Pair> pq = new PriorityQueue<>((x, y) -> x.distance - y.distance);
+        pq.add(new Pair(0, S));
+
+        while (!pq.isEmpty()) {
+            Pair current = pq.poll();
+            int u = current.node;
+            int d = current.distance;
+
+// if there is a shorter distance already dont proceed
+            if (d > dist[u]) { // Already found a shorter path
+                continue;
+            }
+
+// get all neighbours, for each neighbour get the node and distance, 
+// u ppoints to v, u -> v direction
+// if to reach v, dist[u] + weight is lesser than current distance array, then update dist[v] = dist[u] + weight
+// add the new Pair to the pq as well
+            for (ArrayList<Integer> neighborInfo : adj.get(u)) {
+                int v = neighborInfo.get(0); // Neighbor node
+                int weight = neighborInfo.get(1); // Edge weight
+
+                if (dist[u] + weight < dist[v]) {
+                    dist[v] = dist[u] + weight;
+                    pq.add(new Pair(dist[v], v));
+                }
+            }
+        }
+        return dist;
+    }
+}
