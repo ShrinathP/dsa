@@ -1,0 +1,133 @@
+/*
+Striver explanation - chatgpt solution with adjacency list creation
+Problem Statement: 
+
+You are given a weighted undirected graph having n+1 vertices numbered from 0 to n and m edges describing there are edges between a to b with some weight, 
+find the shortest path between the vertex 1 and the vertex n, and if the path does not exist then return a list consisting of only -1.
+
+Plain Dijkstra will give only the shortest distance
+Need to use some kind of memoization to keep hold of the shortest path
+REMEMBER WHERE I AM COMING FROM
+
+1. PriorityQueue
+2. Distance array
+3. Memoization array - parent array - where am i coming from
+
+Whenever we update the distance array, we also update the parent array saying this index was reached from this parent
+
+Algorithm:-
+The Algorithm consists of the following steps :
+
+1. We start by initializing an adjacency list which will store all the adjacent nodes for a particular node 
+along with the weights associated with them.
+2. Then, as a part of the initial configuration, we define a dist array to store the updated shortest distances for each node, 
+a priority queue for storing the distance-node pairs, and a source node.
+3. In addition to this, 
+we also declare a ‘parent’ array which would store the parent node for each node and will update itself to a different parent if a shorter path from a node is found at some point in time.
+4. At the start, all nodes’ parents have been set to the nodes themselves to indicate that the traversal has not yet been started.
+5. For every node at the top of the queue, we pop the element out and look out for its adjacent nodes. If the current reachable distance is better than the previous distance (dis + edW < dist[adjNode]), indicated by the distance array, we update the distance and push it into the queue.
+6. A node with a lower distance would be at the top of the priority queue as opposed to a node with a higher distance because we are using a min-heap.
+7. In addition to the previous step, we will also update the parent array to the node from where the current node came while traversing.
+8. By following step 5 repeatedly until our queue becomes empty, 
+we would get the minimum distance from the source node to all other nodes and also our parent array would be updated according to the shortest path.
+9. Now, we run a loop starting from the destination node storing the node’s parent and then moving to the parent again (backtrack) till the parent[node] becomes equal to the node itself.
+10. At last, we reverse the array in which the path is being stored as the path is in reverse order. Finally, we return the ‘path’ array.
+*/
+
+import java.util.*;
+
+class Solution {
+    static class Pair implements Comparable<Pair> {
+        int node, dist;
+        Pair(int node, int dist) {
+            this.node = node;
+            this.dist = dist;
+        }
+        public int compareTo(Pair other) {
+            return this.dist - other.dist;
+        }
+    }
+
+    // Dijkstra’s Algorithm to find shortest path from src to dest
+    public List<Integer> dijkstraShortestPath(int V, List<List<Pair>> adj, int src, int dest) {
+        int[] dist = new int[V];
+        int[] parent = new int[V]; // To reconstruct path
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        Arrays.fill(parent, -1);
+
+        dist[src] = 0;
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        pq.offer(new Pair(src, 0));
+
+        while (!pq.isEmpty()) {
+            Pair top = pq.poll();
+            int u = top.node;
+
+            for (Pair neighbor : adj.get(u)) {
+                int v = neighbor.node;
+                int weight = neighbor.dist;
+
+                if (dist[u] + weight < dist[v]) {
+                    dist[v] = dist[u] + weight;
+                    parent[v] = u;
+                    pq.offer(new Pair(v, dist[v]));
+                }
+            }
+        }
+
+        // Reconstruct the shortest path from src to dest
+        List<Integer> path = new ArrayList<>();
+        if (dist[dest] == Integer.MAX_VALUE) return path; // No path exists
+
+        int current = dest;
+        while (current != -1) {
+            path.add(current);
+            current = parent[current];
+        }
+        Collections.reverse(path); // Reverse to get path from src to dest
+        return path;
+    }
+}
+
+public class DijkstraExample {
+    public static void main(String[] args) {
+        int V = 6; // Number of nodes
+        // edges is 2d array with each row representing single edge - u,v,distance(weight)
+        int[][] edges = {
+            {0, 1, 5},
+            {0, 2, 3},
+            {1, 3, 6},
+            {1, 2, 2},
+            {2, 4, 4},
+            {2, 5, 2},
+            {2, 3, 7},
+            {3, 4, -1},
+            {4, 5, -2}
+        };
+
+        // Step 1: Create adjacency list - add array new arrayList based on the number of nodes
+        List<List<Solution.Pair>> adj = new ArrayList<>();
+        for (int i = 0; i < V; i++) adj.add(new ArrayList<>());
+        // edge is array with 3 values each
+        for (int[] edge : edges) {
+            int u = edge[0];
+            int v = edge[1];
+            int w = edge[2];
+            adj.get(u).add(new Solution.Pair(v, w));
+        }
+
+        // Step 2: Run Dijkstra’s algorithm
+        Solution sol = new Solution();
+        int src = 0;
+        int dest = 5;
+        List<Integer> path = sol.dijkstraShortestPath(V, adj, src, dest);
+
+        // Step 3: Print shortest path
+        if (path.isEmpty()) {
+            System.out.println("No path exists from " + src + " to " + dest);
+        } else {
+            System.out.println("Shortest path from " + src + " to " + dest + ": " + path);
+        }
+    }
+}
+
