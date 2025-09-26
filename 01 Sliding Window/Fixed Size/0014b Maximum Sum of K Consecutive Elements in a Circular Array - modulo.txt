@@ -14,8 +14,8 @@ public class Solution {
 
         // Step 3: Slide the window through the array
         for (int i = k; i < n + k; i++) {
-            // Remove the element that is leaving the window (i - k)
-            // Add the new element that is entering the window (i % n)
+            // Remove the element that is leaving the window (i - k) % n
+            // Add the new element that is entering the window (i) % n
             windowSum += arr[i % n] - arr[(i - k) % n];
 
             // Update maxSum if we found a larger sum
