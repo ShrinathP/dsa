@@ -44,6 +44,16 @@ class Solution {
         }
         //reverse logic
         //for every node, get its adjacents, for every adjacent add the current node as adjacent
+        // chatgpt u->v , v-> u explanation better
+        /*
+            for (int u = 0; u < V; u++) {
+                for (int v : graph.get(u)) {
+                    revGraph.get(v).add(u); // reverse edge
+                    indegree[u]++;          // original outdegree
+                }
+            }
+        */
+
 
         Queue<Integer> q = new LinkedList<>();
         List<Integer> safeNodes = new ArrayList<>();

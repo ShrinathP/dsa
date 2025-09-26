@@ -34,7 +34,7 @@ class Solution {
 
         for (int u = 0; u < V; u++) {
             for (int v : graph.get(u)) {
-                revGraph.get(v).add(u); // reverse edge
+                revGraph.get(v).add(u); // reverse edge, get adjacent of v and add u
                 indegree[u]++;          // original outdegree
             }
         }

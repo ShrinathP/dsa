@@ -1,0 +1,114 @@
+/*
+//Striver explanation and code
+Problem Statement: Given a sorted dictionary of an alien language having N words and k starting alphabets of a standard dictionary. 
+Find the order of characters in the alien language.
+Note: Many orders may be possible for a particular test case, thus you may return any valid order.
+
+Sometime appears before something - topolgical sort
+convert all alphabets to 0 based indexes
+baa
+abcd
+convert b appears before a to a directed graph b -> a, b has an edge to a
+abcd
+abca
+convert d appears before a to a directed graph d-> a, d has an edge to a
+
+
+Algorithm explanation
+1. - We will run a loop from the starting index to the second last index 
+because we will check the ith element and the (i+1)th element. 
+2. - Inside the loop, we will pick two words (the word at the current index(s1) and the word at the next index(s2)). 
+For comparing them, we will again run a loop up to the length of the smallest string.
+3. - Inside that second loop, if at any index we find inequality (s1[i] != s2[i]), 
+we will add them to the adjacency list (s1[i] —> s2[i]) in terms of numbers(subtracting ‘a’ from them), 
+and then we will immediately come out of the loop. 
+4. - This is only because we want the first differentiating character. Finally, we will get the adjacency list.
+5. - In short, we need to find the differentiating character for adjacent strings and create the graph. 
+6. - Once the graph is created, simply perform a topo sort, whose steps are given below. 
+        - calculate indegree
+        - push the node whose indegree is 0
+        - pop add to the result, for every adjacent nodes, keep decreasing the indegree array, and push to the queue
+*/
+
+
+import java.util.*;
+
+
+class Solution {
+    private List<Integer> topoSort(int V, List<List<Integer>> adj) {
+        int indegree[] = new int[V];
+        for (int i = 0; i < V; i++) {
+            for (int it : adj.get(i)) {
+                indegree[it]++;
+            }
+        }
+
+        Queue<Integer> q = new LinkedList<>();
+        for (int i = 0; i < V; i++) {
+            if (indegree[i] == 0) {
+                q.add(i);
+            }
+        }
+        List<Integer> topo = new ArrayList<>();
+        while (!q.isEmpty()) {
+            int node = q.peek();
+            q.remove();
+            topo.add(node);
+            // node is in your topo sort
+            // so please remove it from the indegree
+
+            for (int it : adj.get(node)) {
+                indegree[it]--;
+                if (indegree[it] == 0) q.add(it);
+            }
+        }
+
+        return topo;
+    }
+    public String findOrder(String [] dict, int N, int K) {
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < K; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+// word comparision function, whenever there is a non matching character add to the adjacency list
+        for (int i = 0; i < N - 1; i++) {
+            String s1 = dict[i];
+            String s2 = dict[i + 1];
+            int len = Math.min(s1.length(), s2.length());
+            for (int ptr = 0; ptr < len; ptr++) {
+                if (s1.charAt(ptr) != s2.charAt(ptr)) {
+                    // store the characters in terms of their numbers 0,1,2,3,4 etc
+                    adj.get(s1.charAt(ptr) - 'a').add(s2.charAt(ptr) - 'a');
+                    break;
+                }
+            }
+        }
+
+        //perform topo sort
+        List<Integer> topo = topoSort(K, adj);
+
+        //add for every int of the answer, convert into the char array back
+        String ans = "";
+        for (int it : topo) {
+            ans = ans + (char)(it + (int)('a'));
+        }
+
+        return ans;
+
+    }
+}
+
+public class tUf {
+    public static void main(String[] args) {
+        int N = 5, K = 4;
+        String[] dict = {"baa", "abcd", "abca", "cab", "cad"};
+        Solution obj = new Solution();
+        String ans = obj.findOrder(dict, N, K);
+
+        for (int i = 0; i < ans.length(); i++) {
+            System.out.print(ans.charAt(i) + " ");
+        }
+        System.out.println("");
+    }
+}
