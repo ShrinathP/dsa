@@ -21,6 +21,7 @@ class ArrayImpl {
 
     for (int j = k; j < arr.length; j++) {
       sum = sum + arr[j] - arr[start++];
+      //sum = sum + arr[j] - arr[j-k]; (can do j-k as well)
 
       if (sum > max_sum) {
         max_sum = sum;
