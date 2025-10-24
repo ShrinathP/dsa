@@ -1,6 +1,15 @@
 // 1566. Detect Pattern of Length M Repeated K or More Times
 // Given an array of positive integers arr, find if a pattern of length m that is repeated k or more times.
 
+/*
+To detect k consecutive repetitions of a pattern of length m, we need to find (k-1) × m consecutive matches. 
+Why (k-1) × m and not k × m? Because:
+- The first occurrence of the pattern takes up m elements
+- Each additional repetition requires m more matching elements
+- So for k total repetitions, we need the first m elements plus (k-1) × m matching elements
+
+*/
+
 class Solution {
     //explanation naresh, chgp
     public boolean containsPattern(int[] arr, int m, int k) {
