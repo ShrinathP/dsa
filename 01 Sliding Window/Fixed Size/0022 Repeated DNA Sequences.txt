@@ -4,6 +4,13 @@
 /*
 Given a string s that represents a DNA sequence, 
 return all the 10-letter-long sequences (substrings) that occur more than once in a DNA molecule. 
+
+
+two problems are different.
+
+Detect Pattern checks k CONSECUTIVE repeats of a block (element-wise). Your arr[i] == arr[i+m] works since elements are atomic and you count (k-1)*m consecutive matches → boolean.
+
+Repeated DNA Sequences asks for all distinct 10-char substrings that occur ≥2 times ANYWHERE (not necessarily consecutive) → you must identify substrings, not just detect a run.
 */
 
 class Solution {
