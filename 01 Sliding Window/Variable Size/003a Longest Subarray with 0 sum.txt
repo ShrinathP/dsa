@@ -1,4 +1,6 @@
 /*
+//cue - prefixsum - map of sum and indices
+
 Similar to Maximum Size Subarray sum equals K - Prefix Sum + Hash
 GFG Problem - 
 Given an array arr[] consisting of both positive and negative integers, 
