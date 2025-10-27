@@ -1,5 +1,6 @@
 //Codebix
 //codebix
+//map of prefixsum and occurences
 /*
 Keep holding prefixsum and its occurences in HashMap
 keep adding sum
