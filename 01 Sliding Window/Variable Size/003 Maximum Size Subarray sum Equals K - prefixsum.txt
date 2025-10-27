@@ -7,6 +7,9 @@ Given an array arr[] of size n containing integers, the task is to find the leng
 Check GFG Solution and Explanation on this website
 https://www.geeksforgeeks.org/dsa/longest-sub-array-sum-k/
 
+NOTE IMP: Store only the first occurence of the prefixSum as we need the longest length
+=======================================================================================
+
 Explanation
 ===========
 The idea is based on the fact that if Sj - Si = k (where Si and Sj are prefix sums till index i and j respectively, and  i < j), then the subarray between i+1 to j has sum equal to k. 
