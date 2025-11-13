@@ -1,0 +1,52 @@
+/*
+Leetcode 523
+Given an integer array nums and an integer k, return true if nums has a good subarray or false otherwise
+A good subarray is a subarray where:
+- its length is at least two, and
+- the sum of the elements of the subarray is a multiple of k.
+Note that:
+A subarray is a contiguous part of the array.
+An integer x is a multiple of k if there exists an integer n such that x = n * k. 0 is always a multiple of k
+*/
+
+//codestorywithMIK solution
+// the concept is  suppose k = 6, 23,2,4,6,7
+//1st iter = sum=23 % 6-> rem = 5
+//2nd iter = sum=(23+2)%6-> rem = 1
+//3rd iter = sum=(23 + 2 + 4)%6-> rem = 5
+
+/*
+for 1st and 3rd iter remainders are same, so 2+4 should be multiple of k
+This is basic math concept
+
+At each iteration, keep saving 2 things - remainder, index
+if we find the same remainder earlier in one of the prev iterations, 
+get that index, check the length i-index > 2
+*/
+
+class Solution {
+    public boolean checkSubarraySum(int[] nums, int k) {
+        Map<Integer, Integer> mp = new HashMap<>();
+        mp.put(0,-1);
+        //initialize 0 was never seen
+
+        int sum = 0;
+        for(int i=0; i < nums.length; i++) {
+            sum += nums[i];
+            int remainder = sum%k;
+            //check if the same remainder is present in the map
+            if(mp.containsKey(remainder)) {
+                // if yes, the difference, between this sum and prev sum is a   multiple of k, add it to soln
+                //check for length
+                if(i - mp.get(remainder) >= 2){
+                    return true;
+                }
+
+            } else {
+                //i
+                mp.put(remainder, i);
+            }
+        }
+        return false;
+    }
+}
