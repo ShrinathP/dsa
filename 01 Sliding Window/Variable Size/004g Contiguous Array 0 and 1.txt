@@ -1,0 +1,37 @@
+
+/*525. Contiguous Array - of equal 0 and 1
+Solution from article
+https://leetcode.com/problems/continuous-subarray-sum/solutions/5276981/prefix-sum-hashmap-patterns-7-problems-b-6794/
+
+Max Length
+Given a binary array nums, return the maximum length of a contiguous subarray with an equal number of 0 and 1.
+Condition : Binary Subarray with an equal number of 0 and 1
+*/
+
+class Solution {
+    public int findMaxLength(int[] nums) {
+        int result = 0;
+        int zero = 0, one = 0;
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        //hm of prefixSum and index
+        hm.put(0, -1);  // prefix sum 0 at index -1 (empty prefix)
+
+        for(int i=0; i<nums.length; i++) {
+            if(nums[i] == 0) {
+                zero++;
+            } else {
+                one++;
+            }
+            int curr_diff = zero - one;
+            if(hm.containsKey(curr_diff)) {
+                result = Math.max(result, i - hm.get(curr_diff));
+            } else {
+
+            hm.put(curr_diff, i);
+            }
+        }
+
+        return result;
+    }
+}
+
