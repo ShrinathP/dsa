@@ -1,0 +1,55 @@
+// Leetcode 930 -  Count Binary Subarrays with given SUM.txt
+//codestorywithMIK or chatgpt solution
+
+
+class Solution {
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        Map<Integer, Integer> map = new HashMap<>();
+        map.put(0, 1); // empty prefix
+        
+        int prefix = 0;
+        int count = 0;
+
+        for (int num : nums) {
+            prefix += num;
+
+            // count subarrays ending here with sum = goal
+            count += map.getOrDefault(prefix - goal, 0);
+
+            // update frequency
+            map.put(prefix, map.getOrDefault(prefix, 0) + 1);
+        }
+
+        return count;
+    }
+}
+
+// Using pure array
+
+class Solution {
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        int n = nums.length;
+
+        // prefix sum can go from 0 to n
+        int[] freq = new int[n + 1];
+        freq[0] = 1;   // empty prefix
+
+        int prefix = 0;
+        int count = 0;
+
+        for (int x : nums) {
+            prefix += x;
+
+            // check if prefix - goal exists
+            if (prefix - goal >= 0) {
+                count += freq[prefix - goal];
+            }
+
+            // update frequency
+            freq[prefix]++;
+        }
+
+        return count;
+    }
+}
+
