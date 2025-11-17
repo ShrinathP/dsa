@@ -1,0 +1,28 @@
+// Leetcode 930
+//Chatgpt soln
+// Similar to - 01 Sliding Window/Variable Size/004 Count Subarray sum equals k - prefixsum.txt
+class Solution {
+    public int numSubarraysWithSum(int[] nums, int goal) {
+        HashMap<Integer, Integer> hm = new HashMap<>();
+        hm.put(0,1); //at 0 index empty prefixsum, so 0 prefix sum at index 1
+
+        int prefix = 0;
+        int count = 0;
+
+        for(int num: nums) {
+            //calc prefixsum
+            prefix += num;
+
+            //check if there is something complementary, if yes
+            // it sums to zero here then
+            int complementary = prefix - goal;
+            count += hm.getOrDefault(complementary, 0);
+            
+            //update frequency in hm
+            hm.put(prefix, hm.getOrDefault(prefix, 0) + 1);
+            
+        }
+
+        return count;
+    }
+}
