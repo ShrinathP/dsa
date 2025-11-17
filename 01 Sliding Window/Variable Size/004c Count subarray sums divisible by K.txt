@@ -1,0 +1,33 @@
+/**
+CodestorywithMIK
+Naive solution - 2 for loops - where we calculate the sum from i to j
+
+Better Naive solution
+Create a cumulative sum array - 
+2 for loops check sum from j to i
+*/
+
+class Solution {
+    public int subarraysDivByK(int[] nums, int k) {
+        //cumulative sum 
+        for(int i=1; i< nums.length; i++) {
+            nums[i]+=nums[i-1];
+        }
+        int n = nums.length;
+        int result = 0;
+        for(int i=0; i<n; i++) {
+            for(int j=i; j<n;j++) {
+                int sum = 0;
+                if(i == 0){
+                    sum = nums[j];
+                } else {
+                    sum = nums[j] - nums[i-1];
+                }
+
+                if(sum%k == 0)
+                    result++;
+            }
+        }
+        return result;
+    }
+}
