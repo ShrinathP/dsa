@@ -1,0 +1,61 @@
+/*
+//codestorywithMIK solution youtube
+// the concept is  suppose k = 6, 23,2,4,6,7
+//1st iter = sum=23 % 6-> rem = 5
+//2nd iter = sum=(23+2)%6-> rem = 1
+//3rd iter = sum=(23 + 2 + 4)%6-> rem = 5
+
+/*
+for 1st and 3rd iter remainders are same, so 2+4 should be multiple of k
+This is basic math concept
+*/
+
+/**
+CodestorywithMIK
+If for an array, a sum to a particular number gives remainder x when % k
+If for the same array, a sum to a another number also gives remainder x when % k
+the difference between the sums is also divisible by k
+
+A subarray i..j is divisible by K if:
+(prefix[j] - prefix[i-1]) % K == 0 
+
+We maintain a frequency array count[0..K-1] where
+count[r] = number of prefix sums with remainder r.
+*/
+
+class Solution {
+    public int subarraysDivByK(int[] nums, int k) {
+        int[] freq = new int[k];
+        freq[0] = 1; //empty prefix
+
+        int prefix = 0;
+        int result = 0;
+
+        for(int num: nums) {
+            //1) - calculate prefixsum
+            prefix += num;
+            
+
+            //2) - calculate remainder
+            int rem = prefix % k; // remainder
+            if(rem < 0) rem += k; // handle negative numbers
+            
+            //3) - add occurence of this remainder to the result
+            result += freq[rem]; //number of times this remainder has already occured 
+            //1st iter = sum=23 % 6-> rem = 5
+            //2nd iter = sum=(23+2)%6-> rem = 1
+            //3rd iter = sum=(23 + 2 + 4)%6-> rem = 5
+            // so 2 + 4 is divisible by K, count is 1
+            //store the current rem count so freq[5]++ (will be 2)
+            //next iteration when we move, we can repeat the same
+
+
+            //4) increase the freq count of the current remainder, as it was seen
+            freq[rem]++;
+       
+    
+        }
+        
+        return result;
+    }
+}
