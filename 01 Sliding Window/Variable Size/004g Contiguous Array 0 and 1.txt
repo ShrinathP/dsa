@@ -6,6 +6,10 @@ https://leetcode.com/problems/continuous-subarray-sum/solutions/5276981/prefix-s
 Max Length
 Given a binary array nums, return the maximum length of a contiguous subarray with an equal number of 0 and 1.
 Condition : Binary Subarray with an equal number of 0 and 1
+
+Logic:
+Hold the difference between the two entities (curr_diff = zero - one) in a map
+If that was already reached previously - then j-i has equal number of zeros and ones
 */
 
 class Solution {
