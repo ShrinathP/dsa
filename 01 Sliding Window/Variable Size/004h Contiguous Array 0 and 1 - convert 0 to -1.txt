@@ -6,7 +6,7 @@ The key trick is:
 👉 Convert every 0 to -1
 
 Then the problem becomes:
-Find the longest subarray with sum = 0.
+Find the longest subarray with sum = 0. (Check 003a for this solution)
 
 We use a prefix sum + HashMap storing first index of each prefix sum.
 
