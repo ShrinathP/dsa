@@ -1,6 +1,8 @@
 //567 Leetcode : Permutation in String
 //1st way
 //Codebix
+//Check if given string has a permutation of target string.
+There is one more question 'Leetcode 46: Permutations' - where we return all possible Permutations of array
 
     /*
     codebix => Sliding window + freq array
