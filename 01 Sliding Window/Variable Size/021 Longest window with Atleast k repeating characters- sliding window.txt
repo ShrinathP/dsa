@@ -51,36 +51,37 @@ Total: O(26n) → effectively linear
 
 import java.util.*;
 
-public class LongestSubstringAtLeastK_HashMapImproved {
+public class LongestSubstringAtLeastK_HashMap {
 
     public int longestSubstring(String s, int k) {
         int maxLen = 0;
         int totalUnique = countTotalUnique(s);
 
+        // Try all possible target unique counts
         for (int targetUnique = 1; targetUnique <= totalUnique; targetUnique++) {
             Map<Character, Integer> freqMap = new HashMap<>();
             int left = 0, right = 0;
             int countAtLeastK = 0;
 
             while (right < s.length()) {
-                // Expand window
-                char rChar = s.charAt(right++);
+                // Expand the window
+                char rChar = s.charAt(right);
                 freqMap.put(rChar, freqMap.getOrDefault(rChar, 0) + 1);
                 if (freqMap.get(rChar) == k) countAtLeastK++;
+                right++;
 
-                // Shrink window when unique characters exceed target
+                // Shrink the window if unique count exceeds target
                 while (freqMap.size() > targetUnique) {
-                    char lChar = s.charAt(left++);
-                    int freq = freqMap.get(lChar);
-                    if (freq == k) countAtLeastK--;
-                    if (freq == 1) {
-                        freqMap.remove(lChar); // remove completely
-                    } else {
-                        freqMap.put(lChar, freq - 1); // decrease count
+                    char lChar = s.charAt(left);
+                    if (freqMap.get(lChar) == k) countAtLeastK--;
+                    freqMap.put(lChar, freqMap.get(lChar) - 1);
+                    if (freqMap.get(lChar) == 0) {
+                        freqMap.remove(lChar);
                     }
+                    left++;
                 }
 
-                // If all unique chars occur at least k times, it's valid
+                // Check for valid window
                 if (freqMap.size() == targetUnique && countAtLeastK == targetUnique) {
                     maxLen = Math.max(maxLen, right - left);
                 }
@@ -90,16 +91,19 @@ public class LongestSubstringAtLeastK_HashMapImproved {
         return maxLen;
     }
 
+    // Helper to count total number of unique characters in the string
     private int countTotalUnique(String s) {
-        Set<Character> set = new HashSet<>();
-        for (char c : s.toCharArray()) set.add(c);
-        return set.size();
+        Set<Character> uniqueChars = new HashSet<>();
+        for (char c : s.toCharArray()) {
+            uniqueChars.add(c);
+        }
+        return uniqueChars.size();
     }
 
     public static void main(String[] args) {
-        LongestSubstringAtLeastK_HashMapImproved solver = new LongestSubstringAtLeastK_HashMapImproved();
+        LongestSubstringAtLeastK_HashMap solver = new LongestSubstringAtLeastK_HashMap();
         String s = "aaabbccdde";
         int k = 2;
-        System.out.println("Length: " + solver.longestSubstring(s, k));  // Output: 6 ("aabbcc")
+        System.out.println("Length: " + solver.longestSubstring(s, k)); // Output: 6 ("aabbcc")
     }
 }
