@@ -1,6 +1,10 @@
 //cue- freqarr->split whenenver you find a letter with freq less than k
 
 /*
+A standard sliding window is not used because the condition is "every character in the substring must appear at least k times," not just a single character. When a sliding window shrinks, a character's frequency can drop below k, and there's no easy way to know if the window can be expanded again to satisfy the condition without recalculating all character frequencies from scratch
+*/
+
+/*
 The characters that appear less than k times can never be part of the answer — we can use them to split the string and recursively check left and right parts.
 
 This leads to a Divide and Conquer approach.
