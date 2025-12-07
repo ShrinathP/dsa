@@ -27,6 +27,7 @@ class Solution {
             //remove ONE TIME from front to bring culprit to 0
             if(culprit > 0) {
                 map.put(nums[i], map.get(nums[i]) - 1);
+                // if size matches k, the removed i was the culprit, reduce the culprit size
                 if(map.get(nums[i]) == k) {
                     culprit--;
                 }
