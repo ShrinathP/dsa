@@ -1,6 +1,8 @@
 //check striver solution
 //check culprit method codewithMIK
 
+//IMP: do not aggressive trim using while loop, if an answer lets say length 5 satisfies, then move ahead the same length 5
+
 424. Longest Repeating Character Replacement
 // We are removing the while loop to trim the left pointer continuously 
 //We only trim by 1, so effectively keeping the max length same if not satisfied
