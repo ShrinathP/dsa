@@ -1,4 +1,16 @@
 //https://leetcode.com/problems/heaters/solutions/6655429/master-binary-search-to-find-minimum-hea-6ou8
+//chatgpt explanation of left - 1
+/*
+Your binary search finds:
+the first heater whose value is ≥ house
+
+Meaning:
+heaters[left] is the first heater to the right of the house
+(or exactly at the house).
+heaters[left − 1] is the heater immediately to the left.
+To find the closest heater, you must compare both sides.
+*/
+
 
 class Solution {
     public int findRadius(int[] houses, int[] heaters) {
