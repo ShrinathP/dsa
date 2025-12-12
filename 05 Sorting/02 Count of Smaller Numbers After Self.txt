@@ -1,0 +1,75 @@
+//Explanation: 
+// https://leetcode.com/problems/count-of-smaller-numbers-after-self/?envType=problem-list-v2&envId=binary-search
+// chatgpt solution
+//while merging at every point in the left array if we have something in the right subaaray less than left one, store to a variable and move ahead in the right subarray, (avoids looping and adding 1 by 1, instead add the whole variable value once in the left location at once)
+
+class Solution {
+    public List<Integer> countSmaller(int[] nums) {
+        int n = nums.length;
+
+        //hold counts array and indexes array
+        int[] counts = new int[n];
+        int[] indexes = new int[n];
+
+        //fill indexes array
+        for(int i=0;i< n; i++) {
+            indexes[i] = i;
+        }
+
+        mergeSort(nums, indexes, 0, n-1, counts);
+
+        List<Integer> result = new ArrayList<>();
+        for(int c: counts) result.add(c);
+        return result;
+    }
+
+    private void mergeSort(int[] nums, int[] indexes, int left, int right, int[] counts) {
+        if(left >= right) return;
+
+        int mid = left + (right - left)/2;
+        mergeSort(nums, indexes, left, mid, counts);
+        mergeSort(nums, indexes, mid + 1, right, counts);
+
+        merge(nums, indexes, left, mid, right, counts);
+    }
+
+    private void merge(int[] nums, int[] indexes, int left, int mid, int right, int[] counts) {
+
+        int[] temp = new int[right - left + 1];
+        int i = left;       // pointer for left half
+        int j = mid + 1;    // pointer for right half
+        int k = 0;
+
+        // THIS COUNTS how many right-side elements are smaller
+        int rightSmallerCount = 0;
+
+        while (i <= mid && j <= right) {
+            // Right side element is smaller
+            if (nums[indexes[j]] < nums[indexes[i]]) {
+                rightSmallerCount++;          // like your explanation
+                temp[k++] = indexes[j++];
+            }
+            else {
+                // Add all right side smaller elements collected so far
+                counts[indexes[i]] += rightSmallerCount;
+                temp[k++] = indexes[i++];
+            }
+        }
+
+        // Drain remaining left half
+        while (i <= mid) {
+            counts[indexes[i]] += rightSmallerCount;
+            temp[k++] = indexes[i++];
+        }
+
+        // Drain remaining right half
+        while (j <= right) {
+            temp[k++] = indexes[j++];
+        }
+
+        // Copy back
+        for (int t = 0; t < temp.length; t++) {
+            indexes[left + t] = temp[t];
+        }
+    }
+}
