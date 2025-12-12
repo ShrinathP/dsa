@@ -1,0 +1,59 @@
+/*
+Striver explanation - chtgpt solution
+
+1. If segment has ≤1 element → return 0.
+2. Split array into left and right halves.
+3. Recursively count inversions in left half.
+4. Recursively count inversions in right half.
+5. Count cross-inversions while merging: IMP
+  - When a[i] > a[j] (j from right half):
+    → all elements from i..mid are also > a[j].
+    → add (mid - i + 1) to count.
+    → add a[j], move j pointer
+  - When a[i] < a[j], add a[i] move i pointer
+6. Merge both halves into sorted order.
+7. Return total inversions.
+
+Time: O(n log n)
+Space: O(n) (temp array for merging)
+*/
+
+class Solution {
+    public long inversionCount(long[] arr) {
+        return mergeSort(arr, 0, arr.length - 1);
+    }
+
+    private long mergeSort(long[] a, int l, int r) {
+        if (l >= r) return 0;
+
+        int mid = (l + r) / 2;
+        long count = mergeSort(a, l, mid) + mergeSort(a, mid + 1, r);
+
+        // count cross inversions
+        count += merge(a, l, mid, r);
+
+        return count;
+    }
+
+    private long merge(long[] a, int l, int mid, int r) {
+        long count = 0;
+        long[] temp = new long[r - l + 1];
+        int i = l, j = mid + 1, k = 0;
+
+        while (i <= mid && j <= r) {
+            if (a[i] <= a[j]) {
+                temp[k++] = a[i++];
+            } else {
+                temp[k++] = a[j++];
+                count += (mid - i + 1);   // all remaining left elements from mid will also form inversions
+                //i.e i to mid elements
+            }
+        }
+
+        while (i <= mid) temp[k++] = a[i++];
+        while (j <= r) temp[k++] = a[j++];
+
+        System.arraycopy(temp, 0, a, l, temp.length);
+        return count;
+    }
+}
