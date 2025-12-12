@@ -1,0 +1,35 @@
+//https://leetcode.com/problems/heaters/solutions/6655429/master-binary-search-to-find-minimum-hea-6ou8
+
+class Solution {
+    public int findRadius(int[] houses, int[] heaters) {
+        //sort houses and heaters
+        Arrays.sort(houses);
+        Arrays.sort(heaters);
+        int radius = 0;
+        
+        //for every house, bs on heaters (finding the nearest heater)
+        for(int house: houses) {
+            int left = 0, right = heaters.length - 1;
+            while(left < right) {
+                int mid = left + (right - left)/2;
+                if(house > heaters[mid]) {
+                    left = mid + 1;
+                } else {
+                    right = mid;
+                }
+            }
+
+            //reached the nearest heater for that house
+            //find distance
+            int dist = Math.abs(heaters[left] - house);
+            if(left > 0) {
+                dist = Math.min(dist, Math.abs(heaters[left - 1] - house));
+            }
+
+            radius = Math.max(radius, dist);
+        }
+
+        return radius;
+        
+    }
+}
