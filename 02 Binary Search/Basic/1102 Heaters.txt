@@ -1,0 +1,43 @@
+/*
+Google Gemini Solution - Two Pointer Solution
+
+1. Sort: Arrays.sort(houses); and Arrays.sort(heaters);.
+2. Initialize: maxRadius = 0, heaterIndex = 0.
+3. Iterate Houses: For each house:
+  1. Find Closest Heater: 
+  Move heaterIndex forward as long as the next heater (heaters[heaterIndex + 1]) 
+  is closer to the current house than the current heater (heaters[heaterIndex]).
+  2. Calculate Distance: Find the distance to the now-closest heater (either heaters[heaterIndex]
+  or the one just before it if the loop moved).
+  3. Update Max Radius: maxRadius = Math.max(maxRadius, distance_to_closest_heater);.
+
+*/
+
+import java.util.Arrays;
+
+class Solution {
+    public int findRadius(int[] houses, int[] heaters) {
+        Arrays.sort(houses);
+        Arrays.sort(heaters);
+
+        int maxRadius = 0;
+        int heaterIndex = 0; // Pointer for heaters array
+
+        for (int house : houses) {
+            // Move heaterIndex to the best heater for the current house
+            // Keep advancing heaterIndex if the next heater is closer
+            while (heaterIndex + 1 < heaters.length &&
+                   Math.abs(heaters[heaterIndex + 1] - house) <= Math.abs(heaters[heaterIndex] - house)) {
+                heaterIndex++;
+            }
+
+            // Calculate distance to the closest heater found
+            int distance = Math.abs(heaters[heaterIndex] - house);
+
+            // Update the overall required radius
+            maxRadius = Math.max(maxRadius, distance);
+        }
+
+        return maxRadius;
+    }
+}
