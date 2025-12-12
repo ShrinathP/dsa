@@ -1,0 +1,65 @@
+/*
+Striver explanation - Google Gemini code
+
+Reverse Pairs - Leetcode — Minimal step-by-step algorithm (merge-sort)
+
+1. If segment length ≤ 1 return 0.
+2. Split array into left [l..mid] and right [mid+1..r].
+3. Recursively count reverse pairs in left and right.
+4. Count cross pairs:
+    - Let j = mid+1.
+    - For each i from l to mid:
+      - Advance j while j ≤ r and (long) a[i] > 2L * a[j].
+      - Add j - (mid+1) to the count (for that i).
+5. Merge the two sorted halves into one sorted segment.
+6. Return leftCount + rightCount + crossCount.
+*/
+
+public class Solution {
+    public int reversePairs(int[] nums) {
+        return mergeSort(nums, 0, nums.length - 1);
+    }
+
+    private int mergeSort(int[] nums, int low, int high) {
+        if (low >= high) return 0;
+        int mid = low + (high - low) / 2;
+        int count = mergeSort(nums, low, mid) + mergeSort(nums, mid + 1, high);
+        
+        // Step 1: Count reverse pairs between two sorted halves
+        count += countPairs(nums, low, mid, high);
+        
+        // Step 2: Merge the two sorted halves
+        merge(nums, low, mid, high);
+        return count;
+    }
+
+    private int countPairs(int[] nums, int low, int mid, int high) {
+        int count = 0;
+        int right = mid + 1;
+        for (int i = low; i <= mid; i++) {
+            // Use 2L to handle potential 32-bit integer overflow
+            while (right <= high && nums[i] > 2L * nums[right]) {
+                right++;
+            }
+            count += (right - (mid + 1));
+        }
+        return count;
+    }
+
+    private void merge(int[] nums, int low, int mid, int high) {
+        int[] temp = new int[high - low + 1];
+        int i = low, j = mid + 1, k = 0;
+
+        while (i <= mid && j <= high) {
+            if (nums[i] <= nums[j]) {
+                temp[k++] = nums[i++];
+            } else {
+                temp[k++] = nums[j++];
+            }
+        }
+        while (i <= mid) temp[k++] = nums[i++];
+        while (j <= high) temp[k++] = nums[j++];
+
+        System.arraycopy(temp, 0, nums, low, temp.length);
+    }
+}
