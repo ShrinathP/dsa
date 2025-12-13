@@ -1,0 +1,44 @@
+/*
+Leetcode 352 - Data Stream as Disjoint Intervals
+Given a data stream input of non-negative integers a1, a2, ..., an, summarize the numbers seen so far as a list of disjoint intervals.
+*/
+
+//codestorywithMIK solution, Brute Force using HashSet + sort on Demand
+//while getting intervals, add to list, sort and run a for loop to find intervals
+class SummaryRanges {
+    private Set<Integer> set;
+
+    public SummaryRanges() {
+        set = new HashSet<>();
+    }
+
+    public void addNum(int value) {
+        set.add(value);
+    }
+
+    public int[][] getIntervals() {
+        if (set.isEmpty()) return new int[0][0];
+
+        List<Integer> list = new ArrayList<>(set);
+        Collections.sort(list);
+
+        List<int[]> res = new ArrayList<>();
+        int start = list.get(0);
+        int prev = start;
+
+//there can be other way, while ways as well
+        for (int i = 1; i < list.size(); i++) {
+            int curr = list.get(i);
+            if (curr == prev + 1) {
+                prev = curr;
+            } else {
+                res.add(new int[]{start, prev});
+                start = curr;
+                prev = curr;
+            }
+        }
+        res.add(new int[]{start, prev});
+
+        return res.toArray(new int[res.size()][]);
+    }
+}
