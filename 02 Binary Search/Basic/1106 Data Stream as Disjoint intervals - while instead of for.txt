@@ -1,0 +1,39 @@
+//chatgpt solution
+//codestorywithMIK solution, Brute Force using HashSet + sort on Demand
+//while getting intervals, add to list, sort and run a for loop to find intervals
+//running while loop instead of for
+class SummaryRanges {
+    private Set<Integer> set;
+
+    public SummaryRanges() {
+        set = new HashSet<>();
+    }
+
+    public void addNum(int value) {
+        set.add(value);
+    }
+
+    public int[][] getIntervals() {
+        if (set.isEmpty()) return new int[0][0];
+
+        List<Integer> nums = new ArrayList<>(set);
+        Collections.sort(nums);
+
+        List<int[]> res = new ArrayList<>();
+        int n = nums.size();
+        int i = 0;
+
+//there can be other way, while ways as well
+        while (i < n) {
+            int start = nums.get(i);
+            while(i+1 < n && nums.get(i+1) == nums.get(i) + 1) {
+                i++;
+            }
+            int end  = nums.get(i);
+            res.add(new int[]{start, end});
+            i++;
+        }
+
+        return res.toArray(new int[res.size()][]);
+    }
+}
