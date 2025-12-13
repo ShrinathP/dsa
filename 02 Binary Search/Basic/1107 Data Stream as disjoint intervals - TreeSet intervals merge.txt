@@ -1,0 +1,67 @@
+/*
+codeStoryWithMIK explanation - 
+hold a TreeSet of intervals
+Data Structure: TreeMap<start, end>
+
+Steps (for addNum(val)):
+1. Check left interval - 
+    low = floorKey(val) → interval with start ≤ val
+2. Check right interval
+    high = ceilingKey(val) → next interval start ≥ val
+3. If already covered - if end of low interval is higher than current val - nothing to do
+    If low != null and map.get(low) ≥ val → do nothing
+4. Merge conditions - if low's end + 1 equals val AND val + 1 equals ceil i.e. high eg (1(low),3), val=4, (5(high),6)
+    mergeLeft → low != null && map.get(low) + 1 == val
+    mergeRight → high != null && high == val + 1
+5. Apply merge
+    Both sides: merge left & right into one interval
+    Left only: extend left interval
+    Right only: extend right interval
+    None: create new [val, val]
+*/
+
+
+class SummaryRanges {
+    private TreeMap<Integer, Integer> map;
+
+    public SummaryRanges() {
+        map = new TreeMap<>();
+    }
+
+    public void addNum(int val) {
+        if (map.containsKey(val)) return;
+
+        Integer low = map.floorKey(val);
+        Integer high = map.ceilingKey(val);
+
+        // case 1: val already covered
+        if (low != null && map.get(low) >= val) return;
+
+        boolean mergeLeft = low != null && map.get(low) + 1 == val;
+        boolean mergeRight = high != null && high == val + 1;
+
+        if (mergeLeft && mergeRight) {
+            // merge both sides
+            map.put(low, map.get(high));
+            map.remove(high);
+        } else if (mergeLeft) {
+            map.put(low, map.get(low) + 1);
+        } else if (mergeRight) {
+            map.put(val, map.get(high));
+            map.remove(high);
+        } else {
+            map.put(val, val);
+        }
+    }
+
+    public int[][] getIntervals() {
+        int[][] res = new int[map.size()][2];
+        int i = 0;
+        for (Map.Entry<Integer, Integer> e : map.entrySet()) {
+            res[i][0] = e.getKey();
+            res[i][1] = e.getValue();
+            i++;
+        }
+        return res;
+    }
+}
