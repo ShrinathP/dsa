@@ -1,0 +1,47 @@
+/*
+Coders camp explanation 
+Leetcode 668
+IMP
+to find the numbers lesser than current mid count = Math.min(n, mid/i)
+where n is column numbers
+chatgpt solution
+Math.min(n, mid / i) is specific to the multiplication table structure.
+
+Algo steps
+1. Binary search range
+    left = 1, right = m * n
+2. Pick mid
+    mid = (left + right) / 2
+3. Count ≤ mid
+    For each row i = 1..m
+    Add min(n, mid / i)
+4. Adjust search
+    If count < k → left = mid + 1
+    Else → right = mid
+5. Answer
+    When left == right
+ */
+
+class Solution {
+    public int findKthNumber(int m, int n, int k) {
+        int left = 1, right = m * n;
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (count(mid, m, n) < k) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        return left;
+    }
+
+    private int count(int x, int m, int n) {
+        int cnt = 0;
+        for (int i = 1; i <= m; i++) {
+            cnt += Math.min(n, x / i);
+        }
+        return cnt;
+    }
+}
