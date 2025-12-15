@@ -22,10 +22,14 @@ class Solution {
             //as duplicates are allowed
             //tricky part if left and right both are mid values, we just 
             //increment and decrement pointers
-            if(nums[left]==nums[mid] && nums[right] == nums[mid]){left++; right--;}
+            if(nums[left]==nums[mid] && nums[right] == nums[mid]){
+                left++; 
+                right--;
+                continue;
+                }
                
             // ///left part is sorted
-            if(nums[left] < nums[mid]){ 
+            if(nums[left] <= nums[mid]){ 
                    if(nums[left] <= target && nums[mid] > target){
                        //target lies in left sorted part
                        right = mid-1;
@@ -38,16 +42,16 @@ class Solution {
                     } else {
                         right = mid-1;
                     }   
-               } else {
-	//duplicates, we know nums[mid] != target, so nums[start] != target
-            //based on current information, we can only move left pointer to skip one cell
-            //thus in the worest case, we would have target: 2, and array like 11111111, then
-            //the running time would be O(n)
-                left++;
-            }
+               } 
+// no need of this else
+    //            else {
+	// //duplicates, we know nums[mid] != target, so nums[start] != target
+    //         //based on current information, we can only move left pointer to skip one cell
+    //         //thus in the worest case, we would have target: 2, and array like 11111111, then
+    //         //the running time would be O(n)
+    //             left++;
+    //         }
         }
         return false;
     }   
 }
-
-
