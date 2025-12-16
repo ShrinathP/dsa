@@ -1,4 +1,5 @@
 //left bottom strategy
+// Not pure BS, concept of elimination is applied
 
 //GFG Problem says row wise sorted 
 //and column wise sorted
