@@ -6,7 +6,13 @@ chatgpt solution, algoritms made easy explanation -
 For Kth Missing Positive Number, the correct relation is:
 missingTillIndex = arr[i] - (i + 1);
 
-How - Missing number left + k explanation - Striver 
+IMP- Striver explanation
+current missing number + more (missing numbers) = k - should be the answer
+more = k - currmissing
+currmissing = arr[high] - (high + 1)
+currmissing = arr[high] - (high + 1)
+k - currmissing = k - arr[high] - high - 1
+How - Missing number left + k explanation - Striver - by heart
 
 why are we adding k at last ?
 After binary search
