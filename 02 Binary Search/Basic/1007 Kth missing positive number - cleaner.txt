@@ -1,4 +1,6 @@
 /*
+at every point compute missing number, if less move right half, if more move left half
+
 chatgpt solution, algoritms made easy explanation - 
 
 For Kth Missing Positive Number, the correct relation is:
