@@ -1,0 +1,73 @@
+// google gemini solution
+class Solution {
+    /**
+     * Finds the n-th digit of the infinite integer sequence.
+     * 
+     * @param n The 1-based index of the digit to find.
+     * @return The n-th digit as an integer.
+     */
+    public int findNthDigit(int n) {
+        // len: current number of digits for the group (1-digit, 2-digits, etc.)
+        int len = 1;
+        // count: total digits available in the current group (9 for 1-digit, 90*2 for 2-digits, etc.)
+        long count = 9;
+        // start: the first number in the current group (1, 10, 100, etc.)
+        long start = 1;
+
+        // Step 1: Find the number group (length of numbers) where the n-th digit resides
+        while (n > len * count) {
+            n -= len * count; // Subtract the digits of the current group
+            len++;            // Move to the next digit group (e.g., from 1-digit to 2-digit numbers)
+            count *= 10;      // Update the count for the new group (90 two-digit numbers)
+            start *= 10;      // Update the starting number for the new group (10)
+        }
+
+        // Step 2: Find the exact number within the group that contains the n-th digit
+        // 'n' is now the 1-based index within the current group
+        long num = start + (n - 1) / len;
+        //IMP-  this gives exact number 
+
+        // Step 3: Extract the specific digit from the number
+        // 'index' is the 0-based index within the number string
+        int indexInNum = (n - 1) % len;
+        
+        // Convert the target number to a string to easily access the character at the specific index
+        String s = Long.toString(num);
+        
+        // Convert the character at the index back to an integer digit
+        return Character.getNumericValue(s.charAt(indexInNum));
+    }
+}
+
+
+/*
+chatgpt explanation
+Let’s walk step-by-step with n = 237 👇
+1. Step 1️⃣ Find digit block
+1-digit numbers → 9 × 1 = 9 digits
+237 − 9 = 228
+
+2-digit numbers → 90 × 2 = 180 digits
+228 − 180 = 48
+
+So we are inside 2-digit numbers
+👉 len = 2, start = 10, n = 48
+
+Step 2: find the exact number
+num = start + (n - 1) / len
+    = 10 + (48 - 1) / 2
+    = 10 + 23
+    = 33
+
+👉 The digit lies in number 33
+
+Step 3: Find digit inside the number
+indexInNum = (n - 1) % len
+           = 47 % 2
+           = 1
+
+Digits of 33:
+3 3
+0 1
+Digit at index 1 is 3
+*/
