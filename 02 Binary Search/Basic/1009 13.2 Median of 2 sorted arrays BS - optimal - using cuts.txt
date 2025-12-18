@@ -1,10 +1,42 @@
 //Take u forward solution
+
+
+/*
+//chatgpt explanation
+For odd total length
+total = 7
+sorted = [a b c | d | e f g]
+median would be 7/2 = 3 - does not include median on left size
+7 / 2 = 3   ❌ median falls on right side
+with + 1; 
+(7 + 1) / 2 = 4 elements  ← includes median on left side
+
+For Even total length
+sorted = [a b c d | e f g h]
+median would be 8/2 = 4 - has the median on left side
+For even total length:
+(n1 + n2) / 2 == (n1 + n2 + 1) / 2
+So +1 makes NO difference for even cases.
+
+One-line intuition
+LEFT always contains the median position.
+
+thats why 
+leftSize = (n1 + n2 + 1) / 2;
+cut1 + cut2 = leftSize (we need (n1 + n2 + 1)/2) elements on the leftSize
+cut2 = leftSize - cut1
+
+*/
+
 /*
 Scalar Notes
             //condition satisfied   	M = [ a  | b]  
 //					N = [ c  | d]
 //Property of the median // a < d and c < b
 Imp keep 1st array smaller, as we are doing BS on 1st array only
+
+
+
 
 Step 1.
 Binary Search on Smalllest length array
