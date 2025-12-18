@@ -1,18 +1,26 @@
+1351 Leetcode - Count Negative numbers in sorted matrix - non increasing order
+Given a m x n matrix grid which is sorted in non-increasing order both row-wise and column-wise, return the number of negative numbers in grid
+
+
 //https://leetcode.com/problems/count-negative-numbers-in-a-sorted-matrix/discuss/512165/Java-binary-search-beats-100-explained
 
 //Other way also good
 //https://leetcode.com/problems/count-negative-numbers-in-a-sorted-matrix/discuss/872527/Easy-understandable-Java-Binary-Search.-beats-100
+
 class Solution {
      public int countNegatives(int[][] grid) {
         int rows = grid.length, cols = grid[0].length; 
         int res = 0, lastNeg = cols - 1;
         for (int row = 0; row < rows; row++) {
             //check edge cases - if first element is < 0 - all elements in row are negative
+               // IMP: non increasing order, eg
+               // -2 -4 -6 -12; -2<0 so rest will be less than 0
             if (grid[row][0] < 0) {
                 res+=cols;
                 continue;
             }
             //if last element is positive - it means there are no negative numbers in a row
+               // 5 3 2 1 i.e. 1 > 0 , rest will be greater than 0
             if (grid[row][cols - 1] > 0)
                 continue;
             //there is a mix of negative and positive ones, need to find the border. starting
