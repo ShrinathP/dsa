@@ -35,15 +35,15 @@ class Solution {
                 right= mid-1;
             } else {left = mid +1;}
         }
-        
+
+        // while breaks when right < left, 
+        //so missing number would be arr[right] + k - compute(currnum, expectednum)
+
         //Right -1
         //if right moves back to -1 meaning the first number in array is more than k
         if(right == -1) return k;
-        return arr[right] - compute(arr[right], right+1)+ k;
-        /*
-        originalNumberswithoutMissing = arr[right] - count(arr[right], right+1);
-        kthmissingNumber = originalNumberswithoutMissing + k
-        */
+        return arr[right] + k - compute(arr[right], right+1);
+       
     }
     
     int compute(int actual, int expected) {
