@@ -3,17 +3,6 @@ at every point compute missing number, if less move right half, if more move lef
 
 chatgpt solution, algoritms made easy explanation - 
 
-For Kth Missing Positive Number, the correct relation is:
-missingTillIndex = arr[i] - (i + 1);
-
-IMP- Striver explanation
-current missing number + more (missing numbers) = k - should be the answer
-more = k - currmissing
-currmissing = arr[high] - (high + 1)
-currmissing = arr[high] - (high + 1)
-k - currmissing = k - arr[high] - high - 1
-How - Missing number left + k explanation - Striver - by heart
-
 why are we adding k at last ?
 After binary search
 Those left elements occupy left natural numbers
@@ -30,6 +19,7 @@ Natural numbers covered:
 1 2 3 4 5 6 7 8 9
       ↑ missing count = 5
 answer = left + k = 4 + 5 = 9
+
 
 */
 
