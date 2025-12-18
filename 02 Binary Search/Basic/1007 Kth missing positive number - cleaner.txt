@@ -1,0 +1,42 @@
+/*
+chatgpt solution, algoritms made easy explanation - 
+
+For Kth Missing Positive Number, the correct relation is:
+missingTillIndex = arr[i] - (i + 1);
+
+why are we adding k at last ?
+After binary search
+Those left elements occupy left natural numbers
+
+👉 The kth missing number is:
+answer = left (present numbers) + k (missing numbers)
+To get the kth missing number, skip left existing numbers and k missing ones.
+
+Small Example
+arr = [2,3,4,7,11], k = 5
+After binary search:
+left = 4   // 4 array elements are before the answer
+Natural numbers covered:
+1 2 3 4 5 6 7 8 9
+      ↑ missing count = 5
+answer = left + k = 4 + 5 = 9
+
+*/
+
+class Solution {
+    public int findKthPositive(int[] arr, int k) {
+        int left = 0, right = arr.length - 1;
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            int missing = arr[mid] - (mid + 1);
+
+            if (missing < k)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+
+        return left + k;
+    }
+}
