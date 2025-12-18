@@ -6,6 +6,8 @@ chatgpt solution, algoritms made easy explanation -
 For Kth Missing Positive Number, the correct relation is:
 missingTillIndex = arr[i] - (i + 1);
 
+How - Missing number left + k explanation - Striver 
+
 why are we adding k at last ?
 After binary search
 Those left elements occupy left natural numbers
