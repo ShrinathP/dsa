@@ -1,0 +1,68 @@
+//Striver explanation 
+//chatgpt code
+/*
+Leetcode
+“Row with maximum number of 1s” using Binary Search on a 2D array 👇
+Given a m x n binary matrix mat, 
+find the 0-indexed position of the row that contains the maximum count of ones, 
+and the number of ones in that row.
+
+In case there are multiple rows that have the maximum count of ones, 
+the row with the smallest row number should be selected.
+
+0 0 1 1 1
+    |
+Either of the below 3 will point to 1
+lowerbound(1) - first element <=1
+upperbound(0) -  first element > 0
+firstoccurence(1)
+
+We are doing it with lowerbound
+
+The count of ones in the above row is [ m - lowerbound(1)]
+hold count_max and do count_max = Math.max(count_ones, count_max)
+
+*/
+
+
+
+class Solution {
+    int rowWithMax1s(int[][] mat, int n, int m) {
+        int maxOnes = 0;
+        int ansRow = -1;
+
+        for (int i = 0; i < n; i++) {
+            int lb = lowerBound(mat[i], m, 1);
+
+            //if there is all 0s lb will point to m 
+            //skip condition where there is no 1
+            //IMP: can skip the if block as well, onesCount will be m - m = 0
+            if (lb < m) { // means at least one '1' exists
+                int onesCount = m - lb;
+                if (onesCount > maxOnes) {
+                    maxOnes = onesCount;
+                    ansRow = i;
+                }
+            }
+        }
+        return ansRow;
+    }
+
+    // lower_bound: first index where arr[index] >= target
+    private int lowerBound(int[] arr, int n, int target) {
+        int low = 0, high = n - 1;
+        int ans = n; // default = not found
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (arr[mid] >= target) {
+                ans = mid;
+                high = mid - 1; // move left
+            } else {
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+}
