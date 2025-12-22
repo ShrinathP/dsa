@@ -30,7 +30,8 @@ class Solution {
                    Math.abs(heaters[heaterIndex + 1] - house) <= Math.abs(heaters[heaterIndex] - house)) {
                 heaterIndex++;
             }
-
+            // while breaks when (heaterIndex) distance is lesser than (heaterIndex + 1)
+        
             // Calculate distance to the closest heater found
             int distance = Math.abs(heaters[heaterIndex] - house);
 
