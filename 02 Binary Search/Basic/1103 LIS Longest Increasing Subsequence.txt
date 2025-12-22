@@ -1,7 +1,6 @@
 
 // Striver Explanation
-// Code from  
-// https://leetcode.com/problems/russian-doll-envelopes/solutions/82763/java-nlogn-solution-with-explanation-by-gq7yc
+// Code from  chatgpt
 // Standard lowerbound Binary search
 /*
 left=0, right=0, middle=0
