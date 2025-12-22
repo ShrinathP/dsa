@@ -2,26 +2,63 @@
 // Striver Explanation
 // Code from  
 // https://leetcode.com/problems/russian-doll-envelopes/solutions/82763/java-nlogn-solution-with-explanation-by-gq7yc
+// Standard lowerbound Binary search
+/*
+left=0, right=0, middle=0
+for each num, either we add to the dp, or we replace the element in the dp array
+we can use lowerbound to find the exact position of the element where this num should be located
+
+IMP: chatgpt explanation for first and subs elements
+For the first element, right = size-1 = -1 → loop doesn't run → pos = 0 → insert at start
+For subsequent elements, binary search finds the first index ≥ num (lower bound)
+
+If num > all dp → append at end
+If num ≤ some dp → replace dp[pos]
+
+
+chatgpt explanation
+For 2,3
+Initially
+dp = [] (all zeros, size = 0)
+size = 0
+
+Step 1 — num = 2
+left = 0
+right = size - 1 = -1
+pos = size = 0
+
+Step 2 - if its 3 then this also would be appended, 
+If insertion would have been 3,2 then 2 would replace 3
+*/
 
 // binary search: O(nlogn)
 public class Solution {
     public int lengthOfLIS(int[] nums) {
         int[] dp = new int[nums.length];
         int size = 0;
-        
-        for(int num: nums) {
-            // binary search
-            int left = 0, right = size, middle = 0;     // right = size
-            while(left < right) {
-                middle = left + (right - left) / 2;
-                if(dp[middle] < num) left = middle + 1;
-                else right = middle;
+
+        for (int num : nums) {
+            int left = 0, right = size - 1;
+            int pos = size; // default insert position if num > all dp elements
+
+            // Standard lower_bound with <=
+            while (left <= right) {
+                int mid = left + (right - left) / 2;
+                if (dp[mid] >= num) {
+                    pos = mid;   // potential replacement position
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
             }
-            
-            // left is the right position to 'replace' in dp array
-            dp[left] = num;
-            if(left == size) size++;
+
+            //if no replacement found then pos will be at size
+            //if replacement found pos will be mid
+            dp[pos] = num;
+            if (pos == size) size++;  // extend size if num is bigger than all in dp
         }
+
         return size;
     }
 }
+
