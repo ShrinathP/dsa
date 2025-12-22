@@ -39,7 +39,7 @@ public class Solution {
 
         for (int num : nums) {
             int left = 0, right = size - 1;
-            int pos = size; // default insert position if num > all dp elements
+            int pos = size; // default insert position if num > all dp elements (at end)
 
             // Standard lower_bound with <=
             while (left <= right) {
@@ -52,8 +52,8 @@ public class Solution {
                 }
             }
 
-            //if no replacement found then pos will be at size
-            //if replacement found pos will be mid
+            //if no replacement found, then pos will be at size, default insert position at end
+            //if replacement found, pos will be mid
             dp[pos] = num;
             if (pos == size) size++;  // extend size if num is bigger than all in dp
         }
