@@ -1,0 +1,53 @@
+//https://leetcode.com/problems/heaters/solutions/6655429/master-binary-search-to-find-minimum-hea-6ou8
+//chatgpt solution and explanation of left - 1
+/*
+lowerbound question
+
+Meaning:
+Your binary search finds:
+the first heater whose value is ≥ house
+heaters[left] is the first heater to the right of the house
+(or exactly at the house).
+
+heaters[left − 1] is the heater immediately to the left.
+To find the closest heater, you must compare both sides.
+*/
+
+
+class Solution {
+    public int findRadius(int[] houses, int[] heaters) {
+        Arrays.sort(houses);
+        Arrays.sort(heaters);
+        int radius = 0;
+
+        for (int house : houses) {
+            int left = 0, right = heaters.length - 1;
+            int lowerBound = heaters.length; // default if house > all heaters
+
+            // Standard lower_bound style with <=
+            while (left <= right) {
+                int mid = left + (right - left) / 2;
+                if (heaters[mid] >= house) {
+                    lowerBound = mid; // possible lower bound
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            }
+
+            // Compute distance to nearest heater
+            int dist = Integer.MAX_VALUE;
+            if (lowerBound < heaters.length) {
+                dist = Math.abs(heaters[lowerBound] - house); // right-side heater
+            }
+            if (lowerBound > 0) {
+                dist = Math.min(dist, Math.abs(heaters[lowerBound - 1] - house)); // left-side heater
+            }
+
+            radius = Math.max(radius, dist);
+        }
+
+        return radius;
+    }
+}
+
