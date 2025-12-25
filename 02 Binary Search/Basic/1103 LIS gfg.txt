@@ -39,6 +39,9 @@ public class GFG {
                 // found position with the current number.
                 // By doing this, we are maintaining
                 // a sorted order in the answer list.
+
+                //if key is not found, bs returns a low index and we find the insertionIndex using
+                // realInsertionPoint = -(returnedIndex + 1);
                 if (low < 0) {
                     low = -(low + 1);
                 }
