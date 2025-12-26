@@ -8,9 +8,14 @@ Extension of LIS 300 leetcode problem
 We want to apply LIS (Longest Increasing Subsequence) on heights after sorting.
 (5,4) (5,5)
 if we sort by increasing heights - then LIS will be 2
-which is wrong so we sort by descending heights
+But if two envelopes have the same width, they cannot be nested — because width must be strictly increasing.
+But actual answer = 1
+because width 5 == width 5 → cannot nest.
+LIS 2 is is wrong so we sort by descending heights
 (5,5), (5,4)
 LIS = 1
+Because now smaller height is after larger height → cannot be used as "increasing" candidate in LIS.
+
 
 LIS 300. leetcode question - Striver Explanation
 https://youtu.be/on2hvxBXJH4?t=559
