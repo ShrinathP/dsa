@@ -7,6 +7,9 @@ where n is column numbers
 chatgpt solution
 Math.min(n, mid / i) is specific to the multiplication table structure.
 
+IMP: count of nos smaller in current row is min(col, mid/rowNum)
+================================================================
+
 Algo steps
 1. Binary search range
     left = 1, right = m * n
