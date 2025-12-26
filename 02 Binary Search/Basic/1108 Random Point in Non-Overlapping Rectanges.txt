@@ -25,6 +25,7 @@ class Solution {
 
     public Solution(int[][] rects) {
         this.rects = rects;
+//x1,y1,x2,y2 are the points
         for (int[] rec : rects) {
             total += (rec[2] - rec[0] + 1) * (rec[3] - rec[1] + 1);
             prefixSum.add(total);
@@ -34,7 +35,7 @@ class Solution {
     public int[] pick() {
         int target = r.nextInt(total);
         int lo = 0, hi = rects.length - 1;
-
+//find the nearest rectangle number, prefixSum will have rects.length number of prefixSums
         while (lo < hi) {
             int mid = lo + (hi - lo) / 2;
             if (target >= prefixSum.get(mid))
