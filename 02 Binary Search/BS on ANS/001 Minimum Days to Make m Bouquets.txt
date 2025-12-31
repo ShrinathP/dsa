@@ -19,33 +19,38 @@ Time: O(n × log(max bloom day))
 Space: O(1)
 */
 
-
-public class Solution {
-
+/*
+Striver explanation, chatgpt solution
+Process
+1. Compute Minimum possible day: min(bloomDay)
+2. Maximum possible day: max(bloomDay)
+3. For each day, check: Can we make m bouquets by that day? using min and max run binary search
+*/
+class Solution {
     public int minDays(int[] bloomDay, int m, int k) {
         int n = bloomDay.length;
-
-        // Total flowers needed is greater, not possible
-        if ((long) m * k > n) return -1;
+        //If total flowers needed is greater then length, not possible
+        if((long) m * k > n) return -1;
 
         int low = 1, high = 0;
-        for (int day : bloomDay) {
-            high = Math.max(high, day);
+        for(int day: bloomDay) {
+            low = Math.min(low, day);   // earliest bloom day
+            high = Math.max(high, day); // latest bloom day
         }
 
         int ans = -1;
 
-        while (low <= high) {
-            int mid = low + (high - low) / 2;
+        //Binary search on range minBloomlength to maxLength
+        while(low <= high) {
+            int mid = low + (high - low)/2;
 
-            if (canMake(bloomDay, m, k, mid)) {
+            if(canMake(bloomDay, m, k, mid)) {
                 ans = mid;
                 high = mid - 1;  // try smaller days
             } else {
                 low = mid + 1;   // need more days
             }
         }
-
         return ans;
     }
 
@@ -67,4 +72,5 @@ public class Solution {
 
         return bouquets >= m;
     }
+
 }
