@@ -4,6 +4,9 @@ Leetcode 1283 – Find the Smallest Divisor Given a Threshold is a classic examp
 Given an array nums[] and an integer threshold, return the smallest positive integer divisor such that the sum of ceil(nums[i] / divisor)
 across all elements is less than or equal to the threshold.
 
+Each result of the division is rounded to the nearest integer greater than or equal to that element.
+So we need Math.ceil
+
 Why It's "Binary Search on Answer":
 You're not searching in the array, you're searching for the smallest possible divisor (an answer) in the range [1, max(nums)].
 
