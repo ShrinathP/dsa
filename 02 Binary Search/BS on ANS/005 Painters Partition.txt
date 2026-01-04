@@ -57,16 +57,12 @@ class Solution {
     private boolean isPossible(long maxTime, int[] arr, int k) {
         int painters = 1;
         long currSum = 0;
-        for (int len : arr) {
-            //good check to add --
-            if (len > maxTime) {
-                return false; // Single board exceeds maxTime
-            }
-            if (currSum + len > maxTime) {
-                painters++;
-                currSum = len;
+        for (int currBoardLength : arr) {
+            if (currSum + currBoardLength > maxTime) {
+                painters++; // new painter
+                currSum = currBoardLength; // new painter will pick this board, set currSum to currBoardLength
             } else {
-                currSum += len;
+                currSum += currBoardLength; // add to currSum
             }
         }
         return painters <= k;
