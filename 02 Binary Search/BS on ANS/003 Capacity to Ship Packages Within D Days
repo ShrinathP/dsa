@@ -53,6 +53,7 @@ public class Solution {
             if (currentLoad + w > capacity) {
                 days++; // Need an extra day
                 currentLoad = 0; // Start fresh for the new day
+            //new day, new load
             }
                     // Keep adding current package to today's load
             currentLoad += w;
