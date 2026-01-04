@@ -4,6 +4,7 @@ Find the minimum ship capacity such that all packages can be shipped within D da
 Packages must be shipped in order, and a ship cannot carry more than its capacity in a day.
 
 Low - Minimum capacity of the ship should be the maximum of the individual packages otherwise the package wont be shipped
+So minimum ship size is max(nums)
 High - Max is total sum of all packages - can be shipped in 1 shot - 1 day
 
 Monotonic Property:
