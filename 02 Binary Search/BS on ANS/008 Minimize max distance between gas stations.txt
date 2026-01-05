@@ -23,38 +23,37 @@ Input: stations = [1,2,3,4,5,6,7,8,9,10], K = 9
 Output: 0.500000
 */
 
-
+// Google gemini solution
 
 public class Solution {
-
-    public double minmaxGasDist(int[] stations, int K) {
-        int n = stations.length;
-        double low = 0.0, high = stations[n - 1] - stations[0];
-        double eps = 1e-6; // Precision 10^-6
+    public double minmaxGasDist(int[] stations, int k) {
+        double left = 0, right = 0;
+        // 1. Calculate the initial maximum gap to set the binary search bound
+        for (int i = 0; i < stations.length - 1; i++) {
+            right = Math.max(right, (double) stations[i + 1] - stations[i]);
+        }
         
-        while (high - low > eps) {
-            double mid = (low + high) / 2;
-
-            if (canPlace(stations, K, mid)) {
-                high = mid; // Try smaller distance
+        // 2. Binary search for the minimum max distance
+        while (right - left > 1e-6) {
+            double mid = left + (right - left) / 2.0;
+            if (canPlace(stations, k, mid)) {
+                right = mid; // Try smaller distance
             } else {
-                low = mid; // Need bigger distance
+                left = mid; // Need larger distance
             }
         }
-
-        return low;
+        return right;
     }
-
-    // Can we add at most K stations to ensure no distance > maxDist
-    private boolean canPlace(int[] stations, int K, double maxDist) {
+    
+    // 3. Feasibility check: Can we place K stations with max distance 'mid'?
+    private boolean canPlace(int[] stations, int k, double maxDist) {
         int count = 0;
-        
-        for (int i = 1; i < stations.length; i++) {
-            double dist = stations[i] - stations[i - 1];
-            //For each gap station check how many gas stations are needed
-            count += (int)(dist / maxDist);  // Number of stations needed in this gap
+        for (int i = 0; i < stations.length - 1; i++) {
+            double gap = stations[i + 1] - stations[i];
+            // Number of stations needed is floor(gap / maxDist)
+            count += (int) (gap / maxDist);
         }
-        
-        return count <= K;
+        return count <= k;
     }
 }
+
