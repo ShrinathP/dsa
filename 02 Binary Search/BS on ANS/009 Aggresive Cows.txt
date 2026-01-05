@@ -1,6 +1,21 @@
 /*
 * Maximize the minimum distance between cows - they are aggressive
 
+- Maximize the minimum distance between any two cows.
+Aggressive Cows is a maximize–minimum problem on integers,
+Minimize Max Gas Distance is a minimize–maximum problem on reals.
+
+Because of this, the meaning of high is different, even though both use binary search.
+high is the largest possible minimum distance you could ever hope for.
+Put one cow at the first stall
+Put another cow at the last stall
+
+Gas Station Problem
+Minimize the maximum distance between adjacent stations.
+So search variable
+D = maximum allowed gap
+
+
 Problem Understanding
 You have n stalls at different positions (represented by an array).
 You have k aggressive cows.
