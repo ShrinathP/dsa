@@ -1,0 +1,52 @@
+//https://leetcode.com/problems/partition-labels/?envType=problem-list-v2&envId=two-pointers
+//Leetcode 763 - Partition Labels
+/*
+
+1. Precompute the last index of each character in the string.
+2. Traverse the string while maintaining `end` as the farthest last index
+   of all characters seen so far.
+3. When the current index `i` equals `end`, close the partition and record
+   its length.
+
+Example  - 
+s = "abac"
+i = 0 → 'a' → end = 2
+i = 1 → 'b' → end = max(2,1) = 2
+i = 2 → 'a' → end = 2
+
+i == end → partition ends here ✔
+
+
+
+ */
+class Solution {
+    public List<Integer> partitionLabels(String s) {
+        Map<Character, Integer> map = new HashMap<>();
+        //filling the occurences of the character, will hold the last occurence index
+        for(int i=0; i< s.length(); i++) {
+            char ch = s.charAt(i);
+            map.put(ch, i);
+        }
+
+        // now we have to find optimal cuts
+        //making of result
+        List<Integer> result = new ArrayList<>();
+        int prev = -1, end = 0;
+
+        //iterate and find the maximum end index, of current character
+        //when iterator variable reaches max end index of all character until i
+        // break, save in result, assign prev = end
+         for(int i = 0; i < s.length(); i++){
+            char ch = s.charAt(i);
+            end = Math.max(end, map.get(ch));
+            if(end == i){
+                // partition time
+                result.add(end - prev);
+                prev = end;
+            }
+        }
+
+        return result;
+        
+    }
+}
