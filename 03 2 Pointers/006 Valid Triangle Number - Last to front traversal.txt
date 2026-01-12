@@ -1,0 +1,34 @@
+import java.util.Arrays;
+
+//chatgpt solution
+//Right to left traversal
+//Fix the largest side on the right side = k
+//Use two pointers: i, j
+//if condition satisfies
+class Solution {
+    public int triangleNumber(int[] nums) {
+        int n = nums.length;
+        if (n < 3) return 0;
+
+        Arrays.sort(nums);
+        int count = 0;
+
+        // Fix the largest side
+        for (int k = n - 1; k >= 2; k--) {
+            int i = 0;
+            int j = k - 1;
+
+            while (i < j) {
+                if (nums[i] + nums[j] > nums[k]) {
+                    // All pairs from i to j-1 are valid
+                    count += (j - i);
+                    j--;
+                } else {
+                    i++;
+                }
+            }
+        }
+
+        return count;
+    }
+}
