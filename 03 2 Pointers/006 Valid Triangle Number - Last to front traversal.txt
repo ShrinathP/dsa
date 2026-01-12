@@ -5,6 +5,25 @@ import java.util.Arrays;
 //Fix the largest side on the right side = k
 //Use two pointers: i, j
 //if condition satisfies
+
+/*
+
+✅ Algorithm Steps
+1. Sort the array
+2. Initialize count = 0
+3. Fix the largest side at index k from right to left
+4. Use two pointers:
+* i = 0 (smallest)
+* j = k - 1
+5. While i < j:
+* If nums[i] + nums[j] > nums[k]
+    → all pairs from i to j-1 work
+    → count += (j - i)
+    → j--
+* Else
+    → i++
+6. Return count
+*/
 class Solution {
     public int triangleNumber(int[] nums) {
         int n = nums.length;
