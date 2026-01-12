@@ -1,1 +1,55 @@
 
+// Leetcode 125 Valid Palindrome
+/*
+1. Clean the string using Pattern.compile()
+2. 2 pointer start and end
+3. If matches then keep moving a_pointer++ b_pointer--, if doesnt return false
+4. return false when the while loop ends
+
+*/
+
+import java.util.regex.*;  
+
+class Solution {
+    //2 pointer solution
+    public boolean isPalindrome(String s) {
+        //considering only alphanumeric characters
+        //we need to remove spaces, punctuations
+        //ignore case
+        
+        
+        String cleanedString = "";
+        /*
+        for(char c: s.toCharArray()){
+            //using Character class
+            if(Character.isDigit(c) || Character.isLetter(c)){
+                cleanedString += c;
+            }          
+        }
+        */
+        
+//Alternate way: cleaning String using Regex
+//import java.util.regex.*;  
+        Pattern p = Pattern.compile("[a-zA-Z0-9]+");
+        Matcher m = p.matcher(s);
+        while(m.find()){
+            cleanedString += m.group();
+        }
+        cleanedString = cleanedString.toLowerCase();
+        
+        //2 pointer
+        int a_pointer = 0;
+        int b_pointer= cleanedString.length()-1;
+        
+        while(a_pointer <= b_pointer){
+            if(cleanedString.charAt(a_pointer) != cleanedString.charAt(b_pointer)){
+                return false;
+            }
+            
+            a_pointer +=1;
+            b_pointer -=1;
+        }
+        
+        return true;
+    }
+}
