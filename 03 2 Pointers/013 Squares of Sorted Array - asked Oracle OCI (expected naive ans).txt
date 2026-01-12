@@ -1,5 +1,13 @@
 //cue - tricky,lo, hi,, traverse from back, check if first is negative, if yes hold its square at end
 
+/*
+1. i=0, j=n-1
+2. p traverses from backwards, 
+3. if abs(i) > abs(j), arr[p] = arr[i] * arr[i], move i ahead
+4. else, arr[p] = arr[j] * arr[j]
+
+*/
+
 https://leetcode.com/problems/squares-of-a-sorted-array/discuss/221922/Java-two-pointers-O(N)
 
 
