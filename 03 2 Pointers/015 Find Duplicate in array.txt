@@ -12,6 +12,7 @@ nC will be multiple turns of Cycle
 https://youtu.be/32Ll35mhWg0?t=352
 so above equation boils down to a = nC
 Check the video
+-------
 
 
 Step 1
