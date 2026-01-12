@@ -1,0 +1,28 @@
+
+//Algorithms made easy
+/*
+sort people, 2 pointer 2 ends, if sum<=limit, incr both, else only carry right one
+(all weights will be < limit given)
+*/
+
+
+class Solution {
+    public int numRescueBoats(int[] people, int limit) {
+        Arrays.sort(people);
+        int left=0, right=people.length -1;
+        int boats=0;
+        while(left <= right) {
+            if(people[left]+people[right] <= limit) {
+                left++;
+                right--;
+                //can accomodate both
+            } else {
+                //can put only right guy
+                right--;
+            }
+            boats++;
+        }
+        return boats;
+        
+    }
+}
