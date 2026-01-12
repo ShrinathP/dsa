@@ -1,9 +1,18 @@
 /*Naive way is to sort and iterate over an array*/
 /*
+
 Intuition - 
 “One pointer starts from the beginning, the other from inside the cycle.
 Because both are the same distance away from the cycle entry, 
 moving them at the same speed makes them meet exactly at the duplicate.”
+
+--IMP--
+Check Striver explanation - Way Better -  fast(2a) = slow(a) + nC
+nC will be multiple turns of Cycle
+https://youtu.be/32Ll35mhWg0?t=352
+so above equation boils down to a = nC
+Check the video
+
 
 Step 1
 let these fast and slow pointers meet, they will meet inside the cycle
@@ -11,6 +20,7 @@ After the meeting:
 Let x = distance from start to cycle entry
 Let y = distance from cycle entry to meeting point
 Let c = cycle length
+
 
 Step 2
 Mathematical relation
