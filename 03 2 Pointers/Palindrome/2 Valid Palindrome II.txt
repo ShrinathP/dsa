@@ -1,6 +1,8 @@
 //Nick White
 
-//
+// Leetocde 680- Valid parenthesis ii
+// Find if by deleting at most 1 character, can we find a palindrome
+
 //Other Solution
 //https://leetcode.com/problems/valid-palindrome-ii/discuss/107716/Java-O(n)-Time-O(1)-Space
 
