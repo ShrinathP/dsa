@@ -1,5 +1,7 @@
 
 //fast pointer, slow pointer solution
+//Hello Byte Solution
+//https://www.youtube.com/shorts/dr7uOESuMSo
 
 //we have somehow scanning through the array and insert/discard the exploring element
 //This hint inspires the use of two pointers, where one points to the current element 
