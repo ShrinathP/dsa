@@ -1,0 +1,33 @@
+1️⃣ Scan from the back → find first nums[i] < nums[i+1]
+
+Why?
+
+* The suffix after this index is non-increasing
+* A non-increasing sequence is already the maximum arrangement
+* You cannot get a larger permutation by rearranging only that suffix
+➡️ So the first place where an increase is possible (nums[i] < nums[i+1]) is the rightmost position where change is possible
+This guarantees minimal change to the number
+
+
+2️⃣ Find the smallest number greater than nums[i] in the suffix
+Why not just any larger number?
+* We want the next, not just any larger permutation
+* Swapping with the smallest number greater than nums[i] ensures:
+    The increase is minimal
+    We don’t skip permutations
+
+➡️ This is the smallest possible increment
+
+
+3️⃣ Reverse the suffix after index i
+
+Why reverse?
+* Before swapping, the suffix is in descending order
+* After the swap, to get the smallest permutation, the suffix must be:
+  Sorted in ascending order
+
+Reversing works because:
+* The suffix was already descending
+* Reverse = ascending in O(n)
+
+➡️ This gives the minimum suffix, completing the next permutation
