@@ -1,0 +1,63 @@
+/*Naive way is to sort and iterate over an array*/
+/*
+Intuition - 
+“One pointer starts from the beginning, the other from inside the cycle.
+Because both are the same distance away from the cycle entry, 
+moving them at the same speed makes them meet exactly at the duplicate.”
+
+Step 1
+let these fast and slow pointers meet, they will meet inside the cycle
+After the meeting:
+Let x = distance from start to cycle entry
+Let y = distance from cycle entry to meeting point
+Let c = cycle length
+
+Step 2
+Mathematical relation
+When slow and fast meet:
+2 * (x + y) = x + y + k*c
+⇒ x = k*c - y
+➡️ Distance from start → cycle entry = distance from meeting point → cycle entry
+move fast pointer at 0, they will meet at cycle entry
+move both pointers 1 by 1
+
+Where does k * c come from?
+After both pointers enter the cycle:
+Fast pointer may lap the slow pointer
+Each lap = one full cycle = c steps
+So the extra distance fast travels inside the cycle is:
+k * c
+fast = slow + k*c
+Substitute values
+2(x + y) = (x + y) + k*c
+
+
+
+
+*/
+
+class Solution {
+    public int findDuplicate(int[] nums) {
+        //Same as Hare and tortoise algorithm
+        //Take u forward
+        //142. Finding cycle in array
+        //2 pointer type
+        
+        int slow = nums[0];
+        int fast = nums[0];
+        
+        do  {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        } while(slow != fast);
+            
+            //move slow/fast pointer at first
+            //and traverse 1 places
+        fast = nums[0];
+        while(fast != slow){
+            fast = nums[fast];
+            slow = nums[slow];
+        }
+        return slow; //or fast any one of it
+    }
+}
