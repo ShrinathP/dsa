@@ -1,1 +1,37 @@
 
+//Algorithms made easy
+class Solution {
+    public int numRescueBoats(int[] people, int limit) {
+        // Arrays.sort(people);
+        //Using Count Sort - keep freq array
+        int [] count = new int[limit+1];
+        for(int p: people) {
+            count[p]++;
+        }
+
+        //fill the people array based on count
+        int index=0;
+        for(int val=1; val<=limit; val++){
+            while(count[val]-- > 0){
+                people[index++] = val;
+            }
+        }
+
+        //2 pointer
+        int left=0, right=people.length -1;
+        int boats=0;
+        while(left <= right) {
+            if(people[left]+people[right] <= limit) {
+                left++;
+                right--;
+                //can accomodate both
+            } else {
+                //can put only right guy
+                right--;
+            }
+            boats++;
+        }
+        return boats;
+        
+    }
+}
