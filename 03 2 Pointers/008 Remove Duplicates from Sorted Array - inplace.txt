@@ -1,0 +1,30 @@
+
+//fast pointer, slow pointer solution
+
+//we have somehow scanning through the array and insert/discard the exploring element
+//This hint inspires the use of two pointers, where one points to the current element 
+//and the other points to the correct position that element should be reside
+
+//1. j is the scanner , i holds the correct position of element
+//2. check if j and i are not equal
+//3. if not equal move i, assign nums[j] to nums[i]
+
+//Nick White
+class Solution {
+    public int removeDuplicates(int[] nums) {
+        if(nums.length == 0){
+            return 0;
+        }
+        
+        int slow_pointer=0;
+        for(int fast_pointer=1; fast_pointer < nums.length; fast_pointer++){
+            if(nums[slow_pointer] != nums[fast_pointer]){
+                //we found a unique element, which can be copied to slow pointer place
+                slow_pointer++;
+                nums[fast_pointer] = nums[fast_pointer];
+            }
+        }
+        
+        return slow_pointer + 1;
+    }
+}
