@@ -1,5 +1,7 @@
 //codestorywithMIK solution
 //leetcode 1456. Maximum Number of Vowels in a Substring of Given Length
+//Given a string s and an integer k, return the maximum number of vowel letters in any substring of s with length k.
+
 
 /**
 1. i=0 j=0 for 2 ends of our window
