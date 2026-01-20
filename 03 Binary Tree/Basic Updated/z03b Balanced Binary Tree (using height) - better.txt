@@ -18,13 +18,14 @@ class Solution {
         if(node == null) return 0;
         int left = height(node.left);
         int right = height(node.right);
-        int bf = Math.abs(left - right);
+        int diff = Math.abs(left - right);
         
         //If left subtree is unbalanced
         //If right subtree is unbalanced
         //If current nodes left - right height is greater than 1
         //return -1 in any case
-        if(bf > 1|| left == -1 || right == -1) return -1;
+        if(diff > 1|| left == -1 || right == -1) return -1;
+// Propagate the unbalanced signal, above
         
         //or return height which is max of left, right + current node
         return 1 + Math.max(left, right);
