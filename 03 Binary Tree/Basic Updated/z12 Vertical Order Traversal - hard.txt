@@ -21,10 +21,20 @@ Inner key = row (y)
 Value = min-heap to store multiple nodes at same (x, y) sorted by value
 
 Why PriorityQueue
+=======================
 Using a PriorityQueue here ensures:
 Values are stored in natural order (min-heap).
 When we extract them later with poll(), they come out sorted.
 PriorityQueue is used to sort multiple values at the same (x, y).
+            10
+           /  \
+          5    15
+           \   /
+           12  7
+
+Here 12 and 7 are at same level, so with normal traversal it would be 10,12,7 but req ans is 10,7,12
+as the problem (LC 987) requires sorted values at same position.
+
 
 
 
