@@ -1,0 +1,41 @@
+/*
+Striver explanation,
+chatgpt solution
+
+1. Create 2 arrayLists for 2 paths
+2. Use findPath method in  prev solution to find path to both nodes
+while both paths are same keep moving ahead, find the last matching node, this will be LCA
+
+
+*/
+
+public class Solution {
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        List<TreeNode> path1 = new ArrayList<>();
+        List<TreeNode> path2 = new ArrayList<>();
+
+        findPath(root, p, path1);
+        findPath(root, q, path2);
+
+        int i = 0;
+        while (i < path1.size() && i < path2.size() && path1.get(i) == path2.get(i)) {
+            i++;
+        }
+
+        return path1.get(i - 1);
+    }
+
+    private boolean findPath(TreeNode node, TreeNode target, List<TreeNode> path) {
+        if (node == null) return false;
+
+        path.add(node);
+
+        if (node == target) return true;
+
+        if (findPath(node.left, target, path) || findPath(node.right, target, path))
+            return true;
+
+        path.remove(path.size() - 1);
+        return false;
+    }
+}
