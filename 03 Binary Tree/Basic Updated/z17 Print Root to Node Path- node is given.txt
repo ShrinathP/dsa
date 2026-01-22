@@ -1,4 +1,15 @@
 /*tuf 
+
+=====
+Steps
+=====
+1. add curr node to path
+2. if curr node val is target, return true
+3. if we find path on either left or right, return true
+    if (recur on left || recur on right) return true
+4. - Backtrack - if did not satisfy, no target on either side, remove the added node 
+
+
 Inorder traversal
 Go left,then Node, then Right
 
@@ -6,6 +17,7 @@ Go left,then Node, then Right
 //Recursion + BAcktracking
 //As we need to search for all possible ways
 //where the target node is present
+
 
 */
 
@@ -30,6 +42,7 @@ public class Solution {
         }
 
         //add current node value
+        //add curr node to path
         arr.add(root.val);
 
         //if we reached then return true
@@ -43,6 +56,7 @@ public class Solution {
         }
 
         //no x on either left or right of the node, remove the node
+        // backtrack
         arr.remove(arr.size() - 1); 
         return false; 
     }
