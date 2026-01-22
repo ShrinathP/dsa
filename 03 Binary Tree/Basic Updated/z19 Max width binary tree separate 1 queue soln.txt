@@ -1,4 +1,7 @@
 /*
+- Full imaginary Binary tree width- 
+The width of a level is measured using positions from a conceptual complete binary tree, so null gaps between nodes are counted. This is why we assign indices to nodes and compute width as rightIndex − leftIndex + 1.
+
 chatgpt solution
 */
 
