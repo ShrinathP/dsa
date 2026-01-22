@@ -18,9 +18,15 @@ eg lca(4,7)
 Find a node under which both the nodes are there ,here 2
 
 
-//If you have got both the nodes under you -- you are the LCA
 
+* Key Logic (in 3 lines): DFS Traversal
+1. If current node is null, p, or q, return it. // (if you reach null or either of the nodes return it, otherwise keep traversing)
+2. Recurse left and right.
+3. If both sides return non-null → current node is LCA.
+
+//If you have got both the nodes under you -- you are the LCA
 if root.left is not null and root.right is not null, you are the LCA
+
 
 */
 
