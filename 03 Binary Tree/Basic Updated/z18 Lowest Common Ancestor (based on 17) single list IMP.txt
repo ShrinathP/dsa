@@ -78,6 +78,7 @@ class Solution {
         } else {
             //both left and right have been checked and are non nulls
             //we found our result
+//One target found in left subtree, The other found in right subtree,
             return root;
         }
         
