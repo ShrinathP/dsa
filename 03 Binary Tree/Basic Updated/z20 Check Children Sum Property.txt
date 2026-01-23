@@ -4,6 +4,9 @@ chatgpt solution
 
 A binary tree satisfies the Children Sum Property if every node’s value is equal to the sum of its left and right child values.
  Leaf nodes are considered valid by default.
+
+node.val = (left != null ? left.val : 0) + (right != null ? right.val : 0)
+
 */
 
 
