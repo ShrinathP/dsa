@@ -1,6 +1,8 @@
 /*
 Striver explanation
 Check Children sum property of binary tree
+Given the root of a binary tree, determine whether the tree satisfies the Children Sum Property. 
+In this property, each non-leaf node must have a value equal to the sum of its left and right children's values
 chat gpt sol
 
 Note at * even else will work as per strivers code because any one of the left or
