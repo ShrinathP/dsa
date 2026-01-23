@@ -5,9 +5,7 @@ Given the root of a binary tree, determine whether the tree satisfies the Childr
 In this property, each non-leaf node must have a value equal to the sum of its left and right children's values
 chat gpt sol
 
-Note at * even else will work as per strivers code because any one of the left or
-right we would be making it equal to the root, so sum would be greater
-
+🎯 Children Sum Property:
 For every node:
 node.val = (left != null ? left.val : 0) + (right != null ? right.val : 0)
 
@@ -57,7 +55,7 @@ class Solution {
         } else {
             if (root.left != null) root.left.val = root.val;
             if (root.right != null) root.right.val = root.val;
-            //*
+            
         }
 
         changeTree(root.left);
@@ -68,7 +66,11 @@ class Solution {
         int total = 0;
         if (root.left != null) total += root.left.val;
         if (root.right != null) total += root.right.val;
+
         if (root.left != null || root.right != null) root.val = total;
+        // “Only update me if I actually have children.”, 
+        // if both are null then total=0 and root will be updated, avoid updation
+        
     }
 }
 
