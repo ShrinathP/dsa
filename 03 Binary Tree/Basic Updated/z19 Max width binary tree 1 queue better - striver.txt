@@ -19,10 +19,6 @@ left node will be 2*i
 right node will be 2*i + 1
 
 
-1. at any level whenever we reach
-2. we get the start and end index to calculate width
-3. we add the qIndex as 2*currentIndex for lefter node and 2*currentIndex+1 for righter
-4. at every level we need to normalize the index by subtracting the minIndex of that level
 
 Normalizing indexes
 🎯 Why normalize indices in BFS (e.g., idx = currentIdx - minIndex)?
@@ -32,6 +28,20 @@ In deep trees (say depth > 30), using formulas like 2 * idx + 1 can cause values
 Normalizing keeps indices small by resetting the starting index to 0 at each level.
  Example (without normalization):
 If node at level 30 has index 2^30 = 1,073,741,824, multiplying further may exceed Integer.MAX_VALUE.
+
+
+Maximum Width of Binary Tree — Algorithm (short):
+1. Do level order traversal (BFS).
+2. Store each node with a 0-based index.
+3. At each level:
+ - minIdx = index of first node (peek)
+ - Normalize all indices: curIdx = idx - minIdx
+ - Track first and last index.
+4. Width of level = last - first + 1.
+5. Push children:
+ - left → 2 * curIdx
+ - right → 2 * curIdx + 1
+6. Return maximum width.
 
 */
 
