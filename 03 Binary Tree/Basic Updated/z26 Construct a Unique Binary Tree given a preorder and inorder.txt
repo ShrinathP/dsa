@@ -67,9 +67,10 @@ preorder first is the root at every level
 
 🔁 Recursion Algo Logic:
 =======================
+- Keep an indorderIndexMap
 - For each subtree:
 1. Pick new root from preorder’s current preStart.
-2. Find it in inorder → calculate leftSize.
+2. Find it in inorder using indorderIndexMap → calculate leftSize. - split inorder
 3. Recurse left/right with adjusted indices.
 - Base case: return null when start > end.
 
