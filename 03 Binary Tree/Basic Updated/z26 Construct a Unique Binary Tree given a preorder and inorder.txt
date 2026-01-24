@@ -53,6 +53,26 @@ Here: preStart=4, preEnd=6 → [C, F, G]
 Right subtree inorder segment: inRootIdx+1 to inEnd:
 inStart=4, inEnd=6 → [F, C, G]
 
+
+preorder: A [B D E] [C F G]
+inorder:  [D B E] A [F C G]
+          | left |root| right|
+
+        A
+      /   \
+     B     C
+    / \   / \
+   D   E F   G
+preorder first is the root at every level
+
+🔁 Recursion Algo Logic:
+=======================
+- For each subtree:
+1. Pick new root from preorder’s current preStart.
+2. Find it in inorder → calculate leftSize.
+3. Recurse left/right with adjusted indices.
+- Base case: return null when start > end.
+
  
 */
 
