@@ -1,0 +1,19 @@
+
+Indices change
+🧠 One-line intuition
+
+Preorder: Skip the root → start at preStart + 1
+Postorder: Root is at the end → left subtree already starts at postStart
+
+PreOrder
+preStart → root
+Left subtree starts right after root → preStart + 1
+Ends at 
+(preStart + 1) + leftSize - 1 = preStart + leftSize
+
+PostOrder
+postEnd → root
+Left subtree is at the start of the postorder slice
+It has leftSize nodes
+Ends at
+postStart + leftSize - 1
