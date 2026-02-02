@@ -1,0 +1,25 @@
+/*
+Reverse Preorder Traversal
+Striver Explanation
+1. Flatten BT
+2. Recur on right, Recur on Left
+3. Attach left to right of current node, rename prev to current node
+*/
+
+
+class Solution {
+    TreeNode prev = null;
+
+    public void flatten(TreeNode root) {
+        if (root == null) return;
+
+        // Recurse on right first, then left
+        flatten(root.right);
+        flatten(root.left);
+
+        // Rewire pointers
+        root.right = prev;
+        root.left = null;
+        prev = root;
+    }
+}
