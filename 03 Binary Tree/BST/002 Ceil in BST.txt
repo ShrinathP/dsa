@@ -1,13 +1,16 @@
 /*
 Striver explanation - 
+//if curr val is greater, keep as answer, move left
 
 ✅ Explanation:
 
 1. Ceil in a BST = smallest node value ≥ key.
 2. Traverse BST:
     If key == node.val → perfect match → return node.val.
-    If key > node.val → go right.
-    Else → update ceil = node.val (possible answer) → go left.
+    If node.val > key → keep ans, go left to search for better ans.
+    Else → move right
+
+
 */
 
 public class TreeNode {
@@ -34,12 +37,12 @@ public class Solution {
                 return ceil;
             }
 
-            if (key > root.data) {
-                root = root.right;
-            } else {
-//either node.val is greater or node.val is equal to root
+//if curr val is smaller, keep as answer, move left
+            if (root.data > key ) {
                 ceil = root.data;
                 root = root.left;
+            } else {
+                root = root.right;
             }
         }
         return ceil;
