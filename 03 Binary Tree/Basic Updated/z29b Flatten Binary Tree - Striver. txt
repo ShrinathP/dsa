@@ -1,10 +1,25 @@
-move rightmost's leftmost
+
 /*
 Reverse Preorder Traversal
 Striver Explanation
 1. Flatten BT
 2. Recur on right, Recur on Left - 
 3. Attach left to right of current node, rename prev to current node
+
+
+Chatgpt
+Yes — at each step, 
+we attach the already-flattened list (prev) to the current node’s right, and then update prev to the current node.
+prev always points to the head of the already-flattened list (which is actually the next node in preorder).
+
+At every node:
+1. Go to the right subtree and flatten it.
+2. Go to the left subtree and flatten it.
+3. Now, both subtrees are already flattened into linked lists.
+4. Attach the previously flattened list to the current node’s right:
+    root.right = prev
+    root.left = null
+5. Update prev = root.
 */
 
 
