@@ -37,6 +37,7 @@ public class Solution {
             if (key > root.data) {
                 root = root.right;
             } else {
+//either node.val is greater or node.val is equal to root
                 ceil = root.data;
                 root = root.left;
             }
