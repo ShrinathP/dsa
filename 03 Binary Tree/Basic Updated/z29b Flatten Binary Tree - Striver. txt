@@ -1,8 +1,9 @@
+move rightmost's leftmost
 /*
 Reverse Preorder Traversal
 Striver Explanation
 1. Flatten BT
-2. Recur on right, Recur on Left
+2. Recur on right, Recur on Left - 
 3. Attach left to right of current node, rename prev to current node
 */
 
