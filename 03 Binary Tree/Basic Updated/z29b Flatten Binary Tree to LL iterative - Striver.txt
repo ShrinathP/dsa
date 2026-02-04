@@ -1,0 +1,40 @@
+//Striver explanation
+/
+🧠 Why this works (same as your notes)
+Stack = LIFO, so:
+    Push right first, then left
+    Left gets processed next (preorder)
+After popping curr, the next node in preorder is st.peek()
+So:
+    curr.right = st.peek()    
+    curr.left = null*
+
+1. push root, 
+2. while stack !empty, pop, push right, push left
+3. if st!empty, peek stack attach to right (basically attaching left to right)
+*/
+
+class Solution {
+    public void flatten(TreeNode root) {
+        if (root == null) return;
+
+        Stack<TreeNode> st = new Stack<>();
+        st.push(root);
+
+        while (!st.isEmpty()) {
+            TreeNode curr = st.pop();
+
+            if (curr.right != null) {
+                st.push(curr.right);
+            }
+            if (curr.left != null) {
+                st.push(curr.left);
+            }
+
+            if (!st.isEmpty()) {
+                curr.right = st.peek();
+            }
+            curr.left = null;
+        }
+    }
+}
