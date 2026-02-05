@@ -47,6 +47,15 @@ IMP - If not null keep moving on left or right based on key value
     If key > node → go right.
 2. Insert at the first null child.
 
+1. If the tree is empty, create a new node and return it as root.
+2. Start from the root.
+3. Compare the value to insert (val) with the current node:
+        - If val < current.val, move to the left subtree.
+        - Else, move to the right subtree.
+4. Repeat until you find a null position.
+5. Insert the new node at that position.
+6. Return the original root.
+
 ✅ Time Complexity (TC)
 For inserting a node into a BST, time depends on the height h:
 In a balanced BST, h = log₂(n).
