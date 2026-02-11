@@ -2,6 +2,10 @@
 /*
 Striver explanation
 The point where the current node is between the p.val and q.val, that is your LCA
+
+1. if both of them are on the right - curr is less than both - move right
+2. if both of them are on the left - curr is greater than both - move left
+3. if one is on right and one is on left - current node is LCA
 */
 
 class TreeNode {
