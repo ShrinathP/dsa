@@ -5,7 +5,7 @@ To Delete a node - remove the node
 create a new connection in 2 different ways
 Check images 005b 005c
 
-Edge Cases - 
+# Edge Cases - 
 If there exists left and right of the node to be deleted - 
 you need to reconnect
 If there doesnt exists left and right, you do not have to reconnect
