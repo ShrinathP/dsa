@@ -1,7 +1,7 @@
 
 /*
 Chatgpt solution
-Using a MONOTONIC Stack
+Using a MONOTONIC Stack - IMP - maintaining a monotonically decreasing stack
 
 ✅ Logic: Construct BST from Preorder Traversal (Using Stack)
 We use a monotonic stack to simulate BST insertion, leveraging the preorder property:
