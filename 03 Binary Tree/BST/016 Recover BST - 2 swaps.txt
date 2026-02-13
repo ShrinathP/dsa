@@ -14,6 +14,8 @@ If its the first violation store the first as prev
         - last = second node causing violation (if not adjacent)
 Finally, swap first ↔ last (or first ↔ middle if only one violation)
 
+For adjacent swap only 1 will violation will be detected
+
 */
 
 
