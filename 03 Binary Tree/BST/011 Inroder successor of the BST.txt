@@ -29,7 +29,8 @@ public TreeNode inorderSuccessor(TreeNode root, TreeNode p) {
     TreeNode successor = null;
 
     while (root != null) {
-        if (p.val < root.val) {
+        if (root.val > p.val) {
+//assign current root val to ans and move left
             successor = root;         // potential successor
             root = root.left;
         } else {
