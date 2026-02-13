@@ -1,6 +1,7 @@
 
 /*
-
+Trick is in modifying inorder traversal
+recursive inorder, go left, left, left. 
 Striver explanation
 
 If its the first violation store the first as prev
