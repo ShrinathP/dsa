@@ -6,8 +6,8 @@ Striver explanation
 Use a stack to store the path to the next smallest node.
 - Initially, push all left children from root to leftmost node.
 - On next():
-    - Pop the top node (current smallest)
-    - Push left path of its right child (if exists)
+    - Pop the top node (current smallest) - store it in temp variable
+    - (if exists) Go to the right child of the popped node and Push left path 
     - This ensures the stack top always points to the next node in inorder.
 
 
