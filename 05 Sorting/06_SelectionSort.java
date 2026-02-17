@@ -17,6 +17,7 @@ public class SelectionSort {
 	// FInd/select the smallest number and put it at first position
 	// Move the head ahead by one then
 
+	// Pick the minimum from the unsorted part and put it at the front. No consecutive swaps in inner loop
 	public static void selectionSort(int[] arr) {
 		for (int i = 0; i < arr.length - 1; i++) {
 			int index = i;
