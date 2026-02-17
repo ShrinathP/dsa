@@ -1,5 +1,11 @@
 package com.dsa.Sorting;
 
+/*
+1. Pick a pivot and place it in its correct place in a sorted array.
+2. Smaller on the left, larger on the right
+*/
+
+
 public class QuickSort {
 
 	/*
@@ -62,7 +68,6 @@ public class QuickSort {
 				quickSort(arr, i, higherIndex);
 		}
 		
-		
 
 	}
 	
@@ -72,5 +77,13 @@ public class QuickSort {
 		arrtoswap[to] = temp;
 	}
 
+}
+
+public class QuickSortTest {
+	public static void main(String[] args) {
+		int arr[] = { 3, 60, 35, 8, 2, 45, 320, 5, 7 };
+		QuickSort.quickSort(arr, 0, arr.length-1);
+		System.out.println(Arrays.toString(arr));
+	}
 }
 
