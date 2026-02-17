@@ -8,7 +8,9 @@ public class InsertionSort {
     {
         int n = arr.length;
         for (int i = 1; i < n; ++i) {
+            // Store the current element to be inserted in its correct position
             int key = arr[i];
+            // Need to compare key with the prev element
             int prev = i - 1;
 
             /* Move elements of arr[0..i-1], that are
