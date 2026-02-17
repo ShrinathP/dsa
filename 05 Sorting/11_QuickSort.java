@@ -1,6 +1,7 @@
 package com.dsa.Sorting;
 
 /*
+Striver Explanation
 1. Pick a pivot and place it in its correct place in a sorted array.
 2. Smaller on the left, larger on the right
 */
