@@ -1,3 +1,6 @@
+//
+// In an expanding window take the last element and put it in its correct position
+
 package com.dsa.Sorting;
 
 import java.util.Arrays;
