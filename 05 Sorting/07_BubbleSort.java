@@ -25,7 +25,7 @@ public class BubbleSort {
 																// SWAP AND PUT THE HIGHEST ELEMENT AT LAST
 				// System.out.println(n-i);
 				if (arr[j - 1] > arr[j]) {
-					//swap elements //shift right
+					//prev is greater, swap elements //shift right
 					temp = arr[j - 1];
 					arr[j - 1] = arr[j];
 					arr[j] = temp;
@@ -40,4 +40,15 @@ public class BubbleSort {
 
 	}
 
+}
+
+
+public class BubbleSortTest {
+
+	public static void main(String[] args) {
+
+		int arr[] = { 3, 60, 35, 8, 2, 45, 320, 5, 7 };
+		System.out.println("Original array "+ Arrays.toString(arr));
+		BubbleSort.bubbleSort(arr);
+	}
 }
