@@ -1,5 +1,5 @@
 //
-// In an expanding window take the last element and put it in its correct position
+// In an expanding window take the last element and put it in its correct position using consecutive swapping
 
 package com.dsa.Sorting;
 
