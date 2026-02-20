@@ -1,4 +1,11 @@
 //Striver explanation - chatgpt soln
+
+/*
+    0. Traversal in LL
+    1. Length of LL
+    2. Search in LL
+*/
+
 class Node {
     int data;
     Node next;
