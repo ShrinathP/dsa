@@ -1,0 +1,58 @@
+
+Striver explanation
+/*
+Node temp = head
+while temp.next.next != null -- cue
+keep moving temp i.e temp = temp.next 
+*/
+
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+    }
+}
+
+public class DeleteTail {
+
+    public static Node deleteTail(Node head) {
+        
+        // Case 1: Empty list or single node
+        if (head == null || head.next == null) {
+            return null;
+        }
+
+        Node temp = head;
+
+        // Traverse to second last node
+        while (temp.next.next != null) {
+            temp = temp.next;
+        }
+
+        // Remove last node
+        temp.next = null;
+
+        return head;
+    }
+
+    // Helper to print list
+    public static void print(Node head) {
+        while (head != null) {
+            System.out.print(head.data + " ");
+            head = head.next;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Node head = new Node(10);
+        head.next = new Node(20);
+        head.next.next = new Node(30);
+
+        head = deleteTail(head);
+        print(head);
+    }
+}
