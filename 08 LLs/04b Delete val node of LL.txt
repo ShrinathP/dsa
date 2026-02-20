@@ -1,0 +1,28 @@
+//Same as previous solution, no need to count
+//compare head.data, temp.data to elemVal
+
+private static Node removeK(Node head, int elemVal) {
+
+    if (head == null) return head;
+
+    //if k=1 we need to remove the head, return head.next
+    if (head.data == elemVal) {
+        return head.next;   // delete head
+    }
+
+    Node temp = head;
+    Node prev = null;
+
+    while (temp != null) {
+
+        if (temp.data == elemVal) {
+            prev.next = prev.next.next;
+            break;
+        }
+
+        prev = temp;
+        temp = temp.next;
+    }
+
+    return head;
+}
