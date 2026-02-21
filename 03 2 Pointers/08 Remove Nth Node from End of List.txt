@@ -2,6 +2,9 @@ class Solution {
     //2 pointer (NickWhite)
     //Step 1: Move the fast pointer by n nodes 0 to n
     //Step 2: Then move both pointers until fast becomes null
+    //Step 3: When fast reaches end, slow will be just before the node to delete. 
+    slow.next = slow.next.next
+
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode dummy_head = new ListNode(0);
         dummy_head.next = head;
