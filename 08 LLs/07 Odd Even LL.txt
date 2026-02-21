@@ -5,7 +5,7 @@
 
 /* Striver explanation
 IMP
-After Separating Odd and Even to Different Lists we need to point the last odd.next to evenHead
+After Separating Odd and Even to Different Lists we need to point the last odd.next to evenHead to make a single LL
 2 -> 3 -> 1 -> 4 -> 5 -> 6
 OddList
 2 -> 1 -> 5 
