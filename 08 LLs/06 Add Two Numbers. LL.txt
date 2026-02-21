@@ -1,3 +1,8 @@
+/*
+IMP- dummy_node concept
+NOTE: Whenever you create a new List, always use the concept of dummy_node
+do all the changes to t3 = dummy_node and return dummy_node.next
+*/
 
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
