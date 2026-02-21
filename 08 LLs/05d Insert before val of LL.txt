@@ -1,0 +1,53 @@
+/*
+Striver explanation- chatgpt soln
+1. Keep hold of prev and current elem
+2. keep moving until curr.data is target
+3. create new node attach prev.next to it
+attach new node next to current
+
+
+1. If list is empty → return null
+2. If head itself has the target value → insert at head
+3. Otherwise:
+  Traverse using prev and curr
+  When curr.data == target
+  Insert between prev and curr
+*/
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+    }
+}
+
+private static Node insertBeforeValue(Node head, int val, int target) {
+
+    if (head == null) return null;
+
+    // Case 1: Insert before head
+    if (head.data == target) {
+        Node newNode = new Node(val);
+        newNode.next = head;
+        return newNode;
+    }
+
+    Node prev = null;
+    Node curr = head;
+
+    while (curr != null && curr.data != target) {
+        prev = curr;
+        curr = curr.next;
+    }
+
+    // If target found
+    if (curr != null) {
+        Node newNode = new Node(val);
+        prev.next = newNode;
+        newNode.next = curr;
+    }
+
+    return head;
+}
