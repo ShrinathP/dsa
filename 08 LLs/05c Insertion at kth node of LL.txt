@@ -9,12 +9,13 @@ Striver explanation
 
 private static Node insertK(Node head, int val, int k) {
 
+    // Case 1: Empty list
     if (head == null) {
         if (k == 1) return new Node(val);
         else return head;
     }
 
-    // Insert at head
+    // Case 2: Insert at head
     if (k == 1) {
         Node newNode = new Node(val);
         newNode.next = head;
@@ -27,10 +28,11 @@ private static Node insertK(Node head, int val, int k) {
     while (temp != null) {
         cnt++;
 
+        // Reach (k-1)th node
         if (cnt == (k - 1)) {
-            Node x = new Node(val);   // create with val only
-            x.next = temp.next;       // manually set next
-            temp.next = x;
+            Node x = new Node(val);  // create node
+            x.next = temp.next;      // connect new node to next
+            temp.next = x;           // connect previous to new node
             break;
         }
 
