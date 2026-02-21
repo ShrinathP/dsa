@@ -1,0 +1,41 @@
+/*
+move until count = k-1 (prev element)
+1. create a newnode, 
+2. add newnode.next = curr.next and curr.next = newnode (break) - [ Cue - imagine breaking the link and adding a new node there ]
+
+Striver explanation
+*/
+
+
+private static Node insertK(Node head, int val, int k) {
+
+    if (head == null) {
+        if (k == 1) return new Node(val);
+        else return head;
+    }
+
+    // Insert at head
+    if (k == 1) {
+        Node newNode = new Node(val);
+        newNode.next = head;
+        return newNode;
+    }
+
+    int cnt = 0;
+    Node temp = head;
+
+    while (temp != null) {
+        cnt++;
+
+        if (cnt == (k - 1)) {
+            Node x = new Node(val);   // create with val only
+            x.next = temp.next;       // manually set next
+            temp.next = x;
+            break;
+        }
+
+        temp = temp.next;
+    }
+
+    return head;
+}
