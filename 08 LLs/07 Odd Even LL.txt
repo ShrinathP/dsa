@@ -1,0 +1,47 @@
+
+//Odd Even LinkedList
+//By assigning pointers
+//https://leetcode.com/problems/odd-even-linked-list/discuss/1606975/JAVA-or-2-Solutions-or-Explanation-Using-Image-or-Without-Space
+
+/* Striver explanation
+IMP
+After Separating Odd and Even to Different Lists we need to point the last odd.next to evenHead
+2 -> 3 -> 1 -> 4 -> 5 -> 6
+OddList
+2 -> 1 -> 5 
+EvenList
+3 -> 4 -> 6
+Now Odd End is 5, odd.next should point to 3 i.e. evenHead
+
+
+1. odd = head, even = head.next, evenHead = head.next
+2. Jump both by next.next
+3. odd.next = odd.next.next, even.next = even.next.next; and move odd ahead, even ahead
+4. lastly IMP, attach evenHead; i.e. odd.next = evenHead
+*/
+
+
+class Solution {
+    public ListNode oddEvenList(ListNode head) {
+        
+		if(head==null) return head;
+		
+        ListNode odd = head;
+        ListNode even = head.next;
+        ListNode evenHead = even;
+
+//NPE conditions
+		// even is ahead so even cannot be null, otherwise even.next will throw NPE
+		// also even.next cannot be null, otherwise even.next.next will throw NPE
+        while( even!=null && even.next!=null ) {
+            odd.next = odd.next.next;
+            even.next = even.next.next;
+            odd = odd.next;
+            even = even.next;
+        }
+        
+        odd.next = evenHead;
+        
+        return head;
+    }
+}
