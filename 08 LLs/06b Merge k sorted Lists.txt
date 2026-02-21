@@ -1,0 +1,50 @@
+//Algos with michael Divide and Conquer approach
+// Leetcode 23
+
+class Solution {
+    //Divide and conquer section problems
+    //Michael Muinos
+    //Merge sort approach
+    //Time complexity - O(n * logK) where n is l1.length+l2.length and k is number of 
+    //recursive calls
+    public ListNode mergeKLists(ListNode[] lists) {
+        if(lists == null || lists.length == 0) return null;
+        return mergeKLists(lists, 0, lists.length-1);
+    }
+    
+    private ListNode mergeKLists(ListNode[] lists, int start, int end) {
+        if (start == end) return lists[start];
+        //handle overflow
+        int mid = start + (end - start)/2; //same as (start + end)/2
+        
+        ListNode left = mergeKLists(lists, start, mid);
+        ListNode right = mergeKLists(lists, mid + 1, end);
+        
+        return merge(left, right);
+    }
+
+    //Replace this by the merge function of 06a
+    private ListNode merge(ListNode l1, ListNode l2){
+        ListNode result = new ListNode(-1);
+        ListNode curr = result;
+        //l1 and l2 can be of different lengths
+        while(l1 != null || l2!= null) {
+            if(l1 == null) {
+                curr.next = l2;
+                l2 = l2.next;
+            } else if(l2 == null){
+                curr.next = l1;
+                l1 = l1.next;
+            } else if(l1.val < l2.val){
+                curr.next = l1;
+                l1 = l1.next;
+            } else {
+                curr.next = l2;
+                l2 = l2.next;
+            }
+            curr = curr.next;
+            
+        }
+        return result.next;
+    }
+}
