@@ -1,0 +1,47 @@
+// Insertion at head of LL, Striver explanation, chatgpt code
+
+/*
+1. Create new node
+2. Point newNode.next → head
+3. Move head → newNode
+*/
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+    }
+}
+
+public class InsertAtHead {
+
+    public static Node insertAtHead(Node head, int val) {
+
+        Node newNode = new Node(val);  // Step 1
+        newNode.next = head;           // Step 2
+        head = newNode;                // Step 3
+
+        return head;
+    }
+
+    // Helper to print
+    public static void print(Node head) {
+        while (head != null) {
+            System.out.print(head.data + " ");
+            head = head.next;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Node head = null;
+
+        head = insertAtHead(head, 30);
+        head = insertAtHead(head, 20);
+        head = insertAtHead(head, 10);
+
+        print(head);
+    }
+}
