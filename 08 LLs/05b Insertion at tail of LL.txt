@@ -1,0 +1,58 @@
+//Striver explanation
+
+1. create newNode
+2. while(temp.next != null), keep moving temp  - IMP cue
+3. temp.next = newNode insert
+
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+    }
+}
+
+public class InsertAtTail {
+
+    public static Node insertTail(Node head, int val) {
+
+        Node newNode = new Node(val);
+
+        // Case 1: Empty list
+        if (head == null) {
+            return newNode;
+        }
+
+        Node temp = head;
+
+        // Traverse till last node
+        while (temp.next != null) {
+            temp = temp.next;
+        }
+
+        // Attach new node
+        temp.next = newNode;
+
+        return head;
+    }
+
+    // Helper to print
+    public static void print(Node head) {
+        while (head != null) {
+            System.out.print(head.data + " ");
+            head = head.next;
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Node head = null;
+
+        head = insertTail(head, 10);
+        head = insertTail(head, 20);
+        head = insertTail(head, 30);
+
+        print(head);
+    }
+}
