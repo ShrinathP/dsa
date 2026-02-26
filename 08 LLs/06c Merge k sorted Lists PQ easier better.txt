@@ -1,0 +1,63 @@
+//Chatgpt code
+//Striver explanation
+
+/*
+1. Add all heads of the lists in the PQ - they are sorted ascending now
+2. Create a dummy head, create current = dummy (we will return dummy.next as answer)
+3. while minHeap is not empty
+    Poll from minHeap i.e currMinNode, add to the current, curr = curr.next
+    if currMinNode has next, add to the PQ/Heap
+4. Return dummy.next
+*/
+
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
+// Definition for singly-linked list.
+public class ListNode {
+    int val;
+    ListNode next;
+    ListNode() {}
+    ListNode(int val) { this.val = val; }
+    ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+}
+
+public class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        if (lists == null || lists.length == 0) {
+            return null;
+        }
+
+        // Create a min-heap (PriorityQueue)
+        // The comparator orders ListNodes by their 'val' field in ascending order
+        PriorityQueue<ListNode> minHeap = new PriorityQueue<>(Comparator.comparingInt(a -> a.val));
+
+        // Add the head of each non-null list to the min-heap
+        for (ListNode node : lists) {
+            if (node != null) {
+                minHeap.add(node);
+            }
+        }
+
+        // Create a dummy head for the result list
+        ListNode dummy = new ListNode(0);
+        ListNode current = dummy;
+
+        // Process nodes until the heap is empty
+        while (!minHeap.isEmpty()) {
+            // Extract the node with the smallest value from the heap
+            ListNode minNode = minHeap.poll();
+
+            // Append the minimum node to the merged list
+            current.next = minNode;
+            current = current.next;
+
+            // If the extracted node has a next node, add it to the heap
+            if (minNode.next != null) {
+                minHeap.add(minNode.next);
+            }
+        }
+
+        return dummy.next; // The head of the merged sorted list
+    }
+}
