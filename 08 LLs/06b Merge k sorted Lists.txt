@@ -17,8 +17,11 @@ class Solution {
         //handle overflow
         int mid = start + (end - start)/2; //same as (start + end)/2
         
-        ListNode left = mergeKLists(lists, start, mid);
-        ListNode right = mergeKLists(lists, mid + 1, end);
+        ListNode left = mergeKLists(lists, start, mid);   
+//left recursion breaks when start == end, i.e only one left stays
+        ListNode right = mergeKLists(lists, mid + 1, end); 
+//then we get the right of it, and call merge
+
         
         return merge(left, right);
     }
