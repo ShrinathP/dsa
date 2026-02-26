@@ -1,0 +1,37 @@
+// Merge Sort Visualization
+// Chatgpt
+
+left left left - left hits, then right - right also will hit correct
+
+FLOW
+left
+  left
+    left
+      base case hit → return (left==right)
+    right
+      base case hit → return (left==right)
+  merge
+right
+  ...
+
+Index Position
+ 0   1   2   3
+[8,  3,  5,  1]
+
+Visual Tree (for 0-3)
+=====================
+          (0,3)
+         /     \
+     (0,1)     (2,3)
+     /   \      /   \
+  (0,0)(1,1) (2,2)(3,3)
+All leaf nodes (left == right) return immediately.
+
+
+(0,3)
+ → (0,1)
+   → (0,0)  ✅ hit
+   → (1,1)  ✅ hit
+ → (2,3)
+   → (2,2)  ✅ hit
+   → (3,3)  ✅ hit
