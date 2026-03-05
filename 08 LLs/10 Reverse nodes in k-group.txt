@@ -1,0 +1,93 @@
+// Striver explanation, chatgpt code
+func1. getKthNode function, if curr is null return curr
+func2. reverse LL function
+
+/*
+Steps:
+//1 Starter dummy_node
+-  create a dummy_node with its next pointing to head
+- groupPrev points to dummy
+//2. Use func1 to getKthNode from groupPrev; kth
+//3. Disconnect kth.next
+  groupNext = kth.next
+  kth.next = null
+//4. Reverse the group - use func2
+start = groupPrev.next
+newHead = reverse(start)
+//5. reconnect
+groupPrev.next = newHead
+start.next = groupNext
+//6. return dummy.next
+*/
+
+
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int val) {
+        this.val = val;
+        this.next = null;
+    }
+}
+
+public class ReverseKGroup {
+// Find kth node
+    private ListNode getKthNode(ListNode curr, int k) {
+        while (curr != null && k > 0) {
+            curr = curr.next;
+            k--;
+        }
+        return curr;
+    }
+
+    public ListNode reverseKGroup(ListNode head, int k) {
+
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode groupPrev = dummy;
+
+        while (true) {
+
+            ListNode kth = getKthNode(groupPrev, k);
+            if (kth == null) break;
+
+            ListNode groupNext = kth.next;
+
+            // detach group
+            kth.next = null;
+
+            ListNode start = groupPrev.next;
+
+            // reverse the group
+            ListNode newHead = reverse(start);
+
+            // reconnect
+            groupPrev.next = newHead;
+            start.next = groupNext;
+
+            groupPrev = start;
+        }
+
+        return dummy.next;
+    }
+
+    // Reverse a linked list
+    private ListNode reverse(ListNode head) {
+
+        ListNode prev = null;
+        ListNode curr = head;
+
+        while (curr != null) {
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        return prev;
+    }
+
+    
+}
