@@ -1,0 +1,16 @@
+1. Create dummy → dummy.next = head
+2. groupPrev = dummy
+
+3. Find kth node from groupPrev
+   if kth == null → break
+
+4. groupNext = kth.next
+
+5. Reverse nodes from start → kth
+   start = groupPrev.next
+
+6. Reconnect
+   groupPrev.next = kth
+   start.next = groupNext
+
+7. Move groupPrev = start
