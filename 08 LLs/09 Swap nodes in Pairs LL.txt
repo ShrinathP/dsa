@@ -1,0 +1,43 @@
+
+/*
+Before swap:
+prev → first → second → nextPair
+Goal: 
+prev → second → first → nextPair
+
+3 Pointer changes - IMP
+first.next = second.next;   (as we will be breaking second.next)
+second.next = first;        (point second.next to first)
+prev.next = second;         (point prev.next to second)
+
+
+ //Algorithms Made easy explanation - check visualization
+ //chatgpt solution
+
+*/
+
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+
+        ListNode prev = dummy;
+
+        while (prev.next != null && prev.next.next != null) {
+
+            ListNode first = prev.next;
+            ListNode second = prev.next.next;
+
+            // Swapping - important
+            first.next = second.next;
+            second.next = first;
+            prev.next = second;
+
+            // Move prev forward
+            prev = first;
+        }
+
+        return dummy.next;
+        
+    }
+}
