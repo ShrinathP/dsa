@@ -1,5 +1,5 @@
 
-//Take u forward
+//Take u forward - striver explanation
 
 class Solution {
     public ListNode rotateRight(ListNode head, int k) {
