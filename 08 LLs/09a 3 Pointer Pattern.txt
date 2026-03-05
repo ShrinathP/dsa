@@ -1,0 +1,23 @@
+# 3 Pointer Pattern
+## Swap nodes in Pairs Problem
+Before swap:
+prev → first → second → nextPair
+Goal: 
+prev → second → first → nextPair
+
+3 Pointer changes - IMP
+first.next = second.next;   (as we will be breaking second.next)
+second.next = first;        (point second.next to first)
+prev.next = second;         (point prev.next to second)
+
+
+🔥 Why This Pattern Is Powerful
+Same structure solves multiple problems
+
+| Problem             | Change          |
+| ------------------- | --------------- |
+| Swap Nodes in Pairs | k = 2           |
+| Reverse K Group     | reverse k nodes |
+| Reverse Linked List | k = n           |
+| Rotate List         | reconnect tail  |
+
