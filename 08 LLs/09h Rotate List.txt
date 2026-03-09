@@ -4,16 +4,13 @@
 class Solution {
     public ListNode rotateRight(ListNode head, int k) {
         //Take u forward
-    
-        //Case 1: if k greater than the length of the linkedlist
-        //k can be 1000 also, so we should be able to reduce the number k
-        //Case 1.1 if k is multiple of length of LL, return original LL
-        //Case 1.2 if k % length has some number rotate that number of times
+ 
         
-        //Step 1: Point the last node to the first
-        //Step 2: traverse from last node backwards k times
-        //Step 3: point the head to kth node
-        //Step 4: remove the prev node of the k (length -kth node) and attach it to null
+        //Step 1: //point the last node to head, create continuous connection
+        //Step 2: //in case k is divisible by length, return head
+        //Step 3: //find kth node, 
+        //Step 4: point head to kth next i.e curr.next, break curr i.e. curr.next = null
+        //Step 5: return head
         
         //edge cases
         if(head==null ||head.next==null || k==0)
@@ -26,22 +23,27 @@ class Solution {
             len++;
             cur = cur.next;
         }
-        
-        //point the last node to head
+
+        //0
+        //point the last node to head, create continuous connection
         cur.next = head;
 
+        //1
         //in case k is divisible by length, return head
         k = k % len;
         if(k == 0) return head
 
+        //2
+        //find kth node
         k = len - k;
         // keep traversing len-k to reach the new last node
         while(k-- >0) cur = cur.next;
-        
-        //make the head node and break connection
+
+        //3
+        //make kth next as head and break connection by pointing k to null
         head = cur.next; //new head -will be next of cur
         cur.next = null; //assigning null to last node
             
-            return head;
+        return head;
     }
 }
