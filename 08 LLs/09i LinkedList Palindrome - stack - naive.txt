@@ -1,0 +1,43 @@
+//Striver explanation - chatgpt solution
+//2 Pass
+/*
+1. Traverse list and push all values into a stack.
+2. Traverse again and compare with popped values.
+*/
+
+import java.util.Stack;
+
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int val) {
+        this.val = val;
+    }
+}
+
+public class PalindromeLL {
+
+    public boolean isPalindrome(ListNode head) {
+
+        Stack<Integer> stack = new Stack<>();
+        ListNode curr = head;
+
+        // push all nodes
+        while (curr != null) {
+            stack.push(curr.val);
+            curr = curr.next;
+        }
+
+        // compare with stack
+        curr = head;
+        while (curr != null) {
+            if (curr.val != stack.pop()) {
+                return false;
+			}
+            curr = curr.next;
+        }
+
+        return true;
+    }
+}
