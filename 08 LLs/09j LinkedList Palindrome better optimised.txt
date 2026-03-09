@@ -6,6 +6,12 @@ Idea - Optimal
 2. Reverse second half.
 3. Compare first half and reversed half.
 
+2 middles
+        m1    m2
+1-> 2 -> 3 -> 3 -> 2 -> 1
+                  fast
+we need to reach m1, fast should point to 2nd last node, fast.next.next == null
+
 */
 
 class ListNode {
