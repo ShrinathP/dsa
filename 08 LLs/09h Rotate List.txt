@@ -29,7 +29,11 @@ class Solution {
         
         //point the last node to head
         cur.next = head;
+
+        //in case k is divisible by length, return head
         k = k % len;
+        if(k == 0) return head
+
         k = len - k;
         // keep traversing len-k to reach the new last node
         while(k-- >0) cur = cur.next;
