@@ -6,14 +6,6 @@ Idea - Optimal
 2. Reverse second half.
 3. Compare first half and reversed half.
 
-2 middles - 2 ways
-// 1st solution
-reaching till m2 - standard find middle element solution - reverse from m2 - reverse(slow)
-        m1    m2
-1-> 2 -> 3 -> 3 -> 2 -> 1
-                  fast
-we need to reach m1, fast should point to 2nd last node, fast.next.next == null
-
 
 2 middles
 // 2nd solution
@@ -26,7 +18,6 @@ we need to reach m1, fast should point to 2nd last node, fast.next.next == null
 If loop gives m2 → reverse(slow)
 If loop gives m1 → reverse(slow.next)
 */
-
 class ListNode {
     int val;
     ListNode next;
@@ -39,25 +30,29 @@ class ListNode {
 public class PalindromeLL {
 
     public boolean isPalindrome(ListNode head) {
-        if (head == null || head.next == null) return true;
 
-        // 1. find middle
+        if (head == null || head.next == null)
+            return true;
+
         ListNode slow = head, fast = head;
 
-        //to avoid NPE on fast.next and fast.next.next we check this -> fast != null && fast.next != null
-        //finding m2
-        while (fast != null && fast.next != null) {
+        // find m1
+        //to avoid NPE check fast.next and fast.next.next
+        while (fast.next != null && fast.next.next != null) {
             slow = slow.next;
             fast = fast.next.next;
         }
 
-        // 2. reverse second half
-        ListNode second = reverse(slow);
+        // reverse second half
+        ListNode second = reverse(slow.next);
 
-        // 3. compare
         ListNode first = head;
+
+        // compare
         while (second != null) {
-            if (first.val != second.val) return false;
+            if (first.val != second.val)
+                return false;
+
             first = first.next;
             second = second.next;
         }
@@ -65,8 +60,8 @@ public class PalindromeLL {
         return true;
     }
 
-//Standard Reverse LL code
     private ListNode reverse(ListNode head) {
+
         ListNode prev = null;
 
         while (head != null) {

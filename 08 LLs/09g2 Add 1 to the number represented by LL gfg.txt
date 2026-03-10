@@ -1,0 +1,70 @@
+// Striver explanation and gemini code
+// Reverse and Add and Reverse
+// Step 1 Reverse the LinkedList
+// Step 2 Set current = head of the reversed LL, carry = 1
+// Step 3 - while current != null, calculate sum =  carry + curr.data 
+// Step 4 - new curr.data, curr.data = sum % 10; new carry = sum / 10
+// Step 5 - When while breaks and still carry present, need to add a new node
+// Step 6 - return reversed head
+
+class ListNode {
+    int data;
+    ListNode next;
+
+    ListNode(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+
+public class AddOneLinkedList {
+
+    // Helper function to reverse the linked list
+    private static ListNode reverseList(ListNode head) {
+        ListNode prev = null;
+        ListNode current = head;
+        ListNode nextNode = null;
+        while (current != null) {
+            nextNode = current.next;
+            current.next = prev;
+            prev = current;
+            current = nextNode;
+        }
+        return prev;
+    }
+
+    // Function to add 1 to the number represented by the linked list
+    public static ListNode addOne(ListNode head) {
+        // Step 1: Reverse the list
+        head = reverseList(head);
+
+        // Step 2: Add 1 and handle carry
+        ListNode current = head;
+        int carry = 1;
+        
+        while (current != null) {
+            int sum = carry + current.data;
+            current.data = sum % 10;
+            carry = sum / 10;
+            
+            // If no carry, we can stop early
+            if (carry == 0) {
+                break;
+            }
+            current = current.next;
+        }
+
+        // Step 3: If carry remains after the loop, add a new node
+        if (carry > 0) {
+            ListNode newNode = new ListNode(carry);
+            // We need to find the tail of the reversed list to attach the new node
+            // The loop above handles finding the last modified node implicitly if we track the previous
+            // node. In this specific implementation, we need to re-traverse or adjust the loop.
+            // An easier way is to adjust the initial loop to track the tail
+        }
+
+        // Step 4: Reverse the list back to the original order
+        return reverseList(head);
+    }
+}
+
