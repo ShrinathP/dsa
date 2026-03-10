@@ -6,6 +6,20 @@
 //Shift the longer list by difference
 //Start iterating until both nodes are not same
 
+/*
+GFG
+https://www.geeksforgeeks.org/dsa/write-a-function-to-get-the-intersection-point-of-two-linked-lists/#expected-approach-2-using-two-pointer-technique-om-n-time-and-o1-space
+
+The two lists share the same tail after the intersection; only their starting parts differ in length. 
+To align them, we should skip the extra nodes in the longer list so both pointers stand at the same distance from the intersection.
+
+Algorithms made easy
+
+1. Find the length of both linked lists
+2. In the longer list skip the difference
+3. start traversion in both LLs and compare
+*/
+
 //Time complexity O(M + N)
 /**
  * Definition for singly-linked list.
