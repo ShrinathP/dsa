@@ -2,6 +2,10 @@
 //NOTE : Here whenever we reach end for a_pointer , we assign headB to it
 //whenever we reach end for b_pointer, we assign headA to it
 
+/*
+The idea is to traverse the two given linked lists simultaneously, using two pointers. When one pointer reaches the end of its list, it is reassigned to the head of the other list. This process continues until the two pointers meet, which indicates that they have reached the intersection point.
+*/
+
 //This compensates for the difference in the length of 2 LinkedLists
 public class Solution {
     public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
