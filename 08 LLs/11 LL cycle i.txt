@@ -1,4 +1,4 @@
-//BEst Solution
+//BEst Solution 1st one
 //Best solution, same as LL cycle ii
 //HAre and tortoise solution
 //https://leetcode.com/problems/linked-list-cycle/discuss/44694/Accepted-clean-Java-solution

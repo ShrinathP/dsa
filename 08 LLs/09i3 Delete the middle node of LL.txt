@@ -1,0 +1,47 @@
+//Striver explanation - chatgpt solution
+//Use the m2 version (the normal middle-finding loop).
+//Because the problem usually expects delete the middle node, and for even length lists the second middle is considered the middle.
+//finding m2
+//while(fast != null && fast.next!= null)
+
+Steps
+1. initialize - prev = null, slow = head, fast = head
+2. while(fast != null && fast.next!= null)
+    prev =slow; slow=slow.next, fast = fast.next.next
+3. now slow is pointing to middle, attach prev.next to slow's next i.e. middle's next
+
+
+//Chatgpt
+//finding m1 - used in palindrome solution
+//while(fast.next != null && fast.next.next!= null)
+
+
+class ListNode {
+    int val;
+    ListNode next;
+
+    ListNode(int val) {
+        this.val = val;
+    }
+}
+
+public ListNode deleteMiddle(ListNode head) {
+
+    if (head == null || head.next == null)
+        return null;
+
+    ListNode slow = head;
+    ListNode fast = head;
+    ListNode prev = null;
+
+    while (fast != null && fast.next != null) {
+        prev = slow;
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+
+    // delete middle
+    prev.next = slow.next;
+
+    return head;
+}
