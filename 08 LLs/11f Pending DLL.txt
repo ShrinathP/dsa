@@ -1,0 +1,48 @@
+// Find the length of the loop in LL
+//Striver explanation - 
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+
+/*
+1. Detect cycle using Floyd's algorithm.
+2. When slow == fast, we are inside the loop.
+3. Move fast until it returns to slow, counting nodes.
+*/
+
+public class Solution {
+    public int cycleLength(ListNode head) {
+
+        ListNode slow = head, fast = head;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            //cycle detected, initiate length = 1, move fast to next
+            //move fast until it returns to slow, increase length
+            if (slow == fast) {
+                // cycle detected
+                int length = 1;
+                fast = fast.next;
+
+                while (slow != fast) {
+                    fast = fast.next;
+                    length++;
+                }
+
+                return length;
+            }
+        }
+
+        return 0; // no cycle
+    }
+}

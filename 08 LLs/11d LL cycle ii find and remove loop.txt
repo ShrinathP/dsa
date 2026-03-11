@@ -1,0 +1,67 @@
+// Detect and remove loop in LL - chatgpt soln
+//Striver explanation - chatgpt solution - extension of find entry of loop
+
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+
+/*
+1. Detect cycle using Floyd's algorithm.
+2. When slow == fast, we are inside the loop.
+3. Detect the intersection Point by moving slow to head
+4. Minor change - hold previous node of fast as we will point it to null
+
+*/
+
+
+public class Solution {
+
+    public void removeLoop(ListNode head) {
+
+        ListNode slow = head, fast = head;
+
+        // Step 1: Detect cycle
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) {
+
+                // Step 2: Find cycle start
+                slow = head;
+                ListNode prev = null;
+
+                while (slow != fast) {
+                    prev = fast;      // track node before start - 
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+
+                // Now slow == fast == intersection point, assign prev of fast to null
+                // Step 3: Break loop
+                prev.next = null;
+                return;
+            }
+        }
+    }
+}
+
+
+Other way for line 36 is to avoid use of prev, compare slow.next to fast.next
+                while (slow.next != fast.next) {
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+              
+                // since fast->next is the looping point 
+                // remove loop 
+              	fast.next = null; 
+            
