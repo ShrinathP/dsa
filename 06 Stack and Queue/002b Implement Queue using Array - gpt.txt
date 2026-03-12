@@ -44,6 +44,7 @@ class Queue {
             System.out.println("Queue is Empty");
             return -1;
         }
+    //read first, then move front
         int dequeuedValue = queueArray[front];
         if (front == rear) {
             front = rear = -1; // Queue becomes empty
