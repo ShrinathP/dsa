@@ -6,6 +6,12 @@ Explanation:
 - enqueue(): Adds an element at the rear. If the queue is empty, front is also set to 0.
 - dequeue(): Removes an element from the front. After removing, if the queue becomes empty, both front and rear are reset to -1.
 - Circular Queue: The rear and front wrap around the array using modulo (%), so that when rear or front reaches the end, they return to the beginning.
+- isFull Function
+In a circular queue, rear wraps around using modulo: rear = (rear + 1) % size
+If moving rear forward would make it equal to front, it means the queue has no free space left.
+- isEmpty
+front is at -1
+
 */
 
 class Queue {
