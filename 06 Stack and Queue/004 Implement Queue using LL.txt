@@ -33,7 +33,7 @@ class Queue {
     // Enqueue operation (add element to the rear of the queue)
     public void enqueue(int value) {
         Node newNode = new Node(value);
-        if (rear == null) {
+        if (isEmpty()) {
             front = rear = newNode; // If the queue is empty, front and rear point to the same node
             return;
         }
