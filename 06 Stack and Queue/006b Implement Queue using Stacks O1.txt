@@ -1,18 +1,30 @@
 /* Striver explanation
 Solution 2: Using two Stacks where push operation is O(1)
 
-1. While pushing keep pushing to the input stack only
-2. While popping, shift everything from the input to the output - until input is empty, 
-everything will be reversed, and you can pop 1 from the output and return, 
-2a. also until output stack is not empty, you can use the output stack to pop
+Making the push operation cheaper
+and
+making pop and top operation expensive
+
+1. While pushing keep pushing to s1
+2. While popping, (use s2)
+    if s2.empty == true 
+        dump from s1 to s2 - until s1 is empty, everything will be reversed,
+    we can pop from s2 and return
+3. same While peeking, 
+    if s2.empty == true 
+        dump from s1 to s2 - until s1 is empty, everything will be reversed,
+    we can peek from s2 and return
+4. size = s1.size + s2.size
+
+NOTE we empty everything from s1 to s2 only when s2 is empty, if s2 is not empty directly pop from s2
 */
 
 
 import java.util.*;
 
 class MyQueue {
-    Stack < Integer > input = new Stack < > ();
-    Stack < Integer > output = new Stack < > ();
+    Stack < Integer > s1 = new Stack < > ();
+    Stack < Integer > s2 = new Stack < > ();
     /** Initialize your data structure here. */
     public MyQueue() {
 
@@ -21,36 +33,36 @@ class MyQueue {
     /** Push element x to the back of queue. */
     public void push(int x) {
         System.out.println("The element pushed is " + x);
-        input.push(x);
+        s1.push(x);
     }
 
     /** Removes the element from in front of queue and returns that element. */
     public int pop() {
-        // shift input to output, Step 2, until input is empty
-        if (output.empty())
-            while (input.empty() == false) {
-                output.push(input.peek());
-                input.pop();
+        // shift s1 to s2, Step 2, until s1 is empty
+        if (s2.empty()) {
+            while (s1.empty() == false) {
+                s2.push(s1.peek());
+                s1.pop();
             }
+        }
 
-
-        int x = output.peek();
-        output.pop();
+        int x = s2.peek();
+        s2.pop();
         return x;
     }
 
     /** Get the front element. */
     public int peek() {
-        // shift input to output 
-        if (output.empty())
-            while (input.empty() == false) {
-                output.push(input.peek());
-                input.pop();
+        // shift s1 to s2 
+        if (s2.empty())
+            while (s1.empty() == false) {
+                s2.push(s1.peek());
+                s1.pop();
             }
-        return output.peek();
+        return s2.peek();
     }
     int size() {
-        return (output.size() + input.size());
+        return (s2.size() + s1.size());
     }
 
 
