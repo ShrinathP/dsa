@@ -1,6 +1,6 @@
 
 /*
-Better use Reverse in k-group with k value 2
+
 
 Before swap:
 prev → first → second → nextPair
