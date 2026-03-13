@@ -1,9 +1,9 @@
 /*
 Keep pushing opening brackets to the stack
 else
-if its not an opening bracket
+if its not an opening bracket (its empty or a closing bracket)
   - if stack is empty, return false
-  - if stack.pop doesnt match the opposite of opening bracket, return false
+  - if stack.pop doesnt match corresponding val of closing bracket i.e. mp.get(closingBracket), return false
 */
 
 class Solution {

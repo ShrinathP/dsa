@@ -1,33 +1,40 @@
 //2 solutions
 //Using a stack - 1st one is better
-//TC O(N), SC O(N)
-//Algorithms made easy - 2 traversal way
+Code- Algorithms Made Easy channel
+Time O(n) SpaceO(n)
 
+/*
+Initialization -> Maintain a stack, push -1 and run a For loop
+1. open bracket - push index to the stack
+2. else
+        closed bracket -> pop once - IMP
+        if stack empty -> push current index i
+        else - calc len; len = i - stack.peek(),update maxL; Math.max(maxL, len)
+
+
+
+NOTE - IMP
+For every closed bracket, we pop out the previously pushed open bracket
+for incorrect closed brackets, we have the index pushed as stack will be empty
+
+Step by Step Dry run - chatgpt
+Input
+)()())
+| i | char | Operation            | Stack | Length Calc   | max |
+| - | ---- | -------------------- | ----- | ------------- | --- |
+| 0 | `)`  | pop → empty → push 0 | [0]   | —             | 0   |
+| 1 | `(`  | push 1               | [0,1] | —             | 0   |
+| 2 | `)`  | pop                  | [0]   | 2 - 0 = **2** | 2   |
+| 3 | `(`  | push 3               | [0,3] | —             | 2   |
+| 4 | `)`  | pop                  | [0]   | 4 - 0 = **4** | 4   |
+| 5 | `)`  | pop → empty → push 5 | [5]   | —             | 4   |
+
+
+*/
 
 //Solution 1
 
 class Solution {
-    /*
-    
-    
-    Step 1- Push (-1) into the stack
-    Step 2 - Traverse the string
-            Case 1- If we encounter an open character ( push the index
-            Case 2- If we encounter a close character ) , pop
-                2.1 If the stack is empty after the pop, push the index
-                2.2 If the stack is not empty after the pop, calculate max
-                max - i - topOfStack
-                Update new max
-                
-                
-                Logic GuruMack utube channel- Longest valid Parenthesis
-                https://www.youtube.com/watch?v=8CYhffMML8o
-                
-                Code- Algorithms Made Easy channel
-                
-                Time O(n) SpaceO(n)
-                
-    */
     public int longestValidParentheses(String s) {
         Stack<Integer> stack = new Stack<>();
         stack.push(-1);
@@ -50,73 +57,6 @@ class Solution {
             }
             
         }
-        return max;
-        
-    }
-}
-
-
-//Solution 2, 2 traversals from 0 to N and from N to 0
-//O(N)
-class Solution {
-    /*
-    
-     
-   Another solution in O(1) Space
-    Time Complexity O(n)
-    Code- Algorithms Made Easy channel      
-    
-    Traverse from 0 to N
-    Traverse from N to 0
-    */
-    public int longestValidParentheses(String s) {
-        //Traverse from 0 to N
-        int open =0, close =0;
-        int max=0;
-        //0..N
-        for(int i=0;i< s.length();i++){
-            char c = s.charAt(i);
-            if(c=='('){
-                open++;
-            } else {
-                close++;
-            }
-            
-            //string is valid
-            if(open == close){
-                //length of string is open paran + close paran
-                int len = open + close;
-                max = Math.max(max, len);
-            } else if(close > open) {
-                //invalid string
-                open = close = 0;
-            }
-            
-        }
-        System.out.println(max + "----");
-        
-        open = close =0;
-        //N..0
-        for(int i=s.length()-1;i>=0;i--){
-            char c = s.charAt(i);
-            if(c=='('){
-                open++;
-            } else {
-                close++;
-            }
-            
-            //string is valid
-            if(open == close){
-                //length of string is open paran + close paran
-                int len = open + close;
-                max = Math.max(max, len);
-            } else if(open > close) {
-                //invalid string
-                open = close = 0;
-            }
-            
-        }
-        System.out.println(max);
         return max;
         
     }

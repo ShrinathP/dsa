@@ -1,0 +1,69 @@
+//2nd solution, 2 traversals, 0..n and n..0
+
+/*
+   Another solution in O(1) Space
+    Time Complexity O(n)
+    Code- Algorithms Made Easy channel      
+    
+    open++, close++, if open==close, len = open + close, else **
+    Traverse from 0 to N
+    ** from left any increase in close, mark invalid; open=close=0
+    Traverse from N to 0
+    ** from right any increase in opens, mark invalid; open=close=0
+    */
+
+//Solution 2, 2 traversals from 0 to N and from N to 0
+//O(N)
+class Solution {
+    public int longestValidParentheses(String s) {
+        //Traverse from 0 to N
+        int open =0, close =0;
+        int max=0;
+        //0..N
+        for(int i=0;i< s.length();i++){
+            char c = s.charAt(i);
+            if(c=='('){
+                open++;
+            } else {
+                close++;
+            }
+            
+            //string is valid
+            if(open == close){
+                //length of string is open paran + close paran
+                int len = open + close;
+                max = Math.max(max, len);
+            } else if(close > open) {
+                //invalid string
+                open = close = 0;
+            }
+            
+        }
+        System.out.println(max + "----");
+        
+        open = close =0;
+        //N..0
+        for(int i=s.length()-1;i>=0;i--){
+            char c = s.charAt(i);
+            if(c=='('){
+                open++;
+            } else {
+                close++;
+            }
+            
+            //string is valid
+            if(open == close){
+                //length of string is open paran + close paran
+                int len = open + close;
+                max = Math.max(max, len);
+            } else if(open > close) {
+                //invalid string
+                open = close = 0;
+            }
+            
+        }
+        System.out.println(max);
+        return max;
+        
+    }
+}
