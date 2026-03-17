@@ -20,6 +20,30 @@ and we need to revert the minimum back to the previous value.
 if pop.val < currmin, newmin = 2 * min - top;
 
 3. Get Min Operation: The current minimum can be directly retrieved from the mini variable
+
+NOTE IMP INTUITION
+🤯 Why 2*val - min works
+oldMin = min
+newVal = val  (smaller than min)
+We push:
+encoded = 2*val - oldMin
+Key properties:
+1. encoded < val
+2. encoded < oldMin
+This helps us detect later that its special value
+
+🔍 During pop
+If top is encoded value
+encoded = 2*val - oldMin
+We recover previous min:
+oldMin = 2*currentMin - encoded
+
+Why this works
+We stored
+encoded = 2*newMin - oldMin
+rearrange
+oldMin = 2*newMin - encoded
+
 */
 
 import java.util.*;
@@ -56,6 +80,7 @@ class MinStack {
         }
 
         int top = stack.pop();
+        //if top is less than currMin this is encoded value
         if (top <= min) {
             min = 2 * min - top; // Restore the previous minimum
         }

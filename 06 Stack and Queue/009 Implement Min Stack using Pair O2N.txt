@@ -1,7 +1,16 @@
 // Problem Statement: Implement Min Stack | O(2N) and O(N) Space Complexity.
 // Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
-// Approach: The first element in the pair will store the value and the second element will store the minimum element till now.
-// Striver Explanation and SOln 
+
+/*
+Approach: The first element in the pair will store the value,
+and the second element will store the minimum element till now.
+Push -> if st.empty(), min = x, else min = Math.min(st.peek().y, x); st.push(new Pair(x, min))
+Top -> st.peek().x
+getMin -> st.peek().y
+Pop -> st.pop
+*/
+
+// Striver Explanation and Solution
 // https://takeuforward.org/data-structure/implement-min-stack-o2n-and-on-space-complexity/
 
 /*
@@ -20,9 +29,9 @@ class Pair {
     }
 }
 class MinStack {
-    Stack < Pair > st;
+    Stack <Pair> st;
     public MinStack() {
-        st = new Stack < > ();
+        st = new Stack<>();
     }
 
 //imp

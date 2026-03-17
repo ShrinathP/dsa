@@ -8,7 +8,7 @@ Initialization -> Maintain a stack, push -1 and run a For loop
 1. open bracket - push index to the stack
 2. else
         closed bracket -> pop once - IMP
-        if stack empty -> push current index i
+        if stack empty -> push current index i - (this is the last invalid boundary)
         else - calc len; len = i - stack.peek(),update maxL; Math.max(maxL, len)
 
 
@@ -16,6 +16,13 @@ Initialization -> Maintain a stack, push -1 and run a For loop
 NOTE - IMP
 For every closed bracket, we pop out the previously pushed open bracket
 for incorrect closed brackets, we have the index pushed as stack will be empty
+
+,,,
+For ')':
+    pop
+    if empty → push index (invalid boundary)
+    else → calculate length
+,,,
 
 Step by Step Dry run - chatgpt
 Input
