@@ -16,7 +16,7 @@ the task is to find the Next Greater Element for each element of the array in or
 //chatgpt soln or gfg soln
 4,12,5,3,1
 //As you traverse back , for every element, remove all the elements from the stack which are lesser than curr element
-Visualize as height of tree, 
+Visualize as height of tree, decreasing from back to front
 
 import java.util.*;
 
