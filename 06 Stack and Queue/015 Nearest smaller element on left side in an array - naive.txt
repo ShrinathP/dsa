@@ -1,6 +1,7 @@
 /*
 Given an array of integers, 
 find the nearest smaller number for every element such that the smaller element is on the left side.
+Previous Smaller Element
 
 Example
 Input: arr = [1, 6, 2]

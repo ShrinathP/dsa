@@ -42,7 +42,7 @@ public class SumOfSubarrayMinimums {
         int sum = 0;
         int MOD = 1000000007; // To avoid integer overflow, as per LeetCode convention
         
-        // Traverse all subarrays
+        // Traverse all subarray lengths
         for (int i = 0; i < n; i++) {
             int minVal = arr[i]; // Start with first element in subarray
             for (int j = i; j < n; j++) {

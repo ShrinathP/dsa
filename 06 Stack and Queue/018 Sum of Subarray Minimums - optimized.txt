@@ -1,6 +1,23 @@
 
 /*
 
+================================================================================
+For each elem, PSE to NSE is the range where the elem's currVal it is the smallest
+1, 3, 4, 2, 5, 6, 1
+So for 2, PSE is 1, NSE is 1, 
+so from 3 to 2 is PSE range
+so from 2 to 6 is NSE range
+Total no. of subarrays = PSE length * NSE length
+Total sum = PSE length * NSE length * currNumber
+
+1. Initialize 2 arrays int[] pse = new int[n]; int[] nse = new int[n];
+2. IMP - save indices
+    Run PSE save to pse, Run NSE save to nse, 
+3. Run for loop, at every i, left_length = i - pse[i], right_length = nse[i] - i
+    Sum = sum + arr[i] + left_length + right_length
+================================================================================
+
+
 Striver explanation, chatgpt soln
 Optimized Approach:
 
@@ -54,39 +71,39 @@ public class SumOfSubarrayMinimums {
         int n = arr.length;
         
         // Arrays to store previous smaller and next smaller elements
-        int[] prev = new int[n];
-        int[] next = new int[n];
+        int[] pse = new int[n];
+        int[] nse = new int[n];
         
         // Monotonic stack for Previous Smaller Element (PSE)
         Stack<Integer> stack = new Stack<>();
         
-        // Fill prev[] with indices of the previous smaller elements
+        // Fill pse[] with indices of the previous smaller elements
         for (int i = 0; i < n; i++) {
             while (!stack.isEmpty() && arr[stack.peek()] >= arr[i]) {
                 stack.pop();
             }
-            prev[i] = stack.isEmpty() ? -1 : stack.peek();
+            pse[i] = stack.isEmpty() ? -1 : stack.peek();
             stack.push(i);
         }
         
         // Monotonic stack for Next Smaller Element (NSE)
         stack.clear();  // Clear the stack for next smaller element
         
-        // Fill next[] with indices of the next smaller elements
+        // Fill nse[] with indices of the next smaller elements
         for (int i = n - 1; i >= 0; i--) {
             while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {
                 stack.pop();
             }
-            next[i] = stack.isEmpty() ? n : stack.peek();
+            nse[i] = stack.isEmpty() ? n : stack.peek();
             stack.push(i);
         }
         
         // Now calculate the sum of subarray minimums
         long sum = 0;
         for (int i = 0; i < n; i++) {
-            long left = i - prev[i];  // Number of subarrays that end at arr[i]
-            long right = next[i] - i;  // Number of subarrays that start at arr[i]
-            sum = (sum + arr[i] * left * right) % MOD;  // Contribution of arr[i]
+            long left_length = i - pse[i];  // Number of subarrays that end at arr[i]
+            long right_length = nse[i] - i;  // Number of subarrays that start at arr[i]
+            sum = (sum + arr[i] * left_length * right_length) % MOD;  // Contribution of arr[i]
         }
         
         return (int) sum;

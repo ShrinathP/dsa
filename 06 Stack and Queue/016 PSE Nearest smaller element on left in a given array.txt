@@ -1,4 +1,4 @@
-//Monotonically increasing stack - left to right traversal - 
+//Monotonically increasing stack - left to right traversal - opposite of 
 As we are removing everything which is greater than the current element from the stack,
 IMP: current element to be pushed has to be the greatest in the stack
 //striver explanation, chatgpt soln
