@@ -9,6 +9,22 @@ Maintain a monotonically decreasing stack
 chatgpt soln. explanation same as Next Greater element I leetcode solution
 */
 
+/*
+Similar to - 011 Next Greater Element I - leetcode 2 arrays question - front to back
+NOTE - IMP - Push Indexes to the Stack instead of currVal
+1. Init res size n, Fill result arr with -1
+2. Double to array, traverse front to back i from 0 to < 2*n, 
+    do same monotonic decreasing stack
+    currVal = arr[i%n]
+    while (nums[stack.peek()] < currVal && !stack.isEmpty()) {
+        idx = stack.pop;
+        //update NGE
+        result[idx] = currVal
+    }
+    Now currVal is less than val of index left in stack i.e. currVal < nums[stack.peek()]
+    We can push
+3. Push to stack - if i<n - stack.push(currVal)
+*/
 
 import java.util.*;
 

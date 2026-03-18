@@ -9,6 +9,18 @@
 */
 //Visualize Tree height way
 
+/*
+Similar to - 06 Stack and Queue/010 Next Greater Element Striver - back to front.txt
+1. Init res size n, Fill result arr with -1
+2. Double to array, traverse back to front - 2*n - 1, 
+    do same monotonic decreasing stack
+    currVal = arr[i%n]
+    while (stack.peek() < currVal && !stack.isEmpty()) {stack.pop}
+    Now number left in stack i.e. stack.peek() > currVal
+3. Update NGE - If within first pass i<n then only update NGE, because of res size is n
+4. Push to stack - stack.push(currVal)
+*/
+
 
 import java.util.ArrayList;
 import java.util.Stack;

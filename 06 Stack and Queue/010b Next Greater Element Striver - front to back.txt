@@ -1,0 +1,43 @@
+//Do this 
+/*
+Do a front to back, single array Question front to back
+NOTE - IMP - Push Indexes to the Stack instead of currVal
+Similar to 011 and 014 
+*/
+
+
+import java.util.*;
+
+public class NextGreaterElementNonCircular {
+
+    public int[] nextGreaterElements(int[] nums) {
+        int n = nums.length;
+        int[] result = new int[n];
+        Arrays.fill(result, -1); // default
+
+        Stack<Integer> stack = new Stack<>(); // stores indices
+
+        for (int i = 0; i < n; i++) {
+
+            // Resolve all smaller elements
+            while (!stack.isEmpty() && nums[stack.peek()] < nums[i]) {
+                int idx = stack.pop();
+                result[idx] = nums[i];
+            }
+
+            // Push current index
+            stack.push(i);
+        }
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        NextGreaterElementNonCircular solution = new NextGreaterElementNonCircular();
+
+        int[] nums = {4, 3, 2, 3};
+        int[] result = solution.nextGreaterElements(nums);
+
+        System.out.println(Arrays.toString(result)); // [-1, -1, 3, -1]
+    }
+}
