@@ -1,0 +1,48 @@
+/*
+Chatgpt solution
+
+Same as previous one, just 
+instead of 
+result = result + arr[deque.peekFirst()]
+do 
+result = Math.max(result, A[deque.peekFirst()]);
+as we need to maintain Max and not sum
+*/
+
+
+
+
+
+public int maxOfSubarrayMins(int[] A, int k) {
+    int n = A.length;
+    int result = Integer.MIN_VALUE;
+
+    Deque<Integer> deque = new LinkedList<>();
+
+    for (int i = 0; i < k; i++) {
+        while (!deque.isEmpty() && A[deque.peekLast()] >= A[i]) {
+            deque.pollLast();
+        }
+        deque.offerLast(i);
+    }
+
+    result = A[deque.peekFirst()];
+
+    for (int i = k; i < n; i++) {
+        //remove Out-of-Bound elements from the front of Deque
+        while (!deque.isEmpty() && deque.peekFirst() <= i - k) {
+            deque.pollFirst();
+        }
+
+        //Remove element greater than the curr from the back of the Deque
+        while (!deque.isEmpty() && A[deque.peekLast()] >= A[i]) {
+            deque.pollLast();
+        }
+
+        deque.offerLast(i);
+
+        result = Math.max(result, A[deque.peekFirst()]);
+    }
+
+    return result;
+}

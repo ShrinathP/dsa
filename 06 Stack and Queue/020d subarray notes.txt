@@ -1,0 +1,7 @@
+
+Sum of Subarray visualization
+=============================
+Sum of subarray minimums (all sizes) → use NSE + PSE (contribution technique - Hey element - you're smaller for how much WindowSize, how many Subarrays can be made)
+Sum of subarray maximums (all sizes) → use NGE + PGE (contribution technique - Hey element - you're greater for how much WindowSize, how many Subarrays can be made)
+Sum of subarray minimums (fixed size k) → use sliding window + deque (sum all mins)
+Max of subarray minimums (fixed size k) → same deque, just use Math.max instead of sum

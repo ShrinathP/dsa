@@ -1,0 +1,72 @@
+//Chatgpt soln - striver explanation
+/*
+Goal:
+Sliding window Minimums
+
+
+Approach:
+Use monotonically increasing Deque
+
+1. Initialization: Deque, Result arr with length i-k+1
+2. IMP Save indices to the deque
+  - For each element in the array:
+    - Remove Out-of-Bounds Elements: If the index at the front of the deque is outside the current window, remove it.
+    - Remove Greater Elements: if queueEnd is > currVal, remove it, 
+    remove all elements in the queue which are greater than currVal from back
+    while(!dq.isEmpty() && nums[dq.peekLast()] > currVal) {
+        dq.pollLast()
+        }
+3. Add Current Element Index to back. dq.offerLast(i)
+4. if i >=k-1, if i reaches window, store the minimum in result
+
+*/
+
+/*
+IMP
+SUBTLE DIFFERENCE - In Deque we do offerLast first and then add to result array. 
+during stack we used to compute NGE first and then push currElement to the stack
+
+🧠 Why deque → “offer first, then take result”, Sliding window minimums, i has to be the part of window
+👉 So the current element i MUST be part of the window
+
+🧠 Why stack → “compute first, then push” - NGE
+We are asking "What is the next greater element to the RIGHT of i?"
+So You must compute answer before inserting current element
+*/
+
+
+
+import java.util.*;
+
+public class SlidingWindowMinimum {
+
+    public int[] minSlidingWindow(int[] nums, int k) {
+        int n = nums.length;
+        int[] result = new int[n - k + 1];
+        
+        Deque<Integer> dq = new ArrayDeque<>(); // stores indices
+        
+        for (int i = 0; i < n; i++) {
+            
+            // 1. Remove indices out of current window
+            if (!dq.isEmpty() && dq.peekFirst() <= i - k) {
+                dq.pollFirst();
+            }
+            
+            // 2. Maintain increasing order (remove useless elements) // remove greater than currVal in the deque from back
+            while (!dq.isEmpty() && nums[dq.peekLast()] >= nums[i]) {
+                dq.pollLast();
+            }
+            
+            // 3. Add current index
+            dq.offerLast(i);
+            
+            // 4. Store result when window is valid
+            if (i >= k - 1) {
+                result[i - k + 1] = nums[dq.peekFirst()];
+            }
+        }
+        
+        return result;
+    }
+}

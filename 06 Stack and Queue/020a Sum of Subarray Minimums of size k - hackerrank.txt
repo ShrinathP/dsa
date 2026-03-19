@@ -19,12 +19,24 @@ monotonic increasing deque
 To find the minimum of a sliding window, 
 we need a monotonic increasing deque, where the smallest element will always be at the front of the deque.
 
-Maintaining the smallest element: In a monotonic increasing deque, 
-the front of the deque always gives us the minimum element in the window because elements in the stack are arranged in increasing order from back to front.
 
-If for a current element,
-  - queue elements are greater than the current 
-  - keep removing elements from the queue
+STEPS
+=====
+Monotonic increasing queue
+1. Maintain a deque                                                            |
+2. run for i to k                                                              | |                                  |
+   Remove all elements from back which are greater than the currentElement - | | |  if peek is greater than current |, remove it
+   while(!deque.isEmpty() && arr[deque.peekLast()] > currVal) {
+    deque.pollLast();
+   }
+3. Now peek will be leser than currVal, add it to last, deque.offerLast(i)
+4. First window is completed, add the front of the deque to the result, result = result + arr[dq.peekFirst()]
+5. Run loop from k to n, 
+    - remove out of window elements from front
+    - from back maintain a Monotonic increasing queue, remove everything greater than currVal
+    - now offerLast the currElement index
+    - Update result = result + arr[dq.peekFirst()]
+
 
 */
 
