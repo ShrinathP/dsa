@@ -1,7 +1,7 @@
 
 /*
 Traverse from back to front
-Maintain a monotonic increasing stack from back to front
+Maintain a monotonic increasing stack from back to front insertion
 //Remove all elements greater than the current
 
 NSE

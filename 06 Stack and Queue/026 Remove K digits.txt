@@ -6,6 +6,23 @@ For every integer check if there is something lesser ahead
 if yes pop the current integer from stack
 
 Striver Explanation
+IMP - PSE - front to back - monotonic increasing Stack
+======================================================
+Same as PSE solution
+1 difference is we can remove only k digits, so for every stack.pop() do k--, and break the while when k == 0
+1. PSE with k tracking
+    traverse string using index or num.toCharArray
+    while (!stack.isEmpty() && k > 0 && stack.peek() > digit) 
+    pop, k--
+2.  if k > 0, k still greater than 0, some stack peek values are == digit , stack.peek() == digit
+    we need to remove them
+3. pop everything from stack, add to stringBuilder, reverse sb
+4. Remove leading zeroes from sb, 
+    while(sb.length() > 1 && sb.charAt(0) == '0'){
+            sb.deleteCharAt(0);
+    }
+======================================================
+
 Front to back Pushing Increasing order elements to the stack - from top to bottom the stack will be monotonically decreasing
         /
       /
@@ -35,7 +52,7 @@ class Solution {
             index++;
         }
         
-        /*Ending number is greater, or last numbers are equal and ke havent deleted all k
+        /*Ending number is greater, or last numbers are equal and we havent deleted all k
         number of characters*/
         //This is for cases like "112" and we have to delete 1 char, which has to be last
         
