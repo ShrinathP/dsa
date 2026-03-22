@@ -2,12 +2,28 @@
 Given an array of integers heights representing the histogram's bar heights where the width of each bar is 1, 
 return the area of the largest rectangle that can be formed in the histogram.
 
+
+NOTE IMP - Same as Sum of subarray minimums all sizes - 018a
+------------------------------------------------------------
+
+Steps- 
+1. IMP - Ask question - Hey element - you're smaller for how much WindowSize
+2. use PSE + NSE to get windowSize, 2 arrays pse, nse, etc, etc
+3. once you find pse, nse then, for each i, 
+    - find windowSize, windowSize = nse[i] - pse[i] - 1, 
+    - find currRectangleArea = currHeight * windowSize
+4. Maintain a maxArea, update maxArea = Math.max(maxArea, currRectangleArea)
+------------------------------------------------------------
+
+
 Striver explanation - chatgpt soln
 Max Area at the current a[i] equals to 
 height = a[i]
 width  = nse - pse - 1
 nse - next occurence of smaller than current height
 pse - previous occurence of smaller than current height
+
+
 
 PSE
 From front to back, maintain 

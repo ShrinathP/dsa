@@ -1,6 +1,7 @@
 NGE - back to front - monotonically decreasing stack
 ====================================================
 Stack.peek < currVal - remove it
+ANYTHING WHICH IS SMALLER THAN CURRENT ALREADY IN THE STACK - REMOVE IT
 
 Light Pole Visualization
                                  |
@@ -14,9 +15,27 @@ Light Pole Visualization
 Stack fills from 1 - right - anything that is smaller than currValue - remove it
 
 
+PGE - front to back - monotonically decreasing stack
+====================================================
+Stack.peek < currVal - remove it
+ANYTHING WHICH IS SMALLER THAN CURRENT ALREADY IN THE STACK - REMOVE IT
+
+Light Pole Visualization
+                     
+|                    
+|    |                        
+|    |       |       
+|    |       |        |          
+|____|_______|________|__________|____
+1    2       3        4          5
+
+Stack fills from 1 - right - anything that is smaller than currValue - remove it
+
+
 PSE - front to back - monotonically increasing stack
 ====================================================
 Stack.peek  > currVal - remove it
+ANYTHING WHICH IS GREATER THAN CURRENT ALREADY IN THE STACK - REMOVE IT
 
 Light Pole Visualization
                                  |
@@ -27,3 +46,12 @@ Light Pole Visualization
 |____|_______|________|__________|____
 1    2       3        4          5
 Stack fills from 1 - left - anything that is larger than currValue - remove it
+
+
+NSE - back to front - monotonically increasing stack
+====================================================
+Stack.peek > currVal - remove it
+\
+  \
+    \
+      \

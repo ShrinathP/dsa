@@ -1,0 +1,11 @@
+
+Similar on the lines of Stack
+
+Sliding window minimum - Deque monotonically increasing queue
+Remove from front for window size overflow
+Check back for queue.peekLast() > curr, remove
+
+Sliding window maximum - Deque monotonically decreasing queue
+Remove from front for window size overflow
+Check back for queue.peekLast() < curr, remove
+

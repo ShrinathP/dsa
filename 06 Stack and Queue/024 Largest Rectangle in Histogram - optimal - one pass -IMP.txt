@@ -1,0 +1,99 @@
+/*
+Striver explanation - chatgpt soln
+
+
+
+========================================================================
+//IMP: we pop and get the height, peek and get the prev index
+
+More precise:
+1. we are detecting NSE and then computing area using PSE + NSE
+2. Similar to PSE solution, maintain an monotonic increasing stack
+3. Modifications - Traverse from i to n, with n included as we need to calculate area for the last bar as well, height[n] == 0
+  (to know the NSE of last bar)
+4. Instead of blindly popping out the stack.peek() > currHeight, before popping out
+    we calculate area using, 
+      width =  currIndex - stack.peek()index - 1; if stack.isEmpty(), width = i
+      height = stack.peek()height
+5. this we do for every pop
+
+Light Pole Visualization
+             |                   
+     |       |                  
+     |       |                  
+     |       |        |          |
+|    |       |        |          |
+|____|_______|________|__________|____
+1    5       6        3          3
+0    1       2        3          4
+
+For 3, currHeight < stack.peek() 6; we pop 6, calc width = 3-2 = 1 * 6(height)
+For 3, currHeight < stack.peek() 5; we pop 5, calc width = 3-1 = 2 * 5(height)
+Now we push 3, so stack has 1,3
+
+========================================================================
+
+
+
+
+/*
+TC
+Final Time Complexity:
+O(n) for traversing the array.
+O(n) for push and pop operations (since each element is pushed and popped at most once).
+Thus, the overall time complexity is O(2n) ~ O(n).
+*/
+
+
+import java.util.*;
+
+public class LargestRectangleHistogram {
+
+    public int largestRectangleArea(int[] heights) {
+        int n = heights.length;
+        Stack<Integer> stack = new Stack<>();
+        int maxArea = 0;
+        
+        // Traverse through all bars of the histogram, and n
+        for (int i = 0; i <= n; i++) {
+            
+            // if i reaches n, height = 0
+            // for last remaining bar, i.e. n-1, 
+            // IMP change, above will trigger calc area for last remaining bar in while loop
+            int currHeight = (i == n) ? 0 : heights[i];
+
+            // Maintain monotonic increasing stack
+            // Calculate the area for bars in the stack, when popped
+            while (!stack.isEmpty() && currHeight < heights[stack.peek()]) {
+                int height = heights[stack.pop()]; 
+                //IMP: we pop and get the height, peek and get the prev index
+                
+                // If stack is empty, it means the width spans from the beginning to the current index (i)
+                int width;
+                if (stack.isEmpty()) {
+                    width = i; // All previous were taller
+                } else {
+                    width = i - stack.peek() - 1;
+                }
+                
+                //Calc Area
+                maxArea = Math.max(maxArea, height * width);
+            }
+            
+            // Push the current bar's index to the stack
+            stack.push(i);
+
+        }
+        
+        return maxArea;
+    }
+
+    // Test the solution
+    public static void main(String[] args) {
+        LargestRectangleHistogram solution = new LargestRectangleHistogram();
+        
+        int[] heights = {2, 1, 5, 6, 2, 3};
+        
+        System.out.println(solution.largestRectangleArea(heights));  // Output: 10
+    }
+}

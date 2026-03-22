@@ -1,6 +1,6 @@
 /*
 Maximal Rectangle
-Pre-requisite - Largest Rectangle in Histogram
+Pre-requisite - Based on Largest Rectangle in Histogram
 
 Given a 2d binary matrix mat[][], the task is to find the maximum size rectangle binary-sub-matrix with all 1's. 
 
@@ -11,9 +11,26 @@ Using Largest Rectangular Area in a Histogram Approach
 
 Time complexity:- O(n*m) Time and O(m) Space
 
+===========================================================================
+IMP: - reset height if column bottom is 0 (currentrow column)
+Steps
+=====
+1. For in for loop
+2. For i
+        For j
+            Compute heights array (from 0 to current row)
+            if matrix[i][j] == 1, heights[j] = heights[j] + 1
+            else if matrix[i][j] == 0, heights[j] = 0; IMP: - reset height if column bottom is 0 (currentrow column)
+
+        Now we have heights array filled
+        Maintain maxArea variable maxArea = Math.max(maxArea, largestRectangleArea(heights))
+        largestRectangleArea same logic of "Largest Rectangle in Histogram" 024 question
+3. return maxArea
+===========================================================================
+
 For each row, 
 - traverse through columns 
-- and find the column height
+- and find the column height from 0 to current row
 - fill the heights array = heights[j]
 - Compute the largestRectangle Area at that level
 */

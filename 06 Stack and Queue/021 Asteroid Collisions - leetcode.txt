@@ -13,13 +13,28 @@ Asteroids collide if they are moving towards each other (right meets left).
   -  If they are the same size, both explode.
   - Asteroids moving in the same direction never collide.
 
-Only if the current stack peek is lesser than or equals to the absolute value of negative element to be added, 
-we can pop the current stack peek, otherwise the current stack peek stays
-if(stack.peek()> 0 && a<0) {
-  stack.peek() <= abs(a) , then only need to pop
-}
+=============================================================================================
+IMP
+Conditions to assess
+Case 1: stack.peek() < 0 and current < 0 - both moving left wont collide
+Case 2: stack.peek() < 0 and current > 0 - They are moving away from each other → no collision
+Case 3: stack.peek() > 0 and current > 0 - both moving left wont collide
+Case 4: stack.peek() > 0 and current < 0 - both moving towards each other - WILL COLLIDE
+        collision condition -> while (!stack.isEmpty() && stack.peek() > 0 && curr < 0)
 
-Only if the current stack peek is greater than equal to abs(-ve a element) we are able to explode the a
+
+1. Maintain a stack, run for loop on asteroids, init exploded = false
+2. check if stack.peek is > 0 and currVal is < 0
+while (!stack.isEmpty() && stack.peek() > 0 && curr < 0)
+    if yes, then one of this explodes
+    - if stack.peek < -currVal -> stack.peek explodes i.e. stack.pop, 
+        - continue to next stack.peek
+    - if stack.peek > -currVal -> currVal explodes, exploded = true
+    - if stack.peek == -currVal -> both explode; stack.pop, exploded = true
+3. if currVal not exploded we can add curr to stack, if (!exploded) {stack.push(currVal)}
+
+=============================================================================================
+
 */
 
 
