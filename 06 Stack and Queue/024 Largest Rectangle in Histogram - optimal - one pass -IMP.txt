@@ -6,17 +6,17 @@ Striver explanation - chatgpt soln
 ========================================================================
 //IMP: we pop and get the height, peek and get the prev index
 
-More precise:
-1. we are detecting NSE and then computing area using PSE + NSE
-2. Similar to PSE solution, maintain an monotonic increasing stack
-3. Modifications - Traverse from i to n, with n included as we need to calculate area for the last bar as well, height[n] == 0
+More precise: Modified PSE to find NSE as well
+1. Similar to PSE solution, maintain an monotonic increasing stack
+2. Modifications - Traverse from i to n, with n included as we need to calculate area for the last bar as well, height[n] == 0
   (to know the NSE of last bar)
-4. Instead of blindly popping out the stack.peek() > currHeight, before popping out
+3. Instead of blindly popping out the stack.peek() > currHeight, before popping out
     we calculate area using, 
       width =  currIndex - stack.peek()index - 1; if stack.isEmpty(), width = i
       height = stack.peek()height
-5. this we do for every pop
+4. this we do for every pop
 
+Example
 Light Pole Visualization
              |                   
      |       |                  
