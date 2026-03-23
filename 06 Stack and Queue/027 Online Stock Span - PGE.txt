@@ -1,15 +1,19 @@
 /*
+Maintain a monotonic decreasing stack - front to back
 Striver explanation, chatgpt
 https://www.geeksforgeeks.org/dsa/the-stock-span-problem/
 The stock span problem is a financial problem where we have a series of daily price quotes for a stock denoted by an array arr[] and the task is to calculate the span of the stock's price for all days. 
 The span of the stock's price on ith day represents the maximum number of consecutive days leading up to ith day (including the current day) where the stock's price was less than or equal to its price on day i.
 
 View as a height of integer array,
-Previous greater element - solution
+Same as Previous greater element - solution
+Maintain a monotonic decreasing stack - front to back
 
 Maximum Consecutive days for which the price of stock is less than equal to the current price
+As we need to find the max consecutive previous days for which current element is greater
+we need to find the Previous Greater element to get the span length from PGE to current element
+Hey element, youre greater for how much of the previous elements ?
 
-Maintain a decreasing adding sequence, (so monotonic increasing stack from top of the stack to bottom)
 
 \
   \
@@ -17,7 +21,14 @@ Maintain a decreasing adding sequence, (so monotonic increasing stack from top o
       \
         \
 
-For any peek less than current price, we need to pop, keep popping and calculate the days 
+Same as PGE - 
+monotonic decreasing stack front to back - 
+1. Traverse from i to n
+2. pop if stack.peek() is < currVal
+   while(stack.isEmpty() && prices[stack.peek()] <= prices[i])
+   This while will stop when we reach PGE, (Prev greater value)
+3. Calculate span - from currVal to PGE i.e. i - stack.peek()
+4. Push currVal/currIndex to stack
 */
 
 
@@ -39,7 +50,10 @@ public class StockSpan {
                 stack.pop();
             }
             
-            // If the stack is empty, it means the price is higher than all previous prices, so span is i+1
+            // Now the next peek will be PGE of current element at i
+            //Span length calculation
+            // If the stack is empty no PGE current element is greater from index 0, span = i+1, 
+            //   else i - stack.peek()
             span[i] = (stack.isEmpty()) ? i + 1 : i - stack.peek();
             
             // Push the current index onto the stack
