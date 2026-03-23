@@ -3,6 +3,23 @@ Striver Explanation
 Problem Summary:
 Customers pay with $5, $10, or $20 bills. 
 Each lemonade costs $5. Return true if you can provide change to every customer in order, otherwise false.
+
+
+=======================================================================
+When someone gives $20, you have two options:
+Option A:
+Give: 10 + 5
+Option B:
+Give: 5 + 5 + 5
+-> Greedy Insight - Preserve smaller denominations for future flexibility
+----------------------------------------------------------------------
+So USe Option A always:
+Use larger bills first (10)
+Save smaller bills (5)
+You only care about:
+“Best way to survive future customers”
+=======================================================================
+
 */
 
 public class Solution {
