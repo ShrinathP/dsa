@@ -20,6 +20,20 @@ You only care about:
 “Best way to survive future customers”
 =======================================================================
 
+
+
+08 greedy playlist/002 Lemonade Change.txt
+-> Greedy Insight - Preserve smaller denominations for future flexibility
+Initialize 3 variables, five, ten, and twenty
+If five -> increase five++
+If ten -> if (five == 0) return false
+five- - , ten++
+else -> its twenty 
+if ten > 0 && five > 0 , ten--, five–  (greedy insight)
+else if five >= 3, five = five - 3
+else return false
+
+
 */
 
 public class Solution {
