@@ -1,1 +1,108 @@
 
+Shortest Job first Preemptive and Non Preemptive scheduling
+https://www.geeksforgeeks.org/operating-systems/preemptive-and-non-preemptive-scheduling/
+
+Non Preemptive - the process arrives and once started, will be executed fully before executing the next process, if there is no process idletime
+Processes have - arrival time, burst time (execution time)
+SJF - 
+
+================================================================================================================================================
+1. Add all arrived processes
+2. Pick ONLY ONE process - as there is space for only 1 execution
+3. Repeat - IMP - in the next iteration (step 1) there may be a chance that some newly added process has the least burst time
+
+sort processes by arrival time, sort PQ by burst time
+get hold of the process that arrived first. 
+    - if there are multiple processes that arrived at the same time
+    - sort them based on their burst time
+    - execute the one with the least burst time
+    - while completed < n
+        - add all processes to Pq that have arrivalTime < time
+    - if !pq.isEmpty() poll and add burst time time += bursttime, completed++
+    - else pq.isEmpty() Idle time, no process arrived yet - add arrival time -> time += arrivalTime
+================================================================================================================================================
+
+import java.util.*;
+
+class Process {
+    int pid;
+    int arrivalTime;
+    int burstTime;
+    int completionTime;
+    int waitingTime;
+    int turnaroundTime;
+
+    Process(int pid, int at, int bt) {
+        this.pid = pid;
+        this.arrivalTime = at;
+        this.burstTime = bt;
+    }
+}
+
+public class SJF_L3 {
+
+    public static void main(String[] args) {
+
+        Process[] arr = {
+            new Process(1, 0, 7),
+            new Process(2, 2, 4),
+            new Process(3, 4, 1),
+            new Process(4, 5, 4)
+        };
+
+        int n = arr.length;
+
+        // Step 1: Sort by arrival time
+        Arrays.sort(arr, Comparator.comparingInt(p -> p.arrivalTime));
+
+        // Step 2: Min heap based on burst time
+        PriorityQueue<Process> pq =
+            new PriorityQueue<>(Comparator.comparingInt(p -> p.burstTime));
+
+        int time = 0;
+        int i = 0;
+        int completed = 0;
+
+        while (completed < n) {
+
+            // Add all arrived processes
+            while (i < n && arr[i].arrivalTime <= time) {
+                pq.offer(arr[i]);
+                i++;
+            }
+
+            // if priorityQueue is not empty, poll (will get the least burst time)
+            //and process
+            if (!pq.isEmpty()) {
+                Process curr = pq.poll();
+
+                time += curr.burstTime;
+                curr.completionTime = time;
+
+                curr.turnaroundTime = curr.completionTime - curr.arrivalTime;
+                curr.waitingTime = curr.turnaroundTime - curr.burstTime;
+
+                completed++;
+            } else {
+                // CPU idle → jump to next arrival
+                time = arr[i].arrivalTime;
+            }
+        }
+
+        // Print result
+        double totalWT = 0, totalTAT = 0;
+
+        System.out.println("PID\tAT\tBT\tCT\tWT\tTAT");
+        for (Process p : arr) {
+            System.out.println(p.pid + "\t" + p.arrivalTime + "\t" +
+                               p.burstTime + "\t" + p.completionTime + "\t" +
+                               p.waitingTime + "\t" + p.turnaroundTime);
+
+            totalWT += p.waitingTime;
+            totalTAT += p.turnaroundTime;
+        }
+
+        System.out.println("\nAverage WT: " + (totalWT / n));
+        System.out.println("Average TAT: " + (totalTAT / n));
+    }
+}
