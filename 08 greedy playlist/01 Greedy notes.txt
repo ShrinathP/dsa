@@ -1,0 +1,182 @@
+Greedy Strategy:
+Always try to satisfy the least greedy child with the smallest sufficient cookie.
+Sort both arrays, and use two pointers.
+
+A greedy algorithm means:
+👉 “At every step, pick the locally best choice, and it will lead to a globally optimal solution.”
+No backtracking, no DP table—just commit and move on.
+
+Greedy Choice Property: 
+At each step, making the choice that appears best at the moment (the locally optimal choice)
+leads to an overall optimal solution (the global optimum). 
+A key sign is that once a choice is made, it never needs to be reconsidered or undone later (no backtracking is necessary).
+
+Optimal Substructure: 
+The optimal solution to the entire problem can be built from the optimal solutions of its smaller subproblems. 
+The problem can be broken down into smaller, self-similar parts. 
+
+
+
+# Greedy Algorithms — How to Identify & Solve
+
+## 🧠 What is a Greedy Problem?
+
+A greedy algorithm means:
+
+> At every step, pick the **locally best choice**, hoping it leads to a **globally optimal solution**.
+
+- No backtracking  
+- No revisiting decisions  
+- No full state exploration  
+
+---
+Look for these signals 👇
+
+## 🔍 How to Identify Greedy Problems
+
+### 1. 🧩 Optimization (min / max)
+- Minimum intervals
+- Maximum profit
+- Minimum jumps
+- Maximum activities
+
+➡️ If problem asks **min/max**, greedy is a candidate.
+
+---
+
+### 2. ⏱️ Irreversible Decisions
+- Once you pick, you don’t reconsider  
+- No undo/backtrack  
+
+---
+
+### 3. 📊 Sorting simplifies the problem (VERY IMPORTANT)
+- Sort → problem becomes easy
+
+Examples:
+- Sort by end time → interval scheduling  
+- Sort by value/weight → knapsack variant  
+- Sort by start time → merging  
+
+---
+
+### 4. 🎯 “Pick best option right now”
+Keywords:
+- Earliest finishing  
+- Smallest / largest  
+- Closest  
+- Least cost  
+
+---
+
+### 5. ❌ No overlapping subproblems
+- If no repeated states → likely NOT DP  
+
+---
+
+## 🔥 Classic Greedy Patterns
+
+### 1. Interval Problems
+**Pattern:**
+- Sort by end time  
+- Pick non-overlapping intervals  
+
+**Rule:**
+> Always pick the interval that ends earliest  
+
+---
+
+### 2. Jump Game
+**Rule:**
+> Always jump as far as possible  
+
+---
+
+### 3. Coin Change (Greedy version)
+⚠️ Works only for specific coin systems  
+
+**Rule:**
+> Always take largest denomination first  
+
+---
+
+### 4. Gas Station
+**Rule:**
+- If total gas ≥ total cost → solution exists  
+- Reset start when tank < 0  
+
+---
+
+### 5. Fractional Knapsack
+**Rule:**
+- Sort by value/weight ratio  
+- Take highest ratio first  
+
+---
+
+### 6. Merge Intervals
+**Rule:**
+- Sort by start time  
+- Merge overlaps  
+
+---
+
+### 7. Huffman Coding / Rope Merge
+**Rule:**
+> Always combine smallest elements first (use heap)  
+
+---
+
+## ⚠️ When Greedy Fails
+
+### ❌ Future depends on past
+- Example: 0/1 Knapsack → use DP  
+
+### ❌ Need to try all possibilities
+- Subsets, permutations → backtracking  
+
+### ❌ Overlapping subproblems
+- LCS, DP problems  
+
+---
+
+## 🧠 Intuition Trick
+
+Ask:
+> “If I make the best choice NOW, can it hurt me later?”
+
+- If **NO** → Greedy works  
+- If **YES** → likely DP  
+
+---
+
+## 💡 Example Thinking
+
+**Problem:** Max number of meetings in one room  
+
+- Meetings overlap → conflict  
+- Want max count  
+- Ending early gives more space  
+
+➡️ Greedy choice:
+> Pick meeting with earliest end time  
+
+---
+
+## 🚀 How to Get Comfortable
+
+1. Memorize patterns  
+2. Solve 20–30 standard greedy problems  
+3. Train pattern recognition  
+
+---
+
+## ⚡ Quick Cheat Sheet
+
+| Signal | Meaning |
+|------|--------|
+| Min/max | Greedy candidate |
+| Sorting helps | Strong signal |
+| No backtracking | Greedy |
+| Local best works | Greedy |
+| Overlapping subproblems | Use DP |
