@@ -1,9 +1,32 @@
 
 
 //2 solutions
-//we are being greedy and finding the maximum reachable position
+/*
+----------------------------------------------------------------------------------------
+IMP - Greedy Insight - We are being greedy and finding the maximum reachable position
+
+1st solution - extendable to jump game ii as well
+More intuitive 
+IMP: Ask How far can I go? from current position
+1. Initilize reachable = 0, n = nums.length
+2. Run a for loop - front to back
+    2.1 If reachable falls below current index, we cant reach
+        - If reachable < i; return false 
+    2.2 compute reachable = Math.max(reachable, i + nums[i])
+
+2nd solution
+goal/lastGoodIndexPosition way
+Traverse from back, At every point, check if this is goal is reachable from prev i
+1. Init goal = lastGoodIndexPosition = nums.length - 1
+2. Run for loop - back to front -> from i = nums.length - 2; i>=0; i--
+    if i + nums[i] >= goal; //this is reachable, move goal back to i
+    goal = i
+
+----------------------------------------------------------------------------------------
+
+*/
+
 //Striver explanation and solution
-//2nd one better
 
 
 //Tech dose solution
@@ -47,6 +70,7 @@ class Solution {
     //Step 3: If yes - reassign the lastGood position and go back
     //Do until lastGood becomes 0
     */
+//goal = lastGoodIndexPosition way
     public boolean canJump(int[] nums) {
         
         int lastGoodIndexPosition = nums.length-1;
