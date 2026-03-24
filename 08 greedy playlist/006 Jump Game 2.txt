@@ -6,19 +6,21 @@ Cleaner Greedy (Always O(n)):
 
 */
 
-  //Algorithms made easy
+  
     /*
-    1. Create a variable end to track the end from the current index
-    2. Create a farthest variable which will track the farthest 
-    jump that can be done considering numbers from i to end
-    eg [2, 3, 1, 1, 4, 8, 1, 2, 1, 1, 3]
-        i     end
-    3. farthest will store the maxi jump which can be done till end is reached
-    4. Iterate over the array and
-        keep updating the farthest value
-    5. when i reaches end, 
-        update jump number, 
-        update end to farthest
+//Algorithms made easy
+
+IMP - Min Jumps to reach end
+Greedy strategy -
+- At each step, update the farthest index reachable.
+- When you reach the end of the current jump range, increment jumps and update the range to farthest.
+
+    1. init -> jumps=0, farthest=0, end=0;
+    2. Run a for loop from i=0 to nums.length - 1
+        -> compute farthest = Math.max(farthest, i + nums[i])
+        -> when i reaches end, 
+            - update jump number, 
+            - update end to farthest
         
     */
 
