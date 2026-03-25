@@ -2,22 +2,10 @@
 
 Try to take up faster meetings  - meetings with earlier end times
 
-Step 1
-Create a meeting ArrayList and fill the meeting objects
 
-Step 2
-Sort the meetings by 
-1. their finishing time, if finishing time is same then by position
-2. and the least time taken for the meeting to complete
-
-if same start and finishing time occur
-take the one at first index first and then later
-
-Step 3
-Add the first meeting to the Answer list (as this will have the least end time)
-create a limit variable which points to the end of 1st meeting added
-Loop through the meetings array
-and check if start is greater than limit 
+✅ Short Answer:
+IMP only sort by asc end time
+No, you don’t need to sort by start time if end times are equal.
 
 
 
@@ -60,10 +48,6 @@ class meetingComparator implements Comparator<meeting> {
     @Override
     public int compare(meeting o1, meeting o2) {
         if(o1.end < o2.end){
-            return -1;}
-        else if (o1.end > o2.end){
-            return 1;}
-        else if(o1.pos < o2.pos){
             return -1;}
         return 1;
     }
