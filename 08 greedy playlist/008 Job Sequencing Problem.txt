@@ -15,6 +15,7 @@ Strategy:
 - Try to schedule it at the latest available time slot ≤ deadline.
 - Use a slot array to keep track of occupied time slots.
 
+Steps
 1. Sort all jobs by descending order of profit (b.profit - a.profit)
 2. Find maxDeadline ot create slots array
 3. Create time slots array size = maxDeadline+1 (index 1 to maxDeadline),  
