@@ -65,8 +65,8 @@ public class NMeetings {
         }
 
         // Sort by end time (if equal, by position)
-        meetings.sort((a, b) -> a.end != b.end ? a.end - b.end : a.pos - b.pos);
-//IMP - you dont need to sort by start pos, if ends are same
+        meetings.sort((a, b) -> a.end != b.end ? a.end - b.end : a.start - b.start);
+//IMP - you dont need to sort by start, if ends are same
 
         //can keep an answer arraylist as well // ArrayList<Integer> answer = new ArrayList<>();
         //adding the first meeting and getting its end
