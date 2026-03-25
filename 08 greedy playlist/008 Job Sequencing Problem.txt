@@ -10,19 +10,20 @@ IMP
 Logic: Try to Perform most amount of jobs on the deadline(/later) days, so that previous days can be kept empty for other jobs
 Use Descending order of deadlines to perform jobs
 
-
 Strategy:
 - Greedy choice: Always pick the most profitable job first.
 - Try to schedule it at the latest available time slot ≤ deadline.
 - Use a slot array to keep track of occupied time slots.
 
-// Step 1: Sort all jobs by descending order of profit
-// Step 2: Find maximum deadline to size the time slots array
-// Step 3: Create time slots array (index 1 to maxDeadline), -1 = free, fill with -1 , // All slots are initially free
-For every job
-// Step 4: Try to schedule each job
-//         Try all slots from job.deadline to 1, if empty assign and move to next job
-// Step 5: Return result
+1. Sort all jobs by descending order of profit (b.profit - a.profit)
+2. Find maxDeadline ot create slots array
+3. Create time slots array size = maxDeadline+1 (index 1 to maxDeadline),  
+Array.fill with -1 , // All slots are initially free
+4. For every job
+    Possible places in slot array are job.deadline to 1 (do the job as late as possible)
+    - Traverse from back to front - in the slot array - from job.deadline to 0
+    - i.e. for(int i=job.deadline; i>0; i++)
+        - if (slots[i] == -1), fill job.id, break;  
 */
 
 import java.util.*;
@@ -47,8 +48,9 @@ public class JobSequencing {
 
         // Step 2: Find maximum deadline to size the time slots array
         int maxDeadline = 0;
-        for (Job job : jobs)
+        for (Job job : jobs) {
             maxDeadline = Math.max(maxDeadline, job.deadline);
+        }
 
         // Step 3: Create time slots array (index 1 to maxDeadline), -1 = free
         int[] slots = new int[maxDeadline + 1];
