@@ -18,6 +18,20 @@ The greedy approach here is to merge as many overlapping intervals as possible w
 // Step 2: Merge all overlapping intervals
 // Step 3: Add remaining intervals after newInterval
 
+/*
+Steps
+1. Init - result arrayList
+2. add all intervals where currInterval end < newInterval start
+    - while i<n and intervals[i][1] < newInterval[0]
+3. HERE Now we have overlapping condition - 
+    - merge while currentInterval start < newInterval end
+    - while i < n && currInterval[i][0] < newInterval[1]
+        - create mergedNewInterval
+    - add mergedNewInterval
+4. HERE Now we have the currInterval start crossing newInterval end
+    - add the rest of intervals
+*/
+
 import java.util.*;
 
 public class Solution {
@@ -26,12 +40,15 @@ public class Solution {
         
         int i = 0, n = intervals.length;
 
+        // while end of currInterval is < start of newInterval, keep adding
         // Step 1: Add all intervals ending before newInterval starts
         while (i < n && intervals[i][1] < newInterval[0]) {
             result.add(intervals[i]);
             i++;
         }
 
+        // HERE Now we have an overlapping interval
+        // while start of currInterval < newInterval end, keep merging
         // Step 2: Merge all overlapping intervals - where start is less then the new interval end
         while (i < n && intervals[i][0] <= newInterval[1]) {
             newInterval[0] = Math.min(newInterval[0], intervals[i][0]);
@@ -40,6 +57,7 @@ public class Solution {
         }
         result.add(newInterval);
 
+        // HERE Now we have the currInterval start crossing newInterval end
         // Step 3: Add remaining intervals after newInterval - add rest intervals
         while (i < n) {
             result.add(intervals[i]);

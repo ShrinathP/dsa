@@ -16,13 +16,17 @@ Objective: Calculate the minimum number of platforms needed so that no train has
 4. Track the maximum number of platforms required at any point.
 
 
+------------------------------------------------------------------------------------------------
 💡 Explanation:
 1. Sort the arrival[] and departure[] arrays.
 2. Two pointers (i for arrival[] and j for departure[]):
     - Track the current train arrival and current train departure.
-3. If a train arrives before the previous train departs, we need an extra platform.
-4. If a train departs before the next one arrives, free up a platform.
+2. Run while i < n
+3. If a train arrives before the previous train departs, we need an extra platform; move arrival arr; platforms++
+4. If a train departs before the next one arrives, free up a platform; move departure arr; platforms--
 5. Track the maximum number of platforms required during the process.
+
+------------------------------------------------------------------------------------------------
 */
 
 
