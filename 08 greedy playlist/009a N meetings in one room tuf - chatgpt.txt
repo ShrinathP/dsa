@@ -38,6 +38,16 @@ Arrays start[] and end[] of n meetings.
 eg 1,5 and 4,5, both end at 5, we dont care, can use any of it
 ==
 
+--------------------------------------------------------------------
+1. meeting arrayList of Meeting objs, fill start and end times of each
+2. Sort by end times ascending
+3. Init count =1, lastEnd = meetings.get(0).end - take first meeting, 
+4. Run Loop from i=1 to n
+    If ith start > lastEnd -> can be taken
+    Increase count; move lastEnd = meetings.get(i).end
+5. Return count
+--------------------------------------------------------------------
+
 
 Time Complexity
 O(N) to traverse,+ O(NlogN) to sort, + O(N) to traverse finising

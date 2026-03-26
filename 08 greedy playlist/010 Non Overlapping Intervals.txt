@@ -28,17 +28,9 @@ class Solution {
             return 0;
         }
 
-        // Sort intervals by their ending points.
-        // If ending points are the same, sort by starting points.
-        Arrays.sort(intervals, new Comparator<int[]>() {
-            @Override
-            public int compare(int[] a, int[] b) {
-                if (a[1] != b[1]) {
-                    return Integer.compare(a[1], b[1]);
-                }
-                return Integer.compare(a[0], b[0]);
-            }
-        });
+        // Sort intervals by end time in ascending order
+        // This greedy approach helps us keep intervals that end earlier
+        Arrays.sort(intervals, (a, b) -> a[1] - b[1]);
 
         int end = intervals[0][1]; // The end point of the last chosen non-overlapping interval
         int count = 1; // Number of non-overlapping intervals found

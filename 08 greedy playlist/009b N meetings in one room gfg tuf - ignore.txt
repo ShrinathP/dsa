@@ -52,6 +52,7 @@ class meetingComparator implements Comparator<meeting> {
         return 1;
     }
 }
+
 //Meeting class
 class Meeting {
     static void maxMeetings(int start[], int end[], int n) {
