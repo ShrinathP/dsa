@@ -1,0 +1,44 @@
+https://www.geeksforgeeks.org/policemen-catch-thieves/
+2 ways
+2 pointer way
+/*
+The idea is to use two pointers (both begin from left side): one to keep track of  policemen and the other for thieves. 
+We traverse the array while maintaining these pointers. If a policeman and a thief are within the allowed range k, the thief is caught, and both pointers move forward.
+ If the thief is too far left, we move the thief pointer forward otherwise policeman is too far left, we move the policeman pointer forward.
+*/
+
+function catchThieves(arr, k) {
+    let n = arr.length;
+    let i = 0, j = 0;
+    let count = 0;
+
+    while (i < n && j < n) {
+        
+        // Move i to the next policeman
+        while (i < n && arr[i] !== 'P') i++;
+
+        // Move j to the next thief
+        while (j < n && arr[j] !== 'T') j++;
+
+        // If both policeman and thief exist and are within range k
+        if (i < n && j < n && Math.abs(i - j) <= k) {
+            count++;
+            i++;
+
+            j++;
+        } 
+        else if (j < n && j < i) {
+            j++;
+        } 
+        else if (i < n && i < j) {
+            i++;
+        }
+    }
+    return count;
+}
+
+// Driver Code
+const k = 1;
+const arr = ['P', 'T', 'T', 'P', 'T'];
+
+console.log(catchThieves(arr, k));

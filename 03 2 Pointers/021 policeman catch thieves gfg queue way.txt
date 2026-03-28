@@ -1,0 +1,76 @@
+https://www.geeksforgeeks.org/policemen-catch-thieves/
+2 ways
+2 pointers and Using Queue
+
+Queue
+The idea is to maintain two queues for police and thief indices. 
+Traverse the array, enqueue positions, and match from the front if the distance ≤ k. Dequeue accordingly to count maximum catches.
+Steps
+Traverse the array and enqueue the index of each police officer or thief into their respective queues. 
+Then, repeatedly compare the front elements of both queues. 
+If the distance between the police and the thief at the front is less than or equal to k, we catch the thief and dequeue both. 
+If the police index is smaller, it means this policeman cannot catch the thief at the front, so we dequeue the police. Otherwise, if the thief is too far left, we dequeue the thief.
+
+// Queue implementation using front pointer (O(1) enqueue & dequeue)
+class Queue {
+    constructor() {
+        this.arr = [];
+        this.front = 0;
+    }
+
+    enqueue(x) {
+        this.arr.push(x); // O(1)
+    }
+
+    dequeue() {
+        if (this.isEmpty()) return null;
+        return this.arr[this.front++]; // O(1)
+    }
+
+    peek() {
+        return this.isEmpty() ? null : this.arr[this.front];
+    }
+
+    isEmpty() {
+        return this.front >= this.arr.length;
+    }
+}
+
+// Function to catch thieves
+function catchThieves(arr, k) {
+    // Keep track of police and thieve
+    let police = new Queue();
+    let thieve = new Queue();
+    let c = 0;
+    let n = arr.length;
+
+    for (let i = 0; i < n; i++) {
+        if (arr[i] === 'P') {
+            police.enqueue(i);
+        } else {
+            thieve.enqueue(i);
+        }
+
+        // process the thieve and police
+        while (!police.isEmpty() && !thieve.isEmpty()) {
+            let p = police.peek();  
+            let t = thieve.peek();   
+
+            if (Math.abs(p - t) <= k) {
+                c++;
+                police.dequeue();
+                thieve.dequeue();
+            } else if (p < t) {
+                police.dequeue();
+            } else {
+                thieve.dequeue();
+            }
+        }
+    }
+    return c;
+}
+
+// Driver code
+let k = 1;
+let arr = ['P', 'T', 'T', 'P', 'T'];
+console.log(catchThieves(arr, k));
