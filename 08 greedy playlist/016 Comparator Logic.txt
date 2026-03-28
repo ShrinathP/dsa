@@ -1,0 +1,38 @@
+/*
+================================================
+//COMPARATOR LOGIC
+
+Mental Model (THIS WILL CLICK)
+------------------------------
+Just think:
+When do I want a to come before b?
+Then:
+Return -1 in that case
+
+if for desc we want r1 before r2
+if(r1 > r2) return -1
+
+if for asc we want r1 before r2
+if(r1 < r2) return -1
+
+For cleanliness
+---------------
+if (r1 < r2) return 1;
+else if (r1 > r2) return -1;
+else return 0;
+
+👉 Handles 3 cases properly:
+less
+greater
+equal ✅
+
+Rule to Remember
+----------------
+| Case                | Return |
+| ------------------- | ------ |
+| a should come first | -1     |
+| b should come first | 1      |
+| both equal          | 0      |
+
+================================================
+*/
