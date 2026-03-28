@@ -2,6 +2,11 @@
 //while traversiong from left to right, check if right is greater
 //while traversiong from right to left, check if the lefts are greater - if yes
     - math.max of current left or add just one to the right of the left
+
+----------------------------------------------------------------------------------------------------------------
+Exactly same as Candy Problem 014
+In second pass R to L, when ratings[i] > ratings[i+1]; we do candies[i] = Math.max(candies[i], candies[i+1] + 1)
+----------------------------------------------------------------------------------------------------------------
  
 public class Solution {
     public int candy(int[] ratings) {

@@ -3,6 +3,10 @@ The Minimum Number of Platforms problem is a common interview question, where yo
 Striver Explanation
 chatgpt code
 
+Greedy Strategy:-
+At any moment, reuse a platform if the earliest train has already departed; otherwise, allocate a new platform.
+
+
 ✅ Problem Explanation:
 Given two arrays:
 arrival[]: The arrival times of the trains.
