@@ -8,6 +8,18 @@ Count how many subsequences sum to K
 4. left and right functions call this recursive call
 5. return left + right
 
+STEPS - IMP
+================================================================================
+Same as prev, we don't have to print or return true/false, instead return 1 or 0
+1. when index = arr.length, if sum==k, return 1, base case return 0
+2. In both recur calls get these count values and return
+  int pick = recurMethod(index + 1, sum+arr[index], ds, arr, k)
+  int notPick = recurMethod(index + 1, sum, ds, arr, k)
+3. return the sum of pick and notPick ways 
+  return pick + notPick
+================================================================================
+
+
 ✅ Time & Space Complexity:
 Time: O(2^n) — all subsequences
 Space: O(n) recursion depth

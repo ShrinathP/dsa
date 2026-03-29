@@ -4,6 +4,18 @@
 ✅ Time & Space Complexity:
 Time: O(2^n) — each element is either picked or not
 Space: O(n) recursion + output subsequences
+
+==============================================================================================
+Same as prev
+in recurMethod maintain sum as well as k
+print when sum = k 
+recurMethod(index, sum, ds, arr, k)
+    - when index = arr.length and sum == k -> print current ds/subsequence, return
+    - pick n recur -> ds.add(arr[index]); recurMethod(index + 1, sum + arr[index], ds, arr, k)
+    - remove n recur -> ds.add(arr[index]); recurMethod(index + 1, sum, ds, arr, k)
+just  print when sum = k
+==============================================================================================
+
 */
 
 class Solution {

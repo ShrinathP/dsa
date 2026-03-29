@@ -1,0 +1,31 @@
+-- Explanation with recursion tree --
+
+                               []
+                    /                         \
+               [1] (P)                     [] (NP)
+            /           \              /            \
+      [1,2]          [1]        [2]              []
+     /     \        /    \     /    \          /     \
+[1,2,3] [1,2]  [1,3]  [1]  [2,3]  [2]      [3]      []
+  /   \    / \   / \    / \   / \    / \     / \      / \
+[1234][123][124][12][134][13][14][1][234][23][24][2][34][3][4][]
+
+
+How to read this
+Take ONE path:
+
+👉 Leftmost path (all picks)
+[] → [1] → [1,2] → [1,2,3] → [1,2,3,4]
+✔ Printed first
+
+👉 Then backtrack happens automatically
+From [1,2,3,4]:
+- go up to [1,2,3]
+- explore right branch (not pick 4)
+[1,2,3]
+
+👉 Then go up again
+From [1,2,3]:
+- backtrack to [1,2]
+- explore "not pick 3"
+- then pick 4

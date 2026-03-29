@@ -6,6 +6,16 @@ Modifications in 19b code - (Avoid future recursion calls)
 4. Put Non Pick method in if check == true, return true
 5. Else if nothing satisfied return false
 
+
+Steps
+=====================================================================================
+Same as prev Print when sum==k   
+when index = arr.length, if sum==k, print and  return true, base case return false
+Also in both recur calls check for true, if true return true, base case return false
+Check modified code
+=====================================================================================
+
+
 class Solution {
     public boolean printOneSubsequenceWithSumK(int[] arr, int k) {
         List<Integer> ds = new ArrayList<>();

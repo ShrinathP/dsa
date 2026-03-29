@@ -5,6 +5,24 @@ Java solution for printing all subsequences of an array or string using recursio
 
 // Printing Subsequences of an int[]
 
+
+/*
+======================================================================
+Cue -> DFS recursion -pick and recur, non pick and recur
+DFS traversal ->
+Go LEFT as deep as possible
+→ then come back (backtrack)
+→ then go RIGHT
+
+Steps:
+1. Init ds = ArrayList to hold current subsequence
+2. recurMethod(index, ds, arr), 
+    - when index = arr.length -> print current ds/subsequence, return
+    - pick and move ahead -> ds.add(arr[index]); recurMethod()
+    - remove and move ahead -> ds.add(arr[index]); recurMethod()
+======================================================================
+*/
+
 class Solution {
     public void printSubsequences(int[] arr) {
         List<Integer> ds = new ArrayList<>();
