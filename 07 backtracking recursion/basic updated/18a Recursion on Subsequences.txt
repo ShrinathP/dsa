@@ -50,6 +50,11 @@ class Solution {
 }
 
 //✅ For Strings:
+Use 
+For pick
+sb.append(s.charAt(index))
+For not Pick
+sb.deleteCharAt(sb.length() - 1)
 
 private void solve(int index, String s, StringBuilder sb) {
     if (index == s.length()) {
