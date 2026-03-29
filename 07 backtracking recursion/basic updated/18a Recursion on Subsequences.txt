@@ -21,6 +21,13 @@ Steps:
     - pick and move ahead -> ds.add(arr[index]); recurMethod()
     - remove and move ahead -> ds.add(arr[index]); recurMethod()
 ======================================================================
+//✅ For Strings:
+Use 
+For pick
+sb.append(s.charAt(index))
+For not Pick
+sb.deleteCharAt(sb.length() - 1)
+========================================================================
 */
 
 class Solution {
