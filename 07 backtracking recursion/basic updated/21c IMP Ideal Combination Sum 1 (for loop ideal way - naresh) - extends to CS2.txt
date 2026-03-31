@@ -5,12 +5,17 @@ https://leetcode.com/problems/combination-sum/discuss/16502/A-general-approach-t
 Naresh Gupta
 For loop + 1 pick backtrack
 
+===============================================================
 NOTE - for loop vs pick non pick
 If you use for loop you dont have to put a non pick recursion
 condition, 
 as the for loop starting from
 further indices will automatically not pick 
 previous indices elements
+
+NOTE IMP - In for-loop recursion:
+=================================
+NOT PICK is handled by the loop moving forward
 
 IMP: --
 If you remember this pattern, you can solve:

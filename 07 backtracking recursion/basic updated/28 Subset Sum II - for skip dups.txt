@@ -7,6 +7,16 @@ The input array may contain duplicates.
 You need to return all unique subsets (not just subset sums).
 
 
+=================================================================
+Steps
+IMP CUE - Only 2 additions to the for loop Subsets Power Set Problem
+* Addition 1: Sorting needed to Skip duplicates
+Arrays.sort(arr); // required
+* Addition 2: Skipping Algorithm
+if (i > index && arr[i] == arr[i - 1]) continue; // 🔥 only change
+=================================================================
+
+
 ✅ Algorithm Steps:
 1. Sort the array:
 Helps detect duplicates (e.g., [1,2,2] → sorted remains same).

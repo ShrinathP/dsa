@@ -1,13 +1,47 @@
-2 ways
+3 distinct problems
+===================
+1. Subset Sum I (all sums)
+→ Usually pick / not-pick
+→ For-loop possible ✅ (but less common)
+
+2. Subsets (Power Set)
+→ For-loop ✅ (standard approach)
+
+3. Subsets II (with duplicates)
+→ For-loop + skip duplicates ✅ (standard)
+
+
+Subset Sum I question 2 ways
+============================
 → usually involves SUM
 → either:
    1. print subsets with sum = K
    2. OR return all subset sums
 
-Case 1: Sum = K
+Case 1: Sum = K ** IMP
 👉 This is literally:
 print subsequences whose sum = K
 
 Case 2: Return all subset sums
 All Sums of Subsets
-This we are solving
+This we are solving in 26b - Same as 18a Recursion on Subsequences.txt - Pick Non Pick way
+
+Case 2: Return all subset sums - can be done for loop way as well which extends to Subsets II
+
+
+Subset 1 vs Subset 2
+============================
+Subset Sum I:
+- Array has UNIQUE elements
+- Generate all subsets
+- No need to worry about duplicates
+
+Subset Sum II:
+- Array may have DUPLICATES
+- Must return ONLY UNIQUE subsets
+- Need to SKIP duplicates
+
+* Sorting needed to Skip duplicates
+Arrays.sort(arr); // required
+* Skipping Algorithm
+if (i > index && arr[i] == arr[i - 1]) continue; // 🔥 only change

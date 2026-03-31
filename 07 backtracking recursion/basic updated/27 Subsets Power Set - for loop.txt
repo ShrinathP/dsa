@@ -1,0 +1,49 @@
+/*
+
+Given an array arr[], print all subsets.
+Subsets - Power Set
+See Striver solution video
+
+=====================================================================================================
+Steps
+Same as CS1 - Very basic, 3 removals
+Change 0: no target
+Change 1: no need of Return Statement on condition as no target, just add currList to result
+Change 2: no prempptive pruning
+
+1. Init a result ArrayList of List
+2. recurMethod(index, candArr, currList, result)
+    2.1 No Return statements
+        Just add currList to result
+    2.2 For loop
+        for (i=start; i < cand.length; i++)
+        - currList.add(cand[i])
+        - recurMethod(i, candArr, ...)
+        - currList.remove(currList.size() - 1)
+=====================================================================================================
+
+*/
+
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        int[] arr = {1, 2, 3};
+        List<List<Integer>> ans = new ArrayList<>();
+        solve(0, arr, new ArrayList<>(), ans);
+        System.out.println(ans);
+    }
+
+    static void solve(int index, int[] arr, List<Integer> ds, List<List<Integer>> ans) {
+        // add current subset
+        ans.add(new ArrayList<>(ds));
+
+        for (int i = index; i < arr.length; i++) {
+            ds.add(arr[i]);
+            solve(i + 1, arr, ds, ans);
+            ds.remove(ds.size() - 1); // backtrack
+        }
+    }
+}
+
