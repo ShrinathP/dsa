@@ -1,0 +1,71 @@
+/*
+Check this one too
+https://leetcode.com/problems/combination-sum/discuss/16502/A-general-approach-to-backtracking-questions-in-Java-(Subsets-Permutations-Combination-Sum-Palindrome-Partitioning)
+
+Naresh Gupta
+For loop + 1 pick backtrack
+
+NOTE - for loop vs pick non pick
+If you use for loop you dont have to put a non pick recursion
+condition, 
+as the for loop starting from
+further indices will automatically not pick 
+previous indices elements
+
+IMP: --
+If you remember this pattern, you can solve:
+Combination Sum 1
+Combination Sum 2
+Subsets II
+Permutations II
+-------------------------------------------------------------------------------------------------------------------
+IMP Cue -> recurMethod -> target == 0, for (prune < target, add, recurMethod(target - cand[i]), remove)
+====================================================================================================================
+Steps
+1. Init a result ArrayList of List
+2. recurMethod(index, candArr, target, currList, result)
+    2.1 Return statements
+        - if target == 0, add currList to result and return
+    2.2 For loop
+        for (i=start; i < cand.length; i++)
+        - preemptive prune if cand value is > remainingTarget -> if (cand[i] > remainingTarget) continue; //to next candidate
+        - currList.add(cand[i])
+        - recurMethod(i, target - cand[i], ...)
+        - currList.remove(currList.size() - 1)
+====================================================================================================================
+
+*/
+
+    //You can repeat the number multiple times
+    //Backtracking
+    //Naresh Gupta - backtracking with for loop
+
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        backtrack(candidates, 0, target, new ArrayList<>(), result);
+        return result;
+    }
+
+    private void backtrack(int[] cand, int start, int target, List<Integer> list, List<List<Integer>> result) {
+        
+        //Commenting below case as preemptive pruning handles it
+        //if (target < 0) return;
+        
+        if (target == 0) {
+            result.add(new ArrayList<>(list));
+            return;
+        }
+
+        for (int i = start; i < cand.length; i++) {
+            //preemptive pruning
+            //if current element is greater than target, ignore, continue to next
+            //this will prevent the if(target < 0) return case
+            if (cand[i] > target) continue; // 🔥 pruning
+
+            list.add(cand[i]);
+            backtrack(cand, i, target - cand[i], list, result);
+            list.remove(list.size() - 1); // backtrack
+        }
+    }
+}

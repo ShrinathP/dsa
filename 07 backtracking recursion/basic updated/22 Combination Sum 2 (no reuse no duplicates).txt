@@ -1,0 +1,61 @@
+// USING HASHSET
+// ✅ Code (Backtracking + Sorting + Skip Duplicates):
+// Pending check how Time complexity - 2 ^ n
+
+CS1:
+→ "take same number again?" YES
+
+CS2:
+→ "take same number again?" NO
+→ "avoid duplicate combinations?" YES
+
+/*
+======================================================
+Steps
+Additional Steps from Combination Sum 1
+1. Change 1: No reuse of numbers - move index forward
+    - solve(arr, i, target - arr[i], ds);
+    + solve(arr, i + 1, target - arr[i], ds);
+2. Change 2: To handle duplicates - Sort the array 
+    Arrays.sort(arr);
+3. Change 3: Skip Duplicates in For loop
+    if (i > start && arr[i] == arr[i - 1]) continue;
+======================================================
+
+*/
+
+class Solution {
+    //Backtracking Problem, chatgpt solution
+    //Non Repeatable numbers
+    //Naresh Gupta
+
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList();
+        // Change 2: Sort to handle duplicates
+        Arrays.sort(candidates);
+        backtrack(candidates, 0, target, new ArrayList(), result);
+        
+        //converting the Set back to List
+        return new ArrayList(result);
+    }
+    
+    private void backtrack(int[] cand, int start, int target, List<Integer> list, Set<List<Integer>> result){
+        
+        if(target == 0) {
+            result.add(new ArrayList(list));
+            return;
+        }
+
+        for(int i = start; i < cand.length; i++){
+            //Change 3 - skip Duplicates
+            if (i > start && cand[i] == cand[i - 1]) continue; // skip duplicates
+            
+            if (cand[i] > target) break; //preemptive pruning (since sorted), can use continue
+
+            list.add(cand[i]);
+            //Change 1: No reuse
+            backtrack(cand , i+1, target - cand[i], list, result);
+            list.remove(list.size() - 1);
+        }
+    }
+}

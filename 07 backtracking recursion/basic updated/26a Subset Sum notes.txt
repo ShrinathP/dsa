@@ -1,0 +1,13 @@
+2 ways
+→ usually involves SUM
+→ either:
+   1. print subsets with sum = K
+   2. OR return all subset sums
+
+Case 1: Sum = K
+👉 This is literally:
+print subsequences whose sum = K
+
+Case 2: Return all subset sums
+All Sums of Subsets
+This we are solving

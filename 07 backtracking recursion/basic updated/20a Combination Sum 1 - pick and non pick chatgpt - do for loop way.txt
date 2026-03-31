@@ -1,8 +1,28 @@
 /*
 Find all the combinations of the numbers in candidates array that sum to a specific target number
 
-Note
+Note: IMP
 Each number in the candidates can be used any number of times
+-------------------------------------------------------------
+
+======================================================================================================
+✅ You can reuse elements
+👉 Pick → stay at same index
+👉 Not pick → move to next index
+
+Steps 
+1. Init a result ArrayList of List
+2. recurMethod(index, candidatesArr, target, currentList, resultList)
+    Return statements
+    - if (target == 0) add currList to resultList, return
+       if(target == 0) { result.add(new ArrayList<>(currList)); return; }
+    - if target < 0 || index = candidates.length; i.e. subtraction caused negative target ; just return
+    - pick, reduce target and recur; currList.add(candidates[index]), recurMethod(index, candidatesArr, target - candidates[index]...)
+        IMP - not index+1 because we can reuse
+    - remove and recur; currList.remove(currList.size() - 1), recurMethod(index + 1, target...)
+        IMP - move to next index
+======================================================================================================
+    
 
 Pending Time complexity - 2 ^ n
 */
@@ -17,7 +37,7 @@ public class CombinationSum {
     }
 
     private void backtrack(int index, int[] candidates, int target, List<Integer> current, List<List<Integer>> result) {
-        if (target == 0) {
+        if (target == 0) {  
             result.add(new ArrayList<>(current));
             return;
         }

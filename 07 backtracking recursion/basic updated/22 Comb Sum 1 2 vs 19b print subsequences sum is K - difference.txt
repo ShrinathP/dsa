@@ -1,0 +1,23 @@
+CS1, CS2 vs 19b Print subsequences
+----------------------------------
+19b:
+→ binary recursion (pick / not pick)
+→ DOES NOT care about duplicate combinations
+
+CS2:
+→ for-loop recursion
+→ SKIPS duplicates to ensure unique answers
+
+
+CS2
+- BUT must return UNIQUE combinations
+- Input is usually sorted
+- Duplicates must be skipped
+
+
+CS2 is for loop recursion
+For CS1 as well
+Combination Sum 1:
+✔ Prefer FOR-LOOP style (industry standard)
+✔ Pick / Not-pick ALSO works (but less clean)
+✔ This also extends naturally to CS2, subsets, permutations

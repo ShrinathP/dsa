@@ -1,0 +1,59 @@
+/*
+Given an array arr[], print all subset sums (not combinations) in any order.
+Exactly same as Print all subsequences
+Subsets = subsequences
+Chatgpt soln
+
+//Solution from
+//Take u forward
+//NOTE Pick and Non Pick way, run 2 recursions
+
+//For any number of array the number of subsets will be 2 to the power of N
+Brute Force - Power Set way 2^n * N - check this
+//https://practice.geeksforgeeks.org/problems/subset-sums2234/1
+
+
+=====================================================================================================
+Steps
+IMP CUE - Exactly same as 18a Recursion on Subsequences.txt - just no ds.add ds.remove maintain currSum instead
+1. Init ArrayList result
+2. recurMethod(arr, index, currSum, result)
+    - Return statements
+    if index reaches end, return
+    if(index = arr.length) {result.add(currSum); return; }
+    - Recur with Pick and Not Pick
+    -> Pick, addsum and move ahead - recurMethod(arr, index+1, currSum + arr[i], result)
+    -> Not pick, dont addsum and move ahead - recurMethod(arr, index+1, currSum, result)
+=====================================================================================================
+
+*/
+
+import java.util.*;
+
+class Solution {
+    public List<Integer> subsetSums(int[] arr) {
+        List<Integer> result = new ArrayList<>();
+        helper(arr, 0, 0, result);
+        return result;
+    }
+
+    private void helper(int[] arr, int index, int sum, List<Integer> result) {
+        if (index == arr.length) {
+            result.add(sum);
+            return;
+        }
+
+        //Pick - Include current element - increase the sum
+        helper(arr, index + 1, sum + arr[index], result);
+
+        // Not Pick - Exclude current element - dont increase the sum
+        helper(arr, index + 1, sum, result);
+    }
+
+    // Example usage
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        int[] arr = {1, 2, 3};
+        System.out.println(sol.subsetSums(arr)); // Output: [6, 3, 4, 0, 5, 2, 3, 0] (any order)
+    }
+}
