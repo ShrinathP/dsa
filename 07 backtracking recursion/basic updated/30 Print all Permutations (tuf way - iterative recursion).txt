@@ -1,6 +1,55 @@
+//Take u forward
+// Using extra space frequency/visited array to not repeate already used integers
+// If number of elements is N, Permutations will be N! i.e. N factorial
+
+/*
+========================================
+Subsequence vs Substring vs Permutations
+========================================
+
+-> Subsequence, CS1, CS2
+You move forward linearly (index-based). No reuse risk
+Each element is used at most once per path (or controlled reuse in CS1).
+No risk of reusing the same index again → no visited[] needed.
+Not necessarily Contiguous
+
+-> Substring
+Contiguous Subsequence. moving forward linearly. No reuse risk
+
+-> Permutations
+You are not moving forward linearly. Reuse risk
+At every step, you can pick any unused element.
+Without tracking, you might reuse the same element multiple times. 
+So visited[] array needed
+========================================================================
+4 changes from CS1/PowerSet
+Change 1. Return when currList.size() = nums.length; //base case
+- Since it is Permutation, all elements should be in currList
+Change 2: For recurMethod call no passing index + 1, 
+Change 3: For every index For loop starts from 0, as reuse possible,
+          no for(int i=index) 
+Change 4: Check visited arr in For loop as reuse can lead in infinite loops
+
+Cue-  recur with same parameters
+    recurMethod -> check currList.size() == nums.length
+    4 steps in FOR - for from i=0; 
+                                -> visited, add, recurMethod, remove, unvisited
+Steps
+1. Init result ArrayList of List, a currList, a visited boolean array
+2. recurMethod(nums, currList, result, visited)
+    2.1 - Return statement
+        if (currList.size() == nums.length), 1 Permutation done, add currList to result, return
+    2.2 - For starts from int i = 0
+            for(int i=0; i<nums.length; i++)
+                - if not visited, mark visited, add to currList
+                - recurMethod
+                - remove from currList
+                - mark unvisited
+========================================================================
+
+*/
+
 class Solution {
-    //Take u forward
-    //Using extra space frequency array to not repeate already used integers
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         List<Integer> ds = new ArrayList<>();

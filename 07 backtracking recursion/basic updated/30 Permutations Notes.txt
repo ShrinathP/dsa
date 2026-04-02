@@ -1,0 +1,18 @@
+========================================
+Subsequence vs Substring vs Permutations
+========================================
+
+-> Subsequence, CS1, CS2
+You move forward linearly (index-based).
+Each element is used at most once per path (or controlled reuse in CS1).
+No risk of reusing the same index again → no visited[] needed.
+Not necessarily Contiguous
+
+-> Substring
+Contiguous Subsequence
+
+-> Permutations
+You are not moving forward linearly.
+At every step, you can pick any unused element.
+Without tracking, you might reuse the same element multiple times. 
+So visited[] array needed

@@ -21,8 +21,10 @@ IMP: --
 If you remember this pattern, you can solve:
 Combination Sum 1
 Combination Sum 2
+Subsets - Power Set
 Subsets II
 Permutations II
+
 -------------------------------------------------------------------------------------------------------------------
 IMP Cue -> recurMethod -> target == 0, for (prune < target, add, recurMethod(target - cand[i]), remove)
 ====================================================================================================================

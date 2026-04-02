@@ -3,6 +3,11 @@
 //Striver code and explanation - algo and step by step permutations from chatgpt
 /*
 
+🔹 Why swap avoids visited[]? - Revisit issue
+Swap moves used element to the front
+So "used" elements are naturally excluded (left side of start)
+👉 “Left side = used, Right side = choices”
+
 ✅ Algorithm Steps:
 1. Base Case:
 If index == nums.length, we've formed a complete permutation.
@@ -14,13 +19,34 @@ If index == nums.length, we've formed a complete permutation.
 - Recurse: recurPermute(index + 1, nums, ans) - keep swapping at subsequent indexes
 - Backtrack: Swap back to restore original state (nums[i] ↔ nums[index])
 
+/*
+
+===================================================================================================
+Changes from iterate recursion way
+Change 1: For loop starts from index to end, not from 0 to end. same as CS1, CS2 for loop solutions
+Change 2: After every swap, we are doing recurPermute from index+1
+Change 3: No remove, instead swap back after recurPermute ends
+
+Steps
+1. Initialize result ArrayList of List, swap utility method
+2. recurPermute Method (index, nums, result) //no currList as swap is inplace in nums arr
+    - Return statement
+        - if (index == nums.length), create ds, copy nums to ds, add ds to result
+    - for (int i=index; i<nums.length; i++)
+        - swap index with i, swap(index, i, nums)
+        - recurPermute from index+1 recurPermute(index+1, nums, result)
+        - swap back i with index
+===================================================================================================
+
+*/
+
 IMP: Step by Step Permutations
 
 Initial: [1, 2, 3]
 
 Fix index 0:
 ├── Swap 0 with 0 → [1, 2, 3]
-│   └─ Fix index 1:
+│   └─ Permute from index 1:
 │       ├── Swap 1 with 1 → [1, 2, 3]
 │       │   └── Fix index 2:
 │       │       ├── Swap 2 with 2 → [1, 2, 3] ✅
@@ -32,7 +58,7 @@ Fix index 0:
 │           └── Swap back → [1, 2, 3]
 │
 ├── Swap 0 with 1 → [2, 1, 3]
-│   └─ Fix index 1:
+│   └─ Permute from index 1:
 │       ├── Swap 1 with 1 → [2, 1, 3]
 │       │   └── Swap 2 with 2 → [2, 1, 3] ✅
 │       └── Swap back → [2, 1, 3]
@@ -42,7 +68,7 @@ Fix index 0:
 │           └── Swap back → [2, 1, 3]
 │
 ├── Swap 0 with 2 → [3, 2, 1]
-│   └─ Fix index 1:
+│   └─ Permute from index 1:
 │       ├── Swap 1 with 1 → [3, 2, 1]
 │       │   └── Swap 2 with 2 → [3, 2, 1] ✅
 │       └── Swap back → [3, 2, 1]
@@ -59,7 +85,7 @@ import java.util.*;
 class Solution {
     private void recurPermute(int index, int[] nums, List<List<Integer>> ans) {
         if (index == nums.length) {
-            // Copy the ds to ans
+            // Copy the nums to ds, add ds to ans
             List<Integer> ds = new ArrayList<>();
             for (int i = 0; i < nums.length; i++) {
                 ds.add(nums[i]);
