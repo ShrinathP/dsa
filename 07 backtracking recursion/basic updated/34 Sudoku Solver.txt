@@ -1,5 +1,14 @@
 
 /*
+
+Fill incomplete sudoku puzzle
+
+Constraints - for placeable function
+1. The digit 1-9 should exactly appear only once in a given row
+2. The digit 1-9 should exactly appear only once in a given column
+3. The digit 1-9 should exactly appear only once in a given 3x3 board
+
+
 Striver Explanation
 
 1. loop for each row, for each column
@@ -19,6 +28,24 @@ the number can be placed
 	- along the row, 
 	- along the column, 
 	- along the 3*3 box
+
+1. if board == null or board.length == 0, return as it is
+2. recurFunction solve
+    2.1 for in for, for in in rows, for j in columns
+        3.1 if board is blank -> if board[i][j] == '.' - we will try placing from 1 to 9
+            - For char = 1 to 9 run loop
+                - if(isValid(board, row, col, currChar))
+                    - fill board
+                    - call recurFunction solve
+                    - if recurFunction solve returns true, return true
+                 - else backtrack by setting board[i][j] == '.'
+            - return false - tried from 1 to 9 
+
+IMP - ❗ The key doubt
+Why is return false after the for loop instead of inside backtracking?
+👉 "I tried ALL digits (1–9), and NONE worked for this cell"
+
+IMP - Check Recursion Tree IMP
 */
 
 class Solution {
@@ -36,19 +63,20 @@ class Solution {
             for(int j=0; j< board[0].length; j++) {
                 //check if place is blank
                 if(board[i][j] == '.') {
-                    for(char c = '1'; c<= '9'; c++) {//trail 1 through 9
+                    for(char c = '1'; c<= '9'; c++) {
+                    //trail 1 through 9
                         if(isValid(board, i, j, c)){
                             board[i][j] = c;
                             
                             //solve for next blank place
-                            if(solve(board))
+                            if(solve(board)) {
                                 return true; 
+                            } else {
                             //if its solution return true
                             //backtrack
-                            else
                                 board[i][j] = '.'; 
                             //or put back dot , to check for other paths
-                            
+                            }
                         }
                     }
                     //if nothing returned from for

@@ -1,0 +1,33 @@
+IMP - ❗ The key doubt
+Why is return false after the for loop instead of inside backtracking?
+👉 "I tried ALL digits (1–9), and NONE worked for this cell"
+
+Recursion Tree 
+
+solve(board)
+  |
+  └── Found empty cell (i, j)
+        |
+        ├── Try '1'
+        |     |
+        |     └── solve(board)
+        |           |
+        |           └── ❌ fails → backtrack → reset '.'
+        |
+        ├── Try '2'
+        |     |
+        |     └── solve(board)
+        |           |
+        |           └── ❌ fails → backtrack → reset '.'
+        |
+        ├── Try '3'
+        |     |
+        |     └── solve(board)
+        |           |
+        |           └── ✅ success → return true (bubble up)
+        |
+        ├── Try '4'  (never reached if '3' worked)
+        |
+        └── ...
+
+We need to return false only after trying all elements from 1 to 9

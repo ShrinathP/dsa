@@ -9,11 +9,17 @@ Return all distinct solutions.
 */
 
 /*
-As we traverse - keep hold of 3 arrays for 3 directions
-leftRow[] → to check same row
-lowerDiagonal[] → for / diagonal (row + col)
-upperDiagonal[] → for \ diagonal (n - 1 + col - row)
+Steps
+Difference from prev is 
+To reduce TC of the prev solution where we keep checking row, topleft and bottomleft
+We hold 3 arrays and pass it in recurMethod
 
+As we traverse - keep hold of 3 arrays for 3 directions
+1. leftRow[] = new int[n] → to check same row
+2. lowerDiagonal[] = new int[2n - 1] → for / diagonal (row + col)
+3. upperDiagonal[]  = new int[2n - 1] → for \ diagonal [(n - 1) + (col - row)]
+
+isSafe(row, col) = leftRow[row] == 0 && lowerDiagonal[row + col] == 0 && upperDiagonal[(n-1) + (col - row)]
 */
 
 
@@ -54,7 +60,7 @@ class Solution {
             // ↖ diagonal: (col - row + n - 1) → to make it positive
             if (leftRow[row] == 0 &&
                 lowerDiagonal[row + col] == 0 &&
-                upperDiagonal[n - 1 + col - row] == 0) {
+                upperDiagonal[(n - 1) + (col - row)] == 0) {
 
                 // Place queen
                 board[row][col] = 'Q';
