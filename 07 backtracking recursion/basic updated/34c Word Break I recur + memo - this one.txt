@@ -15,14 +15,16 @@ Steps
 1. Initialize map of String, Boolean -> memoization - Can ignore to do pure recursive
 2. recurFunction(partialString, wordDict)
     2.1 base case, if dict contains partialString, return true
+    2.1 another base case, if partialString isEmpty, we successfully completed
     2.2 memo step -> if we already solved return the solved answer
         - if(map.containsKey(s)) return map.get(c)
     2.3 for loop from i=1 to i <= s.length() (IMP) as in s.substring(0,i) j index is exclusive
         - firstSection = s.substring(0, i)
         - if wordDict contains this section and recurFunction with i returns true, save to map, return true
         - if(wordDict.contains(firstSection) && recFunction(i, wordDict)) {map.put(partialString, true ); return true;}
-    2.4 backtrack map.put(partialString, false);
-    2.5 return false
+    2.4 Tried everything, put back false, return false
+        - backtrack map.put(partialString, false);
+        - return false
 ================================================================================================================
 
 */
@@ -59,6 +61,7 @@ class Solution {
                 return true;
             }
         }
+        
         map.put(s, false);
         return false;       
     }

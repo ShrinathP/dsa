@@ -1,0 +1,60 @@
+//Naresh Gupta
+//Recursion + memo
+//There are repeated subproblems hence we can cache the results of
+//repeated subproblems
+//Gemini Solution - Pure Recursion
+/*
+
+================================================================================================================
+Example "abcdefgh", wordDict = ["ab", "cd", "abcd", "h"]
+Cue -> Splice up the present word -> recur on Other Section
+Splice ab -> rest cdefgh -> splice cd -> rest efgh -> NOT PRESENT - false
+Splice abcd -> rest efgh -> NOT PRESENT - false - IMP - (Opportunity for Memoization) - we are resolving it
+
+Steps
+
+1. Pure recurFunction(partialString, wordDict)
+    2.1 base case, if dict contains partialString, return true
+        another base case, if partialString isEmpty, we successfully completed
+    2.3 for loop from i=1 to i <= s.length() (IMP) as in s.substring(0,i) j index is exclusive
+        - firstSection/prefix = s.substring(0, i)
+        - if wordDict contains this section and recurFunction with i returns true, return true
+        - if(wordDict.contains(firstSection) && recFunction(i, wordDict)) { return true;}
+    2.4 Tried everything, return false
+        - return false
+================================================================================================================
+
+*/
+
+//Gemini Solution - Pure recursion
+
+import java.util.*;
+
+public class WordBreak {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        // Convert list to Set for O(1) lookups
+        Set<String> wordSet = new HashSet<>(wordDict);
+        return solve(s, wordSet);
+    }
+
+    private boolean solve(String s, Set<String> wordSet) {
+        // if wordSet.contains(s), return true
+        if (wordSet.contains(s)) return true;
+
+        // Base case: if string is empty, we've successfully segmented it
+        if (s.isEmpty()) return true;
+
+        
+
+
+        // Try every possible prefix
+        for (int i = 1; i <= s.length(); i++) {
+            String prefix = s.substring(0, i);
+            // If prefix is in dictionary AND the rest can be broken
+            if (wordSet.contains(prefix) && solve(s.substring(i), wordSet)) {
+                return true;
+            }
+        }
+        return false;
+    }
+}

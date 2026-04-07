@@ -8,12 +8,15 @@ nick white
 
 ✅ Algorithm Steps:
 
+=======================================================================================
+Steps
 1. Loop over each cell in the grid:
+  - For i in For j loop
   - If board[i][j] == word.charAt(0) → start DFS. - start when you find the first letter
 2. In DFS:
   - Base case: If index == word.length() → entire word matched → return true.
   - If out of bounds OR already visited OR mismatch → return false.
-  - Mark board[i][j] = '#' (or use a visited array).
+  - Mark visited[i][j] = true; //matches, mark visited 
   - Recurse in 4 directions:
     - Down → i+1, j
     - Up → i-1, j
@@ -21,7 +24,8 @@ nick white
     - Left → i, j-1
   - If any recursive call returns true, propagate true.
   - Backtrack by restoring original character. (or hold a visited array)
-3. If no DFS path matches the full word, return false.
+3. If no DFS path matches the full word, reset visited array, return false.
+=======================================================================================
 
 */
 //nick white
@@ -54,10 +58,15 @@ class Solution {
         }
         
         //edge cases , invalid cases
-        //check if already visited
-        if(i<0 || i>= board.length || j< 0 || j>= board[i].length || word.charAt(index) != board[i][j] || visited[i][j]) {
+        if(i<0 || i>= board.length || j< 0 || j>= board[i].length) {
             return false;
         }
+
+        //check if already visited or character doesnt match
+        if(word.charAt(index) != board[i][j] || visited[i][j]) {
+          return false;
+        }
+
         visited[i][j] = true;
         
         if(searchWord(i+1, j, index+1, word, board) ||
