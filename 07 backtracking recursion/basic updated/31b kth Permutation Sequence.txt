@@ -1,0 +1,79 @@
+//swapping way
+//at every index swap the current index with subsequent indexes
+//Striver code and explanation - algo and step by step permutations from chatgpt
+/*
+
+🔹 Why swap avoids visited[]? - Revisit issue
+Swap moves used element to the front
+So "used" elements are naturally excluded (left side of start)
+👉 “Left side = used, Right side = choices”
+
+✅ Algorithm Steps:
+1. Base Case:
+If index == nums.length, we've formed a complete permutation.
+→ Add a copy of nums[] to the result list.
+
+2. Recursive Case:
+- For i = index to n - 1:
+- Swap nums[i] with nums[index] to bring element i to the current index.
+- Recurse: recurPermute(index + 1, nums, ans) - keep swapping at subsequent indexes
+- Backtrack: Swap back to restore original state (nums[i] ↔ nums[index])
+
+/*
+
+===================================================================================================
+
+
+Steps
+Extension of Previous Solution
+1. Find all permutations using the Print all permutations answer
+2. Find the kth permutation now
+===================================================================================================
+
+*/
+
+*/
+
+
+import java.util.*;
+
+class Solution {
+    // Function to generate all possible permutations of a string
+    private void permutationHelper(StringBuilder s, int index, List<String> res) {
+        if (index == s.length()) {
+            res.add(s.toString());
+            return;
+        }
+        for (int i = index; i < s.length(); i++) {
+            // Swap and recurse
+            s.swap(i, index);
+            permutationHelper(s, index + 1, res);
+            s.swap(i, index);  // backtrack
+        }
+    }
+
+    public String getPermutation(int n, int k) {
+        StringBuilder s = new StringBuilder();
+        List<String> res = new ArrayList<>();
+        
+        // Create string with characters '1' to 'n'
+        for (int i = 1; i <= n; i++) {
+            s.append(i);
+        }
+
+        permutationHelper(s, 0, res);  // Generate all permutations
+        Collections.sort(res);  // Sort the generated permutations
+        
+        // Make k 0-based indexed to point to kth sequence
+        return res.get(k - 1);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        int n = 3, k = 3;
+        Solution obj = new Solution();
+        String ans = obj.getPermutation(n, k);
+        System.out.println("The Kth permutation sequence is " + ans);
+    }
+}

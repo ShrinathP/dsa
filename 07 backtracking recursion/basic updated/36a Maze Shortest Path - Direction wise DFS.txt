@@ -7,6 +7,16 @@ Given a 2D grid (0 = wall, 1 = path), find the shortest path from (0,0) to (n-1,
 - Keep track of minimum distance
 - Mark visited cells to avoid cycles
 - Unmark (backtrack) after DFS
+
+=====================================================================================
+Steps
+Exactly same as Previous solution - Rat in a maze problem
+Just that - changes
+Maintain a dist variable
+-> In base case, maintain a minDistance = Math.min(minDistance, dist)
+-> in recurFunction add dist+1 -> recurFunction(row, col, mazearr, visited, int dist)
+=====================================================================================
+
 */
 
 

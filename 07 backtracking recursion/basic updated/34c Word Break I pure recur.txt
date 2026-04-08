@@ -2,7 +2,7 @@
 //Recursion + memo
 //There are repeated subproblems hence we can cache the results of
 //repeated subproblems
-//Gemini Solution - Pure Recursion
+//Gemini Solution - Pure
 /*
 
 ================================================================================================================
