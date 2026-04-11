@@ -8,6 +8,23 @@ Given a 2D grid obstacleGrid[][]:
   1 = obstacle  
   Find the number of unique paths from top-left (0,0) to bottom-right (m-1,n-1) moving only right or down.
 
+
+================================================================================================
+Cue -> compute and build current memo[row][col] till we reach m-1,n-1
+
+Steps
+Exactly similar to Rat in a maze and Maze shortest Path problem
+1. Initialize memo/visited array, fill with -1
+2. recurMethod(row, col, arr, memo)
+    - initialize rowlength = grid.length; collength = grid[0].length
+    - if out of bounds, return 0;
+    - if reached end, i.e. row == rowlength && col == collength ; return 1, (1 path found, successfully)
+    - mark visited
+    - totalCount(row, col) =  recurMethod with row+1, recurMethod with col+1 
+    - store in memo[row][col], return memo[row][col]
+================================================================================================
+
+
 Note: there is a DP version as well
 */
 

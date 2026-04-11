@@ -1,0 +1,59 @@
+
+For array [1,2,2,4]
+loop ends is basically removal or lets say non inclusion of that index as we will be moving ahead in next for loop
+So Loop ends is basically “Done exploring all subsets that start with [1,2,2], now go back to [1,2] and try something else.”
+Done exploring now i undo that index, (inherent removal), move ahead
+IMP -> EACH FOR LOOP END IS INHERENT REMOVAL 
+
+This Part of tree
+[1,2]
+   → +2 → [1,2,2]
+      → explore everything
+      ← loop ends
+      ← -2 → back to [1,2]
+
+"I included this 2,
+explored ALL subsets using it,
+now I undo it so I can try next choices"
+===========================================================================================================================
+
+(0, [])
+├── i=0: +1 → (1, [1])
+│   ├── i=1: +2 → (2, [1,2])
+│   │   ├── i=2: +2 → (3, [1,2,2])
+│   │   │   ├── i=3: +4 → (4, [1,2,2,4]) ✅
+│   │   │   │        ← return, -4 → (3, [1,2,2])
+│   │   │   └── loop ends
+│   │   │        ← return, -2 → (2, [1,2])   ✅ (THIS is removal of i=2)
+│   │   ├── i=3: +4 → (4, [1,2,4]) ✅
+│   │   │        ← return, -4 → (2, [1,2])
+│   │   └── loop ends
+│   │        ← return, -2 → (1, [1])
+│   │
+│   ├── i=2: ❌ skip duplicate
+│   │
+│   ├── i=3: +4 → (4, [1,4]) ✅
+│   │        ← return, -4 → (1, [1])
+│   │
+│   └── loop ends
+│        ← return, -1 → (0, [])
+│
+├── i=1: +2 → (2, [2])
+│   ├── i=2: +2 → (3, [2,2])
+│   │   ├── i=3: +4 → (4, [2,2,4]) ✅
+│   │   │        ← return, -4 → (3, [2,2])
+│   │   └── loop ends
+│   │        ← return, -2 → (2, [2])
+│   │
+│   ├── i=3: +4 → (4, [2,4]) ✅
+│   │        ← return, -4 → (2, [2])
+│   │
+│   └── loop ends
+│        ← return, -2 → (0, [])
+│
+├── i=2: ❌ skip duplicate
+│
+├── i=3: +4 → (4, [4]) ✅
+│        ← return, -4 → (0, [])
+│
+└── loop ends

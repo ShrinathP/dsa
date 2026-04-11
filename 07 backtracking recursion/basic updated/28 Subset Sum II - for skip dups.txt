@@ -32,6 +32,18 @@ At each index:
 ✅ Why i > index is necessary:
 It ensures we only skip duplicates at the same recursive level, not across levels.
 IMP: Check skip duplicates logic in 28 file number
+
+Question
+[1,2,2] wont be there right ? as 2 and 2 are duplicates
+Good catch—but here’s the subtle (and very important) correction:
+❌ [1,2,2] will NOT be removed
+✅ It IS a valid subset because the input itself has two 2s
+
+Key Rule (burn this in)
+If array = [1,2,2]
+Then [2,2] and [1,2,2] are valid ✅
+But generating [2] twice is invalid ❌
+NOTE IMP -> only the starts we are skipping, example for 1,2,2 -> if for 1st 2 we ran, we dont run for 2nd 2
 */
 
 
@@ -51,6 +63,7 @@ class Solution {
         for (int i = index; i < nums.length; i++) {
             // Skip duplicates at the same recursive level
             if (i > index && nums[i] == nums[i - 1]) continue;
+            //** only the starts we are skipping, example for 1,2,2 -> if for 1st 2 we ran, we dont run for 2nd 2
 
             temp.add(nums[i]);
             backtrack(nums, i + 1, temp, result);

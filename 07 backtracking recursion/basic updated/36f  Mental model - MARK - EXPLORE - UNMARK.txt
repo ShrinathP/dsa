@@ -1,0 +1,6 @@
+🔁 For problems like Rat in a Maze / Word Search / N-Queens / Sudoku
+MARK - EXPLORE - UNMARK
+1. Check if current state is valid / goal reached
+2. Mark current cell as visited (CHOICE)
+3. Explore all possible directions (DFS)
+4. Undo the choice (BACKTRACK → unmark visited)
