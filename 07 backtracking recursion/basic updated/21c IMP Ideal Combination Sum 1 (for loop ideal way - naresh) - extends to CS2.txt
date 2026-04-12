@@ -28,11 +28,17 @@ Permutations II
 -------------------------------------------------------------------------------------------------------------------
 IMP Cue -> recurMethod -> target == 0, for (prune < target, add, recurMethod(target - cand[i]), remove)
 ====================================================================================================================
+NOTE: 
+**NOTE IMP - In for-loop recursion:**
+	**- NOT PICK is handled by the loop moving forward**
+	**- we don't need an index == arr.length check as it it handled in for loop only - condition i < arr.length, naturally stops recursion**
+====================================================================================================================
+
 Steps
 1. Init a result ArrayList of List
 2. recurMethod(index, candArr, target, currList, result)
     2.1 Return statements
-        - if target == 0, add currList to result and return
+        - if target == 0, add currList to result and return, (create new List)
     2.2 For loop
         for (i=start; i < cand.length; i++)
         - preemptive prune if cand value is > remainingTarget -> if (cand[i] > remainingTarget) continue; //to next candidate
@@ -66,12 +72,12 @@ class Solution {
 
         for (int i = start; i < cand.length; i++) {
             //preemptive pruning
-            //if current element is greater than target, ignore, continue to next
+            //if current element is greater than target left, ignore, continue to next
             //this will prevent the if(target < 0) return case
             if (cand[i] > target) continue; // 🔥 pruning
 
             list.add(cand[i]);
-            backtrack(cand, i, target - cand[i], list, result);
+            backtrack(cand, i, target - cand[i], list, result); //imp no i+1, can reuse the same number
             list.remove(list.size() - 1); // backtrack
         }
     }

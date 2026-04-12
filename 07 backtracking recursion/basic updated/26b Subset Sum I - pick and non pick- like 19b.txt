@@ -1,5 +1,8 @@
 /*
+
+Given an array of integers arr of size n, return a list containing the sum of all possible subsets of the array.
 Given an array arr[], print all subset sums (not combinations) in any order.
+
 Exactly same as Print all subsequences
 Subsets = subsequences
 Chatgpt soln
@@ -15,7 +18,7 @@ Brute Force - Power Set way 2^n * N - check this
 
 =====================================================================================================
 Steps
-IMP CUE - Exactly same as 18a Recursion on Subsequences.txt - just no ds.add ds.remove maintain currSum instead
+**IMP CUE - Exactly same as 18a Recursion on Subsequences.txt - just no ds.add ds.remove maintain currSum instead**
 1. Init ArrayList result
 2. recurMethod(arr, index, currSum, result)
     - Return statements

@@ -14,7 +14,7 @@ Change 2: no prempptive pruning
 1. Init a result ArrayList of List
 2. recurMethod(index, candArr, currList, result)
     2.1 No Return statements
-        Just add currList to result
+        Just add currList to result, (create new ArrayList)
     2.2 For loop
         for (i=start; i < cand.length; i++)
         - currList.add(cand[i])

@@ -1,6 +1,6 @@
 /*
 Find all the combinations of the numbers in candidates array that sum to a specific target number
-
+Can reuse the number
 Note: IMP
 Each number in the candidates can be used any number of times
 -------------------------------------------------------------

@@ -36,6 +36,8 @@ class Solution {
         //condition not satisfied
         //strictly done if array contains positives only
         if(sum > k) return 0;
+        
+        //IMP: this is valid only if all the numbers in the arr is positive
             
         if (index == arr.length) {
           //condition satisfied

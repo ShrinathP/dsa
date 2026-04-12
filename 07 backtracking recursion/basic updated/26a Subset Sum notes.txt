@@ -1,16 +1,9 @@
 3 distinct problems
 ===================
-1. Subset Sum I (all sums)
+1. Subset Sum I (effectively same as Print all subsequences - maintain sum instead of currList)
 → Usually pick / not-pick
 → For-loop possible ✅ (but less common)
-
-2. Subsets (Power Set)
-→ For-loop ✅ (standard approach)
-
-3. Subsets II (with duplicates)
-→ For-loop + skip duplicates ✅ (standard)
-
-
+→ No reuse like CS1
 Subset Sum I question 2 ways
 ============================
 → usually involves SUM
@@ -21,27 +14,22 @@ Subset Sum I question 2 ways
 Case 1: Sum = K ** IMP
 👉 This is literally:
 print subsequences whose sum = K
-
-Case 2: Return all subset sums
-All Sums of Subsets
 This we are solving in 26b - Same as 18a Recursion on Subsequences.txt - Pick Non Pick way
+Case 2: Return all subset sums - pick and non pick way - Use sum instead of holding subsequence in a ds
 
-Case 2: Return all subset sums - can be done for loop way as well which extends to Subsets II
 
+2. Subsets (Power Set) - like CS1
+→ For-loop ✅ (standard approach)
 
-Subset 1 vs Subset 2
-============================
-Subset Sum I:
-- Array has UNIQUE elements
-- Generate all subsets
-- No need to worry about duplicates
-
-Subset Sum II:
-- Array may have DUPLICATES
-- Must return ONLY UNIQUE subsets
-- Need to SKIP duplicates
+3. Subsets II (with duplicates) - - like CS2
+→ For-loop + skip duplicates ✅ (standard)
 
 * Sorting needed to Skip duplicates
 Arrays.sort(arr); // required
 * Skipping Algorithm
 if (i > index && arr[i] == arr[i - 1]) continue; // 🔥 only change
+
+
+
+
+

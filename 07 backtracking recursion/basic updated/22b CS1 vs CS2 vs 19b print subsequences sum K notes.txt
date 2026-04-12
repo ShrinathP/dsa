@@ -1,15 +1,12 @@
-CS1, CS2 vs 19b Print subsequences
+
+19b Print subsequences vs CS1 vs CS2
 ----------------------------------
-19b:
+19b Print Subsequences:
 → binary recursion (pick / not pick)
 → DOES NOT care about duplicate combinations
 
-CS2:
-→ for-loop recursion
-→ SKIPS duplicates to ensure unique answers
-
-
 CS2
+→ for-loop recursion
 - BUT must return UNIQUE combinations
 - Input is usually sorted
 - Duplicates must be skipped
@@ -21,4 +18,12 @@ Combination Sum 1:
 ✔ Prefer FOR-LOOP style (industry standard)
 ✔ Pick / Not-pick ALSO works (but less clean)
 ✔ This also extends naturally to CS2, subsets, permutations
+
+CS1 vs CS2
+1. index increments in CS2 as we need unique
+2. sort array in CS2 as we can skip duplicates
+3. skip duplicates in for loop using
+   if (i > index && arr[i] == arr[i - 1]) continue;
+   
+
 

@@ -9,6 +9,7 @@ Space: O(n) recursion + output subsequences
 Same as prev
 in recurMethod maintain sum as well as k
 print when sum = k 
+Init ds = ArrayList to hold current subsequence, Init sum = 0
 recurMethod(index, sum, ds, arr, k)
     - when index = arr.length and sum == k -> print current ds/subsequence, return
     - pick n recur -> ds.add(arr[index]); recurMethod(index + 1, sum + arr[index], ds, arr, k)
