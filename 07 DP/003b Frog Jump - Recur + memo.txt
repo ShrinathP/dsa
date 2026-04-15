@@ -1,0 +1,44 @@
+
+/*
+====================================================
+Steps
+1. create memo array of n, fill with -1
+2. recurMethod
+  - base case if i==0, return 0
+  - if in memo[i] != -1 , return memo[i]
+  - oneJump = recur(i-1,...) + abs(h[i] - h[i-1])
+  - twoJump = Integer.MAX_VALUE
+  - if (i > 1)
+  - twoJump = recur(i-2,...) + abs(h[i] - h[i-2])
+  - return memo[i] = oneJump + twoJump
+====================================================
+*/
+
+import java.util.Arrays;
+
+class Solution {
+    public int frogJump(int n, int[] heights) {
+        int[] memo = new int[n];
+        Arrays.fill(dp, -1);
+        return solve(n - 1, heights, memo);
+    }
+
+    private int solve(int i, int[] h, int[] dp) {
+        // base case
+        if (i == 0) return 0;
+
+        // reuse result
+        if (memo[i] != -1) return memo[i];
+
+        // 1-step jump
+        int oneStep = solve(i - 1, h, memo) + Math.abs(h[i] - h[i - 1]);
+
+        // 2-step jump
+        int twoStep = Integer.MAX_VALUE;
+        if (i > 1) {
+            twoStep = solve(i - 2, h, memo) + Math.abs(h[i] - h[i - 2]);
+        }
+
+        return memo[i] = Math.min(oneStep, twoStep);
+    }
+}
