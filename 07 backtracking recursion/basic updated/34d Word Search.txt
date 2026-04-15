@@ -13,7 +13,7 @@ Steps
 1. Loop over each cell in the grid:
   - For i in For j loop
   - If board[i][j] == word.charAt(0) → start DFS. - start when you find the first letter
-2. In DFS:
+2. In DFS: recurFunction(i, j, index, String word, char[][] board, boolean[][] visited)
   - Base case: If index == word.length() → entire word matched → return true.
   - If out of bounds OR already visited OR mismatch → return false.
   - Mark visited[i][j] = true; //matches, mark visited 

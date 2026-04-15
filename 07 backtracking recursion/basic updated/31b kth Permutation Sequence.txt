@@ -27,7 +27,7 @@ If index == nums.length, we've formed a complete permutation.
 Steps
 Extension of Previous Solution
 1. Find all permutations using the Print all permutations answer
-2. Find the kth permutation now
+2. Sort the result. Find the kth permutation now
 ===================================================================================================
 
 */

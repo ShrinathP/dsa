@@ -1,7 +1,7 @@
 /*
 Tuf
 
-Striver explanation - check the hashing indexing
+IMP Striver explanation - check the hashing indexing
 /*
 ✅ Problem:
 Place N queens on an N×N chessboard so that no two queens attack each other (no same row, column, or diagonal).
@@ -16,10 +16,56 @@ We hold 3 arrays and pass it in recurMethod
 
 As we traverse - keep hold of 3 arrays for 3 directions
 1. leftRow[] = new int[n] → to check same row
-2. lowerDiagonal[] = new int[2n - 1] → for / diagonal (row + col)
-3. upperDiagonal[]  = new int[2n - 1] → for \ diagonal [(n - 1) + (col - row)]
+2. lowerDiagonal[] = new int[2n - 1] → for / diagonal IMP (row + col) checks the lower diagonal occupied or not
+3. upperDiagonal[]  = new int[2n - 1] → for \ diagonal [(n - 1) + (col - row)] checks uppoer diagonal occupied or not
 
 isSafe(row, col) = leftRow[row] == 0 && lowerDiagonal[row + col] == 0 && upperDiagonal[(n-1) + (col - row)]
+
+Visualization Intuition
+col will be same as in both case L -> R traversal, in lower diagonal case use row = row, upper diagonal case row = n-row-1 
+🧠 Why your version actually feels intuitive
+
+Your version:
+
+(n - row - 1) + col
+
+Can be thought of as:
+
+“Mirror the row from bottom” → n - row - 1
+Then add col
+
+This gives a nice interpretation:
+👉 You're kind of flipping the matrix vertically and then using a similar idea as row + col
+
+Calc from top left
+Calc from bottom left - flip row values to n-row-1 so to find real row value
+
+
+IMP: VISUALIZE how the diagonal indexing works for N-Queens (or similar problems)
+lowerDiagonal - ( bottom-left ↗ top-right)
+   col →
+    0  1  2  3
+r  ----------- 
+0 | 0  1  2  3
+1 | 1  2  3  4
+2 | 2  3  4  5
+3 | 3  4  5  6
+
+
+upperDiagonal - (top-left ↘ bottom-right)
+   col →
+    0  1  2  3
+r  ----------- 
+0 | 3  4  5  6
+1 | 2  3  4  5
+2 | 1  2  3  4
+3 | 0  1  2  3
+
+| Diagonal Type | Direction               | Formula               | Why                       |
+| ------------- | ----------------------- | --------------------- | ------------------------- |
+| Lower (`/`)   | bottom-left ↗ top-right | `row + col`           | Sum stays constant        |
+| Upper (`\`)   | top-left ↘ bottom-right | `col - row` (shifted) | Difference stays constant |
+
 */
 
 

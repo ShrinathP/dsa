@@ -11,7 +11,7 @@ Not necessarily Contiguous
 -> Substring
 Contiguous Subsequence
 
--> Permutations
+-> Permutations - IMP REUSE risk -> need visited array
 You are not moving forward linearly.
 At every step, you can pick any unused element.
 Without tracking, you might reuse the same element multiple times. 

@@ -29,7 +29,9 @@ the number can be placed
 	- along the column, 
 	- along the 3*3 box
 
-how is row and col calculated in sudoku solver
+IMP: - > Subgrid Origin and Offset
+How is row and col calculated in sudoku solver 
+----------------------------------------------
 board[3 * (row / 3) + i / 3][3 * (col / 3) + i % 3] == c function 
 Subgrid Origin (3 * (row / 3) and 3 * (col / 3)):
 If row is 4, 4 / 3 = 1
@@ -37,8 +39,8 @@ Offset within Subgrid (i / 3 and i % 3):
 If row is 4, 4 / 3 = 1
 Divide by 3 Modulo 3
 
-
-
+========================================================================================
+Steps
 1. if board == null or board.length == 0, return as it is
 2. recurFunction solve
     2.1 for in for, for in in rows, for j in columns
@@ -50,6 +52,7 @@ Divide by 3 Modulo 3
                     - if recurFunction solve returns true, return true
                  - else backtrack by setting board[i][j] == '.'
             - return false - tried everything from 1 to 9 
+========================================================================================
 
 IMP - ❗ The key doubt
 Why is return false after the for loop instead of inside backtracking?

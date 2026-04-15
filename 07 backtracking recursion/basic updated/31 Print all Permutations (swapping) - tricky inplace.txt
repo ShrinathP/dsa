@@ -1,6 +1,5 @@
 //swapping way
-//at every index swap the current index with subsequent indexes
-//Striver code and explanation - algo and step by step permutations from chatgpt
+//Striver explanation
 /*
 
 🔹 Why swap avoids visited[]? - Revisit issue
@@ -51,7 +50,6 @@ Fix index 0:
 │       │   └── Fix index 2:
 │       │       ├── Swap 2 with 2 → [1, 2, 3] ✅
 │       └── Swap back 1 with 1 → [1, 2, 3]
-│
 │       └── Swap 1 with 2 → [1, 3, 2]
 │           └── Fix index 2:
 │               ├── Swap 2 with 2 → [1, 3, 2] ✅
@@ -62,7 +60,6 @@ Fix index 0:
 │       ├── Swap 1 with 1 → [2, 1, 3]
 │       │   └── Swap 2 with 2 → [2, 1, 3] ✅
 │       └── Swap back → [2, 1, 3]
-│
 │       └── Swap 1 with 2 → [2, 3, 1]
 │           └── Swap 2 with 2 → [2, 3, 1] ✅
 │           └── Swap back → [2, 1, 3]
@@ -72,7 +69,6 @@ Fix index 0:
 │       ├── Swap 1 with 1 → [3, 2, 1]
 │       │   └── Swap 2 with 2 → [3, 2, 1] ✅
 │       └── Swap back → [3, 2, 1]
-│
 │       └── Swap 1 with 2 → [3, 1, 2]
 │           └── Swap 2 with 2 → [3, 1, 2] ✅
 │           └── Swap back → [3, 2, 1]

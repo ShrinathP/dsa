@@ -12,6 +12,9 @@ IMP - What we see here is after fixing one others are split in group of 6
 
 So total array = 1,2,3,4
 Initial Block Size = (n-1)! i.e. 3! = 6
+    - First 6 set will be used with 1 -> total 6
+    - Next 6 set will be used with 2 -> total 12
+    - Next 6 set will be used with 3 -> total 18 -> 16 falls here -> 3 is first number
 Convert k to 0 based indexing
 Add the number first k/fact i.e. 16/6 i.e. 2, take the 2nd index, numbers.get(k/fact) to the result
 Remove the same index number
@@ -21,7 +24,7 @@ Update k and factorial
 IMP -
 Cue Initialize - fact = (n-1)!,nums List, 0 based k 
     - while true -> index = k/fact(initial block), add index, remove from nums, 
-                 -> update k, update fact -> k=k%fact, fact = fact/nums.size()
+                 -> update remaining k, update fact -> k=k%fact, fact = fact/nums.size()
 ==============================================================================================
 Steps
 1. Initialize - Precompute factorial from i=1 upto n-1 - to determine the size of "blocks" for each digit,
@@ -32,6 +35,7 @@ Steps
     - pick index of the digit, add to result
     - remove index from numbers ArrayList
     -  Update k for the next position using k = k % (n-1)! i.e. k = k/fact 
+       Now - remaining chars will be -> k modulo slot size
     -  Update factorial newfact = fact/numbers.size()  3!/3 = 2
 ==============================================================================================
 Example:-

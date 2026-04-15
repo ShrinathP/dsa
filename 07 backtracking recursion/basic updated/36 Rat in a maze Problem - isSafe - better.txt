@@ -21,6 +21,25 @@ Before moving to (nextRow, nextCol):
 isSafe = (nextRow and nextCol in bounds) &&
          maze[nextRow][nextCol] == 1 &&
          !visited[nextRow][nextCol]
+
+===========================================================================
+Steps
+1. Initialize - visited array, fill 0s, result = ArrayList<String>
+2. Check if 0,0 number is 1
+	- if (arr[0][0] == 1)
+		- recurMethod(row, col, visited, "", result, N)
+3. isSafe(row, col, maze, visited, n)
+    isSafe func ->  (nextRow and nextCol in bounds) &&
+                    maze[nextRow][nextCol] == 1 &&
+                    !visited[nextRow][nextCol]
+3. recurMethod definition
+	- return statement, base case
+	- if row == n-1 && col == n-1, we reached end add path to result arrayList, return
+    - mark visited[i][j] = true
+	- 4 movements -> if(isSafe()) {recurMethod(path + "direction")}
+    - mark un visited[i][j] = false
+===========================================================================
+
 */
 
 //chatgpt soln

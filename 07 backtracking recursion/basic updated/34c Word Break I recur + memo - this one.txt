@@ -4,10 +4,12 @@
 //repeated subproblems
 
 /*
+IMP Cue -> if dictContains s return true, for i to s.length, substr 0 to i, if dictContains && recurFunction rest, return true, tried everything return false
 
 ================================================================================================================
 Example "abcdefgh", wordDict = ["ab", "cd", "abcd", "h"]
-Cue -> Splice up the present word -> recur on Other Section
+
+
 Splice ab -> rest cdefgh -> splice cd -> rest efgh -> NOT PRESENT - false
 Splice abcd -> rest efgh -> NOT PRESENT - false - IMP - (Opportunity for Memoization) - we are resolving it
 

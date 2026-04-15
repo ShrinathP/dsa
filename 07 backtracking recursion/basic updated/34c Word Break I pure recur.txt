@@ -18,7 +18,7 @@ Steps
         another base case, if partialString isEmpty, we successfully completed
     2.3 for loop from i=1 to i <= s.length() (IMP) as in s.substring(0,i) j index is exclusive
         - firstSection/prefix = s.substring(0, i)
-        - if wordDict contains this section and recurFunction with i returns true, return true
+        - if wordDict contains this prefix and recurFunction with i returns true, return true
         - if(wordDict.contains(firstSection) && recFunction(i, wordDict)) { return true;}
     2.4 Tried everything, return false
         - return false
