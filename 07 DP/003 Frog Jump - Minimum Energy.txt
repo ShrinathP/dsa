@@ -1,0 +1,63 @@
+/*
+Problem Statement
+1. Frog Jump (Minimum Energy) - Classic DP problem
+    Problem:
+    You have heights[]
+    From index i, you can jump:
+    i → i+1
+    i → i+2
+    Cost = abs(height[i] - height[j])
+    Goal: minimize total cost
+
+Why greedy doesnt work
+Greedy works when: Problem has no cost variation
+minimum steps with uniform cost
+In frog jump 
+Cost is:
+cost = |h[i] - h[j]|
+Different for each jump
+
+===========================================================================
+Cue - at every jump 
+oneHop = jump from prev i.e. n-1 + energy spent in current jump
+twoHop = jump from prev i.e. n-2 + energy spent in current jump
+===========================================================================
+Steps
+Similar to Climbing Stairs
+1. recurMethod (lastIndex, heightsArr)
+  - base case i == 0, return 0, no energy spent
+  - oneJump = recurMethod(i-1, heightsArr) +abs(heights[i] - heights[i-1]) (jump from prev + energy spent in current jump)
+  - Init twoJump = Integer.MAX_VALUE, 
+    if n > 1 , we can jump back 2
+    twoJump = recurMethod(i-2, heightsArr) +abs(heights[i] - heights[i-1]) (energy spent)
+  - calc min energy of both, return;
+===========================================================================
+*/
+
+public class FrogJumpRecursive {
+    public static int frogJump(int[] heights) {
+        return recurMethod(heights.length - 1, heights);
+    }
+
+    private static int recurMethod(int ind, int[] heights) {
+        // Base case: If we are at the first stair, cost is 0
+        if (ind == 0) return 0;
+
+        // Option 1: Jump from one step back
+        int oneJump = recurMethod(ind - 1, heights) + Math.abs(heights[ind] - heights[ind - 1]);
+        
+        // Option 2: Jump from two steps back
+        int twoJump = Integer.MAX_VALUE;
+        if (ind > 1) {
+            twoJump = recurMethod(ind - 2, heights) + Math.abs(heights[ind] - heights[ind - 2]);
+        }
+
+        // Return minimum of both options
+        return Math.min(oneJump, twoJump);
+    }
+
+    public static void main(String[] args) {
+        int[] heights = {30, 10, 60, 10, 60, 50};
+        System.out.println("Minimum Cost: " + frogJump(heights)); // Output: 40
+    }
+}
