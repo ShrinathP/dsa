@@ -15,3 +15,7 @@ Repeated nodes:
 - solve(2) → appears multiple times
 - solve(1) → appears multiple times
 - solve(0) → appears many times
+
+IMP
+“If you see here, solve(2) and solve(1) are being recomputed multiple times from different paths.
+That’s overlapping subproblems, so we memoize using DP.”
