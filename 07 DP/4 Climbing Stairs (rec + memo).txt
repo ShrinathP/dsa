@@ -3,6 +3,33 @@
 //Plain recursive
 //top down approach
 
+/*
+1. Try to represent the problem in terms of index
+2. Do all possible stuffs on that index, according to the problem statement
+3. sum of all stuffs
+    -> either count
+    -> or min or max
+
+IMP Cue -> 
+    -  start from last i.e. n, move backwards; 
+    - recurMethod
+        n<=1, return 1;
+        memo[n] = recur(n-1,memo)+recur(n-2,memo), return memo[n]
+
+=========================================================================================================
+Steps
+
+Top to bottom - recursion
+1. Intialize memo array with size n+1, int[] memo = new int[n+1];, can fill with -1
+2. recurMethod(n, memo) start from last i.e. n, move backwards
+    - base case -> if n <= 1, only 1 way to jump back i.e. 1 jump; return 1
+    - calc jump1 = recurMethod(n-1, memo) -> single jump
+    - calc jump2 = recurMethod(n-2, memo) -> double jump
+    - memo[n] = jump1 + jump2 -> all possible ways to reach n == all possibile ways to reach from n-1,n-2
+    - return memo[n]
+=========================================================================================================
+*/
+
 //Codebix
 //Top down recursive 
 //without memoization
