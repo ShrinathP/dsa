@@ -2,6 +2,16 @@
 //Bottom up dp
 //Keep filling dp array until n is reached
 //As you can reach by 1 or 2 steps, so n can be reached via n-1 or n-2 th step
+
+=========================================================
+Cue => bottom up filling from 2 to n
+Steps
+1. Initialize dp arr of size n+1 (always dp size is n+1)
+    dp[0], dp[1] = 1, as for these 2 indexes, only 1 way
+2. for 2 to <=n, dp[i] = dp[i-1] + dp[i-2]
+3. return dp[n]
+=========================================================
+
 class Solution {
     public int climbStairs(int n) {
         int[] dp = new int[n+1];
