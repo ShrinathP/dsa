@@ -1,0 +1,17 @@
+Overlapping Subproblems - Memo will help
+
+                solve(4)
+               /        \
+         solve(3)     solve(2)
+          /    \        /    \
+   solve(2)  solve(1) solve(1) solve(0)
+     /   \       |        |
+solve(1) solve(0) solve(0) solve(0)
+   |
+solve(0)
+
+
+Repeated nodes:
+- solve(2) → appears multiple times
+- solve(1) → appears multiple times
+- solve(0) → appears many times
