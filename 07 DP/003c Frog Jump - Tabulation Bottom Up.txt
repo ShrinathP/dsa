@@ -1,10 +1,11 @@
 Steps
 ===============================================================
-base case - dp[0] = 0
-Start from 1 to n -> bottom up
-onestep = dp[i-1] + abs(h[i] = h[i-1])
-twostep = dp[i-2] + abs(h[i] = h[i-2])
-dp[i] = Math.min(onestep, twostep), just fill nothing to return
+1. base case - dp[0] = 0
+2. Start from 1 to n -> bottom up
+    - onestep = dp[i-1] + abs(h[i] = h[i-1])    
+    - if(i > 1) do twoStep
+    twostep = dp[i-2] + abs(h[i] = h[i-2])
+    - dp[i] = Math.min(onestep, twostep), just fill, nothing to return
 ===============================================================
 
 class Solution {
