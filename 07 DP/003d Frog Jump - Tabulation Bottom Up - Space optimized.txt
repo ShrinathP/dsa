@@ -1,0 +1,32 @@
+
+/*
+We are maintaining dp[i-1] and dp[i-2] which is prev and prev2 in this case
+
+Same as previous soln, but we dont maintain dp array to optimize space
+Cue -> For the next step prev2 will be prev, and prev will be curr
+prev2 = prev;
+prev = current;
+*/
+
+class Solution {
+    public int frogJump(int n, int[] h) {
+        int prev = 0;   // dp[i-1]
+        int prev2 = 0;  // dp[i-2]
+
+        for (int i = 1; i < n; i++) {
+            int oneStep = prev + Math.abs(h[i] - h[i - 1]);
+
+            int twoStep = Integer.MAX_VALUE;
+            if (i > 1) {
+                twoStep = prev2 + Math.abs(h[i] - h[i - 2]);
+            }
+
+            int curr = Math.min(oneStep, twoStep);
+
+            prev2 = prev;
+            prev = curr;
+        }
+
+        return prev;
+    }
+}
