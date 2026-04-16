@@ -1,31 +1,42 @@
 
+===========================================================
 Steps
-1. For k jumps backwards from n-1, run a loop from j=1 to j=k
+1. Initialize memo arr, fill with -1
+2. recurFunction(currIndex, k, heights[], memo)
+    - base cases
+        -> if currIndex = 0, return 0, no way to jump back
+        -> if memo[currIndex] != -1, return memo[currIndex]
+    - For k jumps backwards from n-1, run a loop from j=1 to j=k
+        for(j=1; j<=k; j++)
+        - currCost = recurMethod(i-j, ...)
+        - minCost = Math.min(minCost, currCost)
+    - memo[currIndex] = minCost, return memo[currIndex]
+===========================================================
 
 import java.util.Arrays;
 
 class Solution {
     public int frogJump(int n, int k, int[] h) {
-        int[] dp = new int[n];
-        Arrays.fill(dp, -1);
-        return solve(n - 1, k, h, dp);
+        int[] memo = new int[n];
+        Arrays.fill(memo, -1);
+        return solve(n - 1, k, h, memo);
     }
 
-    private int solve(int i, int k, int[] h, int[] dp) {
+    private int solve(int i, int k, int[] h, int[] memo) {
         if (i == 0) return 0;
 
-        if (dp[i] != -1) return dp[i];
+        if (memo[i] != -1) return memo[i];
 
         int minCost = Integer.MAX_VALUE;
 
         for (int j = 1; j <= k; j++) {
             if (i - j >= 0) {
-                int cost = solve(i - j, k, h, dp) 
+                int cost = solve(i - j, k, h, memo) 
                          + Math.abs(h[i] - h[i - j]);
                 minCost = Math.min(minCost, cost);
             }
         }
 
-        return dp[i] = minCost;
+        return memo[i] = minCost;
     }
 }
