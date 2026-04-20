@@ -1,0 +1,60 @@
+
+/*
+As we are only needing previous row to compute the next row/day
+Instead of saving a dp[dayIndex][4] matrix we can just save, int[4], an in array of size 4
+At each row/dayIndex, compute a int[] curr = new int[4], fill it, curr[last] = max, assign prev = curr
+
+==========================================================================================  
+3 For ins visualize
+
+For (day 1 -> n-1)
+  For (last 0 -> 3)
+    // IMP need to compute max and fill here
+    int max
+      For (task), if (task != last), val = points[dayIndex][task] + dp[dayIndex-1][task] i.e. prev
+                Max(val, max)
+    curr[last] = max
+  prev = curr
+return prev[3]
+==========================================================================================  
+Changes
+Change 1 -> Init prev int[] prev = new int[4]
+Change 2 -> When you start a day i.e. For day = 1 to < n -> initialize curr array, int[] curr = new int[4]
+Change 3 -> Inside For in For, when you compute max using For task, update curr[last] = max
+Change 4 -> after filling assing prev = curr
+*/
+
+
+class Solution {
+    public int ninjaTraining(int n, int[][] points) {
+        int[] prev = new int[4];
+
+        // base case
+        prev[0] = Math.max(points[0][1], points[0][2]);
+        prev[1] = Math.max(points[0][0], points[0][2]);
+        prev[2] = Math.max(points[0][0], points[0][1]);
+        prev[3] = Math.max(points[0][0], 
+                     Math.max(points[0][1], points[0][2]));
+
+        for (int day = 1; day < n; day++) {
+            int[] curr = new int[4];
+
+            for (int last = 0; last < 4; last++) {
+                int max = 0;
+
+                for (int task = 0; task < 3; task++) {
+                    if (task != last) {
+                        int val = points[day][task] + prev[task];
+                        max = Math.max(max, val);
+                    }
+                }
+
+                curr[last] = max;
+            }
+
+            prev = curr;
+        }
+
+        return prev[3];
+    }
+}
