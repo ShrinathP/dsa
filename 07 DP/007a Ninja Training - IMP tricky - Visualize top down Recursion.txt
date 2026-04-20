@@ -1,0 +1,84 @@
+
+/*
+Ninja Training
+Problem Statement
+You are given:
+  n days
+  Each day has 3 activities: 0, 1, 2  
+  points[i][j] → points for doing activity j on day i
+  IMP: - You cannot do the same activity on consecutive days
+Goal
+Maximize total points over n days
+
+Top Down recursion 
+from N to 0
+You need what was performed on the previous day i.e. nth day to choose n-1 st day
+State
+(day, lastTask)
+
+Key Points -
+f(day, last) = max over tasks ≠ last:
+               points[day][task] + f(day-1, task)
+
+Cue, 
+  top down recursion, 
+  -> recurFunction(lastTask, dayIndex, 2darr), 
+  -> for loop in tasks, 
+    -> if currTask != lastTask, compute val = 2darr[dayIndex, currTask] + recurFunction(currTask, dayIndex - 1, 2darr)
+
+Visualize
+2darr imagination, each row is 1 day, each col is 1 task, cols have to be 3
+
+=========================================================================================================
+Steps 
+dayIndex = row number
+lastTask = col number
+
+1. recurFunction(dayIndex(row),lastTask(col), 2dPointsArr) //top down, 3 coln
+   recurFunction(n-1,3, 2dPointsArr) //top down, 3 coln
+  1.1 base case - return Max of all remaining tasks
+      - if we reach 0th row i.e. first row, init max
+        - for loop over tasks, 
+          - if currTask != lastTask
+          - calc max = Math.max(max, points[0][col])
+        - return max
+  1.2 initialize max = 0; 
+      - for loop over tasks - cols -> compute val = val + recurFunction(n-1, currTask, ...)-> maintain max
+        - if (currTask != lastTask)
+          - int val = points[dayIndex, currTask] + recurMethod(n-1, currTask, points);
+          - max = Math.max(max, val)
+      - return max
+=========================================================================================================
+*/
+
+
+class Solution {
+    public int ninjaTraining(int n, int[][] points) {
+        return solve(n - 1, 3, points); // 3 means no last task
+    }
+
+    private int solve(int day, int last, int[][] points) {
+        // base case
+        if (day == 0) {
+            int max = 0;
+            for (int task = 0; task < 3; task++) {
+                if (task != last) {
+                    max = Math.max(max, points[0][task]);
+                }
+            }
+            return max;
+        }
+
+        int max = 0;
+
+        for (int task = 0; task < 3; task++) {
+            if (task != last) {
+                int val = points[day][task] 
+                        + solve(day - 1, task, points);
+                max = Math.max(max, val);
+            }
+        }
+
+        return max;
+    }
+}
