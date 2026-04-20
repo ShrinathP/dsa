@@ -1,4 +1,10 @@
 
+1. Like recursion backtracking playlist, but 
+there we do recursion from 0 to n-1, 
+here n-1 to 0
+
+
+Prefer (m-1,n-1) → backward style traversal as it transitions cleanly into DP versions
 
 
 class Solution {
