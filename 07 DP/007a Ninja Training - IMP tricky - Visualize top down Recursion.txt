@@ -49,13 +49,21 @@ lastTask = col number
           - int val = points[dayIndex, currTask] + recurMethod(n-1, currTask, points);
           - max = Math.max(max, val)
       - return max
+
+IMP -> There are 4 states for the last task
+0 -> picked 0th col state
+1 -> picked 1st col state
+2 -> picked 2nd col state
+3 -> picked no task of 0,1,2
 =========================================================================================================
 */
 
 
 class Solution {
     public int ninjaTraining(int n, int[][] points) {
-        return solve(n - 1, 3, points); // 3 means no last task
+        return solve(n - 1, 3, points); 
+      // 3 means no last task, as we are started here, we can pick any of 0,1,2
+      // picked no task of 0,1,2
     }
 
     private int solve(int day, int last, int[][] points) {
