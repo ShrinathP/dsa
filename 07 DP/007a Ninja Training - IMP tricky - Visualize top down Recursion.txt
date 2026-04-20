@@ -50,7 +50,7 @@ lastTask = col number
           - max = Math.max(max, val)
       - return max
 
-IMP -> There are 4 states for the last task
+IMP -> THERE ARE 4 STATES
 0 -> picked 0th col state
 1 -> picked 1st col state
 2 -> picked 2nd col state
