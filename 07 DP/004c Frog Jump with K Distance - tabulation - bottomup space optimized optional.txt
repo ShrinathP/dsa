@@ -1,0 +1,76 @@
+
+Problem Statement
+A frog wants to climb a staircase with n steps.
+Given an integer array heights, where heights[i] contains the height of the ith step, and an integer k. 
+To jump from the ith step to the jth step, the frog requires abs(heights[i] - heights[j]) energy, where abs() denotes the absolute difference. 
+The frog can jump from the ith step to any step in the range [i + 1, i + k], provided it exists. 
+Return the minimum amount of energy required by the frog to go from the 0th step to the (n-1)th step.
+
+So in the prev problem at every i, you can reach only from k previous places 
+So you can reduce space from O(n) → O(k) by keeping only the last k DP values (sliding window idea).
+👉 Instead of storing full dp[], we store only:
+dp[i-1], dp[i-2], ..., dp[i-k]
+At index i, your transition is:
+dp[i] = min over j=1..k:
+        dp[i-j] + |h[i] - h[i-j]|
+So we only use
+dp[i-1], dp[i-2], ..., dp[i-k]
+dp[i-(k+1)], dp[i-(k+2)] ... -> this will never be used
+
+chatgpt Solution
+
+Changes from previous Solution
+===========================================================
+Change 1 -> Maintain a circular buffer dp array -> int dp[] = new int[k] -> circular buffer
+Change 2 -> Use modulo while updating dp to compute indexes
+        2.1 => prevIndex compute
+             - int prevIndex = (i - j) % k; -> currCost = dp[prevIndex] + abs(h[i] - h[i-j])
+        2.2 => update dp array with minCost
+             - dp[i % k] = minCost
+        2.3 => update final answer
+             - return dp[(n - 1) % k]
+
+
+
+CUE -> bottom up - back jumps - for in for - O(k) - space optimized
+===========================================================
+Steps
+1. Initialize dp arr, base case -> dp[0] = 0 (int dp[] = new int[k] -> circular buffer -> 1 here)
+2. Start from i = 1 to n -> bottom up
+    - for i=1 to n
+        - minCost = Integer.MAX_VALUE
+        - run a loop from 1 to k back jumps from i
+        - for j = 1 to k
+            - if(i > 1) compute, back jumps
+            - currCost = dp[(i-j) % k] + abs(heights[i] - heights[i-j]) -> 2.1 here
+            - minCost = Math.min(minCost, currCost)
+        - update dp array, dp[i % k] = minCost -> 2.2 here
+    - return dp[(n-1) % n] -> 2.3 here
+===========================================================
+
+import java.util.Arrays;
+
+class Solution {
+    public int frogJump(int n, int k, int[] h) {
+        int[] dp = new int[k]; // circular buffer
+
+        dp[0] = 0; // dp[0]
+
+        for (int i = 1; i < n; i++) {
+            int minCost = Integer.MAX_VALUE;
+
+            for (int j = 1; j <= k; j++) {
+                if (i - j >= 0) {
+                    int prevIndex = (i - j) % k;
+                    int currCost = dp[prevIndex] 
+                             + Math.abs(h[i] - h[i - j]);
+                    minCost = Math.min(minCost, currCost);
+                }
+            }
+
+            dp[i % k] = minCost; // overwrite oldest
+        }
+
+        return dp[(n - 1) % k];
+    }
+}

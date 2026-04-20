@@ -1,0 +1,42 @@
+Max amount of non adjacent house robbings
+DP solution
+
+Bottom up DP - Tabulation
+
+Cue -> dp[i] = max(nums[i] + dp[i-2], dp[i-1])
+
+Striver explanation
+=================================================================
+Steps
+1. if only 1 length, if n == 1, return nums[0]
+2. Initialize dp = new int[n], dp[0] = nums[0]
+3. Bottom up. run for from i=1 to < n
+    - pick case -> nums[0] + nums[i-2] 
+    - check i>1 for pick-2 addidtion if(i > 1) pick += nums[i-2]
+    - notpick case - pick prev -> 0 + nums[i-1]
+    - dp[index] = Math.max(pick + notPick)
+4. return dp[n-1]
+=================================================================
+
+
+
+class Solution {
+    public int rob(int[] nums) {
+        int n = nums.length;
+        if (n == 1) return nums[0];
+
+        int[] dp = new int[n];
+        dp[0] = nums[0];
+
+        for (int i = 1; i < n; i++) {
+            int pick = nums[i];
+            if (i > 1) pick += dp[i - 2];
+
+            int notPick = dp[i - 1];
+
+            dp[i] = Math.max(pick, notPick);
+        }
+
+        return dp[n - 1];
+    }
+}

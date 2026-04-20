@@ -1,0 +1,50 @@
+
+Problem Statement
+A frog wants to climb a staircase with n steps.
+Given an integer array heights, where heights[i] contains the height of the ith step, and an integer k. 
+To jump from the ith step to the jth step, the frog requires abs(heights[i] - heights[j]) energy, where abs() denotes the absolute difference. 
+The frog can jump from the ith step to any step in the range [i + 1, i + k], provided it exists. 
+Return the minimum amount of energy required by the frog to go from the 0th step to the (n-1)th step.
+
+chatgpt Solution
+
+CUE -> bottom up - back jumps - for in for
+===========================================================
+Steps
+1. Initialize dp arr, base case -> dp[0] = 0
+2. Start from i = 1 to n -> bottom up
+    - for i=1 to n
+        - minCost = Integer.MAX_VALUE
+        - run a loop from 1 to k back jumps from i
+        - for j = 1 to k
+            - if(i > 1) compute, back jumps
+            - currCost = dp[i-j] + abs(heights[i] - heights[i-j])
+            - minCost = Math.min(minCost, currCost)
+        - update dp array, dp[i] = minCost
+    - return dp[n-1]
+===========================================================
+
+import java.util.Arrays;
+
+class Solution {
+    public int frogJump(int n, int k, int[] h) {
+        int[] dp = new int[n];
+        dp[0] = 0;
+
+        for (int i = 1; i < n; i++) {
+            int minCost = Integer.MAX_VALUE;
+
+            for (int j = 1; j <= k; j++) {
+                if (i - j >= 0) {
+                    int cost = dp[i - j] 
+                             + Math.abs(h[i] - h[i - j]);
+                    minCost = Math.min(minCost, cost);
+                }
+            }
+
+            dp[i] = minCost;
+        }
+
+        return dp[n - 1];
+    }
+}

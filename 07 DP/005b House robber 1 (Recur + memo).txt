@@ -1,0 +1,39 @@
+
+
+========================================================================
+Recursion + Memoizing -> Striver explanation
+Changes from previous Solution
+Change 1 -> Initialize memo arr size n, fill with -1
+Change 2 -> After base case, if memo[index] != -1, return memo[index]
+Change 2 -> After computing Math.max(picksum, notpicksum), save to memo[index], return memo[index]
+========================================================================
+
+
+import java.util.Arrays;
+
+class Solution {
+    public int rob(int[] nums) {
+        int n = nums.length;
+        int[] memo = new int[n]; //Change 1 - Initialize memo, fill -1
+        Arrays.fill(memo, -1);
+
+        return solve(n - 1, nums, memo);
+    }
+
+    private int solve(int i, int[] nums, int[] memo) {
+        // base cases
+        if (i < 0) return 0;
+        if (i == 0) return nums[0];
+
+        // reuse if already computed
+        if (memo[i] != -1) return memo[i]; //Change 2 - After base case, check if already saved in memo
+
+        // pick current
+        int pick = nums[i] + solve(i - 2, nums, memo);
+
+        // skip current
+        int notPick = solve(i - 1, nums, memo);
+
+        return memo[i] = Math.max(pick, notPick); //Change 3 - Save the compute, return
+    }
+}

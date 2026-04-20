@@ -1,0 +1,45 @@
+This is modification of Print all Subsequeces but the Subsequeceswe want to pick has to be non adjacent
+Modified print all Subsequeces Probelm with Pick and Non Pick Parts Modified
+Check Striver Explanation
+
+
+Cue
+Top down Recursion
+1. Pick → take nums[i] + recurMethod(i-2)
+2. Not pick → recurMethod(i-1)
+
+========================================================================
+Steps
+1. recurMethod from n-1 last to back
+2. recurMethod(index, arr)
+    2.1 base case 
+    - if(index < 0) return 0 -> jump from 1 to -1
+    - if(index == 0) return nums[0] -> jump from 2 to 0 -> can take nums[0]
+    2.2 Calc pick and not pick, return max
+    - calc pick -> nums[i] + nums[i-2]
+    - calc notpick -> 0 + nums[i-1]
+    - return Math.max(pick, notpick)
+========================================================================
+
+
+
+
+class Solution {
+    public int rob(int[] nums) {
+        return solve(nums.length - 1, nums);
+    }
+
+    private int solve(int i, int[] nums) {
+        // base cases
+        if (i < 0) return 0;
+        if (i == 0) return nums[0];
+
+        // pick current
+        int pick = nums[i] + solve(i - 2, nums);
+
+        // skip current
+        int notPick = solve(i - 1, nums);
+
+        return Math.max(pick, notPick);
+    }
+}
