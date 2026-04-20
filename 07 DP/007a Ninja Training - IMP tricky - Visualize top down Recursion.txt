@@ -55,6 +55,7 @@ IMP -> THERE ARE 4 STATES
 1 -> picked 1st col state
 2 -> picked 2nd col state
 3 -> picked no task of 0,1,2
+For last = 3, Nothing of task from 0 to 3 will match, hence max will be max(0,1,2)
 =========================================================================================================
 */
 
