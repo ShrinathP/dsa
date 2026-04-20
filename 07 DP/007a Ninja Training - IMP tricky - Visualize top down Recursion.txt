@@ -38,12 +38,13 @@ lastTask = col number
    recurFunction(n-1,3, 2dPointsArr) //top down, 3 coln
   1.1 base case - return Max of all remaining tasks
       - if we reach 0th row i.e. first row, init max
-        - for loop over tasks, 
+        - for loop over tasks, from task=0 to task < 3
           - if currTask != lastTask
           - calc max = Math.max(max, points[0][col])
         - return max
   1.2 initialize max = 0; 
-      - for loop over tasks - cols -> compute val = val + recurFunction(n-1, currTask, ...)-> maintain max
+      - for loop over tasks - cols, from task=0 to task < 3 
+      -> compute val = val + recurFunction(n-1, currTask, ...)-> maintain max
         - if (currTask != lastTask)
           - int val = points[dayIndex, currTask] + recurMethod(n-1, currTask, points);
           - max = Math.max(max, val)
