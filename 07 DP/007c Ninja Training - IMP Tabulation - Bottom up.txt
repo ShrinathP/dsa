@@ -8,18 +8,30 @@ Why dp size of 4 ?
 Why return dp[n-1][3]
 We add "last = 3" to represent “no restriction” case cleanly
 
+
+3 For ins visualize
+For (day 1 -> n-1)
+  For (last 0 -> 3)
+    // IMP need to compute max and fill here
+    int max
+      For (task), if (task != last), val = points[dayIndex][task] + dp[dayIndex-1][task] i.e. prev
+                Max(val, max)
+    curr[last] = max
+  prev = curr
+return prev[3]
 =======================================================================================
 Steps
 1. Initialize dp array size 4
 2. base case fill dayIndex = 0, fill the dp array at index 0,1,2,3
 3. For in for loop 
-->  For day 1 to < n, for last 0 to 3 -> bottom up dp[day][last] filling, compute max
-    - init max
-    - run for task 0 to < 3, 0,1,2
-      - if (task != last) 
-          - calc val = points[dayIndex][task] + dp[dayIndex - 1][task]
-          - maintain max = Math.max(max, val)
-    - dp[day][last] = max
+->  For day 1 to < n, 
+      for last 0 to 3 -> bottom up dp[day][last] filling, compute max
+      - init max
+        - run for task 0 to < 3, 0,1,2
+          - if (task != last) 
+              - calc val = points[dayIndex][task] + dp[dayIndex - 1][task]
+              - maintain max = Math.max(max, val)
+      - dp[day][last] = max
 4. return dp[n-1][3]
 =======================================================================================
 
