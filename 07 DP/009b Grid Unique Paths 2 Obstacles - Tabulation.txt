@@ -1,0 +1,61 @@
+//Bottom up dp fillng
+
+/*
+Same as 07 DP/008c Grid Unique Paths - tabulation IMP bottom up.txt
+One more step is that if we find an obstacle we set dp[i][j] = 0;
+
+======================================================
+Steps
+Bottom up dp filling
+1. Init m, n, a dp array with mxn size
+2. Base cases 
+  - if obstacle at 0,0 return 0, no path
+  if (grid[0][0] = 1) return 0
+  - if we reach 0,0 we have 1 path
+  dp[0][0] = 1
+3. For i in For j, for in for loop, dp filling
+  - if found obstacle set dp 0
+    if grid[i][j] = 1, dp[i][j] = 0
+  - else no obstacle, calc current using up and left
+    else up, left = 0;
+    if(i>0) up = dp[i-1][j]
+    if(j>0) left = dp[i][j-1]
+    dp[i][j] = up + left
+3. return last dp cell dp[m-1][n-1]
+======================================================
+*/
+
+class Solution {
+    public int uniquePathsWithObstacles(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        int[][] dp = new int[m][n];
+
+        // start cell
+        if (grid[0][0] == 1) return 0;
+        // if reached 0,0, (or no of ways to reach 0,0 from 0,0 is 1)
+        dp[0][0] = 1;
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+
+                // obstacle cell
+                if (grid[i][j] == 1) {
+                    dp[i][j] = 0;
+//reached obstacle so 0                    
+                } else if (i == 0 && j == 0) { 
+//can skip this as we fill dp[0][0] = 1;
+                    dp[i][j] = 1;
+  //we reached the starting point 1 path
+                } else {
+                int up = 0;
+                int down = 0;
+                if (i > 0) up = dp[i - 1][j];
+                if (j > 0) left = dp[i][j - 1];
+                dp[i][j] = up + left;
+                }
+            }
+        }
+
+        return dp[m - 1][n - 1];
+    }
+}
