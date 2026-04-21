@@ -1,0 +1,52 @@
+Top down recursion, start from m-1, n-1, keep going back
+
+Striver Explanation
+=====================================================
+Steps
+1. Init a 2D memo arr, size mxn, fill with -1
+2. recurMethod(m-1,n-1, grid, memo)
+  -> extra obstacle check
+  if(i>=0 && j>=0 && grid[i][j] == 1) return 0;
+  -> 2 base cases - 
+    1. we reach 0,0, return 1, 
+    if(i==0 && j==0) return 1; 
+    2. negative i or j, return 0
+    if(i<0 || j<0) return 0;
+  -> if already present in memo, return the value
+  if(memo[i][j] != -1) return memo[i][j]
+  -> compute up and left backwards, save in memo, return
+    - calc up -> recurMethod(i-1, j, grid, memo)
+    - calc left -> recurMethod(i, j-1, grid, memo)
+    - compute memo -> memo[i][j] = up + left
+    - return memo[i][j]
+=====================================================
+
+
+import java.util.*;
+
+class Solution {
+    public int uniquePathsWithObstacles(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+        int[][] memo = new int[m][n];
+        for (int[] row : memo) Arrays.fill(row, -1);
+
+        return solve(m - 1, n - 1, grid, memo);
+    }
+
+    private int solve(int i, int j, int[][] grid, int[][] memo) {
+        // obstacle check
+        if (i >= 0 && j >= 0 && grid[i][j] == 1) return 0;
+
+        // base case
+        if (i == 0 && j == 0) return 1;
+
+        if (i < 0 || j < 0) return 0;
+
+        if (memo[i][j] != -1) return memo[i][j];
+
+        int up = solve(i - 1, j, grid, memo);
+        int left = solve(i, j - 1, grid, memo);
+
+        return memo[i][j] = up + left;
+    }
+}
