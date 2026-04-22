@@ -1,0 +1,43 @@
+//adding memiozation to the previous solution
+
+Steps
+Same and the previous solution
+3 changes
+Change 1 -> Initialize dp array size mxn, fill with -1
+Change 2 -> after base case and out of bounds, check if dp[i][j] != -1, return dp[i][j]
+Change 3 -> after calc up and left -> store in dp[i][j], return dp[i][j]
+
+import java.util.*;
+
+class Solution {
+    public int minPathSum(int[][] grid) {
+        int m = grid.length, n = grid[0].length;
+
+//Change 1
+        int[][] dp = new int[m][n];
+        for (int[] row : dp) Arrays.fill(row, -1);
+
+        return solve(m - 1, n - 1, grid, dp);
+    }
+
+    private int solve(int i, int j, int[][] grid, int[][] dp) {
+
+        // base case
+        if (i == 0 && j == 0) return grid[0][0];
+
+        // out of bounds
+        if (i < 0 || j < 0) return Integer.MAX_VALUE;
+
+//Change 2
+        // already computed
+        if (dp[i][j] != -1) return dp[i][j];
+
+        int up = grid[i][j] + solve(i - 1, j, grid, dp); // go up
+        int left = grid[i][j] + solve(i, j - 1, grid, dp); // go left
+
+//Change 3
+        dp[i][j] = Math.min(up, left);
+
+        return dp[i][j];
+    }
+}
