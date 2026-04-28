@@ -1,0 +1,44 @@
+/*
+Changes from Prev solution
+Change 1 - Init dp arr of size n x (target + 1), fill with -1
+Change 2 - After base cases, if dp[index][target] != -1, return dp[index][target]
+Change 3 -  before return take + noTake, save dp[index][target] = take + notTake
+*/
+
+
+
+class Solution {
+    public int countSubsets(int[] arr, int n, int target) {
+
+//Change 1
+        int[][] dp = new int[n][target + 1]; 
+
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(dp[i], -1);
+        }
+
+        return helper(n - 1, target, arr, dp);
+    }
+
+    private int helper(int index, int target, int[] arr, int[][] dp) {
+        if (target == 0) return 1;
+        if (index == 0) {
+            return (arr[0] == target) ? 1 : 0;
+        }
+
+//Change 2
+        if (dp[index][target] != -1) {    
+            return dp[index][target];
+        }
+
+        int notTake = helper(index - 1, target, arr, dp);
+
+        int take = 0;
+        if (arr[index] <= target) {
+            take = helper(index - 1, target - arr[index], arr, dp);
+        }
+
+//Change 3
+        return dp[index][target] = take + notTake; 
+    }
+}
