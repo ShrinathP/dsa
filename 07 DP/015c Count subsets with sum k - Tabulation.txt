@@ -1,0 +1,50 @@
+Same as 07 012d Subset sum equals target - bottom up Tabulation.txt
+
+==================================================================
+Steps
+1. Init dp, n x (target + 1)
+2. 2 base cases
+  - at any index we can acheive target
+    for (int i = 0; i < n; i++) dp[i][0] = 1;
+  - at index 0, pick arr[0]
+    if (arr[0] <= target) dp[0][arr[0]] = 1;
+  - For in for - bottom up dp filling
+    int notTake = dp[i-1][sum];
+    int take = 0;
+    if(arr[i] <= target) { take = dp[i-1][sum - arr[i]] }
+    dp[i][target] = take || notTake
+4. return dp[n-1][target]
+==================================================================
+
+
+class Solution {
+    public int countSubsets(int[] arr, int n, int target) {
+        int[][] dp = new int[n][target + 1];
+
+        // Base case: sum = 0 → always 1 way (empty subset)
+        for (int i = 0; i < n; i++) {
+            dp[i][0] = 1;
+        }
+
+        // First element
+        if (arr[0] <= target) {
+            dp[0][arr[0]] = 1;
+        }
+
+        for (int i = 1; i < n; i++) {
+            for (int sum = 0; sum <= target; sum++) {
+
+                int notTake = dp[i - 1][sum];
+
+                int take = 0;
+                if (arr[i] <= sum) {
+                    take = dp[i - 1][sum - arr[i]];
+                }
+
+                dp[i][sum] = take + notTake;
+            }
+        }
+
+        return dp[n - 1][target];
+    }
+}
