@@ -11,8 +11,9 @@ Minimize the absolute difference between the sums of the two subsets:
 In the previous problem - Subset Sum Equals Target Problem Tabulation Solution
 at dp[n-1][target] -> the solution is present
 Also
-If we can check for target=k
-We can derieve if every possible target between 1 and K is possible or not
+If we can check for target = k
+We can derieve if every possible target between 1 and K is possible or not, 
+IMP: EVERY TARGET COLUMN IN THE LAST ROW WILL HAVE true/false, target can be achieved or not
 
 As 
 dp[n-1][col -> 0...targetsum]
@@ -33,8 +34,28 @@ So we can
 NOTE IMP /2 trick - at midpoint of totalSum s1 and s2 will switch, so we can calcuate upto totalSum only
 Check striver explanation
 --------------------------------------------------------------------------------------------------------------
-
+====================================================================================
 Steps
+1. Calculate totalSum
+2. Init dp array size (n) x (totalSum + 1)
+3. base cases
+  - target 0 we can reach from any indexes
+    for (int i = 0; i < n; i++) dp[i][0] = true;
+  - at index 0, target will be arr[0], so fill dp[0][arr[0]]
+    if(arr[0] <= sum) dp[0][arr[0]] = true;
+4. same as subset sum - for i in for target loop, take not take, save to dp[i][s]
+5. Change -
+5. For sum from 0 to s/2, check if(dp[n-1][s]) == true
+  - if yes calc s1, s2, diff, update minDiff
+6. return minDiff
+
+====================================================================================
+
+Changes from Subset sum equals - 
+Change 1 - totalSum instead of k
+Change 2 - fill dp[n-1][totalSum] instead of [n-1][k]
+Change 3 - For loop for s=0 to sum/2, s1,s2 calc diff,update minDiff
+====================================================================================
 
 
 */
@@ -71,7 +92,9 @@ class Solution {
 
         for (int s = 0; s <= sum / 2; s++) {
             if (dp[n - 1][s]) {
-                int diff = Math.abs(sum - 2 * s);
+                int s1 = s;
+                int s2 = s - s1;
+                int diff = Math.abs((s2 - s1));
                 minDiff = Math.min(minDiff, diff);
             }
         }
