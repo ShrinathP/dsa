@@ -1,0 +1,50 @@
+
+Subset sum equals target
+
+/*
+Top down pure recursion, start from index n-1 to 0
+
+Steps
+1. recurMethod(index, target, arr)
+1. recurMethod(n-1, target, arr)
+    1. base cases 
+    - if target == 0, return true
+    - if index == 0 , return arr[0] = target
+    2. Pick and non Pick way
+    - boolean notPick = recurMethod(index - 1, target, arr) //dont reduce target
+    - Pick if arr[index] <= target
+        bool pick = false
+        if(arr[index] <= target)
+            recurMethod(index - 1, target - arr[index] , arr) //reduce target
+    3. if any of both pick and notPick returns true we are good so OR
+    return pick || notPick
+
+
+*/
+
+
+
+
+
+class Solution {
+    public boolean subsetSum(int[] arr, int n, int target) {
+        return solve(n - 1, target, arr);
+    }
+
+    private boolean solve(int index, int target, int[] arr) {
+        // base cases
+        if (target == 0) return true;
+        if (index == 0) return arr[0] == target;
+
+        // not pick
+        boolean notTake = solve(index - 1, target, arr);
+
+        // pick
+        boolean take = false;
+        if (arr[index] <= target) {
+            take = solve(index - 1, target - arr[index], arr);
+        }
+
+        return take || notTake;
+    }
+}

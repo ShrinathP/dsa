@@ -1,0 +1,27 @@
+
+
+Recursion Tree Visualization
+Example arr, and target
+arr = [2, 1, 2, 1]
+target = 3
+
+
+solve(3,3)
+├── notTake → solve(2,3)
+│   ├── notTake → solve(1,3)
+│   │   ├── notTake → solve(0,3)
+│   │   └── take → solve(0,2)      ⭐ FIRST TIME
+│   │
+│   └── take → solve(1,1)
+│       ├── notTake → solve(0,1)
+│       └── take → solve(0,0)
+│
+└── take → solve(2,2)
+    ├── notTake → solve(1,2)
+    │   ├── notTake → solve(0,2)   ⭐ SECOND TIME (same state!)
+    │   └── take → solve(0,1)
+    │
+    └── take → solve(1,0)
+        └── return true
+
+solve(0,2) repeated 2nd time, so overlapping subproblems
