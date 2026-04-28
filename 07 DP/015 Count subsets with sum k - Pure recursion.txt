@@ -1,0 +1,40 @@
+/*
+Top down pure recursion -> target decreasing/sum decreasing
+
+========================================================================
+Steps
+1. recurMethod(n-1, target, arr) -> start from back
+  1.1 base cases, if sum = 0, if index = 0
+  -> if sum == 0, return 1
+  -> if (index == 0)
+      if(arr[0] == target) return 1; else return 0;
+  1.2 notTake -> recurMethod(index-1, sum, arr)
+  1.3 init take =0; if arr[i] <= sum (remaining) then we can take
+  - take = 0;
+  - if (arr[index] <= sum) recurMethod(index-1, sum - arr[index], arr)
+  1.4 return take + notTake
+========================================================================
+*/
+
+class Solution {
+    public int countSubsets(int[] arr, int n, int target) {
+        return solve(n - 1, target, arr);
+    }
+
+    private int solve(int index, int remainingTarget, int[] arr) {
+        // Base cases
+        if (remainingTarget == 0) return 1;
+        if (index == 0) {
+            return (arr[0] == remainingTarget) ? 1 : 0;
+        }
+
+        int notTake = helper(index - 1, remainingTarget, arr);
+
+        int take = 0;
+        if (arr[index] <= target) {
+            take = helper(index - 1, remainingTarget - arr[index], arr);
+        }
+
+        return take + notTake;
+    }
+}
