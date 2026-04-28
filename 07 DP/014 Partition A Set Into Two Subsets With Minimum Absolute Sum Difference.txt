@@ -15,12 +15,28 @@ If we can check for target=k
 We can derieve if every possible target between 1 and K is possible or not
 
 As 
+dp[n-1][col -> 0...targetsum]
 dp[n-1][0]
 dp[n-1][2]
 dp[n-1][3]
 .....
 dp[n-1][target-1]
   All these will be filled as well
+
+Intuition
+--------------------------------------------------------------------------------------------------------------
+So if we have a dp with target = totalSum of all arr numbers we can find if each sum from 1 to totalSum is acheivable or not s1 can be that, and s2 will be totalSum - s1
+So we can 
+  - run from s1 ->  0 to totalSum and 
+  - for each sum, -> if its acheivable in dp -> check the difference -> keep it minimal
+
+NOTE IMP /2 trick - at midpoint of totalSum s1 and s2 will switch, so we can calcuate upto totalSum only
+Check striver explanation
+--------------------------------------------------------------------------------------------------------------
+
+Steps
+
+
 */
 
 
