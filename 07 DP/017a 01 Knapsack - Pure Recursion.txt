@@ -1,0 +1,40 @@
+/*
+0/1 Knapsack Problem
+
+Problem Statement
+Given:
+-> wt[] → weights
+-> val[] → values
+-> W → max capacity
+👉 Pick items (each at most once) to maximize total value such that total weight ≤ W.
+
+*/
+
+
+class Solution {
+
+    public int knapsack(int[] wt, int[] val, int n, int W) {
+        return helper(n - 1, W, wt, val);
+    }
+
+    private int helper(int index, int capacity, int[] wt, int[] val) {
+
+        // Base case
+        if (index == 0) {
+            if (wt[0] <= capacity) return val[0];
+            return 0;
+        }
+
+        int notTake = helper(index - 1, capacity, wt, val);
+
+        int take = Integer.MIN_VALUE;
+        if (wt[index] <= capacity) {
+            take = val[index] + helper(index - 1, capacity - wt[index], wt, val);
+        }
+
+        return Math.max(take, notTake);
+    }
+}
+
+
+
