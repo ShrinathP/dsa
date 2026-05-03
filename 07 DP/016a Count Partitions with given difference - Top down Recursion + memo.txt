@@ -1,3 +1,36 @@
+/*
+Extension of Previous Problem
+Given an array arr[] and a number d, count the number of ways to split the array into two subsets S1 and S2 such that:
+S1 - S2 = d
+
+IMP CUE -> This is Previous Problem With modified target 
+--------------------------------------------------------
+
+Reduction to Subset Sum 
+Equation1
+S1 - S2 = D
+
+Equation2
+S1 + S2 = totalSum
+S1 = totalSum - S2
+
+Equation1 will become
+(totalSum - S2) - S2 = D
+totalSum - D = 2S2
+S2 = (totalSum - D)/2
+
+Similarly
+S1 = (totalSum + D)/2
+
+So we have to find subsets with sum either (totalSum - D)/2 or (totalSum + D)/2
+
+2 Base cases -
+Base Case 1 -> totalSum has to be greater than d, totalSum > d, if less return false
+Base Case 2 -> totalSum - D has to be even, if off then subset cant be split - as we dont have decimals
+
+*/
+
+
 import java.util.Arrays;
 
 class Solution {
