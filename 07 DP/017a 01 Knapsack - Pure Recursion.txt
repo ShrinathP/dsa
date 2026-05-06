@@ -8,6 +8,26 @@ Given:
 -> W → max capacity
 👉 Pick items (each at most once) to maximize total value such that total weight ≤ W.
 
+================================================================================
+Steps
+1. recurMethod(index, capacity, wt arr, val arr)
+    1.1 Base case - if we reach index = 0, check if wt less than capacity, if yes return val[0] else 0
+    if(index==0) {
+        if(wt[0] <= capacity) {
+            return val[0];
+        } else {
+            return 0;
+        }
+    }
+    1.2 notTake way -> recur with index-1 - recurMethod(index-1, capacity, wt, val)
+    1.3 take way -> init with INTMIN, if wt[ind] < capacity, take it
+        int take = INT.MIN_VALUE;
+        if(wt[index] <= capacity) {
+            take = val[0] + recurMethod(index-1, capacity-val[0], wt, val)        
+        }
+    1.4 return max(take, notTake)
+================================================================================
+    
 */
 
 
@@ -25,7 +45,7 @@ class Solution {
             return 0;
         }
 
-        int notTake = helper(index - 1, capacity, wt, val);
+        int notTake = 0 + helper(index - 1, capacity, wt, val);
 
         int take = Integer.MIN_VALUE;
         if (wt[index] <= capacity) {
