@@ -1,6 +1,7 @@
 /*
 Changes from Previous Solution
 Change 1 -> init 2d dp arr size n x W+1(capacity+1), fill all rows with -1
+    Index can be from 0 to n-1, weight can be from 0 to W
 Change 2 -> after base case check if dp[index][capacity] != -1, return dp[index][capacity]
 Change 3 -> Before returning Math.max(take, notTake), save to dp array
 */
