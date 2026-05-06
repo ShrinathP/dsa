@@ -1,0 +1,47 @@
+/*
+Bottom up dp filling
+==========================================================================================
+Steps
+1. Init dp arr, n X (capacity + 1)
+2. Base case first row - for all weights from 0 to Capacity(W), I can steal, so fill with its values
+    for(int cap=0; cap<=capacity; cap++) {dp[0][cap] = val[0]; }
+3. for in for loop - index 1 to <n i.e. n-1, for cap 0 to Capacity(W)
+    - notTake -> prev row value -> dp[i-1][cap]
+    - take -> init INT.MIN, if wt <= cap take it and reduce capacity
+      init take=INT.MIN, if(wt[i] <= cap) {take = val[i] + dp[i-1][cap - wt[i]]}
+    - Fill dp
+      dp[i][cap] = Math.max(take, notTake)
+4. return dp[n-1][W];
+==========================================================================================
+  
+*/
+
+
+class Solution {
+
+    public int knapsack(int[] wt, int[] val, int n, int W) {
+
+        int[][] dp = new int[n][W + 1];
+
+        // Base case (index 0)
+        for (int cap = wt[0]; cap <= W; cap++) {
+            dp[0][cap] = val[0];
+        }
+
+        for (int i = 1; i < n; i++) {
+            for (int cap = 0; cap <= W; cap++) {
+
+                int notTake = dp[i - 1][cap];
+
+                int take = Integer.MIN_VALUE;
+                if (wt[i] <= cap) {
+                    take = val[i] + dp[i - 1][cap - wt[i]];
+                }
+
+                dp[i][cap] = Math.max(take, notTake);
+            }
+        }
+
+        return dp[n - 1][W];
+    }
+}
