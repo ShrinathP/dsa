@@ -1,0 +1,49 @@
+
+/*
+IMP
+As for filling next row we use only the previous row of the dp
+We store only prev row, 
+
+Changes from the prev solution
+Change 1 -> Initialize 1D prev row instead of dp -> size [W + 1]
+Change 2 -> base case for cap  wt[0] to <= Capacity(W), fill val[0]
+Change 3 -> For every index, create current row, fill it, assign to prev row
+Change 4 -> return prev[W], last column of the prev row
+
+*/
+
+
+class Solution {
+
+    public int knapsack(int[] wt, int[] val, int n, int W) {
+
+        int[] prev = new int[W + 1];
+
+        // Base case
+        for (int cap = wt[0]; cap <= W; cap++) {
+            prev[cap] = val[0];
+        }
+
+        // For index in For capacity loop
+        for (int i = 1; i < n; i++) {
+
+            int[] curr = new int[W + 1];
+
+            for (int cap = 0; cap <= W; cap++) {
+
+                int notTake = prev[cap];
+
+                int take = Integer.MIN_VALUE;
+                if (wt[i] <= cap) {
+                    take = val[i] + prev[cap - wt[i]];
+                }
+
+                curr[cap] = Math.max(take, notTake);
+            }
+
+            prev = curr;
+        }
+
+        return prev[W];
+    }
+}
