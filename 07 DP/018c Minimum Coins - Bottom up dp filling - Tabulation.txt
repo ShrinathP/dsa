@@ -41,7 +41,7 @@ class Solution {
 
                 int take = (int)1e9;
                 if (coins[i] <= t) {
-                    take = 1 + dp[i][t - coins[i]]; // same row
+                    take = 1 + dp[i][t - coins[i]]; // same row - as infinite supply
                 }
 
                 dp[i][t] = Math.min(take, notTake);
