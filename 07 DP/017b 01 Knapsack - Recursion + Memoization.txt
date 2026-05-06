@@ -12,6 +12,7 @@ class Solution {
 
     public int knapsack(int[] wt, int[] val, int n, int W) {
 
+//Change 1
         int[][] dp = new int[n][W + 1];
         for (int[] row : dp) Arrays.fill(row, -1);
 
@@ -25,6 +26,7 @@ class Solution {
             return 0;
         }
 
+//Change 2
         if (dp[index][capacity] != -1) return dp[index][capacity];
 
         int notTake = helper(index - 1, capacity, wt, val, dp);
@@ -34,6 +36,7 @@ class Solution {
             take = val[index] + helper(index - 1, capacity - wt[index], wt, val, dp);
         }
 
+//Change 3
         return dp[index][capacity] = Math.max(take, notTake);
     }
 }
