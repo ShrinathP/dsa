@@ -1,0 +1,56 @@
+
+=========================================================================================================
+Changes from prev solution
+Using 1D array Instead of 2D Array
+1. Initialize 1D Array prev size [target + 1]
+2. In base case fill that row - for every target 0 to <= target, if divisible then divisor else INTMAX
+3. For index from 1 to <n, 
+  initialize current array,
+      For target from 0 to <= target
+        - notTake -> use prev row 
+          notTake = 0 + prev[t]
+        - take -> 1 + use currrow -> same row as unbounded
+          take = 1 + curr[t - coins[i]]
+        - curr[t] = Math.min(take, notTake)
+  prev = curr
+4. ans = prev[target]
+=========================================================================================================
+
+class Solution {
+
+    public int minCoins(int[] coins, int n, int target) {
+
+        int[] prev = new int[target + 1];
+
+        // 🎯 Base case (only coin[0])
+        for (int t = 0; t <= target; t++) {
+            if (t % coins[0] == 0) {
+                prev[t] = t / coins[0];
+            } else {
+                prev[t] = (int)1e9;
+            }
+        }
+
+        for (int i = 1; i < n; i++) {
+
+            int[] curr = new int[target + 1];
+
+            for (int t = 0; t <= target; t++) {
+
+                int notTake = 0 + prev[t];
+
+                int take = (int)1e9;
+                if (coins[i] <= t) {
+                    take = 1 + curr[t - coins[i]];  // ⚠️ same row (unbounded)
+                }
+
+                curr[t] = Math.min(take, notTake);
+            }
+
+            prev = curr;
+        }
+
+        int ans = prev[target];
+        return (ans >= (int)1e9) ? -1 : ans;
+    }
+}
