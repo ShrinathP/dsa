@@ -3,6 +3,19 @@ IMP Base case at index = 0, fill first row.
 For every target between 0 to <= target, 
   if its divisible by first coin coins[0], i.e. remainder == 0, save the divisor to dp, if not save INT.MAX
 
+=======================================================================================================================================
+Steps
+1. Initialize a dp array size n x (target + 1) -> row is coin index, col is target values
+2. Base case, fill the first row of the dp
+    - for all values from 0 to targets, if target is divisible by coins[0], dp[0][t] = divisor(t/coins[0]) or INT.MAX
+    for (int t = 0; t <= target; t++) { if (t % coins[0] == 0) dp[0][t] = t/coins[0] else dp[0][t] = INT.MAX}
+3. For index 1 to n-1 and t 0 to target
+  - notTake -> prev row dp[i-1][t] -> no subtraction, move prev
+  - take -> init INT.MAX, if(coins[i] <= target) { take = 1 + dp[i][t - coins[i]] } -> subtract target, keep same row as infinite supply
+  - dp[i][t] = Math.min(take, notTake)
+4. ans = dp[n-1][target], if ans >= 1e9 return -1, else return ans
+=======================================================================================================================================
+
 
 class Solution {
 
