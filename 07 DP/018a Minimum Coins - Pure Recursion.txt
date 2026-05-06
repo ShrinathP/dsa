@@ -1,0 +1,49 @@
+/*
+Problem Statement
+Given:
+- coins[] (infinite supply of each coin)
+- target
+
+👉 Find minimum number of coins to make target
+👉 Return -1 if not possible
+*/
+
+/*
+As there is infinite supply of coins
+This is UNBOUNDED:
+take → stay at same index (i)
+notTake → move to i-1
+
+Steps:
+
+*/
+
+
+class Solution {
+
+    public int minCoins(int[] coins, int n, int target) {
+        int ans = helper(n - 1, target, coins);
+        return (ans >= (int)1e9) ? -1 : ans;
+    }
+
+    private int helper(int index, int target, int[] coins) {
+
+        // Base case
+        if (index == 0) {
+            if (target % coins[0] == 0) {
+                return target / coins[0];
+            }
+            return (int)1e9; // impossible
+        }
+
+        int notTake = helper(index - 1, target, coins);
+
+        int take = (int)1e9;
+        if (coins[index] <= target) {
+            // stay at same index (unbounded)
+            take = 1 + helper(index, target - coins[index], coins);
+        }
+
+        return Math.min(take, notTake);
+    }
+}
