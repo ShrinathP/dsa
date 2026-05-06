@@ -14,6 +14,8 @@ Steps
   - take -> init INT.MAX, if(coins[i] <= target) { take = 1 + dp[i][t - coins[i]] } -> subtract target, keep same row as infinite supply
   - dp[i][t] = Math.min(take, notTake)
 4. ans = dp[n-1][target], if ans >= 1e9 return -1, else return ans
+    0 based indexing so row goes from 0 to n-1 and col goes from 0 to target
+    0 based indexing so the last row index is n-1 and last col index is target
 =======================================================================================================================================
 
 
