@@ -11,7 +11,9 @@ Steps
       take = INT.MIN, if(wt[i] <= cap) {take = val[i] + dp[i-1][cap - wt[i]]}
     - Fill dp
       dp[i][cap] = Math.max(take, notTake)
-4. return dp[n-1][W];
+4. return dp[n-1][W]; 
+    0 based indexing so row goes from 0 to n-1 and col goes from 0 to W
+    0 based indexing so the last row index is n-1 and last col index is W
 ==========================================================================================
   
 */
@@ -42,6 +44,6 @@ class Solution {
             }
         }
 
-        return dp[n - 1][W];
+        return dp[n - 1][W]; 
     }
 }
