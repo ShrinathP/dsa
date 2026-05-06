@@ -1,0 +1,39 @@
+/*
+Changes from Previous Solution
+Change 1 -> init 2d dp arr size n x W+1(capacity+1), fill all rows with -1
+Change 2 -> after base case check if dp[index][capacity] != -1, return dp[index][capacity]
+Change 3 -> Before returning Math.max(take, notTake), save to dp array
+*/
+
+
+import java.util.Arrays;
+
+class Solution {
+
+    public int knapsack(int[] wt, int[] val, int n, int W) {
+
+        int[][] dp = new int[n][W + 1];
+        for (int[] row : dp) Arrays.fill(row, -1);
+
+        return helper(n - 1, W, wt, val, dp);
+    }
+
+    private int helper(int index, int capacity, int[] wt, int[] val, int[][] dp) {
+
+        if (index == 0) {
+            if (wt[0] <= capacity) return val[0];
+            return 0;
+        }
+
+        if (dp[index][capacity] != -1) return dp[index][capacity];
+
+        int notTake = helper(index - 1, capacity, wt, val, dp);
+
+        int take = Integer.MIN_VALUE;
+        if (wt[index] <= capacity) {
+            take = val[index] + helper(index - 1, capacity - wt[index], wt, val, dp);
+        }
+
+        return dp[index][capacity] = Math.max(take, notTake);
+    }
+}
