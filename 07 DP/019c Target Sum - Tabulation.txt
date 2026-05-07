@@ -1,0 +1,51 @@
+/*
+Exactly Same as 016c Count Partitions with given difference, tabulation way
+*/
+
+class Solution {
+
+    public int findTargetSumWays(int[] nums, int target) {
+
+        int totalSum = 0;
+        for (int num : nums) totalSum += num;
+
+        if (Math.abs(target) > totalSum ||
+            (totalSum + target) % 2 != 0) {
+            return 0;
+        }
+
+        int reqSum = (totalSum + target) / 2;
+
+        int n = nums.length;
+
+        int[][] dp = new int[n][reqSum + 1];
+
+        // base case
+        if (nums[0] == 0) {
+            dp[0][0] = 2;
+        } else {
+            dp[0][0] = 1;
+        }
+
+        if (nums[0] != 0 && nums[0] <= reqSum) {
+            dp[0][nums[0]] = 1;
+        }
+
+        for (int i = 1; i < n; i++) {
+
+            for (int sum = 0; sum <= reqSum; sum++) {
+
+                int notTake = dp[i - 1][sum];
+
+                int take = 0;
+                if (nums[i] <= sum) {
+                    take = dp[i - 1][sum - nums[i]];
+                }
+
+                dp[i][sum] = take + notTake;
+            }
+        }
+
+        return dp[n - 1][reqSum];
+    }
+}
