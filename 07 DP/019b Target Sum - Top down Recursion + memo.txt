@@ -1,5 +1,25 @@
+/*
 Exactly same as 16b - Count Partitions with give difference
 Refer that problem
+
+Suppose:
+
+P = numbers with +
+N = numbers with -
+
+Then:
+
+P - N = target
+P + N = totalSum
+
+Add both:
+
+2P = totalSum + target
+P = (totalSum + target) / 2
+
+So problem becomes:
+👉 Count subsets with sum = (totalSum + target)/2
+*/
 
 import java.util.Arrays;
 
