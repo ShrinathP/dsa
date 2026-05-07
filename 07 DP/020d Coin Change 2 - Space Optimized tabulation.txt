@@ -1,0 +1,39 @@
+/*
+As we use only prev and current row, use 1D Array instead of 2D array
+For notTake use prev[target]
+For take reduce and keep using current row use curr[target - coins[ind]]
+fill curr[target] = take + notTake
+*/
+
+class Solution {
+    public int change(int amount, int[] coins) {
+        int n = coins.length;
+        int[] prev = new int[amount + 1];
+
+        // Base case
+        for (int t = 0; t <= amount; t++) {
+            if (t % coins[0] == 0) {
+                prev[t] = 1;
+            }
+        }
+
+        for (int i = 1; i < n; i++) {
+            int[] curr = new int[amount + 1];
+            
+            for (int t = 0; t <= amount; t++) {
+                int notTake = prev[t]; // ignored so get val from prev row
+
+                int take = 0;
+                if (coins[i] <= t) {
+                    take = curr[t - coins[i]]; // ⚠️ curr, as infinite supply of current index coints
+                }
+
+                curr[t] = take + notTake;
+            }
+
+            prev = curr;
+        }
+
+        return prev[amount];
+    }
+}
