@@ -1,6 +1,25 @@
 /*
 Exactly Same as 016c Count Partitions with given difference, tabulation way
+
+Suppose:
+
+P = numbers with +
+N = numbers with -
+
+Then:
+
+P - N = target
+P + N = totalSum
+
+Add both:
+
+2P = totalSum + target
+P = (totalSum + target) / 2
+
+So problem becomes:
+👉 Count subsets with sum = (totalSum + target)/2
 */
+
 
 class Solution {
 
