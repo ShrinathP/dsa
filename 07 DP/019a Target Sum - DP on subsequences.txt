@@ -1,0 +1,39 @@
+===================================================
+Problem Statement
+Given an array nums[] and a target value target.
+You can place:
++ sign
+or - sign
+
+before every element.
+👉 Count the number of ways to form the final expression such that:
+expression sum = target
+Exactly same as 
+015 Count Partitions with difference
+===================================================
+
+
+🧠 Key Reduction (VERY IMPORTANT)
+
+Suppose:
+
+P = numbers with +
+N = numbers with -
+
+Then:
+
+P - N = target
+P + N = totalSum
+
+Add both:
+
+2P = totalSum + target
+P = (totalSum + target) / 2
+
+So problem becomes:
+👉 Count subsets with sum = (totalSum + target)/2
+
+So this is essentialy Divide the array into 2 subsets where there difference is target
+Exactly same as 
+015 Count Partitions with difference
+
