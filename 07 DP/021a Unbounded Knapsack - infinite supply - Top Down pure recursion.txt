@@ -12,6 +12,25 @@ Pure recursion solution
 Base case when we reach index = 0, the number of times we can take the weight at 0 will be == cap / wt[0], 
 value will be int (cap/wt[0]) * val[0]
 
+==============================================================================================================
+Top down pure recursion 
+Start from back
+Steps
+1.recurMethod(index, capacity, weight arr, val arr)
+  recurMethod(wt.length - 1, W, wt[], val[])
+  1.1 base case - index == 0, only 1 item left 
+        - number of times i can steal number = cap/wt[0]
+        - value i can get = (cap/wt[0]) * val[0]
+      if(index == 0) {
+        return (cap / wt[0]) * val[0];
+      }
+  1.2 notTake - recur with index-1, dont reduce capacity, recurMethod(index-1,capacity, wt[], val[])
+  1.3 take - init Integer.MIN_VALUE, if(wt[ind] <= capacity) recur with same index (infinite supply), reduce capacity
+      if(wt[ind] <= capacity) {take = val[ind] + recurMethod(index,capacity - wt[ind], wt, val)}
+  1.4 return Math.max(take, notTake);
+==============================================================================================================
+
+
 */
 
 class Solution {
