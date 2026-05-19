@@ -1,0 +1,35 @@
+Changes from prev solution
+Change 1- Create dp array size n X W+1, fill with -1
+Change 2-
+
+
+import java.util.Arrays;
+
+class Solution {
+
+    public int unboundedKnapsack(int[] wt, int[] val, int n, int W) {
+
+        int[][] dp = new int[n][W + 1];
+        for (int[] row : dp) Arrays.fill(row, -1);
+
+        return helper(n - 1, W, wt, val, dp);
+    }
+
+    private int helper(int index, int cap, int[] wt, int[] val, int[][] dp) {
+
+        if (index == 0) {
+            return (cap / wt[0]) * val[0];
+        }
+
+        if (dp[index][cap] != -1) return dp[index][cap];
+
+        int notTake = helper(index - 1, cap, wt, val, dp);
+
+        int take = Integer.MIN_VALUE;
+        if (wt[index] <= cap) {
+            take = val[index] + helper(index, cap - wt[index], wt, val, dp);
+        }
+
+        return dp[index][cap] = Math.max(take, notTake);
+    }
+}
