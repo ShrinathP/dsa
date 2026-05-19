@@ -9,6 +9,8 @@ W (capacity)
 👉 Maximize total value
 
 Pure recursion solution
+Base case when we reach index = 0, the number of times we can take the weight at 0 will be == cap / wt[0], 
+value will be int (cap/wt[0]) * val[0]
 
 */
 
