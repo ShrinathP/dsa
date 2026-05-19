@@ -1,0 +1,39 @@
+/*
+As we use only prev and current row, use 1D Array instead of 2D array
+For notTake use prev[capacity]
+For take reduce and keep using current row use curr[cap - wt[ind]]
+fill curr[cap] = Math.max(take, notTake)
+*/
+
+class Solution {
+
+    public int unboundedKnapsack(int[] wt, int[] val, int n, int W) {
+
+        int[] prev = new int[W + 1];
+
+        // Base case
+        for (int cap = 0; cap <= W; cap++) {
+            prev[cap] = (cap / wt[0]) * val[0];
+        }
+
+        for (int i = 1; i < n; i++) {
+
+            int[] curr = new int[W + 1];
+
+            for (int cap = 0; cap <= W; cap++) {
+                int notTake = prev[cap]; //get value from prev array
+                
+                int take = Integer.MIN_VALUE;
+                if (wt[i] <= cap) {
+                    take = val[i] + curr[cap - wt[i]]; // ⚠️ curr, get earlier values from the curr array
+                }
+
+                curr[cap] = Math.max(take, notTake);
+            }
+
+            prev = curr;
+        }
+
+        return prev[W];
+    }
+}
