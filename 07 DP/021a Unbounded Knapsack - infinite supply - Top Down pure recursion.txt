@@ -1,0 +1,37 @@
+/*
+🧩 Problem (Unbounded Knapsack)
+Given:
+wt[] (weights)
+val[] (values)
+W (capacity)
+
+👉 You can take unlimited copies of each item
+👉 Maximize total value
+
+Pure recursion solution
+
+*/
+
+class Solution {
+
+    public int unboundedKnapsack(int[] wt, int[] val, int n, int W) {
+        return helper(n - 1, W, wt, val);
+    }
+
+    private int helper(int index, int cap, int[] wt, int[] val) {
+
+        // Base case
+        if (index == 0) {
+            return (cap / wt[0]) * val[0];
+        }
+
+        int notTake = helper(index - 1, cap, wt, val);
+
+        int take = Integer.MIN_VALUE;
+        if (wt[index] <= cap) {
+            take = val[index] + helper(index, cap - wt[index], wt, val); // ⚠️ same index
+        }
+
+        return Math.max(take, notTake);
+    }
+}
