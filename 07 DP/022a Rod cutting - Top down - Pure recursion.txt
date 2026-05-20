@@ -1,0 +1,58 @@
+/*
+Problem Statement
+Given:
+
+price[i] → price of rod of length i+1
+total rod length N
+
+👉 Cut the rod to maximize total price
+
+🧠 Mapping to Knapsack
+wt[i]  = i+1        -> rod lengths
+IMP: at index i → rod length = i + 1 so at index 0 rod length is 1
+val[i] = price[i]   -> price 
+W      = N          -> capacity == max length
+
+==========================================================================================
+Steps
+1.recurMethod(index, len, price arr) -> here max len/capacity is n
+  recurMethod(n-1, n, price[])
+  1.1 base case - index == 0, at index 0 rodLength is 1
+      IMP: at index i → rod length = i + 1 so at index 0, rod length is 1 so 1 + 1 + 1 .... till lenRemaining
+      - so price = lenRemaining * 1 * price[0] i.e. lenRemaining * price[0]
+      if(index == 0) {
+        return (len) * price[0];
+      }
+  1.2 notTake - recur with index-1, dont reduce length as same length can be cut, recurMethod(index-1,len, price[])
+  1.3 take - init Integer.MIN_VALUE, rodLength = index + 1;
+      if(rodLength <= capacity) recur with same index (infinite supply), reduce len
+      if(wt[ind] <= capacity) {take = price[ind] + recurMethod(index,len - rodLength, price)}
+  1.4 return Math.max(take, notTake);
+==========================================================================================
+*/
+
+class Solution {
+
+    public int cutRod(int[] price, int n) {
+        return recurMethod(n - 1, n, price);
+    }
+
+    private int recurMethod(int index, int len, int[] price) {
+
+        // Base case
+        if (index == 0) {
+            return len * price[0];
+        }
+
+        int notTake = 0 + helper(index - 1, len, price);
+
+        int take = Integer.MIN_VALUE;
+        int rodLength = index + 1;
+
+        if (rodLength <= len) {
+            take = price[index] + helper(index, len - rodLength, price); // same index
+        }
+
+        return Math.max(take, notTake);
+    }
+}
