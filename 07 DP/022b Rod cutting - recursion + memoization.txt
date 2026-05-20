@@ -1,6 +1,7 @@
 /*
 Changes from prev solution
 Change 1- Create dp array of index 0 to n and cap from 0 to n+1,  size n X n+1, fill with -1
+n X (n + 1) -> n index , n + 1 lenghts
 Change 2- After base case of index==0, check if dp[index][cap] != -1, return dp[index][cap]
 Change 3- save before returning Math.max(take, notTake)
 */
