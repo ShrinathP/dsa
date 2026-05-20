@@ -1,0 +1,41 @@
+/*
+Changes from prev solution
+Change 1- Create dp array of index 0 to n and cap from 0 to n+1,  size n X n+1, fill with -1
+Change 2- After base case of index==0, check if dp[index][cap] != -1, return dp[index][cap]
+Change 3- save before returning Math.max(take, notTake)
+*/
+
+
+import java.util.Arrays;
+
+class Solution {
+
+    public int cutRod(int[] price, int n) {
+
+        int[][] dp = new int[n][n + 1];
+        for (int[] row : dp) Arrays.fill(row, -1);
+
+        return helper(n - 1, n, price, dp);
+    }
+
+    private int helper(int index, int len,
+                       int[] price, int[][] dp) {
+
+        if (index == 0) {
+            return len * price[0];
+        }
+
+        if (dp[index][len] != -1) return dp[index][len];
+
+        int notTake = helper(index - 1, len, price, dp);
+
+        int take = Integer.MIN_VALUE;
+        int rodLen = index + 1;
+
+        if (rodLen <= len) {
+            take = price[index] + helper(index, len - rodLen, price, dp);
+        }
+
+        return dp[index][len] = Math.max(take, notTake);
+    }
+}
