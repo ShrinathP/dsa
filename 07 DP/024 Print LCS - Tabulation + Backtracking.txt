@@ -3,8 +3,36 @@
 Extension of LCS Tabulation Solution
 Fill the dp[n+1][m+1] array using 023c LCS Tabulation Solution
 
-Refer 023c2 LCS DP Print Explanation
+IMP - Refer 023c2 LCS DP Print Explanation
 Now backtrack from m and n, in the dp table 
+
+========================================================================================================================
+Steps - DP Table Creation
+1. init dp array size n+1 x m+1
+2. Base case 0th index/row and column fill with zeroes as there can be nothing common if either of the string length is 0
+    for all dp[i][0] fill 0
+    for all dp[0][j] fill 0
+3. For i(S1) in for j(S2) target loop 
+  For S1 from 1 to <m, 
+    For S2 from 1 to <n, 
+    1. If Match, add 1, to dp[i-1][j-1] fill in dp arr, diagonally top left index, that means add 1 to previous substring
+    2. If Not Match, add max of left or right of current i,j, call Max -> 0 + Math.max( dp[i - 1][j], dp[i][j-1])
+4. return dp[m][n]
+
+Steps - Backtracking from bottom right and building string 
+1. init i=n, j=m, while loop i>0 && j > 0
+    3 cases
+    1. if both chars are equal add to the string and go diagonally up move both i and j back
+    if (s1.charAt(i - 1) == s2.charAt(j - 1)) { 
+        res.append(s1.charAt(i - 1)); i--; j--;
+    }
+    2. else if left if greater than top i.e. dp[i-1][j] > dp[i][j-1], consider top, move i back
+        i--;
+    3. else if top if greater than left i.e. dp[i][j-1] >= dp[i-1][j], consider left, move j back
+        j--;
+========================================================================================================================
+    
+
 */
 
 class Solution {
