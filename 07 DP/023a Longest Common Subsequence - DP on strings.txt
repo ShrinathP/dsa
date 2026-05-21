@@ -1,0 +1,10 @@
+Problem Statement
+Given 2 strings, find the Longest Common Subsequence
+
+For both strings Start from back
+Check each index string matches or not
+2 Possibilities
+1. If Match, add 1, move back both indexes -> 1 + f(ind1 - 1, ind2 - 1)
+2. If Not Match, add 0, move either of indexes and call Max -> 0 + Math.max( f(ind1 - 1, ind2), f(ind1, ind2 - 1))
+  Tricky suppose 2 strings ace and aec so for both users, 
+  if we move back both indexes by -1, then we miss out 'c' match and 'e' match, so we move either of those not both 
