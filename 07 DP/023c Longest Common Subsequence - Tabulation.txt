@@ -8,7 +8,21 @@ col 0 → empty s2
 
 For i in for j loop
 Fill the dp
-*/
+
+============================================================================
+Steps
+1. init dp array size n+1 x m+1
+2. Base case 0th index/row and column fill with zeroes as there can be nothing common if either of the string length is 0
+    for all dp[i][0] fill 0
+    for all dp[0][j] fill 0
+3. For i(S1) in for j(S2) target loop 
+  For S1 from 1 to <m, 
+    For S2 from 1 to <n, 
+    1. If Match, add 1, to dp[i-1][j-1] fill in dp arr, diagonally top left index, that means add 1 to previous substring
+    2. If Not Match, add max of left or right of current i,j, call Max -> 0 + Math.max( dp[i - 1][j], dp[i][j-1])
+4. return dp[m][n]
+============================================================================
+    
 
 class Solution {
     public int lcs(String s1, String s2) {
