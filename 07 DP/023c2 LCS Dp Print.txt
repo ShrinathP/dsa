@@ -17,4 +17,17 @@ how much is matching
 Matching of 
 index 0-4 of abcde is abcd vs index 0-2 of bd is 2
 
+Traversal from bottom right to top left
+abcde -> S1
+bdgek -> S2
+
+VVIMP - Striver explanation youtube video for
+Check DP 26. Print Longest Common Subsequence | Dp on Strings 
+https://youtu.be/-zI4mrF2Pb4?t=443
+
+from back e and k do not match so max of left or right from the dp and so on
+
+
+
+
 */
