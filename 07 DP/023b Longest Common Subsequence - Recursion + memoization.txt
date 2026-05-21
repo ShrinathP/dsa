@@ -1,0 +1,41 @@
+/*
+Changes from Previous Solution
+Change 1 -> Init dp array of size s1.length() * s2.length(), fill with -1
+Change 2 -> After base case, check if dp[i][j] != -1, return dp[i][j]
+Change 3 -> In Match case and non Match case save to dp[i][j] before returning
+*/
+
+import java.util.*;
+
+class Solution {
+    public int lcs(String s1, String s2) {
+        int n = s1.length(), m = s2.length();
+        int[][] dp = new int[n][m];
+
+        // Initialize with -1
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+
+        return solve(n - 1, m - 1, s1, s2, dp);
+    }
+
+    private int solve(int i, int j, String s1, String s2, int[][] dp) {
+        // Base case
+        if (i < 0 || j < 0) return 0;
+
+        // Already computed
+        if (dp[i][j] != -1) return dp[i][j];
+
+        // Match
+        if (s1.charAt(i) == s2.charAt(j)) {
+            return dp[i][j] = 1 + solve(i - 1, j - 1, s1, s2, dp);
+        }
+
+        // Not match
+        return dp[i][j] = Math.max(
+            solve(i - 1, j, s1, s2, dp),
+            solve(i, j - 1, s1, s2, dp)
+        );
+    }
+}
