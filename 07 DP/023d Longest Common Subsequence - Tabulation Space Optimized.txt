@@ -1,0 +1,33 @@
+/*
+As we need only prev array to calculate the current array
+1. Init prev arr with size m + 1
+2. For i from 1 to n
+    Initialize curr array of size m + 1
+    For j from 1 to m loop
+      -> if Match -> 1 + prev col above row above
+          curr[j] = 1 + prev[j-1]
+      -> if Not Match -> Max of top and left
+          curr[j] = Math.max(prev[j], curr[j-1])
+    prev = curr
+*/
+
+class Solution {
+    public int lcs(String s1, String s2) {
+        int n = s1.length(), m = s2.length();
+        int[] prev = new int[m + 1];
+
+        for (int i = 1; i <= n; i++) {
+            int[] curr = new int[m + 1];
+            for (int j = 1; j <= m; j++) {
+                if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                    curr[j] = 1 + prev[j - 1];
+                } else {
+                    curr[j] = Math.max(prev[j], curr[j - 1]);
+                }
+            }
+            prev = curr;
+        }
+
+        return prev[m];
+    }
+}
