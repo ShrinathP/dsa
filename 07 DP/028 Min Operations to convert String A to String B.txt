@@ -1,0 +1,56 @@
+/*
+
+Problem Statement
+Given a String S1 and S2, what is the minimum number of operations needed to convert S1 to S2
+
+Striver Explanation
+Approach
+Max Operations needed to convert S1 to S2 will be to delete everything in S1 and add everything of S2
+So Max Operations  = delete S1.length + add S2.length i.e. operations = S1.length + S2.length
+Given 'abcd' to convert to 'anc' - remove all chars 'abcd' and add all chars 'anc' = 4 + 3 = 7
+
+Optimum Approach
+Ask a question -> What can I not touch ? -> Common Portion among them
+'abcd' and 'anc' common portion is a,c
+
+So 2 kind of operations 
+1. abcd -> ac = 2 deletions
+2. ac -> anc = 1 insertion
+
+=====================================
+Steps
+1. Use Longest Common Subsequence
+2 Deletions = n - LCS
+3 Insertions = m - LCS
+3 Total Ops = Deletions + Insertions
+=====================================
+
+*/
+
+class Solution {
+    public int minOperations(String s1, String s2) {
+        int n = s1.length(), m = s2.length();
+
+        int[][] dp = new int[n + 1][m + 1];
+
+        // LCS computation
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+
+                if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+
+            }
+        }
+
+        int lcs = dp[n][m];
+
+        int deletions = n - lcs;
+        int insertions = m - lcs;
+
+        return deletions + insertions;
+    }
+}
