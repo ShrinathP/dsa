@@ -4,3 +4,54 @@ Given a string s, find the mininum number of insertions needed to make it a pali
 Given a string 'abcaa' min no of insertions needed is reverse of it i.e. 'aacba'
 and the string will become 'abcaaaacba' and thus a palindrome
 So Max number of insertions is length of the string
+
+Approach
+Keep the longest Palindromic Portion Intact, 
+Insertions Needed = String length - Longest Intact Palindrome
+
+Check Striver explanation
+====================================================================
+Steps
+1. From previous solution get longestPalindromicSubsequence() 
+  - same logic If match, 1 + diagonal back or if not match max of left or top
+  - reverse the same string and compare bottom up dp tabulation
+2. Get string size
+3. Insertions Needed = String.size - longestPalindromicSubsequence()
+====================================================================
+*/
+
+
+class Solution {
+    public int minInsertions(String s) {
+        String rev = new StringBuilder(s).reverse().toString();
+        int n = s.length();
+
+        int[][] dp = new int[n + 1][n + 1];
+
+        // 🔹 Explicit base cases, 
+        // row 0 → empty s1
+        for (int j = 0; j <= m; j++) {
+            dp[0][j] = 0;
+        }
+
+        // col 0 → empty s2
+        for (int i = 0; i <= n; i++) {
+            dp[i][0] = 0;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= n; j++) {
+
+                if (s.charAt(i - 1) == rev.charAt(j - 1)) {
+                    dp[i][j] = 1 + dp[i - 1][j - 1];
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+
+            }
+        }
+
+        int lps = dp[n][n];
+        return n - lps;
+    }
+}
