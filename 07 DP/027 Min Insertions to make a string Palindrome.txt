@@ -1,0 +1,6 @@
+Problem Statement
+Given a string s, find the mininum number of insertions needed to make it a palindrome
+
+Given a string 'abcaa' min no of insertions needed is reverse of it i.e. 'aacba'
+and the string will become 'abcaaaacba' and thus a palindrome
+So Max number of insertions is length of the string
