@@ -1,4 +1,7 @@
 
+
+Top down Table filling 
+
 Striver Explanation 
 Gemini code
 Create a dp array with size n = prices.length cross 2 states i.e. 0, 1
