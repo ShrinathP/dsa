@@ -1,0 +1,22 @@
+In the previous space optimized tabulation solution
+As there are only 2 variables for the state, i.e. buy or sell
+We can keep 4 variables in total for 2 arrays, ahead array and current array
+So aheadBuy aheadNotBuy currBuy currNotBuy
+
+
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int aheadBuy = 0, aheadNotBuy = 0;
+
+        for (int i = prices.length - 1; i >= 0; i--) {
+            int currBuy = Math.max(-prices[i] + aheadNotBuy, aheadBuy);
+            int currNotBuy = Math.max(prices[i] + aheadBuy, aheadNotBuy);
+
+            aheadBuy = currBuy;
+            aheadNotBuy = currNotBuy;
+        }
+
+        return aheadBuy;
+    }
+}
