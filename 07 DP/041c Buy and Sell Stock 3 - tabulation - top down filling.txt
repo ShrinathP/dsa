@@ -1,12 +1,23 @@
 
-=====================================================================================
-dp size intuition
+IMP-> dp size intuition
 IMP -> Why only n + 1, not others?
 BUT we also need state for i = n (base case)
 2. canBuy → NO +1 needed, no extra base index needed already 2 values
 3. cap → already includes base case -> 0 -> base case (no transactions left)
 
+IMP-> 🚀 Why return dp[0][1][2] ?
+Because:
+  We start at:
+  day = 0
+  canBuy = 1  (we haven't bought anything yet)
+  cap = 2     (we are allowed 2 transactions)
+👉 That is the initial state of the problem
 
+cap = transactions LEFT (future capacity)
+IMP: Even though we iterate backwards, DP meaning is always forward-looking.
+
+
+=====================================================================================
 Steps
 1. Init dp -> int[][][] dp = new int[n + 1][2][3]; 
   index n -> n+1 index
