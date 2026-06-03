@@ -6,6 +6,9 @@ Base case - at the end n,0 and n,1 profit is 0
 Top down Table filling - opposite of bottom up recursion.
 for i-1 to 0, profit will be max at 0th index, 0th state i.e. can buy state
 
+IMP
+note striver answer in the video is better as it's an extension of recursion solution where canbuy is 1, here buy is 0
+
 
 public class Solution {
     public int maxProfit(int[] prices) {
