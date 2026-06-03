@@ -1,9 +1,17 @@
 
 =====================================================================================
+dp size intuition
+IMP -> Why only n + 1, not others?
+BUT we also need state for i = n (base case)
+2. canBuy → NO +1 needed, no extra base index needed already 2 values
+3. cap → already includes base case -> 0 -> base case (no transactions left)
+
+
+Steps
 1. Init dp -> int[][][] dp = new int[n + 1][2][3]; 
   index n -> n+1 index
-  canBuy 2 cases
-  cap 2 -> 0,1,2 3 cases
+  canBuy 2 states 0,1 -> 2 cases
+  cap 0,1,2 3 states -> 3 cases
   2. Base cases - devised from the recursion solution
     2 cases where dp will be 0
       Case 1 -> i == n
