@@ -1,0 +1,47 @@
+
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+
+        int[][] ahead = new int[2][3];
+        int[][] curr = new int[2][3];
+
+        // Base Case 1: i = n
+        for (int canBuy = 0; canBuy <= 1; canBuy++) {
+            for (int cap = 0; cap <= 2; cap++) {
+                ahead[canBuy][cap] = 0;
+            }
+        }
+
+        // Fill DP
+        for (int i = n - 1; i >= 0; i--) {
+
+            // Base Case 2: cap = 0
+            curr[0][0] = 0;
+            curr[1][0] = 0;
+
+            for (int canBuy = 0; canBuy <= 1; canBuy++) {
+                for (int cap = 1; cap <= 2; cap++) {
+
+                    if (canBuy == 1) {
+                        curr[1][cap] = Math.max(
+                            -prices[i] + ahead[0][cap],
+                            ahead[1][cap]
+                        );
+                    } else {
+                        curr[0][cap] = Math.max(
+                            prices[i] + ahead[1][cap - 1],
+                            ahead[0][cap]
+                        );
+                    }
+                }
+            }
+
+            // Move window
+            ahead = curr.clone();
+        }
+
+        return ahead[1][2];
+    }
+}
