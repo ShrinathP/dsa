@@ -1,0 +1,44 @@
+
+
+Same as previous solution 
+Using Ahead and Curr arrays as we are filling top down.
+
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        int n = prices.length;
+        
+        // Arrays to hold the states for the next day (ahead) and today (curr)
+        // Index 0: Can sell (holds stock). Index 1: Can buy (holds no stock).
+        int[] ahead = new int[2];
+        int[] curr = new int[2];
+
+        // Base case: on day n (out of bounds), profit is 0
+        ahead[0] = 0;
+        ahead[1] = 0;
+
+        // Iterate backwards from the last day down to day 0
+        for (int i = n - 1; i >= 0; i--) {
+            for (int buy = 0; buy <= 1; buy++) {
+                int profit = 0;
+                if (buy == 1) {
+                    // Option 1: Buy stock, Option 2: Skip
+                    int buyStock = -prices[i] + ahead[0];
+                    int skip = ahead[1];
+                    profit = Math.max(buyStock, skip);
+                } else {
+                    // Option 1: Sell stock, Option 2: Skip
+                    int sellStock = prices[i] + ahead[1];
+                    int skip = ahead[0];
+                    profit = Math.max(sellStock, skip);
+                }
+                curr[buy] = profit;
+            }
+            // Move today's states to become the "ahead" states for the next iteration
+            ahead = curr.clone();
+        }
+        
+        // Return max profit starting on day 0 with permission to buy
+        return ahead[1];
+    }
+}
