@@ -1,0 +1,48 @@
+
+same as Previous solution. Buy and Sell 3 - Recursion. replace cap 2 by K, rest stays the same.
+
+public class StockTrading {
+
+    public static int maxProfit(int k, int[] prices) {
+        // Start recursive traversal at day 0, with 'k' transactions, and permission to Buy (isBuying = true)
+        return calculateMaxProfit(0, k, true, prices);
+    }
+
+    private static int calculateMaxProfit(int index, int k, boolean isBuying, int[] prices) {
+        // Base case: if we run out of transactions or reach the end of the price list
+        if (k == 0 || index == prices.length) {
+            return 0;
+        }
+
+        int profit = 0;
+
+        if (isBuying) {
+            // Option 1: Buy the stock today (costs money, so subtract prices[index])
+            // Since we bought, we can't buy again, so isBuying becomes false.
+            int buy = -prices[index] + calculateMaxProfit(index + 1, k, false, prices);
+            
+            // Option 2: Skip buying the stock today, keep transactions and isBuying state as is
+            int skip = 0 + calculateMaxProfit(index + 1, k, true, prices);
+            
+            profit = Math.max(buy, skip);
+        } else {
+            // Option 1: Sell the stock today (gain money, so add prices[index])
+            // A completed buy+sell counts as 1 transaction, so k is decremented by 1.
+            // isBuying becomes true again since we have no stock.
+            int sell = prices[index] + calculateMaxProfit(index + 1, k - 1, true, prices);
+            
+            // Option 2: Skip selling today, keep holding stock
+            int skip = 0 + calculateMaxProfit(index + 1, k, false, prices);
+            
+            profit = Math.max(sell, skip);
+        }
+
+        return profit;
+    }
+
+    public static void main(String[] args) {
+        int[] prices = {3, 2, 6, 5, 0, 3};
+        int k = 2;
+        System.out.println("Maximum Profit: " + maxProfit(k, prices));
+    }
+}
