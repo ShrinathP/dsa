@@ -1,0 +1,30 @@
+Space optimised tabulation Next and Current Array
+
+public class StockSpaceOptimized {
+    public static int maxProfit(int k, int[] prices) {
+        int n = prices.length;
+        if (n == 0 || k == 0) return 0;
+
+        // Represents the row for index + 1
+        int[][] next = new int[k + 1][2];
+        // Represents the row for current index
+        int[][] curr = new int[k + 1][2];
+
+        for (int index = n - 1; index >= 0; index--) {
+            for (int cap = 1; cap <= k; cap++) {
+                // Buy logic
+                int buy = -prices[index] + next[cap][0];
+                int skipBuy = next[cap][1];
+                curr[cap][1] = Math.max(buy, skipBuy);
+
+                // Sell logic
+                int sell = prices[index] + next[cap - 1][1];
+                int skipSell = next[cap][0];
+                curr[cap][0] = Math.max(sell, skipSell);
+            }
+            // Move curr data to next for the next iteration step
+            next = curr.clone(); 
+        }
+        return next[k][1];
+    }
+}
