@@ -1,0 +1,27 @@
+public class StockModuloOptimized {
+    public static int maxProfit(int k, int[] prices) {
+        int n = prices.length;
+        if (n == 0 || k == 0) return 0;
+
+        // We only use 2 rows for the index dimension
+        int[][][] dp = new int[2][k + 1][2];
+
+        for (int index = n - 1; index >= 0; index--) {
+            int currRow = index % 2;
+            int nextRow = (index + 1) % 2;
+
+            for (int cap = 1; cap <= k; cap++) {
+                // Buy logic using rolling rows
+                int buy = -prices[index] + dp[nextRow][cap][0];
+                int skipBuy = dp[nextRow][cap][1];
+                dp[currRow][cap][1] = Math.max(buy, skipBuy);
+
+                // Sell logic using rolling rows
+                int sell = prices[index] + dp[nextRow][cap - 1][1];
+                int skipSell = dp[nextRow][cap][0];
+                dp[currRow][cap][0] = Math.max(sell, skipSell);
+            }
+        }
+        return dp[0][k][1];
+    }
+}
