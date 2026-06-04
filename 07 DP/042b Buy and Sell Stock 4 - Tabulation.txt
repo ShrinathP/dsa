@@ -1,0 +1,30 @@
+Same as previous tabulation solution 
+
+public class StockTabulation {
+    public static int maxProfit(int k, int[] prices) {
+        int n = prices.length;
+        if (n == 0 || k == 0) return 0;
+
+        // dp[index][transactions_left][isBuying]
+        // isBuying: 1 for true (can buy), 0 for false (must sell)
+        int[][][] dp = new int[n + 1][k + 1][2];
+
+        // Base cases are implicitly 0 because Java initializes arrays with 0
+
+        // Iterate backwards from the last day to day 0
+        for (int index = n - 1; index >= 0; index--) {
+            for (int cap = 1; cap <= k; cap++) {
+                // Case 1: We are allowed to buy
+                int buy = -prices[index] + dp[index + 1][cap][0];
+                int skipBuy = dp[index + 1][cap][1];
+                dp[index][cap][1] = Math.max(buy, skipBuy);
+
+                // Case 2: We must sell
+                int sell = prices[index] + dp[index + 1][cap - 1][1];
+                int skipSell = dp[index + 1][cap][0];
+                dp[index][cap][0] = Math.max(sell, skipSell);
+            }
+        }
+        return dp[0][k][1];
+    }
+}
