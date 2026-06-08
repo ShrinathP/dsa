@@ -1,3 +1,30 @@
+/*
+Why TWO base cases?
+1. dp[n][*] = 0
+No days left → no profit
+2. dp[n+1][*] = 0
+Needed because of dp[i+2] when i = n-1
+
+Example: IMPORTANT
+At i = n-1
+Sell → jump to i+2 = n+1
+👉 So dp[n+1] must exist and be valid
+
+Key Insight
+If transition uses i + k → you must define dp up to n + k
+Here:
+k = 2 → size = n + 2
+
+==========================================
+Base cases extension from Recursion Solution
+From recursion:
+if (i >= n) return 0;
+
+Means
+dp[n][0] = dp[n][1] = 0
+dp[n+1][0] = dp[n+1][1] = 0   // because of i+2
+*/
+
 class Solution {
     public int maxProfit(int[] prices) {
         int n = prices.length;
@@ -19,16 +46,10 @@ class Solution {
         for (int i = n - 1; i >= 0; i--) {
 
             // canBuy = 1
-            dp[i][1] = Math.max(
-                -prices[i] + dp[i + 1][0],
-                dp[i + 1][1]
-            );
+            dp[i][1] = Math.max( -prices[i] + dp[i + 1][0], dp[i + 1][1]);
 
-            // canBuy = 0
-            dp[i][0] = Math.max(
-                prices[i] + dp[i + 2][1], // cooldown
-                dp[i + 1][0]
-            );
+            // canBuy = 0 // cooldown
+            dp[i][0] = Math.max( prices[i] + dp[i + 2][1],  dp[i + 1][0]);
         }
 
         return dp[0][1];
