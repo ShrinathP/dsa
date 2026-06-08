@@ -1,4 +1,12 @@
 /*
+No cap on transactions  - IMP Same as Buy and Sell Stock - 2 -> 
+Both have
+- Unlimited transactions
+- Same state: dp[i][canBuy]
+Key difference is - Sell transition - This problem needs cooldown so after sell i+2, instead of i+1
+
+
+
 Why TWO base cases?
 1. dp[n][*] = 0
 No days left → no profit
