@@ -1,0 +1,55 @@
+//Time complexity O(nlogn)
+//Gemini Solution - Striver explanation
+NOTE BS only gives the length -> if you want actual subsequence you cannot get it using BS
+========================================================================
+Steps
+1. Create a tails array of length, nums.length,
+2. variables, size = 0, 
+3. For every num of nums array
+    - low=0; high=size
+    - Binary search for the num in tails array, for its ideal position
+    - low is the insertion index, add to tails arr, tails[low] = x
+    - if its last, increase the size
+4. return size
+========================================================================
+
+
+public class LISManualBinarySearch {
+    public static int lengthOfLIS(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+
+        int[] tails = new int[nums.length];
+        int size = 0;
+
+        for (int x : nums) {
+            int low = 0;
+            int high = size;
+
+            // Custom binary search to find the first element >= x (lower bound)
+            while (low < high) {
+                int mid = low + (high - low) / 2; // Prevents potential integer overflow
+                if (tails[mid] < x) {
+                    low = mid + 1;
+                } else {
+                    high = mid;
+                }
+            }
+
+            // low is the insertion index
+            tails[low] = x;
+
+            if (low == size) {
+                size++;
+            }
+        }
+
+        return size;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {0, 1, 0, 3, 2, 3};
+        System.out.println("Length of LIS: " + lengthOfLIS(nums)); // Output: 4 ([0, 1, 2, 3])
+    }
+}
