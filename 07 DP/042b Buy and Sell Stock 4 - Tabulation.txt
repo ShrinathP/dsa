@@ -1,30 +1,66 @@
-Same as previous tabulation solution 
+Same as previous tabulation solution replace fixed cap by k
+
+==========================================================================================
+Steps
+1. Init dp -> int[][][] dp = new int[n + 1][k+1][2]; 
+  index n -> n+1 index
+  transactions_left 0,1,2 3..k states -> k + 1 cases
+  canBuy/isBuying -> 2 states 0,1 -> 2 cases  
+  2. Base cases - devised from the recursion solution
+    2 cases where dp will be 0
+      Case 1 -> i == n
+      Case 2 -> cap == 0
+  when index = n , for canBuy in for cap loop, fill all dp[n][canBuy][cap] = 0
+  when cap  = 0 , for index in for cap loop, fill all dp[n][canBuy][0] = 0
+  3. For index in For canBuy in For cap loop, top down dp filling from n-1 to 0
+      3.1 if canBuy = 1, save max(buy, skipBuy) to dp
+         int buy = -prices[i] + dp[i + 1][0][cap]; //switch canBuy to 0
+         int skipBuy = dp[i + 1][1][cap];
+         dp[i][1][cap] = Math.max(buy, skipBuy);
+      3.2 else, save max(sell, skipSell) to dp
+          int sell = prices[i] + dp[i + 1][1][cap - 1];
+          int skipSell = 0 + dp[i + 1][0][cap];
+          dp[i][0][cap] = Math.max(sell, skipSell);
+==========================================================================================
+
+import java.util.*;
 
 public class StockTabulation {
     public static int maxProfit(int k, int[] prices) {
         int n = prices.length;
         if (n == 0 || k == 0) return 0;
 
-        // dp[index][transactions_left][isBuying]
-        // isBuying: 1 for true (can buy), 0 for false (must sell)
+        // dp[index][transactions_left][canBuy]
         int[][][] dp = new int[n + 1][k + 1][2];
 
-        // Base cases are implicitly 0 because Java initializes arrays with 0
+        // Base Case 1: index = n (no days left)
+        for (int cap = 0; cap <= k; cap++) {
+            dp[n][cap][0] = 0;
+            dp[n][cap][1] = 0;
+        }
 
-        // Iterate backwards from the last day to day 0
+        // Base Case 2: cap = 0 (no transactions left)
+        for (int index = 0; index <= n; index++) {
+            dp[index][0][0] = 0;
+            dp[index][0][1] = 0;
+        }
+
+        // 🔹 Fill DP
         for (int index = n - 1; index >= 0; index--) {
             for (int cap = 1; cap <= k; cap++) {
-                // Case 1: We are allowed to buy
+
+                // canBuy = 1
                 int buy = -prices[index] + dp[index + 1][cap][0];
                 int skipBuy = dp[index + 1][cap][1];
                 dp[index][cap][1] = Math.max(buy, skipBuy);
 
-                // Case 2: We must sell
+                // canBuy = 0
                 int sell = prices[index] + dp[index + 1][cap - 1][1];
                 int skipSell = dp[index + 1][cap][0];
                 dp[index][cap][0] = Math.max(sell, skipSell);
             }
         }
+
         return dp[0][k][1];
     }
 }
