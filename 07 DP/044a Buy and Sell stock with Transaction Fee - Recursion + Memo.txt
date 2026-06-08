@@ -1,0 +1,35 @@
+/*
+Changes from prev solution
+Change 1 - Dp with size n x 2, fill with -1, pass to recurFunction
+Change 2- After base case, check dp[i][canBuy] != -1, if yes return dp[i][canBuy]
+Change 3 - save to dp the Math.max(buy, skipBuy) or Math.max(sell, skipSell) before returning in both cases
+*/
+
+import java.util.Arrays;
+
+class Solution {
+    public int maxProfit(int[] prices, int fee) {
+        int n = prices.length;
+        int[][] dp = new int[n][2];
+
+        for (int[] row : dp) Arrays.fill(row, -1);
+
+        return f(0, 1, prices, fee, dp);
+    }
+
+    int f(int i, int canBuy, int[] prices, int fee, int[][] dp) {
+        if (i == prices.length) return 0;
+
+        if (dp[i][canBuy] != -1) return dp[i][canBuy];
+
+        if (canBuy == 1) {
+            int buy = -prices[i] + f(i + 1, 0, prices, fee, dp);
+            int skip = f(i + 1, 1, prices, fee, dp);
+            return dp[i][canBuy] = Math.max(buy, skip);
+        } else {
+            int sell = prices[i] - fee + f(i + 1, 1, prices, fee, dp);
+            int skip = f(i + 1, 0, prices, fee, dp);
+            return dp[i][canBuy] = Math.max(sell, skip);
+        }
+    }
+}
