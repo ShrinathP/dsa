@@ -1,0 +1,30 @@
+
+// As we need curr and ahead array - we can hold 2 arrays ahead and curr, when we move from Top down table filling
+// Fill base case Ahead 0,0 at i=n, start filling current 
+
+class Solution {
+    public int maxProfit(int[] prices, int fee) {
+        int n = prices.length;
+
+        int[] ahead = new int[2]; // dp[i+1]
+        int[] curr = new int[2];  // dp[i]
+
+        // 🔹 Base case: i = n
+        ahead[0] = 0;
+        ahead[1] = 0;
+
+        for (int i = n - 1; i >= 0; i--) {
+
+            // canBuy = 1
+            curr[1] = Math.max( -prices[i] + ahead[0], ahead[1] );
+
+            // canBuy = 0
+            curr[0] = Math.max( prices[i] - fee + ahead[1], ahead[0] );
+
+            // move to next iteration
+            ahead = curr.clone();
+        }
+
+        return ahead[1];
+    }
+}
