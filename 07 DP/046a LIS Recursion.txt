@@ -5,30 +5,40 @@ move index ahead, keep prev same
 
 While taking
 keep hold of the prev integer
-compare current nums[index] > prev, we can take 1 + recur
-move index ahead, consider current nums[index] as prev
+compare current nums[index] > nums[prevIndex], we can take 1 + recur
+move index ahead, consider current index as prevIndex
+
+Gemini Solution
 */
 
-class Solution {
-    public int lengthOfLIS(int[] nums) {
-        return solve(nums, 0, Integer.MIN_VALUE);
+public class LongestIncreasingSubsequence {
+
+    public static int findLIS(int[] nums) {
+        // Start from index 0 with a previous index placeholder of -1
+        return calculateLIS(nums, 0, -1);
     }
 
-    int solve(int[] nums, int index, int prevVal) {
-        if (index == nums.length) return 0;
-
-        // Option 1: skip
-        int notTake = solve(nums, index + 1, prevVal);
-
-        // Option 2: take (only if valid)
-        int take = 0;
-// we can use prev = -1 and check
-// if (prev == -1 || nums[index] > prevVal) {
-
-        if (nums[index] > prevVal) {
-            take = 1 + solve(nums, index + 1, nums[index]);
+    private static int calculateLIS(int[] nums, int currentIndex, int previousIndex) {
+        // Base case: If we have processed all elements
+        if (currentIndex == nums.length) {
+            return 0;
         }
 
-        return Math.max(take, notTake);
+        // Option 1: Do not include the current element in the subsequence
+        int notTake = calculateLIS(nums, currentIndex + 1, previousIndex);
+
+        // Option 2: Include the current element (only if it is greater than the previous element)
+        int take = 0;
+        if (previousIndex == -1 || nums[currentIndex] > nums[previousIndex]) {
+            take = 1 + calculateLIS(nums, currentIndex + 1, currentIndex);
+        }
+
+        // Return the maximum of both choices
+        return Math.max(notTake, take);
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {10, 9, 2, 5, 3, 7, 101, 18};
+        System.out.println("Length of LIS: " + findLIS(nums)); // Output: 4
     }
 }
