@@ -22,6 +22,9 @@ class Solution {
 
         // Option 2: take (only if valid)
         int take = 0;
+// we can use prev = -1 and check
+// if (prev == -1 || nums[index] > prev) {
+
         if (nums[index] > prev) {
             take = 1 + solve(nums, index + 1, nums[index]);
         }
