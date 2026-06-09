@@ -1,5 +1,7 @@
 /*
-For 
+Gemini solution, bottom up dp filling
+base case every single element is an increasing subsequence of size 1
+At every case we only need prev and i
 */
 
 import java.util.Arrays;
@@ -14,9 +16,7 @@ public class Solution {
         int n = nums.length;
         // dp[i] stores the length of LIS ending at index i
         int[] dp = new int[n];
-
-        // 🔹 Base case:
-        // dp[0] = 0 → at index i=0 LIS is 0, the same will be prev
+        
         
         // Base case: every single element is an increasing subsequence of length 1
         Arrays.fill(dp, 1);
