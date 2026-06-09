@@ -1,6 +1,8 @@
 /*
 We need to hold the previousIndex where 1 was added
 now the print lis solution using another array lets say hash, which holds the previous index where 1 was added
+
+Striver explanation - Gemini solution
 */
 
 import java.util.ArrayList;
