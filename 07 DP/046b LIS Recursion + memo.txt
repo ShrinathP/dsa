@@ -6,6 +6,16 @@ dp[i][prevIndex + 1], +1 to handle previous State of -1
 Change 2 -> after base case of i== nums.length, check for dp[i, prevIndex + 1] != -1
 if yes return dp[i, prevIndex + 1]
 Change 3 - save Math.max(take, notTake) to dp[i][prevIndex + 1]
+
+
+-> Imp why we dont have n+1 in memo dp array
+if (i == n) return 0;
+👉 base case is handled directly, NOT stored in dp
+So:
+we NEVER access dp[n][...]
+Hence:
+int[][] dp = new int[n][n + 1];  // sufficient
+
 */
 
 
