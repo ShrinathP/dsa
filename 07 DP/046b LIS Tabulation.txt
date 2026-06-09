@@ -1,0 +1,40 @@
+/*
+Extrapolating from recursion solution
+if (i == n) return 0;
+dp[i][*] = 0
+*/
+
+import java.util.*;
+
+public class LongestIncreasingSubsequence {
+
+    public static int findLIS(int[] nums) {
+        int n = nums.length;
+
+        int[][] dp = new int[n + 1][n + 1];
+
+        // 🔹 Base Case: i = n
+        for (int prev = -1; prev < n; prev++) {
+            dp[n][prev + 1] = 0;
+        }
+
+        // 🔹 Fill DP
+        for (int i = n - 1; i >= 0; i--) {
+            for (int prev = i - 1; prev >= -1; prev--) {
+
+                // exclude
+                int exclude = dp[i + 1][prev + 1];
+
+                // include
+                int include = 0;
+                if (prev == -1 || nums[i] > nums[prev]) {
+                    include = 1 + dp[i + 1][i + 1];
+                }
+
+                dp[i][prev + 1] = Math.max(include, exclude);
+            }
+        }
+
+        return dp[0][0]; // prevIndex = -1 → shifted to 0
+    }
+}
