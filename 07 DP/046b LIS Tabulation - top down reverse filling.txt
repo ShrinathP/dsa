@@ -59,6 +59,6 @@ public class LongestIncreasingSubsequence {
             }
         }
 
-        return dp[0][0]; // prevIndex = -1 → shifted to 0
+        return dp[0][-1+1]; // prevIndex = -1 → shifted to 0
     }
 }
