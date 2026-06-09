@@ -3,6 +3,10 @@ Extrapolating from recursion solution
 if (i == n) return 0;
 dp[i][*] = 0
 
+From previous recur + memo solution
+Whenever we convert recursion+memo solution to dp 
+DO COORDINATE SHIFT OF i as well with prev
+
 Sizes of dp
 1. prev starts from -1, to make it 0 based prev+1 size
 2. base case i=n, so index should span from 0 to n, i.e. n+1 size
