@@ -1,0 +1,65 @@
+/*
+We need to hold the previousIndex where 1 was added
+now the print lis solution using another array lets say hash, which holds the previous index where 1 was added
+*/
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class Solution {
+    public static List<Integer> printLIS(int[] nums) {
+        if (nums == null || nums.length == 0) {
+            return new ArrayList<>();
+        }
+        
+        int n = nums.length;
+        int[] dp = new int[n];
+        int[] hash = new int[n]; // Tracks the previous index in the LIS sequence
+        
+        Arrays.fill(dp, 1);
+        // Initialize hash: each element initially points to itself
+        for (int i = 0; i < n; i++) {
+            hash[i] = i;
+        }
+        
+        int maxLISLength = 1;
+        int lastIndex = 0; // Tracks the ending index of the longest subsequence
+        
+        // 1. Tabulation and parent tracking
+        for (int i = 1; i < n; i++) {
+            for (int prev = 0; prev < i; prev++) {
+                if (nums[i] > nums[prev] && dp[prev] + 1 > dp[i]) {
+                    dp[i] = dp[prev] + 1;
+                    hash[i] = prev; // Store the index from which we extended the LIS
+                }
+            }
+            // Update the global maximum length and its corresponding ending index
+            if (dp[i] > maxLISLength) {
+                maxLISLength = dp[i];
+                lastIndex = i;
+            }
+        }
+        
+        // 2. Backtrack using the hash array to reconstruct the LIS
+        List<Integer> lis = new ArrayList<>();
+        lis.add(nums[lastIndex]);
+        
+        while (hash[lastIndex] != lastIndex) {
+            lastIndex = hash[lastIndex];
+            lis.add(nums[lastIndex]);
+        }
+        
+        // The list is constructed backwards, so reverse it to get correct order
+        Collections.reverse(lis);
+        return lis;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {10, 9, 2, 5, 3, 7, 101, 18};
+        List<Integer> result = printLIS(nums);
+        System.out.println("Longest Increasing Subsequence: " + result); 
+        // Example Output: [2, 3, 7, 101] or [2, 5, 7, 101] depending on ties
+    }
+}
