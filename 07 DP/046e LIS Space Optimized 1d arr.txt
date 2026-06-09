@@ -1,0 +1,45 @@
+/*
+For 
+*/
+
+import java.util.Arrays;
+
+public class Solution {
+    public static int lengthOfLIS(int[] nums) {
+        // Handle empty or null array edge cases
+        if (nums == null || nums.length == 0) {
+            return 0;
+        }
+        
+        int n = nums.length;
+        // dp[i] stores the length of LIS ending at index i
+        int[] dp = new int[n];
+
+        // 🔹 Base case:
+        // dp[0] = 0 → at index i=0 LIS is 0, the same will be prev
+        
+        // Base case: every single element is an increasing subsequence of length 1
+        Arrays.fill(dp, 1);
+        
+        int maxLIS = 1;
+        
+        // Build the solution from left to right
+        for (int i = 1; i < n; i++) {
+            for (int prev = 0; prev < i; prev++) {
+                // If the current element is greater, it can extend the subsequence
+                if (nums[i] > nums[prev]) {
+                    dp[i] = Math.max(dp[i], dp[prev] + 1);
+                }
+            }
+            // Keep track of the global maximum length found so far
+            maxLIS = Math.max(maxLIS, dp[i]);
+        }
+        
+        return maxLIS;
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {10, 9, 2, 5, 3, 7, 101, 18};
+        System.out.println("Length of LIS: " + lengthOfLIS(nums)); // Output: 4
+    }
+}
