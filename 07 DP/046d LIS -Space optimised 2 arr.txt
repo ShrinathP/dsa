@@ -1,0 +1,42 @@
+/*
+Same as prev solution
+Create 2 rows, nextRow and currRow
+fill nextRow all at 0 as at start next row will be at n
+*/
+
+
+
+import java.util.*;
+
+public class LongestIncreasingSubsequence {
+
+    public static int findLIS(int[] nums) {
+        int n = nums.length;
+
+        int[] nextRow = new int[n + 1]; // dp[i+1][...]
+        int[] currRow = new int[n + 1]; // dp[i][...]
+
+        // 🔹 Base case already:
+        // nextRow[*] = 0  (dp[n][*] = 0)
+
+        for (int i = n - 1; i >= 0; i--) {
+
+            for (int prev = i - 1; prev >= -1; prev--) {
+
+                int exclude = nextRow[prev + 1];
+
+                int include = 0;
+                if (prev == -1 || nums[i] > nums[prev]) {
+                    include = 1 + nextRow[i + 1];
+                }
+
+                currRow[prev + 1] = Math.max(include, exclude);
+            }
+
+            // move curr → next
+            nextRow = currRow.clone();
+        }
+
+        return nextRow[0]; // prev = -1 → index 0
+    }
+}
