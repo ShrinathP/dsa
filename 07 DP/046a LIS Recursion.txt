@@ -14,18 +14,18 @@ class Solution {
         return solve(nums, 0, Integer.MIN_VALUE);
     }
 
-    int solve(int[] nums, int index, int prev) {
+    int solve(int[] nums, int index, int prevVal) {
         if (index == nums.length) return 0;
 
         // Option 1: skip
-        int notTake = solve(nums, index + 1, prev);
+        int notTake = solve(nums, index + 1, prevVal);
 
         // Option 2: take (only if valid)
         int take = 0;
 // we can use prev = -1 and check
-// if (prev == -1 || nums[index] > prev) {
+// if (prev == -1 || nums[index] > prevVal) {
 
-        if (nums[index] > prev) {
+        if (nums[index] > prevVal) {
             take = 1 + solve(nums, index + 1, nums[index]);
         }
 
