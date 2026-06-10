@@ -1,0 +1,71 @@
+Bottom up dp filling - 
+IMP - moving to 1 based indexing to avoid -1 i.e. < 0 in the previous recursion solution where string exhausted occurs at index 0
+so instead of n-1, m-1, we use n, m
+1. Init dp arr, n+1 X m+1 -> note boolean array
+2. Base case - 
+     -> 0,0 both empty, then true, there is a match 
+      dp[0][0] = true;
+     -> For first row i.e. empty string, if p char is *, then update prev match status
+      for (int j = 1; j <= n; j++) {
+            if (p.charAt(j - 1) == '*') {
+                dp[0][j] = dp[0][j - 1];
+            }
+        }
+3. For i in For j loop, dp filling
+    3.1 if char match or ? , move i and j both back
+        dp[i][j] = dp[i-1][j-1];
+    3.2 if pattern char is * , 2 options
+        we can either
+        skip * from pattern move j back 
+        OR 
+        skip one char from string and keep *, move i back
+        dp[i][j] = dp[i][j-1] || dp[i-1][j];
+    3.3 none of 3.1 and 3.1 happen, assign false
+        dp[i][j] = false;
+4. return dp[n][m];
+
+
+//Gemini solution
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        int m = s.length();
+        int n = p.length();
+        
+        // dp[i][j] represents if the first i chars of s match the first j chars of p
+        boolean[][] dp = new boolean[m + 1][n + 1];
+        
+        // Base case: Empty pattern matches empty string
+        dp[0][0] = true;
+        
+        // Handle patterns like '*' or '**' that can match an empty string
+        for (int j = 1; j <= n; j++) {
+            if (p.charAt(j - 1) == '*') {
+                dp[0][j] = dp[0][j - 1];
+            }
+        }
+        
+        // Fill the DP table
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                char sc = s.charAt(i - 1);
+                char pc = p.charAt(j - 1);
+                
+
+                if (pc == '?' || pc == sc) {
+                    // '?' matches one char, or exact character matches
+                    dp[i][j] = dp[i - 1][j - 1];
+                }
+
+                if (pc == '*') {
+                    // '*' can match empty sequence (dp[i][j-1]) or one/more characters (dp[i-1][j])
+                    dp[i][j] = dp[i][j - 1] || dp[i - 1][j];
+                }
+
+                //dp[i][j] = false, inherently, no need to assign
+                
+            }
+        }
+        
+        return dp[m][n];
+    }
+}

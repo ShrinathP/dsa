@@ -1,0 +1,80 @@
+/*
+Problem Statement
+Given:
+s → input string
+p → pattern
+
+Rules:
+? → matches exactly one char
+* → matches any sequence (including empty)
+👉 Return true/false
+
+==================================================================================================
+Steps
+1. s -> input string, p -> pattern
+    recurMethod(int i, int j, String s, String p), i for s string, j for p pattern
+    recurMethod(s.length() - 1, p.length() - 1, s, p)
+    1.1 Base cases - 3 return statements
+        -> if i<0 and j<0 , both exhausted, all match, return true
+            if (i < 0 && j < 0) return true;
+        -> if j < 0 && i>=0 pattern reached end, string i still pending, cant match, return false;
+            if (j < 0 && i >= 0) return false;
+        -> if i < 0 && j>=0 string reached end, pattern j still pending,  //IMP case
+        check if rest of pattern has all *, then return true, else false
+            if (i < 0 && j >= 0) {
+                for (int k=0; k <= j; k++) {
+                    if(p.charAt(k) != '*') return false;
+                }
+                return true;
+            };
+    1.2 if both char matches or question mark ?, move both back
+        if (s.charAt(i) == p.charAt(j) || p.charAt(j) == '?') {
+            return solve(i - 1, j - 1, s, p);
+        }
+    1.3 if pattern char is *, 
+        we can either 
+        keep * pattern and move string back  -> i-1, j
+        or 
+        skip * pattern and keep string char  -> i, j-1
+        if (p.charAt(j) == '*') {
+            return solve(i - 1, j, s, p) || solve(i, j - 1, s, p);
+        }
+    1.4 last one, return false
+==================================================================================================
+
+
+
+*/
+
+
+class Solution {
+    public boolean isMatch(String s, String p) {
+        return solve(s.length() - 1, p.length() - 1, s, p);
+    }
+
+    private boolean solve(int i, int j, String string, String pattern) {
+        if (i < 0 && j < 0) return true;
+        if (j < 0 && i >= 0) return false;
+
+        if (i < 0 && j >= 0) {
+            // pattern must be all '*'
+            for (int k = 0; k <= j; k++) {
+                if (pattern.charAt(k) != '*') return false;
+            }
+            return true;
+        }
+
+        if (string.charAt(i) == pattern.charAt(j) || pattern.charAt(j) == '?') {
+            return solve(i - 1, j - 1, s, p);
+        }
+
+        if (pattern.charAt(j) == '*') {
+            return solve(i - 1, j, s, p) || solve(i, j - 1, s, p);
+        }
+
+        return false;
+    }
+}
+
+
+

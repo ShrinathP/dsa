@@ -1,0 +1,35 @@
+/*
+Changes from Prev Solution
+Change 1 -> Init dp 2d arr size n x m, fill with -1, Pass the dp in recurMethod
+Change 2 -> After base case check if dp[i][j] != -1, then return dp[i][j]
+Change 3 -> Save to dp[i][j] before returning in both Match and non-Match case
+*/
+
+
+import java.util.*;
+
+class Solution {
+    public int numDistinct(String s, String t) {
+        int n = s.length(), m = t.length();
+        int[][] dp = new int[n][m];
+
+        for (int[] row : dp) Arrays.fill(row, -1);
+
+        return count(n - 1, m - 1, s, t, dp);
+    }
+
+    private int count(int i, int j, String s, String t, int[][] dp) {
+        if (j < 0) return 1;
+        if (i < 0) return 0;
+
+        if (dp[i][j] != -1) return dp[i][j];
+
+        if (s.charAt(i) == t.charAt(j)) {
+            return dp[i][j] =
+                count(i - 1, j - 1, s, t, dp) +
+                count(i - 1, j, s, t, dp);
+        }
+
+        return dp[i][j] = count(i - 1, j, s, t, dp);
+    }
+}

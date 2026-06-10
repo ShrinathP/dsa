@@ -1,0 +1,48 @@
+
+/*
+IN PLACE 1D PREV Array Modification/Updation
+
+IMPORTANT EXPLANATION for reverse traversal
+🔹 Why 2 arrays were needed?
+
+In prev–curr:
+    curr[j] = prev[j-1] + prev[j]
+👉 We depend on:
+    prev[j] (same column, previous row)
+    prev[j-1] (diagonal)
+
+🔴 Problem with 1 array (left → right)
+    If you do:
+    for (j = 1 → m)
+👉 dp[j-1] is already updated for current row, prev[j-1] is lost
+
+❌ So you lose:
+    prev[j-1]
+
+✅ Fix: Traverse Right → Left
+    for (j = m → 1)
+👉 Now:
+    dp[j] = prev[j]
+    dp[j-1] = prev[j-1] (still untouched)
+✔ Both values are safe
+*/
+
+
+class Solution {
+    public int numDistinct(String s, String t) {
+        int n = s.length(), m = t.length();
+
+        int[] dp = new int[m + 1];
+        dp[0] = 1;
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = m; j >= 1; j--) { //traverse reverse back to front
+                if (s.charAt(i - 1) == t.charAt(j - 1)) {
+                    dp[j] = dp[j - 1] + dp[j];
+                }
+            }
+        }
+
+        return dp[m];
+    }
+}

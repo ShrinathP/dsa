@@ -1,0 +1,67 @@
+/*
+Problem Statement : Given two strings s and t, return the number of distinct subsequences of s that equal t.
+Find the distinct occurences of string s in t
+
+Input: s = "rabbbit", t = "rabbit"
+Output: 3
+Explanation:
+As shown below, there are 3 ways you can generate "rabbit" from s.
+rabbbit
+rabbbit
+rabbbit
+
+A subsequence of a string is a new string generated from the original string with some characters (can be none) deleted without changing the relative order of the remaining characters. 
+For example, "ace" is a subsequence of "abcde" while "aec" is not.
+
+Striver explanation 
+Idea
+====
+if Match -> 2 ways either take and recur on rest, or not take and recur on rest -> take + skip 
+if Not Match -> recur on rest -> skip only
+
+===========================================================================================
+Example*
+s1 = babgbag
+s2 = bag
+now traverse from back ->  the g of s2 can match the s1 at first occurence or the other occurence
+
+===========================================================================================
+Find Distinct subsequences of targetString in givenString
+
+Steps - Top down recursion
+1. recurMethod(givenString, targetString, givenStringIndex i , targetIndex j)
+start iteration from back to front
+    1.1 Return statements - Base case 
+    - if (j < 0) target exhausted, found 1 way, return 1
+    - if (i < 0) givenString exhausted but target not exhausted, return 0
+    1.2 char Match or not Match
+    - if char match -> 2 ways take and notTake (there can be other match) - check Example*
+        if (s.charAt(i) == t.charAt(j)) {
+            result = recurMethod(i-1, j-1, s, t) + recurMethod(i-1, j, s, t);
+        }
+    - if char doesnt match -> only 1 way notTake
+        result = recurMethod(i-1, j, s, t);
+===========================================================================================
+*/
+
+
+class Solution {
+    public int numDistinct(String s, String t) {
+        return solve(s.length() - 1, t.length() - 1, s, t);
+    }
+
+    private int solve(int i, int j, String s, String t) {
+
+        // 🔹 Base cases
+        if (j < 0) return 1;  // formed t
+        if (i < 0) return 0;  // s exhausted
+
+        if (s.charAt(i) == t.charAt(j)) {
+            return count(i - 1, j - 1, s, t)   // take j the move back
+                 + count(i - 1, j, s, t);     // notTake j and move back
+        }
+
+        return count(i - 1, j, s, t); // notTake j and move back
+        
+    }
+}

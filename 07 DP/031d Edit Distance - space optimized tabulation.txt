@@ -1,0 +1,57 @@
+
+/*
+// 1 way
+//In the previous solution, replace dp[i] by curr, dp[i-1] by prev
+
+// Other way to look is 
+In insertion, i wont move back, only j moves back, so in curr move j back i.e. curr[j-1]
+In deletion, i will move back, j stays the same, so in prev use j i.e. prev[j]
+In replacement, both i and j move back, so in prev move j back i.e. prev[j-1]
+
+=================================================================================================
+Steps
+1. Init prev row with size s2.length i.e. m, fill with j values
+1. For rows 1 to n, 
+    init curr row with size s2.length
+    curr[0] = i //first col j length 0, to convert i to j(which is 0), we need i deletions
+        For j = 1 to m
+            - > same as prev, if match if not match
+            //In the previous solution, replace dp[i] by curr, dp[i-1] by prev
+
+NOTE IMP - You cannot space optimize this to 1D Array, as we need to store both rows, prev and current
+=================================================================================================
+
+
+*/
+
+class Solution {
+    public int minDistance(String s1, String s2) {
+        int n = s1.length(), m = s2.length();
+
+        int[] prev = new int[m + 1];
+
+        for (int j = 0; j <= m; j++) prev[j] = j;
+
+        for (int i = 1; i <= n; i++) {
+            int[] curr = new int[m + 1];
+            curr[0] = i;
+
+            for (int j = 1; j <= m; j++) {
+
+                if (s1.charAt(i - 1) == s2.charAt(j - 1)) {
+                    curr[j] = prev[j - 1];
+                } else {
+                    int insert = curr[j - 1];
+                    int delete = prev[j];
+                    int replace = prev[j - 1];
+
+                    curr[j] = 1 + Math.min(insert, Math.min(delete, replace));
+                }
+            }
+
+            prev = curr;
+        }
+
+        return prev[m];
+    }
+}

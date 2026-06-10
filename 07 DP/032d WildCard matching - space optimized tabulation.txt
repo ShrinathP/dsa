@@ -1,0 +1,60 @@
+
+
+================================================================
+Steps:
+1. Init prev row with size pattern length, boolean[] prev = new int[p.length() + 1]
+2. Base cases - both empty strings match - prev[0] = true
+3. Fill first row -> j from 1 to n, if char at j-1 = *, prev[j] = prev[j-1]
+4. Same For in for loop -
+    - if char match or ?, move both i and j back
+================================================================
+
+
+public class Solution {
+    public boolean isMatch(String s, String p) {
+        int m = s.length();
+        int n = p.length();
+        
+        // Only keep track of the current and previous rows
+        boolean[] prev = new boolean[n + 1];
+        
+        // Base case: Empty pattern matches empty string
+        prev[0] = true;
+        
+        // Initialize the first row (matching empty string 's' with pattern 'p')
+        for (int j = 1; j <= n; j++) {
+            if (p.charAt(j - 1) == '*') {
+                prev[j] = prev[j - 1];
+            }
+        }
+        
+        // Fill the DP table row by row
+        for (int i = 1; i <= m; i++) {
+            boolean[] curr = new boolean[n + 1];
+            // Base case for each row: non-empty string cannot match empty pattern
+            curr[0] = false; 
+            
+            for (int j = 1; j <= n; j++) {
+                char sc = s.charAt(i - 1);
+                char pc = p.charAt(j - 1);
+                
+                if (pc == '*') {
+                    // curr[j-1] is the left cell (same row, previous pattern char)
+                    // prev[j] is the top cell (previous row, same pattern char)
+                    curr[j] = curr[j - 1] || prev[j];
+                } else if (pc == '?' || pc == sc) {
+                    // prev[j-1] is the diagonal cell (previous row, previous pattern char)
+                    curr[j] = prev[j - 1];
+                } else {
+                    // Crucial step: reset to false since we reuse the row array
+                    curr[j] = false;
+                }
+            }
+            
+            //assign curr to prev
+            prev = curr;
+        }
+        
+        return prev[n];
+    }
+}
