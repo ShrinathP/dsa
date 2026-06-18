@@ -1,0 +1,59 @@
+/*
+Problem Statement
+Given an array of distinct positive integers, return the largest subset such that:
+
+For every pair (a, b) in the subset:
+either a % b == 0 OR b % a == 0
+
+If multiple answers exist, return any one.
+
+Exactly similar to the previous Print LIS using Hash Solution
+Extension of LIS Solution
+Change is ->  sort the array so we get an Increasing sequence and then 
+                every subsequent addition we check if its divisible by the previously added elements
+Steps
+1. Sort the nums array
+2. Init dp array of length n, and prev index of n
+*/
+
+
+import java.util.*;
+
+public class Solution {
+    public List<Integer> largestDivisibleSubset(int[] nums) {
+        int n = nums.length;
+        Arrays.sort(nums);
+
+        int[] dp = new int[n];      // length of subset
+        int[] prev = new int[n];    // previous index
+
+        Arrays.fill(dp, 1);
+        Arrays.fill(prev, -1);
+
+        int maxLen = 1;
+        int lastIndex = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] % nums[j] == 0 && dp[j] + 1 > dp[i]) {
+                    dp[i] = dp[j] + 1;
+                    prev[i] = j;
+                }
+            }
+            if (dp[i] > maxLen) {
+                maxLen = dp[i];
+                lastIndex = i;
+            }
+        }
+
+        // reconstruct subset
+        List<Integer> res = new ArrayList<>();
+        while (lastIndex != -1) {
+            res.add(nums[lastIndex]);
+            lastIndex = prev[lastIndex];
+        }
+
+        Collections.reverse(res);
+        return res;
+    }
+}
