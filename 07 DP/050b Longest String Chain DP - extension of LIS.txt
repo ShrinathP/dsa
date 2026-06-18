@@ -1,0 +1,53 @@
+// Java code for Longest String Chain
+// using Tabulation (Bottom-Up DP)
+// Striver Explanation and code youtube 
+import java.util.*;
+
+class GfG {
+    
+    // Function to check if b is a predecessor of a
+    private static boolean isPred(String a, String b) {
+        if (a.length() != b.length() + 1) {
+            return false;
+        }
+        int i = 0, j = 0;
+        while (i < a.length() && j < b.length()) {
+            if (a.charAt(i) == b.charAt(j)) {
+                i++;
+                j++;
+            } else {
+                i++;
+            }
+        }
+        return j == b.length();
+    }
+
+    // Function to find the longest string chain using DP
+    public static int longestStringChain(String words[]) {
+        
+        // Sort words based on length
+        Arrays.sort(words, Comparator.comparingInt(String::length));
+
+        int n = words.length;
+        int dp[] = new int[n];
+        Arrays.fill(dp, 1);
+        int res = 1;
+
+        // Iterate over each word
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (isPred(words[i], words[j])) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            res = Math.max(res, dp[i]);
+        }
+        return res;
+    }
+
+    // Driver code
+    public static void main(String[] args) {
+        String words[] = { "a", "b", "ba", "bca", "bda", "bdca" };
+        System.out.println(longestStringChain(words));
+    }
+}
