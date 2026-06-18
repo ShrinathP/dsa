@@ -1,6 +1,10 @@
 // Java code for Longest String Chain
 // using Recursion
 // For every word, check from rest words of it can extend. if yes 1+ recurFunction
+
+gfg link
+https://www.geeksforgeeks.org/dsa/find-the-length-of-the-longest-possible-word-chain/#expected-approach-dp-hashing-onlogn-nm-time-and-onm-space
+
 import java.util.Arrays;
 
 public class GfG {
