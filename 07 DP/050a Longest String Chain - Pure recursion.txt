@@ -1,0 +1,59 @@
+// Java code for Longest String Chain
+// using Recursion
+// For every word, check from rest words of it can extend. if yes 1+ recurFunction
+import java.util.Arrays;
+
+public class GfG {
+
+    // Function to check if b can be obtained by removing 
+    // one character from a
+    static boolean isPred(String a, String b) {
+        if (a.length() != b.length() + 1) return false;
+        int i = 0, j = 0;
+        
+        // Compare characters of both strings
+        while (i < a.length() && j < b.length()) {
+            if (a.charAt(i) == b.charAt(j)) { 
+                i++; 
+                j++; 
+            } else { 
+                i++; // Skip one character in a
+            }
+        }
+        return (j == b.length());
+    }
+
+    // Recursive function to find the longest chain that 
+    // ends with the given word 'curr'
+    static int longestEndCurr(String[] words, String curr) {
+        int maxEnd = 1;
+        
+        // Check for all words in the array
+        for (String w : words) {
+            if (isPred(curr, w)) {
+                // Recursively find the longest chain
+                maxEnd = Math.max(maxEnd, 1 + longestEndCurr(words, w));
+            }
+        }
+        return maxEnd;
+    }
+
+    // Function to find the length of the longest string chain
+    static int longestStringChain(String[] words) {
+        int res = 1;
+        
+        // Find the longest chain ending at each word
+        for (String w : words) {
+            res = Math.max(res, longestEndCurr(words, w));
+        }
+        return res;
+    }
+
+    // Driver code
+    public static void main(String[] args) {
+        String[] s = {"a", "b", "ba", "bca", "bda", "bdca"};
+        
+        // Print the length of the longest string chain
+        System.out.println(longestStringChain(s));
+    }
+}
