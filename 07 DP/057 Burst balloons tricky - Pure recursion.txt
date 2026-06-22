@@ -24,46 +24,62 @@ Now the split is arr1 [1 b1 b2];  b3(burst);  arr2 [b4 b5 1]
 So in the next recurfunctions recurFunc(arr1) and recurFunc(arr2), we only need the last burst b3 val on both sides
 TOP DOWN BURSTING
 
+NOTE: Any index can be last burst so need a for loop from i -> j in the recurFunction
+*/
 
-Any index can be last burst so need a for loop from i -> j in the recurFunction
+/*
+Steps: 
+1. Padded Array/ Expanded Array
+  - Built an expanded array with size n + 2. 
+  - add 1 at both ends, arr[0] and arr[n+1], 
+  - fill the rest of the arr from index=1 to index=n
+2. RecurFunction
+  2.1 base case if i > j return 0, no points
+  2.2 for burstIndex from i to j
+      - compute currPoints = curr * left of first * right of last
+      currPoints = arr[i-1] * arr[lastBurstIndex] * arr[j-1]
+      - compute totalPoints -> currPoints + recurLeft + recurRight
+      totalPoints = currPoints + recurFunction(i, lastBurstIndex - 1) + recurFunction(lastBurstIndex + 1, j)
+      - maintain a maxPoints var maxPoints = Math.max(maxPoints, totalPoints)
+  2.3 return maxPoints
 */
 
 public class BurstBalloons {
 
-    public static int solve(int[] nums, int i, int j) {
+    public static int solve(int[] arr, int i, int j) {
         // no balloon in range
         if (i > j) return 0;
 
         int maxCoins = 0;
 
         // try each balloon as LAST to burst
-        for (int k = i; k <= j; k++) {
-
-            int left = solve(nums, i, k - 1);
-            int right = solve(nums, k + 1, j);
-
-            // compute coins when k is last
-            int coins = getValue(nums, i - 1) 
-                      * getValue(nums, k)
-                      * getValue(nums, j + 1);
-
-            int total = left + right + coins;
-
+        for (int lastBurstIndex = i; lastBurstIndex <= j; lastBurstIndex++) {
+        
+            int coins = arr[i - 1] * arr[lastBurstIndex] * arr[j + 1];
+        
+            int total = solve(arr, i, lastBurstIndex - 1)
+                      + solve(arr, lastBurstIndex + 1, j)
+                      + coins;
+        
             maxCoins = Math.max(maxCoins, total);
         }
 
         return maxCoins;
     }
 
-    // helper to handle boundaries safely
-    public static int getValue(int[] nums, int idx) {
-        if (idx < 0 || idx >= nums.length) return 1;
-        return nums[idx];
-    }
-
     public static int maxCoins(int[] nums) {
         int n = nums.length;
-        return solve(nums, 0, n - 1);
+
+        // build padded array
+        int[] arr = new int[n + 2];
+        arr[0] = 1;
+        arr[n + 1] = 1;
+
+        for (int i = 0; i < n; i++) {
+            arr[i + 1] = nums[i];
+        }
+
+        return solve(arr, 1, n);
     }
 
     public static void main(String[] args) {
