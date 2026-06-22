@@ -1,0 +1,31 @@
+/*
+Problem: Evaluate Boolean Expression to True
+
+You are given:
+A string exp consisting of:
+'T' (true), 'F' (false)
+Operators: & (AND), | (OR), ^ (XOR)
+
+Task:
+Count the number of ways to parenthesize the expression such that it evaluates to True
+
+
+Example String
+T ^ F | T & F | T
+i -> index
+
+At every operand we can create a partition
+Operands start at i index and are at a distance of i+2 indexes
+
+consider arr splitted to arr2 and arr2
+If the operand i.e arr[i] is 
+& -> For result to be TRUE  -> arr1 and arr2 both have to be true, leftTrue and rightTrue
+  -> For result to be FALSE -> arr1 true and arr2 false, arr1 false and arr2 true, arr1 false and arr2 false
+
+| -> For result to be TRUE  -> arr1 true and arr2 false, arr1 false and arr2 true, arr1 true and arr2 true
+  -> For result to be FALSE -> arr1 false and arr2 false
+
+^ -> For result to be TRUE  -> arr1 true and arr2 false, arr1 false and arr2 true
+  -> For result to be FALSE -> arr1 false and arr2 false, arr1 true and arr2 true
+
+*/
