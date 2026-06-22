@@ -1,0 +1,65 @@
+
+/*
+Changes from prev solution
+Change 1 ->  Build padded dp array of size n+2, n+2, fill with -1, pass in the recurFunction
+Change 2 ->  After Base case -> if dp[i][j] != -1, return dp[i][j]
+Change 3 ->  Save maxPoints before return; return dp[i][j] = maxPoints
+*/
+
+import java.util.Arrays;
+
+public class BurstBalloonsMemo {
+
+    public static int solve(int[] arr, int i, int j, int[][] dp) {
+
+        // no balloons in range
+        if (i > j) return 0;
+
+        // memo check
+        if (dp[i][j] != -1) return dp[i][j];
+
+        int maxCoins = 0;
+
+        // try each balloon as LAST burst
+        for (int lastBurstIndex = i; lastBurstIndex <= j; lastBurstIndex++) {
+
+            int coins = arr[i - 1] * arr[lastBurstIndex] * arr[j + 1];
+
+            int total = solve(arr, i, lastBurstIndex - 1, dp)
+                      + solve(arr, lastBurstIndex + 1, j, dp)
+                      + coins;
+
+            maxCoins = Math.max(maxCoins, total);
+        }
+
+        return dp[i][j] = maxCoins;
+    }
+
+    public static int maxCoins(int[] nums) {
+
+        int n = nums.length;
+
+        // build padded array
+        int[] arr = new int[n + 2];
+        arr[0] = 1;
+        arr[n + 1] = 1;
+
+        for (int i = 0; i < n; i++) {
+            arr[i + 1] = nums[i];
+        }
+
+        int[][] dp = new int[n + 2][n + 2];
+
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+
+        return solve(arr, 1, n, dp);
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {3, 1, 5, 8};
+
+        System.out.println(maxCoins(nums));
+    }
+}
