@@ -1,0 +1,74 @@
+
+/*
+Striver explanation - TOP DOWN BURSTING - BURST LAST FIRST then RECUR
+NOTE IMP -> Explanation
+
+1 b1 b2 b3 b4 b5 1
+Consider bursting b3 now [1,b1,b3] [b4 b5 1]
+Now b3s right is b4 but its in another array
+If we burst first and then split, the left array's right element depends of right arrays left element
+So both arrs cannot be independent
+
+
+Solution is
+Reverse the logic, instead of bursting first and splitting into 2 independent arrays
+Consider the currentIndex to be bursted at the last
+1 b1 b2 b3 b4 b5 1 - arr
+  i    ind    j    - indices
+so if b3 is burst at last 
+Points  = 1 x b3 x 1 (because rest b1,b2,b4,b5 would have burst earlier only)
+Points  = arr[i-1] x b3 x arr[j+1] 
+Now recur on both left and right independently, 
+as if any of them bursts last, its independent of the other splitted array
+Now the split is arr1 [1 b1 b2];  b3(burst);  arr2 [b4 b5 1]
+So in the next recurfunctions recurFunc(arr1) and recurFunc(arr2), we only need the last burst b3 val on both sides
+TOP DOWN BURSTING
+
+
+Any index can be last burst so need a for loop from i -> j in the recurFunction
+*/
+
+public class BurstBalloons {
+
+    public static int solve(int[] nums, int i, int j) {
+        // no balloon in range
+        if (i > j) return 0;
+
+        int maxCoins = 0;
+
+        // try each balloon as LAST to burst
+        for (int k = i; k <= j; k++) {
+
+            int left = solve(nums, i, k - 1);
+            int right = solve(nums, k + 1, j);
+
+            // compute coins when k is last
+            int coins = getValue(nums, i - 1) 
+                      * getValue(nums, k)
+                      * getValue(nums, j + 1);
+
+            int total = left + right + coins;
+
+            maxCoins = Math.max(maxCoins, total);
+        }
+
+        return maxCoins;
+    }
+
+    // helper to handle boundaries safely
+    public static int getValue(int[] nums, int idx) {
+        if (idx < 0 || idx >= nums.length) return 1;
+        return nums[idx];
+    }
+
+    public static int maxCoins(int[] nums) {
+        int n = nums.length;
+        return solve(nums, 0, n - 1);
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {3, 1, 5, 8};
+
+        System.out.println(maxCoins(nums));
+    }
+}
