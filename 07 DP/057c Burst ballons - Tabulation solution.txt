@@ -1,11 +1,19 @@
 /*
-IMP Same idea as MCM / stick cutting:
-Traverse back to front for i -> n to 1,
-        j goes front to back -> i to n
 
+IMP Same idea as MCM / stick cutting:
+Traverse -> back to front for i -> n to 1,
+         -> j goes front to back -> i to n
+
+IMP* Explicit base case and when its needed
 Explicit base case -> i > j -> not needed but to understand mapping of if(i > j) return 0;
   For all i from 0 to n+1, 
     for all j which is < i, fill 0
+
+IMP*
+As we are moving j from i to n, we never come to a case where j < i, Base case is not needed
+ for (int j = i; j <= n; j++) {
+IMP*
+This explicit base case is possible only if j moves from 1 to n, instead of i to n
 
 */
 
@@ -46,7 +54,6 @@ public class BurstBalloons {
                 int maxCoins = 0;
 
                 for (int lastBurstIndex = i; lastBurstIndex <= j; lastBurstIndex++) {
-
                     int coins = arr[i - 1] * arr[lastBurstIndex] * arr[j + 1];
 
                     int left = dp[i][lastBurstIndex - 1];   // empty range → 0
