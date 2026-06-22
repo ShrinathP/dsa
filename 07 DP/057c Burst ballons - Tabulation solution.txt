@@ -1,0 +1,71 @@
+/*
+IMP Same idea as MCM / stick cutting:
+Traverse back to front for i -> n to 1,
+        j goes front to back -> i to n
+
+Explicit base case -> i > j -> not needed but to understand mapping of if(i > j) return 0;
+  For all i from 0 to n+1, 
+    for all j which is < i, fill 0
+
+*/
+
+
+
+
+import java.util.*;
+
+public class BurstBalloons {
+
+    public static int maxCoins(int[] nums) {
+
+        int n = nums.length;
+
+        // padded array
+        int[] arr = new int[n + 2];
+        arr[0] = 1;
+        arr[n + 1] = 1;
+
+        for (int i = 0; i < n; i++) {
+            arr[i + 1] = nums[i];
+        }
+
+        int[][] dp = new int[n + 2][n + 2];
+
+        // 🔹 Explicit base case:
+        // dp[i][j] = 0 when i > j (no balloons to burst)
+        for (int i = 0; i < n + 2; i++) {
+            for (int j = 0; j < i; j++) {
+                dp[i][j] = 0;
+            }
+        }
+
+        // Bottom-up filling
+        for (int i = n; i >= 1; i--) {
+            for (int j = i; j <= n; j++) {
+
+                int maxCoins = 0;
+
+                for (int lastBurstIndex = i; lastBurstIndex <= j; lastBurstIndex++) {
+
+                    int coins = arr[i - 1] * arr[lastBurstIndex] * arr[j + 1];
+
+                    int left = dp[i][lastBurstIndex - 1];   // empty range → 0
+                    int right = dp[lastBurstIndex + 1][j];  // empty range → 0
+
+                    int total = left + right + coins;
+
+                    maxCoins = Math.max(maxCoins, total);
+                }
+
+                dp[i][j] = maxCoins;
+            }
+        }
+
+        return dp[1][n];
+    }
+
+    public static void main(String[] args) {
+        int[] nums = {3, 1, 5, 8};
+        System.out.println(maxCoins(nums));
+    }
+}
