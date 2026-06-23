@@ -1,3 +1,27 @@
+/*
+
+============================================================================================================
+Steps
+1. Create a 3D dp arr of size n x n x 2
+2. Base case for i==j, i.e. the diagonals on 2 layers of the 2D array. i.e. 3d dp array, has to be filled by 1 or 0
+    if(exp.charAt(i) == 'T') dp[i][i][1] = 1; dp[i][i][0] = 0; // True case
+    if(exp.charAt(i) == 'F') dp[i][i][0] = 1; dp[i][i][1] = 0; // False case
+3. Traverse i from back to front n-1 to >=0 , and j traverses front to back i+1 to < n
+    For every substring from i to j, Compute waysTrue and waysFalse
+    3.1 Partition k goes from i+1 to j-1, with k+=2 steps
+    3.2 Update waysTrue and waysFalse based on operator (same as recursion)
+    3.3 save to dp[i][j][1] = waysTrue
+    3.3 save to dp[i][j][0] = waysFalse
+4. return dp[0][n-1][1] -> waysTrue for the whole expression
+============================================================================================================
+
+Question for the Base case -> 
+//Issue -> Base case hitting operand**
+We may hit the operators in the base case else condition. 
+So use else if (exp.charAt(i) == 'F')
+*/
+
+
 import java.util.*;
 
 public class BooleanExpressionTab {
@@ -12,11 +36,28 @@ public class BooleanExpressionTab {
             if (exp.charAt(i) == 'T') {
                 dp[i][i][1] = 1;
                 dp[i][i][0] = 0;
-            } else {
+            } else {             
+//we may hit operands here, we arent using those vals though. so better is -> else if(exp.charAt(i) == 'F')
                 dp[i][i][1] = 0;
                 dp[i][i][0] = 1;
             }
         }
+
+//Issue -> Base case hitting operand**
+//cleaner way is - 
+/*
+for (int i = 0; i < n; i++) {
+    if (exp.charAt(i) == 'T') {
+        dp[i][i][1] = 1;
+        dp[i][i][0] = 0;
+    } 
+    else if (exp.charAt(i) == 'F') {
+        dp[i][i][1] = 0;
+        dp[i][i][0] = 1;
+    }
+    // operators → ignore
+}
+*/
 
         // 🔹 Fill for substrings
         for (int i = n - 1; i >= 0; i--) {
