@@ -3,6 +3,10 @@ Changes from the prev solution
 Change 1 -> Create 3d dp array n x n x 2, fill with -1, pass in recurFunction
 Change 2 -> After Base case and i==j, check dp[i][j][isTrue] != -1, return dp[i][j][isTrue]
 Change 3 -> Save to dp before returning ways return dp[i][j][isTrue] = ways;
+
+
+dp[i][j][1] → ways to make exp[i..j] TRUE
+dp[i][j][0] → ways to make exp[i..j] FALSE
 */
 
 
