@@ -1,0 +1,82 @@
+/*
+🔎 Problem: Palindrome Partitioning II (Front Partition)
+Given a string s, partition it into substrings such that each substring is a palindrome.
+👉 Return the minimum number of cuts needed.
+
+🧠 Key Idea (Front Partition)
+We try:
+start from index i → try all possible partitions i → j
+If s[i..j] is palindrome:
+make a cut after j
+solve remaining j+1
+
+
+Suppose given String is   
+b a b a b c b a d c e d e
+FRONT PARTITION  - Start Finding Valid Partitions from front
+Start partitioning from front and recur on the rest
+
+3 ways
+b | recur on rest -> 1 + recurFunction( a b a b c b a d c e d e)
+b a b | recur on rest -> 1 + recurFunction( a b c b a d c e d e)
+b a b a b | recur on rest -> 1 + recurFunction( c b a d c e d e)
+
+===============================================================
+FRONT PARTITION  - Start Finding Valid Partitions from front
+Steps
+Recursion 
+1. minCost = Int.MAX
+2. Start i from 0 to n. 
+    create a tempString  = ''
+      Start j from i to < n
+        tempString += arr[j]
+        Check if Substring (i, j) isPalindrome
+        If Palindrome -> cost  = 1 + recurFunction()
+        minCost = Math.min(minCost, cost)
+4. return minCost
+===============================================================
+
+*/
+
+
+public class PalindromePartition {
+
+    // check palindrome
+    public static boolean isPalindrome(String s, int i, int j) {
+        while (i < j) {
+            if (s.charAt(i) != s.charAt(j)) return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
+
+    public static int solve(String s, int i) {
+
+        // 🔹 Base case: reached end → no cuts needed
+        if (i == s.length()) return 0;
+
+        int minCuts = Integer.MAX_VALUE;
+
+        // try all partitions from i → j
+        for (int j = i; j < s.length(); j++) {
+
+            if (isPalindrome(s, i, j)) {
+
+                int cuts = 1 + solve(s, j + 1); // Cut newString from j+1
+                minCuts = Math.min(minCuts, cuts);
+            }
+        }
+
+        return minCuts;
+    }
+
+    public static int minCut(String s) {
+        return solve(s, 0) - 1; // subtract 1 because last partition doesn't need cut
+    }
+
+    public static void main(String[] args) {
+        String s = "aab";
+        System.out.println(minCut(s)); // Output: 1
+    }
+}
