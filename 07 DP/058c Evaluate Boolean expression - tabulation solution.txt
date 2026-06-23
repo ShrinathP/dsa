@@ -1,0 +1,67 @@
+import java.util.*;
+
+public class BooleanExpressionTab {
+
+    public static int countWays(String exp) {
+        int n = exp.length();
+
+        int[][][] dp = new int[n][n][2];
+
+        // 🔹 Base case: single characters
+        for (int i = 0; i < n; i++) {
+            if (exp.charAt(i) == 'T') {
+                dp[i][i][1] = 1;
+                dp[i][i][0] = 0;
+            } else {
+                dp[i][i][1] = 0;
+                dp[i][i][0] = 1;
+            }
+        }
+
+        // 🔹 Fill for substrings
+        for (int i = n - 1; i >= 0; i--) {
+
+            for (int j = i + 1; j < n; j++) {
+
+                int waysTrue = 0;
+                int waysFalse = 0;
+
+                // partition at operators
+                for (int k = i + 1; k <= j - 1; k += 2) {
+
+                    char op = exp.charAt(k);
+
+                    int lt = dp[i][k - 1][1];
+                    int lf = dp[i][k - 1][0];
+                    int rt = dp[k + 1][j][1];
+                    int rf = dp[k + 1][j][0];
+
+                    if (op == '&') {
+                        waysTrue += lt * rt;
+                        waysFalse += lt * rf + lf * rt + lf * rf;
+                    }
+
+                    else if (op == '|') {
+                        waysTrue += lt * rt + lt * rf + lf * rt;
+                        waysFalse += lf * rf;
+                    }
+
+                    else if (op == '^') {
+                        waysTrue += lt * rf + lf * rt;
+                        waysFalse += lt * rt + lf * rf;
+                    }
+                }
+
+                dp[i][j][1] = waysTrue;
+                dp[i][j][0] = waysFalse;
+            }
+        }
+
+        return dp[0][n - 1][1];
+    }
+
+    public static void main(String[] args) {
+        String exp = "T|F&T^T";
+        System.out.println(countWays(exp));
+    }
+}
