@@ -34,6 +34,7 @@ Recursion
         If Palindrome -> cost  = 1 + recurFunction()
         minCost = Math.min(minCost, cost)
 4. return minCost
+5. IMP - subtract 1 because last partition doesn't need cut
 ===============================================================
 
 */
