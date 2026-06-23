@@ -1,0 +1,58 @@
+/*
+equivalent of recursion i==n then return 0 is
+dp[n] = 0, 
+dp[n] = 0  → base case (no characters left → 0 partitions)
+So arr size should be dp[n+1] to reach dp[n]
+
+Traverse i from back to front n-1 to >=0
+Traverse j from i to < n
+*/
+
+
+import java.util.*;
+
+public class PalindromePartitionTab {
+
+    // check palindrome
+    public static boolean isPalindrome(String s, int i, int j) {
+        while (i < j) {
+            if (s.charAt(i) != s.charAt(j)) return false;
+            i++;
+            j--;
+        }
+        return true;
+    }
+
+    public static int minCut(String s) {
+        int n = s.length();
+
+        int[] dp = new int[n + 1];
+
+        // 🔹 Base case
+        dp[n] = 0;
+
+        // fill from back
+        for (int i = n - 1; i >= 0; i--) {
+
+            int minCuts = Integer.MAX_VALUE;
+
+            for (int j = i; j < n; j++) {
+
+                if (isPalindrome(s, i, j)) {
+
+                    int cuts = 1 + dp[j + 1];
+                    minCuts = Math.min(minCuts, cuts);
+                }
+            }
+
+            dp[i] = minCuts;
+        }
+
+        return dp[0] - 1;
+    }
+
+    public static void main(String[] args) {
+        String s = "aab";
+        System.out.println(minCut(s)); // Output: 1
+    }
+}
