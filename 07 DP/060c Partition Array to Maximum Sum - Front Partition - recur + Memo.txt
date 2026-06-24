@@ -21,16 +21,16 @@ public class PartitionArrayMaxSumMemo {
 
         // try all partitions of size ≤ k
         for (int j = i; j < Math.min(i + k, arr.length); j++) {
+            //update currMax or currRangeMax or maxUntilNow 
+            currMax = Math.max(currMax, arr[j]); //max in current window
+            int len = j - i + 1; // curr partition length
 
-            currMax = Math.max(currMax, arr[j]);
-
-            int len = j - i + 1;
-
+            // contribution = max * length + best of remaining
             int sum = currMax * len + solve(arr, j + 1, k, dp);
 
             maxSum = Math.max(maxSum, sum);
         }
-
+        // store best answer for index i
         return dp[i] = maxSum;
     }
 
