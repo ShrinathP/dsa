@@ -4,6 +4,9 @@ So Tabulation should move from back to front
 i.e. 
 i will move from n-1 to <=0
 j will move from i+1 to Math.min(i+k, n)
+
+Also base case i==s.length() in recursion
+So dp size should be n+1 to accomodate n
 */
 
 
