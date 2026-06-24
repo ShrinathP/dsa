@@ -1,0 +1,71 @@
+/*
+Given an n x m matrix with 0 and 1 filled
+
+Give me a list of 
+1 size squares
+2 size squares
+3 size squares
+etc
+
+0,1,1,1
+1,1,1,1
+0,1,1,1
+
+10 1size squares
+4  2size squares
+1  3size squares
+
+Create a similar size dp array 
+So 3 X 4 matrix meand dp[3][4]
+Here in dp arr
+dp[i][j] represents how many squares end at i,j, 
+meaning for how many squares i,j is right bottom
+Only the squares - no rectangles
+
+
+Base case for i=0 and j=0, first row and first column
+Everything will be copied as it is
+As the value themselves represent 1 square or not, 
+other will only be rectangles and we exclude them
+0,1,1,1
+1,
+0,
+
+eg 1,1 ; 1,1,1 on 1st row are rectanges, so exclude such formations
+
+
+Eg 2d Array
+1,1,1
+1,1,1
+1,1,1
+
+Now for i,j -> 1,1 index
+at 1,1 we have 1 square, 
+another square from 0,0 to 1,1
+So 2 squares
+
+Now for i,j -> 1,2 index
+at 1,2 we have 1 square,
+another square from 0,1 to 1,2
+So 2 squares
+
+Similarly For 
+for i,j -> 2,2 index
+at 2,2 we have 1 square,
+another square from 1,1 to 2,2
+another square from 0,0 to 2,2
+So 3 squares
+
+The dp array will look like
+1,1,1
+1,2,2
+1,2,3
+
+Total rectanges = addition of all values in the dp array
+
+
+Also the formula for filling the right bottom i.e. dp [i,j] 
+is min of 3 adjacents + 1, 
+i.e top, top left and left + 1
+
+*/
