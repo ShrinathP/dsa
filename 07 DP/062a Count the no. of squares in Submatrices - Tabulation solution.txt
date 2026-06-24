@@ -1,0 +1,66 @@
+
+/*
+🧠 Key DP Idea
+
+Let:
+
+dp[i][j] = size of largest square ending at (i, j)
+
+Transition:
+
+if matrix[i][j] == 1:
+    dp[i][j] = 1 + min(
+        dp[i-1][j],      // top
+        dp[i][j-1],      // left
+        dp[i-1][j-1]     // top-left (diagonal)
+    )
+else:
+    dp[i][j] = 0
+
+👉 Each dp[i][j] contributes that many squares
+*/
+
+
+public class CountSquares {
+
+    public static int countSquares(int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+
+        int[][] dp = new int[n][m];
+        int total = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+
+                // first row or first column
+                // or keep the first row and first col filling separate
+                if (i == 0 || j == 0) {
+                    dp[i][j] = matrix[i][j]; // only 1x1 possible
+                } else if (matrix[i][j] == 1) {
+                    // extend square using neighbors
+                    dp[i][j] = 1 + Math.min(
+                        dp[i-1][j],
+                        Math.min(dp[i][j-1], dp[i-1][j-1])
+                    );
+                } else {
+                    dp[i][j] = 0;
+                }
+
+                total += dp[i][j]; // add contribution
+            }
+        }
+
+        return total;
+    }
+
+    public static void main(String[] args) {
+        int[][] matrix = {
+            {0,1,1,1},
+            {1,1,1,1},
+            {0,1,1,1}
+        };
+
+        System.out.println(countSquares(matrix)); // Output: 15
+    }
+}
