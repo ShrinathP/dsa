@@ -1,0 +1,52 @@
+/*
+Same as prev solution 
+Only hold a 1D array to memoize
+*/
+
+
+import java.util.*;
+
+public class PartitionArrayMaxSumMemo {
+
+    public static int solve(int[] arr, int i, int k, int[] dp) {
+
+        // 🔹 Base case
+        if (i == arr.length) return 0;
+
+        // 🔹 Memo check
+        if (dp[i] != -1) return dp[i];
+
+        int maxSum = 0;
+        int currMax = 0;
+
+        // try all partitions of size ≤ k
+        for (int j = i; j < Math.min(i + k, arr.length); j++) {
+
+            currMax = Math.max(currMax, arr[j]);
+
+            int len = j - i + 1;
+
+            int sum = currMax * len + solve(arr, j + 1, k, dp);
+
+            maxSum = Math.max(maxSum, sum);
+        }
+
+        return dp[i] = maxSum;
+    }
+
+    public static int maxSumAfterPartitioning(int[] arr, int k) {
+        int n = arr.length;
+
+        int[] dp = new int[n];
+        Arrays.fill(dp, -1);
+
+        return solve(arr, 0, k, dp);
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 15, 7, 9, 2, 5, 10};
+        int k = 3;
+
+        System.out.println(maxSumAfterPartitioning(arr, k));
+    }
+}
