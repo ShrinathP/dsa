@@ -1,0 +1,53 @@
+
+/*
+Steps
+1. recurFunction(arr, startIndex, k)
+  - Base case -> if i reaches arr.length, no number left, return 0
+  - Variables  -> maxSum to calc max sum
+  -            -> currMax to hold max of i..j or maxUntilNow, or currRangeMax
+    - for j from i to Math.min(n, i+k)
+      -> calc len -> j - i + 1;
+      -> currSum = len * currMax + recurFunction(j+1, ...)
+      -> maxSum = Math.max(maxSum, currSum)
+*/
+
+
+public class PartitionArrayMaxSum {
+
+    public static int solve(int[] arr, int i, int k) {
+
+        // 🔹 Base case: reached end
+        if (i == arr.length) return 0;
+        
+        // 1 maxSum for holding global max
+        // 2 local variables, currMax -> for local max for i..j -> or maxUntilNow
+        // len -> i..j length
+        
+        int maxSum = 0;
+        int currMax = 0; // or maxUntilNow  or currRangeMax
+
+        // try all partitions of size ≤ k
+        for (int j = i; j < Math.min(i + k, arr.length); j++) {
+
+            currMax = Math.max(currMax, arr[j]); // or maxUntilNow  or currRangeMax
+            int len = j - i + 1;
+
+            int currSum = currMax * len + solve(arr, j + 1, k);
+
+            maxSum = Math.max(maxSum, currSum);
+        }
+
+        return maxSum;
+    }
+
+    public static int maxSumAfterPartitioning(int[] arr, int k) {
+        return solve(arr, 0, k);
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {1, 15, 7, 9, 2, 5, 10};
+        int k = 3;
+
+        System.out.println(maxSumAfterPartitioning(arr, k));
+    }
+}
