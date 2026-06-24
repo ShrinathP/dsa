@@ -28,10 +28,11 @@ public class PartitionArrayMaxSum {
 
         // try all partitions of size ≤ k
         for (int j = i; j < Math.min(i + k, arr.length); j++) {
-
-            currMax = Math.max(currMax, arr[j]); // or maxUntilNow  or currRangeMax
-            int len = j - i + 1;
-
+            //update currMax or currRangeMax or maxUntilNow 
+            currMax = Math.max(currMax, arr[j]); // or maxUntilNow or currRangeMax
+            int len = j - i + 1; // curr partition length
+            
+            // contribution = max * length + best of remaining
             int currSum = currMax * len + solve(arr, j + 1, k);
 
             maxSum = Math.max(maxSum, currSum);
