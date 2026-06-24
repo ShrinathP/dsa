@@ -1,0 +1,48 @@
+/*
+🔎 Problem: Partition Array for Maximum Sum (Front Partition)
+
+Given:
+Array arr[]
+Integer k
+👉 You can partition the array into subarrays of length ≤ k
+
+For each subarray:
+contribution = max element in subarray * length of subarray
+👉 Return maximum total sum
+
+
+
+Partition Array in Such a way that, 
+the subarrays formed 
+the numbers in each subarray will change to maxium number of subarray numbers
+and sum of them should be maximum
+
+Given an array and max partition length k 
+Eg arr is 1,15,7,9,2,5,10 and k=3
+
+1, 15, | 7, 9, 2, | 5, 10
+will be
+15,15, | 9, 9, 9, |10, 10
+Sum will be
+77
+
+Similar to Palindrome Partitioning ii -> front partitioning
+recurFunction(index)
+i.e. recurFunction(0) means give me the maximum sum if you have the arr from 0
+i.e. recurFunction(3) means give me the maximum sum if you have the arr from 3
+
+
+IMP -> j overflow condition
+---------------------------
+For ind 0 to n
+j will go from ind to < ind + k, 
+for last index ind = n, j will overflow to n+k so
+j should go from int to < min(n, ind + k)
+
+instead of isPalindrome we check valid length k 
+-----------------------------------------------
+
+len, max
+keep track of len and max for every j run
+
+*/
