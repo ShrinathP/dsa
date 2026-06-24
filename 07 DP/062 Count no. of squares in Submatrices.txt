@@ -1,4 +1,10 @@
 /*
+
+🔎 Problem: Count Square Submatrices with All 1’s
+Given a binary matrix:
+👉 Count total number of square submatrices that contain only 1s.
+
+
 Given an n x m matrix with 0 and 1 filled
 
 Give me a list of 
