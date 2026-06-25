@@ -1,0 +1,27 @@
+Recursion Tree
+For arr = [2, 1, 4, 9]:
+index:  0  1  2  3
+value:  2  1  4  9
+
+Check Striver explanation for overlapping subproblems explanation
+Logic
+pick -> go back 2 elements
+notPick -> can consider the prev number
+
+f(3)
+├── pick -> f(1)
+│   ├── pick -> f(-1)
+│   └── notPick -> f(0)
+│       ├── pick -> f(-2)
+│       └── notPick -> f(-1)
+│
+└── notPick -> f(2)
+    ├── pick -> f(0) //repeated -> overlappnig subproblem
+    │   ├── pick -> f(-2)
+    │   └── notPick -> f(-1)
+    │
+    └── notPick -> f(1) //repeated -> overlapping subproblem
+        ├── pick -> f(-1)
+        └── notPick -> f(0) //repeated -> overlappnig subproblem
+            ├── pick -> f(-2)
+            └── notPick -> f(-1)
