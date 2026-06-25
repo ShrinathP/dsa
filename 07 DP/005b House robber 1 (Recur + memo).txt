@@ -2,6 +2,8 @@
 
 ========================================================================
 Recursion + Memoizing -> Striver explanation
+Since we are saving only Math.max(pick, notPick) at each instance. We can have 1D array
+
 Changes from previous Solution
 Change 1 -> Initialize memo arr size n, fill with -1
 Change 2 -> After base case, if memo[index] != -1, return memo[index]
