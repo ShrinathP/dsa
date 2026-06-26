@@ -1,0 +1,39 @@
+/*
+Burst Balloons 
+Suppose arr [b1, b2, b3, b4, b5, b6]
+When we burst b3 the total points = b2 * b3 * b4, center plus 2 adjacents
+
+Q: Why we cannot split ? AND USUAL SPLIT WAY WONT WORK
+We cannot split the array into [b1, b2] and [b4, b5, b6]
+as for the next iteration, b2 wants b4 and b1 i.e. b1 * b2 * b4
+
+Suppose we burst it, the next arr will be
+arr [b1, b2, b4, b5, b6]
+
+For DP to work, we need the split so this method wont work
+
+
+SO Reverse the logic
+CHOOSE THE BALLOON WHICH HAS TO BE BURSTED AT THE END
+So we chose the balloon which has to be bursted at the End
+move Bottom up from individual arr val and build up the arr
+
+EXAMPLE -> B3 BURST AT END
+For a given arr, 
+suppose we burst b3 at the end
+arr [b1, b2, b3, b4, b5, b6]
+Add 1s at both ends
+arr [1, b1, b2, b3, b4, b5, b6, 1]
+        i      ind         j
+For b3 toburst at end, rest b1 b2 b4 b5 b6 all have burst until now
+Points = arr[i-1] x arr[ind] x arr[j+1]
+
+So IMP Logic is - For balloon to be burst LAST
+                - At Each Step
+                - Dont take the adjacents, take the ends
+
+Points = arr[i-1] x arr[ind] x arr[j+1] //curr + ends
+        + recurFunction(i, ind - 1) // cut left half
+        + recurFunction(ind + 1, j) // cut right half
+
+*/

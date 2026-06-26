@@ -1,0 +1,69 @@
+/*
+Tabulation Solution - Similar traversal as 053c MCM - Partition DP - Tabulation
+Back to front traversal with j and cutIndex at i
+i goes from n to 1, j does from i to n
+Solution is at dp[1][c], full i,j from 1 to c
+
+
+
+IMP - NOTE: how we keep i and j at an index inside of both ends of cuts arr
+*/
+
+
+
+import java.util.*;
+
+public class MinCostCutStickTab {
+
+    public static int minCost(int n, int[] cutsArr) {
+        int c = cutsArr.length;
+
+        // Add boundaries
+        int[] cuts = new int[c + 2];
+        cuts[0] = 0;
+        cuts[c + 1] = n;
+
+        for (int i = 0; i < c; i++) {
+            cuts[i + 1] = cutsArr[i];
+        }
+
+        Arrays.sort(cuts);
+
+        int[][] dp = new int[c + 2][c + 2];
+
+        // Base case:
+        // dp[i][j] = 0 when i > j (no cuts) → already 0 by default
+
+        // Fill bottom-up
+        for (int i = c; i >= 1; i--) {
+            for (int j = i; j <= c; j++) {
+            // NOTE: how we keep i and j at an index inside of both ends of cuts arr
+            //i to j range, now need cuts
+
+                int minCost = Integer.MAX_VALUE;
+
+                // Try all possible partitions
+                for (int cutIndex = i; cutIndex <= j; cutIndex++) {
+
+                    int cost = (cuts[j + 1] - cuts[i - 1])  // segment length
+                             + dp[i][cutIndex - 1]          // left
+                             + dp[cutIndex + 1][j];         // right
+
+                    minCost = Math.min(minCost, cost);
+                }
+
+                dp[i][j] = minCost;
+            }
+        }
+
+        // Full problem: all cuts from 1 → c
+        return dp[1][c];
+    }
+
+    public static void main(String[] args) {
+        int n = 7;
+        int[] cuts = {1, 3, 4, 5};
+
+        System.out.println("Minimum cost: " + minCost(n, cuts));
+    }
+}

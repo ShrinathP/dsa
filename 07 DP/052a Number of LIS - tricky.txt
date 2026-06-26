@@ -1,0 +1,138 @@
+/*
+Based of DP41 and DP42 LIS Striver solution 
+046c LIS Tabulation 
+
+Striver Explanation and Video
+
+IMP
+Only change is we need to keep hold of the number of ways -> so 
+At i, if we are updating length of LIS from j, update count as well
+At i, if length of LIS is same as at j, inherit the number of count
+
+Problem Statement
+🧩 Number of Longest Increasing Subsequence — Problem
+Given an integer array, return:
+Number of LIS (Longest Increasing Subsequences)
+
+
+💡 Key Idea (DP + Count Array)
+For each index i:
+dp[i] → length of LIS ending at i
+count[i] → number of LIS ending at i
+*/
+
+/*
+LIS Basic Structure
+for(i=0;i<n;i++) {
+    dp[i] = 1
+    for(j=0; j<i; j++) {
+        if(arr[i]> arr[j] && dp[j] + 1 > dp[i]) {
+            dp[i] = 1 + dp[j]; //*dp[i]
+
+        }
+    }
+}
+
+
+Example
+nums = [1, 2, 4, 3, 5]
+🧠 Focus on index i = 4 (value = 5)
+There are 2 ways to reach 5 -> 1,2,4 then 5
+                            -> 1,2,3 then 5
+nums = [1, 2, 4, 3, 5]
+LIS ending at 4 -> length = 3, count = 1
+LIS ending at 3 -> length = 3, count = 1 
+
+State before processing 5
+Nums : [1, 2, 4, 3]
+dp   : [1, 2, 3, 3]
+count: [1, 1, 1, 1]
+
+dp[index]
+for prev = 0 (1)
+dp[0] + 1 = 2 > 1
+→ IF case, dp[4] = 2, count[4] = 1
+
+for prev = 1 (2)
+dp[1] + 1 = 3 > 2
+→ IF case, dp[4] = 3, count[4] = 1
+
+👉 prev = 2 (4)
+dp[2] + 1 = 4 > 3
+→ IF case, dp[4] = 4, count[4] = 1
+Important: Now dp[4] = 4
+
+NOW 👉 prev = 3 (3)
+dp[3] + 1 = 4, dp[4] = 4
+
+this triggers else condition
+dp[prev] + 1 == dp[i]
+now else if triggers, update the count
+count[4] += count[3]
+count[4] = 1 + 1 = 2
+
+So 
+👉 By the time we reach prev = 3,
+dp[4] is already 4 (updated from prev = 4)
+
+IMPPPPPPP---
+accumulate case
+IMP - if dp[i] is already considered once from some preIndex, and in else if from other index way we can achieve same dp[i]
+If dp[i] is already formed via one prev, and another prev also gives the same length,then we add its count
+i.e. 1 + dp[anotherNewPrevIndex] = dp[i]
+carry over the count from this anotherNewPrevIndex
+so count[i] = count[i] + count[anotherNewPrevIndex]
+
+hold maxLisLenth variable, go through the whole dp[] array wherever it matches maxLisLenth,
+ add count[i] to total
+==============================================================================================
+
+*/
+
+import java.util.*;
+
+public class Solution {
+
+    public int findNumberOfLIS(int[] nums) {
+        int n = nums.length;
+
+        int[] dp = new int[n];
+        int[] count = new int[n];
+
+        Arrays.fill(dp, 1);
+        Arrays.fill(count, 1);
+
+        int maxLen = 1;
+
+        for (int i = 0; i < n; i++) {
+            for (int prev = 0; prev < i; prev++) {
+
+                if (nums[i] > nums[prev]) {
+
+                    // Found better LIS → overwrite
+                    // better LIS found
+                    if (dp[prev] + 1 > dp[i]) {
+                        dp[i] = dp[prev] + 1;
+                        count[i] = count[prev]; // inherit count, Found better LIS → overwrite
+                    }
+                    // same length LIS found
+                    // Found another LIS → add
+                    else if (dp[prev] + 1 == dp[i]) {
+                        count[i] += count[prev]; // add ways, Found another LIS → add
+                    }
+                }
+            }
+            maxLen = Math.max(maxLen, dp[i]);
+        }
+
+        int total = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (dp[i] == maxLen) {
+                total += count[i];
+            }
+        }
+
+        return total;
+    }
+}

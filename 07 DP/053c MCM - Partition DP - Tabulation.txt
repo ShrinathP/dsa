@@ -1,0 +1,80 @@
+
+/*
+Tabulation Method
+1. Copy the base case
+2. Write down the changing states, needs modification in i and j traversals
+3. Copy the recurrence
+
+
+Q: Why does the answer stay at  return dp[1][n - 1] ?
+What does dp[i][j] represent?
+dp[i][j] = minimum cost to multiply matrices from i → j
+So:
+dp[1][1] → only A → cost 0
+dp[2][3] → B × C
+dp[1][4] → A × B × C × D ✅ (FULL PROBLEM)
+Total matrices = n - 1
+They are indexed from 1 to n-1
+NOTE: this is where i traverses from 1 to n-1
+So dp[1, n-1] is where the answer is
+
+
+Steps
+1. i goes from n-1 → 1
+2. j has to be on the right of i, j goes from i+1 → n-1
+3. k goes from i to j
+4. comput steps, save to dp[i][j]
+5. final answer is at dp[1][n-1], i.e cost of multiplying matrices from 1 to n-1
+
+//Check Why is this still bottom up in 053d MCM - Partition DP - Why Still Bottom Up
+*/
+
+public class MCMTabulation {
+
+    public static int mcm(int[] arr) {
+        int n = arr.length;
+
+        int[][] dp = new int[n][n];
+
+        // 🔹 Base case:
+        // When i == j → only one matrix → no multiplication needed
+        // So cost = 0
+        for (int i = 1; i < n; i++) {
+            dp[i][i] = 0;
+        }
+
+        // Fill the table bottom-up
+        // i goes from n-1 → 1
+        for (int i = n - 1; i >= 1; i--) {
+
+            // j goes from i+1 → n-1
+            for (int j = i + 1; j < n; j++) {
+
+                int minCost = Integer.MAX_VALUE;
+
+                // Try all possible partitions
+                for (int k = i; k < j; k++) {
+
+                    int cost = dp[i][k]          // cost of left part
+                             + dp[k + 1][j]      // cost of right part
+                             + arr[i - 1] * arr[k] * arr[j]; // cost of multiplying results
+
+                    minCost = Math.min(minCost, cost);
+                }
+
+                dp[i][j] = minCost;
+            }
+        }
+
+        // 🔥 Final answer:
+        // dp[1][n-1] represents cost of multiplying matrices from 1 to n-1
+        // i.e., the ENTIRE chain of matrices
+        return dp[1][n - 1];
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {10, 20, 30, 40, 30};
+
+        System.out.println("Minimum cost: " + mcm(arr));
+    }
+}

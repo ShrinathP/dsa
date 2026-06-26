@@ -1,0 +1,29 @@
+
+/*
+Tabulation Method
+“Bottom-up is about dependency order, not loop direction.”
+
+Why is this called - Bottom up 
+👉 “Bottom-up” does NOT mean left-to-right or front-to-back.
+It means: build bigger answers from smaller subproblems. - IMP
+We aare ensuring that -> smaller ranges are solved before larger ranges
+Whats the loop actually doing - 
+for (i = n-1 → 1)
+  for (j = i+1 → n-1)
+
+Order of filling
+For 4 matrices (n=5), dp fills like:
+Length = 1 → dp[i][i] = 0   (base)
+
+Length = 2 → dp[3][4], dp[2][3], dp[1][2]
+
+Length = 3 → dp[2][4], dp[1][3]
+
+Length = 4 → dp[1][4]  ← FINAL ANSWER
+
+Order of filling is bottom up
+
+TC - n3 - ncube
+Space - n2 - nsquare
+
+*/

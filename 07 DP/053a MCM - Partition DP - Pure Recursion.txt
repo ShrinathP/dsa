@@ -1,0 +1,34 @@
+
+
+// recurFunction(1, n-1)
+
+public class MCMRecursive {
+
+    public static int mcm(int[] arr, int i, int j) {
+        // Base case: single matrix
+        if (i == j) {
+            return 0;
+        }
+
+        int minCost = Integer.MAX_VALUE;
+
+        // Try all possible splits
+        for (int k = i; k < j; k++) {
+            int cost = mcm(arr, i, k)           // left
+                     + mcm(arr, k + 1, j)       // right
+                     + arr[i - 1] * arr[k] * arr[j]; // cost of multiplication, i-1, k , j
+
+            minCost = Math.min(minCost, cost);
+        }
+
+        return minCost;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {10, 20, 30, 40, 30}; // A(10x20), B(20x30), C(30x40), D(40x30)
+
+        int n = arr.length;
+
+        System.out.println("Minimum cost: " + mcm(arr, 1, n - 1));
+    }
+}

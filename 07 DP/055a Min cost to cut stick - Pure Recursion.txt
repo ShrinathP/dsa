@@ -1,0 +1,79 @@
+/*
+Minimum cost to cut the stick - imp
+Striver explanation and video
+
+Problem Statement (brief)
+You are given:
+A stick of length n
+An array cuts[] → positions where you must cut
+
+====================================================================
+Steps
+1. Create new cuts arr with size cutsArr.length + 2, 
+    - add 0 and n to both ends
+    - copy the existing cutsArr to new cuts
+    - sort the new cuts array
+2. recurFunction(i, j, cutsArr)
+   recurFunction(1, n, cutsArr)
+    - Base case -> if i crosses j, no cut possible return 0
+        if(i > j) return 0
+    - init minCost = Int.MAX_VALUE
+    - For every curIndex from i to j
+        - calc currCost = curr stick length (before cutting)
+                        + recur from i to left of cut (i, cutIndex - 1)
+                        + recur from right of cut to j (cutIndex, j)
+        - (cuts[j+1] - cuts[i-1])
+            + recurFunction(i, cutIndex - 1 , cuts)
+            + recurFunction(cutIndex + 1, j, cuts)
+        minCost  = Math.min(minCost, cost)
+====================================================================    
+*/
+
+
+import java.util.*;
+
+public class MinCostCutStick {
+
+    public static int solve(int i, int j, int[] cuts) {
+        // No cuts possible
+        if (i > j) return 0;
+
+        int minCost = Integer.MAX_VALUE;
+
+        // Try every possible cut/partition index
+        for (int cutIndex = i; cutIndex <= j; cutIndex++) {
+
+            int cost = (cuts[j + 1] - cuts[i - 1])  // current stick length
+                     + solve(i, cutIndex - 1, cuts)        // left part - the j+1 in the next recur call holds this cutIndex value
+                     + solve(cutIndex + 1, j, cuts);       // right part - the i-1 in the next recur call hold this cutIndex value
+
+            minCost = Math.min(minCost, cost);
+        }
+
+        return minCost;
+    }
+
+    public static int minCost(int n, int[] cutsArr) {
+        int c = cutsArr.length;
+
+        // create new cuts array + 2 size, add 0 and n at 2 ends
+        int[] cuts = new int[c + 2];
+        cuts[0] = 0;
+        cuts[c + 1] = n;
+
+        for (int i = 0; i < c; i++) {
+            cuts[i + 1] = cutsArr[i];
+        }
+
+        Arrays.sort(cuts);
+
+        return solve(1, c, cuts);
+    }
+
+    public static void main(String[] args) {
+        int n = 7;
+        int[] cuts = {1, 3, 4, 5};
+
+        System.out.println(minCost(n, cuts));
+    }
+}

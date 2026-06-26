@@ -1,0 +1,67 @@
+/*
+Changes from the prev solution
+Change 1 -> Init dp arr of size initial (cutsArr.size + 2) or new cuts.size length, fill with -1
+Change 2 -> After base case, i > j, check dp[i][j] != -1, return dp[i][j]
+Change 3 -> save the dp before return; return dp[i][j] = minCost
+
+Logic stays the same
+cost  = current segment length 
+        + recur left of cut cutIndex-1 
+        + recur right of cut cutIndex + 1
+
+*/
+
+
+
+import java.util.*;
+
+public class MinCostCutStickMemo {
+
+    public static int solve(int i, int j, int[] cuts, int[][] dp) {
+        // No cuts possible
+        if (i > j) return 0;
+
+        // Memo check
+        if (dp[i][j] != -1) return dp[i][j];
+
+        int minCost = Integer.MAX_VALUE;
+
+        // Try every cut as first cut
+        for (int cutIndex = i; cutIndex <= j; cutIndex++) {
+
+            int cost = (cuts[j + 1] - cuts[i - 1])   // current segment length
+                     + solve(i, cutIndex - 1, cuts, dp)   // left
+                     + solve(cutIndex + 1, j, cuts, dp);  // right
+
+            minCost = Math.min(minCost, cost);
+        }
+
+        return dp[i][j] = minCost;
+    }
+
+    public static int minCost(int n, int[] cutsArr) {
+        int c = cutsArr.length;
+
+        int[] cuts = new int[c + 2];
+        cuts[0] = 0;
+        cuts[c + 1] = n;
+
+        for (int i = 0; i < c; i++) {
+            cuts[i + 1] = cutsArr[i];
+        }
+
+        Arrays.sort(cuts);
+
+        int[][] dp = new int[c + 2][c + 2];
+        for (int[] row : dp) Arrays.fill(row, -1);
+
+        return solve(1, c, cuts, dp);
+    }
+
+    public static void main(String[] args) {
+        int n = 7;
+        int[] cuts = {1, 3, 4, 5};
+
+        System.out.println(minCost(n, cuts));
+    }
+}

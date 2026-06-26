@@ -1,0 +1,53 @@
+changes from Prev solution
+
+recurFunction(1, n-1)
+Change 1: Create a dp of size nxn, fill with -1, pass in the recurFunction
+Change 2: After Base case -> check if dp[i][j] != -1, return dp[i][j]
+Change 3: Save to dp before returning, return dp[i][j] = minCost
+
+
+import java.util.Arrays;
+
+public class MCMMemoParam {
+
+    public static int mcm(int[] arr, int i, int j, int[][] dp) {
+        // Base case
+        if (i == j) {
+            return 0;
+        }
+
+        // Check memo
+        if (dp[i][j] != -1) {
+            return dp[i][j];
+        }
+
+        int minCost = Integer.MAX_VALUE;
+
+        // Try all partitions
+        for (int k = i; k < j; k++) {
+            int cost = mcm(arr, i, k, dp)
+                     + mcm(arr, k + 1, j, dp)
+                     + arr[i - 1] * arr[k] * arr[j];
+
+            minCost = Math.min(minCost, cost);
+        }
+
+        // Store and return
+        return dp[i][j] = minCost;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = {10, 20, 30, 40, 30};
+        int n = arr.length;
+
+        int[][] dp = new int[n][n];
+
+        // initialize with -1
+        for (int[] row : dp) {
+            Arrays.fill(row, -1);
+        }
+
+        System.out.println("Minimum cost: " + mcm(arr, 1, n - 1, dp));
+    }
+}
+

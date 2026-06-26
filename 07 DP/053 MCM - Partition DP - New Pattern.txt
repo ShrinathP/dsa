@@ -1,0 +1,91 @@
+/*
+MCM Matric Chain Multiplication
+To Multiply 3 matrices of different sizes there can be many ways, 
+need to find a way which takes the least operations
+
+1. Start with the entire block/array f(i,j)
+2. Try all partitions - Run a loop for all partitions
+3. Return the best possible 2 partitions
+
+For arr ABCD
+                    ABCD
+    (AB)(CD)   or (A)(BCD) or (ABC)(D)
+Return the best possible 2 partitions of the above
+*/
+Given an array arr = [10, 20, 30, 40, 50]
+The matrix sizes will be -> arr[i] x arr[i-1]
+
+Traversing basics
+      i           j
+ 0    1   2   3   4
+[10, 20, 30, 40, 50]
+1. Now i will be 1 and j will be 4 i.e. lastIndex
+2. recurFunction(i, j) with kth index be used as Partition
+3. if k should go from i to j-1, partitions -> f(i,k), f(k+1, j) - will be taking this as Partition Index
+    OR
+3. if k should go from i+1 to j, partitions -> f(i,k-1), f(k, j)
+
+Steps Calculation
+Suppose (A(BCD))
+A size  = 10 X 20
+BCD size = (20 x 30) (30 X 40) (40 X 50) = 20 X 50
+Number of operations for (A(BCD)) = 10 X 20(middle number) X 50
+Where is 10, 20 and 50 in the array
+ 0    1   2   3   4
+[10, 20, 30, 40, 50]
+i-1  k           j
+So 
+Operations     = A[i-1] X A[k] X A[j-1]
+currTotalSteps = A[i-1] X A[k] X A[j-1] + f(i,k) + f(k+1, j)
+
+Also hold a mini variable
+mini = Math.min(mini, currTotalSteps)
+
+
+Similarly For (AB)(CD), k moves ahead now
+0    1   2   3   4
+[10, 20, 30, 40, 50]
+i-1  i   k       j
+ steps are 10 X 30 X 50 = A[i-1] X A[k] X A[j-1]
+
+
+MCM(i, j) = min over k=i→j-1 of:  cost of multiplying + MCM(i, k) + MCM(k+1, j)
+Recursion Tree Overlapping Subproblems
+MCM(1,4)
+│
+├── k=1:
+│   ├── MCM(1,1) = 0
+│   └── MCM(2,4)
+│       │
+│       ├── k=2:
+│       │   ├── MCM(2,2) = 0
+│       │   └── MCM(3,4)
+│       │       ├── MCM(3,3)=0
+│       │       └── MCM(4,4)=0
+│       │
+│       └── k=3:
+│           ├── MCM(2,3)
+│           │   ├── MCM(2,2)=0   // repeated
+│           │   └── MCM(3,3)=0   // repeated
+│           └── MCM(4,4)=0       // repeated
+│
+├── k=2:
+│   ├── MCM(1,2)
+│   │   ├── MCM(1,1)=0           // repeated
+│   │   └── MCM(2,2)=0           // repeated
+│   └── MCM(3,4)                 // repeated
+│       ├── MCM(3,3)=0           // repeated
+│       └── MCM(4,4)=0           // repeated
+│
+└── k=3:
+    ├── MCM(1,3)
+    │   │
+    │   ├── k=1:
+    │   │   ├── MCM(1,1)=0       // repeated
+    │   │   └── MCM(2,3)         // repeated
+    │   │
+    │   └── k=2:
+    │       ├── MCM(1,2)         // repeated
+    │       └── MCM(3,3)=0       // repeated
+    │
+    └── MCM(4,4)=0               // repeated
