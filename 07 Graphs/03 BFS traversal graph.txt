@@ -6,6 +6,28 @@
 /*
 Space Complexity- o(3N) - 1 adjacency list, 1 visited node and 1 bfs list
 TC -  Queue will run for O(N) + the inner for loop will run for total degrees i.e. (2E) twice the number of edges
+
+=========================================================================================================
+Steps
+1. Define a Graph class, create adj matrix arrayList of size n, for index of adjMatrix add new ArrayList,
+    so adj is ArrayList of ArrayList 
+    ArrayList<ArrayList<Integer>> adjMatrix = new ArrayList<>();
+2. addEdge method, adjMatrix.get(u).add(v); if undirected add other way round i.e. adjMatrix.get(v).add(u)
+3. Init bfs ArrayList, visited arr, Queue, mark source visited and add in queue
+4. while queue isnt Empty, 
+    - remove elem from front and add to BFS,
+    - for all elem's neighbours, 
+        - if not visited, mark visited, add to queue
+    while(!q.isEmpty()) {
+        elem = q.remove(); bfs.add(elem);
+        for(Integer val: adjMatrix.get(elem) ) {
+            if(!vis[val]) { vis[val] = true; q.add(val);}
+        }
+    }
+ 5. return bfs   
+=========================================================================================================
+
+
 */
 
 
