@@ -1,5 +1,8 @@
 /*
 Converting adjacency matrix to an adjacency list
+IMP
+Solution - Same as prev solution - just convert isConnected to Adjacency List
+
 Striver explanation - chatgpt code
 
 Step-by-Step Approach:
@@ -10,6 +13,7 @@ Step-by-Step Approach:
 
 SC - O(N) + O(N) - visited array and recursion stack space
 TC - O(N) + O(V + 2E) ~ O(N)  -check striver explanation
+
 */
 
 class Solution {
