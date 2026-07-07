@@ -16,6 +16,7 @@ delcol ranging from -1 to 1
 Time complexity: O(n*m)
 Space complexity: O(n*m) (visited + worst-case queue).
 
+=====================================================================================
 Steps
 1. Init visited 2d arr size n x m, init count = 0; create a Pair class, first, second
 2. for row in for coln
@@ -28,6 +29,7 @@ Steps
             - remove pair from queue
             - traverse in 8 directions, 
             - if grid val is 1 and not visited, mark visited and add to queue
+=====================================================================================
         
 */
 
