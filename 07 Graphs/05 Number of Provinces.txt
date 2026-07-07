@@ -31,6 +31,9 @@ Steps
         - if connected and not visited recur again on the connected node
          - dfsRecur(isConnected, visited, i)
 ===================================================================================
+Time Complexity -> O(Provinces) + O(V + 2E)
+Worst case when all provinces are single nodes -> O(N) + O(N) ~ O(N)
+Check - Striver Explanation
 */
 
 
