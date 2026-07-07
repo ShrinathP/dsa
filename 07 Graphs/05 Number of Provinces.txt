@@ -11,6 +11,25 @@ Logic
 A dfs call will mark all the connected components index in the visited array as 1
 So every new dfs call from the line 21 will mean we have an unvisited province
 and we need to increment the number
+
+A dfs algo makes sure it visits all the nodes in the graph 
+
+===================================================================================
+Steps
+1. n = isConnected.length, Init a visited arr size n, provinces = 0
+2. For every node, perform dfs, and mark all connected true, 
+   once dfsRecur breaks, increase province by 1, as we visited all connected nodes 
+    for (int i=0; i<n; i++) {
+        if(!visited[i]) {
+            dfsRecur(isConnected, visited, i , n);
+            province++;
+        }
+    }
+3. RecurFunction dfsRecur function
+    - mark visited
+    - for other nodes from i=0 to n,
+        - if connected and not visited - dfsRecur(isConnected, visited, i)
+===================================================================================
 */
 
 
