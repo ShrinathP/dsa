@@ -1,5 +1,6 @@
 /*
 Striver Explanation and code
+IMP : No of Islands, 2D Matrix
 
 if not visited and is an island then run bfs
 
@@ -14,6 +15,20 @@ delcol ranging from -1 to 1
 
 Time complexity: O(n*m)
 Space complexity: O(n*m) (visited + worst-case queue).
+
+Steps
+1. Init visited 2d arr size n x m, init count = 0; create a Pair class, first, second
+2. for row in for coln
+    - increase count
+    - do bfs(row, coln, int[][] visited, int[][] grid)
+        -> mark visited[row][col]
+        -> add Pair to queue new Pair(row, col)
+        -> while !q.isEmpty()
+            - get row and col from pair
+            - remove pair from queue
+            - traverse in 8 directions, 
+            - if grid val is 1 and not visited, mark visited and add to queue
+        
 */
 
 
