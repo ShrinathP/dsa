@@ -28,7 +28,8 @@ Steps
 3. RecurFunction dfsRecur function
     - mark visited
     - for other nodes from i=0 to n,
-        - if connected and not visited - dfsRecur(isConnected, visited, i)
+        - if connected and not visited recur again on the connected node
+         - dfsRecur(isConnected, visited, i)
 ===================================================================================
 */
 
