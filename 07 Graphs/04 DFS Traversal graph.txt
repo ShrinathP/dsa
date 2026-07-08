@@ -4,6 +4,30 @@ Striver explanation, google ai gemini code
 Keep going into the depth for every depth element, run a for loop for the adjacent elements, for each element run dfs
 
 TC - O(N) + 2(E)
+
+========================================================================
+Steps
+1. Define a Graph class, in constructor, create adj matrix, arrayList size n, 
+    - for every index of adjMatrix add new ArrayList
+        so adj is ArrayList of ArrayList 
+        ArrayList<ArrayList<Integer>> adjMatrix = new ArrayList<>();
+    - Define visited array of same size
+2. addEdge method, adjMatrix.get(u).add(v); if undirected add other way round i.e. adjMatrix.get(v).add(u)
+3. DFS Traversal, 
+    - mark visited[u] = true
+    - process the current vertex, print it
+    - for all its neighbours, if !visited, then dfs using that node
+        for(int v: adj.get(u)) {
+            if(!visited[v]) {
+                dfs(v);
+            }
+        }
+
+========================================================================
+TC -> O(V + 2E) and the  - check if its 2E or E
+ Space Complexity (SC) is O(V)
+ where V = verticies and E= edges
+ 
 */
 
 import java.util.ArrayList;
@@ -18,7 +42,7 @@ public class DFSGraph {
     public DFSGraph(int V) {
         adj = new ArrayList<>(V);
         for (int i = 0; i < V; i++) {
-            adj.add(new ArrayList<>());
+            adj.add(new ArrayList<>());`
         }
         visited = new boolean[V];
     }

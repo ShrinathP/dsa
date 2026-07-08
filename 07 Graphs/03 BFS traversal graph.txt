@@ -9,7 +9,7 @@ TC -  Queue will run for O(N) + the inner for loop will run for total degrees i.
 
 =========================================================================================================
 Steps
-1. Define a Graph class, create adj matrix arrayList of size n, for index of adjMatrix add new ArrayList,
+1. Define a Graph class, create adj matrix arrayList of size n, for every index of adjMatrix add new ArrayList,
     so adj is ArrayList of ArrayList 
     ArrayList<ArrayList<Integer>> adjMatrix = new ArrayList<>();
 2. addEdge method, adjMatrix.get(u).add(v); if undirected add other way round i.e. adjMatrix.get(v).add(u)
@@ -26,7 +26,9 @@ Steps
     }
  5. return bfs   
 =========================================================================================================
-
+ TC -> O(V + 2E) and the  - check if its 2E or E
+ Space Complexity (SC) is O(V)
+ where V = verticies and E= edges
 
 */
 
