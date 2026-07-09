@@ -36,6 +36,28 @@ Detailed description and discussion - https://app.notion.com/p/Multi-Source-BFS-
 5. BFS completed, check - if cntFresh != 0, not able to rot the whole grid.
                         - if cntFresh == 0, return maxTime needed to rot
 ============================================================================================================
+SC -> nxm matrix, so max O(NxM) oranges can be filled in the queue. all rotten
+TC Calculation -> -> for nxm cells, we are running 4 directions
+ohh why no nm square generally inside for whatever we do is squared right ?
+IMP: This is probably the most common misconception students have when learning time complexity. The rule is not:
+"If there's a loop inside a loop, it's always squared."
+
+The actual rule is:
+How many total times does the inner work execute?
+
+Each cell is processed once, and checking 4 neighbours is constant work.
+Think of it like this:
+Cell 1 -> 4 checks
+Cell 2 -> 4 checks
+...
+Cell NM -> 4 checks
+
+Total
+4 + 4 + 4 + ... (NM times)
+= 4NM
+not
+NM × NM
+
 */
 
 import java.util.*;
