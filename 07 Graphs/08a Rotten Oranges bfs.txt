@@ -13,7 +13,7 @@ A rotten orange at index (i,j) can rot other fresh oranges which are its neighbo
 Steps
 1. Init, visited arr size n X m, queue, countFresh = 0;
 2. grid[i][j] = 2 rottenOrange, if grid[i][j] = 1, freshOrange
-3. Traverse the whole grid and update visited arr, countFresh;
+3. To Start: Traverse the whole grid and update visited arr, countFresh;
     - if rottenOrange, mark visited 2 and add to Queue (we will pop and traverse later), else mark 0
     - if (grid[i][j] == 2) {
             vis[i][j] = 2;
