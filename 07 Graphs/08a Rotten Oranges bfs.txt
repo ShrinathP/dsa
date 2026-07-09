@@ -19,7 +19,8 @@ Steps
             vis[i][j] = 2;
             q.add(new Pair{i, i, initialTime = 0});  //initialTime = 0, as the orange is already rotten
 -------------------------------------------------------------------------------------------------------
-NOTE: IMP - CANT I START A BFS in a separate function here ? like the 08b dfs looks more cleaner ? 
+NOTE: IMP - CANT I START A BFS in a separate function here ? No as the first bfs will rot everything, 
+Detailed description and discussion - https://app.notion.com/p/Multi-Source-BFS-Graph-398ed24c02798028ba13dce0fe890c3d
 -------------------------------------------------------------------------------------------------------
         } else vis[i][j] = 0;
     - if freshOrange, increase count
