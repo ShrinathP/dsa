@@ -18,6 +18,9 @@ Steps
     - if (grid[i][j] == 2) {
             vis[i][j] = 2;
             q.add(new Pair{i, i, initialTime = 0});  //initialTime = 0, as the orange is already rotten
+-------------------------------------------------------------------------------------------------------
+NOTE: IMP - CANT I START A BFS in a separate function here ? like the 08b dfs looks more cleaner ? 
+-------------------------------------------------------------------------------------------------------
         } else vis[i][j] = 0;
     - if freshOrange, increase count
         if(grid[i][j] = 1) cntFresh++;
