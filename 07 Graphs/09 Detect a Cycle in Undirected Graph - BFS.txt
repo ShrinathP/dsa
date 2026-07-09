@@ -13,10 +13,37 @@ if their adjacents have been visited,
   check if the adjacents is not a parent, if not a parent, then someone has already visited the adjacent from another path
   i.e. you found a cycle
 
+================================================================================================================
+q.add currNode, ParentNode concept, if curr adjacency Node is visited check it was not a parentNode
+Steps - 
+1. if disconnected components present in graph, created visited arr, iterate through all nodes for detectCycle
+  
+  for(int i=0; i< v; i++) {
+    detectCycle(i, visited, adj)
+  }
+2. DetectCycle Function(int startNode, int[] visitedArr, List<List<Integer>> adj)
+  1. add startNode, -1 parent to the queue
+  q.add(new Pair(currNode, parentNode))
+  q.add(new Pair(i, -1))
+  2. while(!q.isEmpty()), poll the queue, get currentNode, parentNode
+    - get adjacent Nodes of the currentNode, 
+      case1 -> if not visited, add a new Pair to queue. q.add(new Pair(adjNode, currNode)) 
+            // NOTE: currNode becomes parent for this adjNode
+            if(!visited(neighbour)) { q.add(new Pair(adjNode, currNode)) }
+      case2 -> if visited, check if that adjNode is not the parentNode, if NOT, then there is a cycle 
+      (Yayy, we have a new node that was visited some other way !!)
+            if(visited[neighbour]) {
+              if( neighbour != parent ) { //we found a visited neighbour and its not parent, it come from other traversal
+                return true
+              }
+            }
+================================================================================================================
+
 IMP
 NOte: For Disconnected Components, we say a graph is a cycle if any of the components is a cycle
 For Disconnected components, we need to create one more visited array and call detectCycle for every element of the array
 Check hasCycle function
+
 
 */
 
