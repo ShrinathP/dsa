@@ -9,6 +9,29 @@ Given a matrix of dimension mxn, where each cell in the matrix can have values 0
 The task is to find the minimum time required so that all the oranges become rotten. 
 A rotten orange at index (i,j) can rot other fresh oranges which are its neighbors (up, down, left, and right).
 
+============================================================================================================
+Steps
+1. Init, visited arr size n X m, queue, countFresh = 0;
+2. grid[i][j] = 2 rottenOrange, if grid[i][j] = 1, freshOrange
+3. Traverse the whole grid and update visited arr, countFresh;
+    - if rottenOrange, mark visited 2 and add to Queue (we will pop and traverse later), else mark 0
+    - if (grid[i][j] == 2) {
+            vis[i][j] = 2;
+            q.add(new Pair{i, i, initialTime = 0});  //initialTime = 0, as the orange is already rotten
+        } else vis[i][j] = 0;
+    - if freshOrange, increase count
+        if(grid[i][j] = 1) cntFresh++;
+4. Now we can do BFS, 
+    4.1 while !q.isEmpty(), pop the queue, get row, col, update maxTime time
+    Pair p = q.poll(); maxTime  = Math.max(maxTime,p.time)
+    4.2 traverse in all 4 directions, 
+    IMP: if unvisited and if freshOrange, 1. rot it, 2. add to Queue with time++, 3. decrease FreshOrange
+        - if grid[i][j] = 1, rot it, vis[i][j] = 2, 
+        - add to queue, q.add(new Pair{row, col, time + 1}), 
+        - decrease fresh Count cntFresh --;
+5. BFS completed, check - if cntFresh != 0, not able to rot the whole grid.
+                        - if cntFresh == 0, return maxTime needed to rot
+============================================================================================================
 */
 
 import java.util.*;
