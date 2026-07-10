@@ -5,6 +5,41 @@ https://takeuforward.org/data-structure/detect-cycle-in-an-undirected-graph-usin
 Time Complexity: O(N + 2E) + O(N), Where N = Nodes, 2E is for total degrees as we traverse all adjacent nodes. In the case of connected components of a graph, it will take another O(N) time.
 
 Space Complexity: O(N) + O(N) ~ O(N), Space for recursive stack space and visited array.
+
+============================================================================================================================================
+Steps - 
+1. if disconnected components present in graph, created visited arr, iterate through all nodes for detectCycle, if not visited run detectCycle
+  for(int i=0; i< v; i++) {
+    if(!vis[i]) {
+        boolean ans = dfs(i, -1, visited, adj);
+    }
+  }
+2. dfs Function(int currNode, int parentNode, int[] visitedArr, List<List<Integer>> adj)
+    - Mark currNode visited
+    - get adjacent Nodes of the currentNode, 
+      case1 -> if not visited, run dfs on adjNode with currNode as parentNode
+                dfs(adjNode, startNode, visited, adj)
+            // NOTE: currNode becomes parent for this adjNode
+            -> if dfs returns true, return true
+                if(dfs(adjNode, startNode, visited, adj) == true) { return true }
+      case2 -> if visited, check if that adjNode is not the parentNode, if NOT, then there is a cycle 
+      (Yayy, we have a new node that was visited some other way !!)
+            if(visited[adjNode]) {
+              if( adjNode != parentNode ) { //we found a visited neighbour and its not parent, it came from other traversal
+                return true
+              }
+            }
+3. In 1st step, check if any of the dfs calls returns true, return true, else after full for loop return false
+    for(int i=0; i< v; i++) {
+        if(!vis[i]) {
+        boolean ans = dfs(i, -1, visited, adj);
+        if (ans == true) return true;
+        }
+      }
+    return false
+============================================================================================================================================
+
+
 */
 import java.util.*;
 
