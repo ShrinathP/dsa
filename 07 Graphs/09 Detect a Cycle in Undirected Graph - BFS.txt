@@ -22,6 +22,7 @@ Steps -
     detectCycle(i, visited, adj)
   }
 2. DetectCycle Function(int startNode, int[] visitedArr, List<List<Integer>> adj)
+  0. Init a queue
   1. add startNode, -1 parent to the queue
   q.add(new Pair(currNode, parentNode))
   q.add(new Pair(i, -1))
