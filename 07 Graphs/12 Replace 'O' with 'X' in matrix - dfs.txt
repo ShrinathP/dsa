@@ -29,7 +29,7 @@ Steps:
 2. For all Edges which has O, connecting Os cannot be converted to X.
     2.1-> If O, dfs on all adjacent 4 sides, check for connecting Os and mark visited
        DFS function to mark all visited
-    2.2-> traverse first row and last row - check for O, dfs for 0 and mark all visited
+    2.2->for all columns; traverse first row and last row - check for O, dfs for 0 and mark all visited
     for(j=0;j<n;j++) {
         //first row
         if(mat[0][j] == O && vis[0][j] == 0) {
@@ -40,7 +40,7 @@ Steps:
             dfs()
         }
     }
-    2.3-> traverse first col and last col - check for O, dfs for 0 and mark all visited
+    2.3->for all rows; traverse first col and last col - check for O, dfs for 0 and mark all visited
     for(int i=0;i<m; i++) {
         //first col
         if(mat[i][0] == O && vis[i][0] == 0) {
