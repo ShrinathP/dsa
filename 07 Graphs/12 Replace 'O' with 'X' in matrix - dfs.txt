@@ -14,24 +14,52 @@ just below, just above, just left, and just right of it.
 NOTE IMP: - O Should be surrounded by X on all sides, not even 1 side should be missing
 So if we see an island of Os surrounded by Xs then only we can convert to X
 
-==================================================================
+================================================================================================
 Steps:
-0. Plain dfs function to recur and mark Visited
-    dfs(row, col, mat, vis, delRow, delCol) {
+1. Plain dfs function to recur and mark Visited
+    dfs(row, col, mat, vis, delRow[], delCol[]) {
         vis[row][col] = 1;
         //traverse 4 directions
-        if mat[newRow][newCol] == O then recur dfs(newRow, newCol, mat, vis, delRow, delCol)
+        for(int i=0; i< 4; i++) {
+            newRow = row + delRow[i]
+            newCol = row + delCol[i]
+            if mat[newRow][newCol] == O then recur dfs(newRow, newCol, mat, vis, delRow, delCol)
+        }
     }
-1. For all Edges which has O, connecting Os cannot be converted to X.
-   -> If O, dfs on all adjacent 4 sides, check for connecting Os and mark visited
-   DFS function to mark all visited
-    
-    -> traverse first row and last row - check for O, dfs for 0 and mark all visited
+2. For all Edges which has O, connecting Os cannot be converted to X.
+    2.1-> If O, dfs on all adjacent 4 sides, check for connecting Os and mark visited
+       DFS function to mark all visited
+    2.2-> traverse first row and last row - check for O, dfs for 0 and mark all visited
     for(j=0;j<n;j++) {
-        if(mat[0][j] == 0 && vis[0][j] == 0) {
+        //first row
+        if(mat[0][j] == O && vis[0][j] == 0) {
+            dfs()
+        }
+        //last row
+        if(mat[m-1][j] == O vis[m-1][j] == 0) {
             dfs()
         }
     }
+    2.3-> traverse first col and last col - check for O, dfs for 0 and mark all visited
+    for(int i=0;i<m; i++) {
+        //first col
+        if(mat[i][0] == O && vis[i][0] == 0) {
+            dfs
+        }
+        //last col
+        if(mat[i][n-1] == O && vis[i][n-1] == 0) {
+            dfs
+        }
+    }
+    -> now for all inner unvisitied Os if they are still unvisited and O convert to X
+    for(int i=0; i<m; i++) {
+        for(int j=0;i<n; j++) {
+            if(vis[i][j] == 0 and mat[i][j] == O) {
+                mat[i][j] = X;
+            }
+        }
+    }
+================================================================================================
 
 
 As 
