@@ -11,7 +11,7 @@ replace 'O' with 'X' if surrounded by 'X'.
 A 'O' (or a set of 'O') is considered to be surrounded by 'X' if there are 'X' at locations 
 just below, just above, just left, and just right of it. 
 
-O Should be surrounded by X on all sides, not even 1 side should be missing
+NOTE IMP: - O Should be surrounded by X on all sides, not even 1 side should be missing
 
 Time Complexity - DFS - in the worst case - for all Os in a matrix -DFS will run for O(NXM)X4 directions
 and for loops will run for O(N)
