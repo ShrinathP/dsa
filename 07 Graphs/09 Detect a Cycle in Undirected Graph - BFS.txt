@@ -14,7 +14,7 @@ if their adjacents have been visited,
   i.e. you found a cycle
 
 ================================================================================================================
-q.add currNode, ParentNode concept, if curr adjacency Node is visited check it was not a parentNode
+IMP CUE - q.add currNode, ParentNode concept, if curr adjacency Node is visited check it was not a parentNode
 Steps - 
 1. if disconnected components present in graph, created visited arr, iterate through all nodes for detectCycle, if not visited run detectCycle
   for(int i=0; i< v; i++) {
