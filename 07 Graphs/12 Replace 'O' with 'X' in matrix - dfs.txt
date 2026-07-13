@@ -12,10 +12,34 @@ A 'O' (or a set of 'O') is considered to be surrounded by 'X' if there are 'X' a
 just below, just above, just left, and just right of it. 
 
 NOTE IMP: - O Should be surrounded by X on all sides, not even 1 side should be missing
+So if we see an island of Os surrounded by Xs then only we can convert to X
+
+==================================================================
+Steps:
+0. Plain dfs function to recur and mark Visited
+    dfs(row, col, mat, vis, delRow, delCol) {
+        vis[row][col] = 1;
+        //traverse 4 directions
+        if mat[newRow][newCol] == O then recur dfs(newRow, newCol, mat, vis, delRow, delCol)
+    }
+1. For all Edges which has O, connecting Os cannot be converted to X.
+   -> If O, dfs on all adjacent 4 sides, check for connecting Os and mark visited
+   DFS function to mark all visited
+    
+    -> traverse first row and last row - check for O, dfs for 0 and mark all visited
+    for(j=0;j<n;j++) {
+        if(mat[0][j] == 0 && vis[0][j] == 0) {
+            dfs()
+        }
+    }
+
+
+As 
 
 Time Complexity - DFS - in the worst case - for all Os in a matrix -DFS will run for O(NXM)X4 directions
 and for loops will run for O(N)
 So O(N) row traverse + O(N) col traverse + O(NXMX4) DFS + NXM (filling all inner elements)
+
 */
 
 
