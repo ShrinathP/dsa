@@ -18,6 +18,58 @@ Use Queue inside the bfs algorithm
 TC will be the same as the dfs solution
 
 IMP - Note - we dont fill all the Os in the Queue like in the previous solution 
+==
+Same as the previous solution
+Instead of DFS, use BFS to mark Visited
+====================================================================================================
+Steps
+1. Plain bfs function to recur and mark Visited
+  Init Queue, offer to queue mark visited, while !queue.isEmpty(), poll and recur in 4 directions
+    bfs(row, col, mat, vis, delRow[], delCol[]) {
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{row, col});
+        vis[row][col] = 1;
+
+        while (!queue.isEmpty()) {
+        queue.poll -> row, col
+        for(int i=0; i<4; i++) {
+          nRow, nCol .... if mar[nRow][nCol] == O, mark vis[nRow][nCol] = 1
+        }
+    }
+2. For all Edges which has O, connecting Os cannot be converted to X.
+    2.1-> If O, dfs on all adjacent 4 sides, check for connecting Os and mark visited
+       DFS function to mark all visited
+    2.2->for all columns; traverse first row and last row - check for O, dfs for 0 and mark all visited
+    for(j=0;j<n;j++) {
+        //first row
+        if(mat[0][j] == O && vis[0][j] == 0) {
+            dfs()
+        }
+        //last row
+        if(mat[m-1][j] == O vis[m-1][j] == 0) {
+            dfs()
+        }
+    }
+    2.3->for all rows; traverse first col and last col - check for O, dfs for 0 and mark all visited
+    for(int i=0;i<m; i++) {
+        //first col
+        if(mat[i][0] == O && vis[i][0] == 0) {
+            dfs
+        }
+        //last col
+        if(mat[i][n-1] == O && vis[i][n-1] == 0) {
+            dfs
+        }
+    }
+    -> now for all inner unvisitied Os if they are still unvisited and O convert to X
+    for(int i=0; i<m; i++) {
+        for(int j=0;i<n; j++) {
+            if(vis[i][j] == 0 and mat[i][j] == O) {
+                mat[i][j] = X;
+            }
+        }
+    }
+====================================================================================================
 */
 
 
