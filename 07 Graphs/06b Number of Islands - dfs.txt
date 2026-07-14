@@ -4,8 +4,9 @@ Problem Statement:
 Given a m x n grid of '1's (land) and '0's (water), find the number of islands.
 An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
 
+=============================================================================
 Explanation:
-DFS Traversal:
+DFS Traversal Steps:
 For each unvisited land cell ('1'), we start DFS.
   - Mark the cell as visited.
   - Explore all 4 directions recursively. - using dfs
@@ -13,6 +14,7 @@ For each unvisited land cell ('1'), we start DFS.
 Counting Islands:
   - Each DFS call from an unvisited land cell represents one island.
   - Increment the numIslands counter.
+=============================================================================
 */
 
 // Number of connected components

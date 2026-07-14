@@ -2,12 +2,16 @@
 // using BFS
 // https://www.geeksforgeeks.org/dsa/flood-fill-algorithm/
 
+IMP: Exactly same as 06a Number of Islands - bfs -> 4 directions instead of 8
+
 /*
 BFS way using Queue 
 - add the first element in the queue
 - Check every direction of the element - 
 - if the direction bound satisfies and color is oldColor - 
 - Change the colour and add it to the queue
+
+
 */
 
 import java.util.*;
