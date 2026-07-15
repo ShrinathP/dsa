@@ -12,12 +12,49 @@ https://takeuforward.org/data-structure/number-of-distinct-islands/
 
 In order to make sure there is the same numbering for 2 similar shapes
 we subtract the base co-ordinated from the current traversed element
+
+Cue - when starting dfs recurfunction, 
+        pass the starting row and col, use as base row0,col0 to subtract and save the shape in ArrayList
+Steps
+1. DFS function, currrow, currcolumn, arrayList, row0, col0
+   -> mark visited, 
+   -> calc diff, add to ArrayList
+  -> traverse all 4 dirs, if not visited and 1, recur with DFS
+2. Init visited arr, n x m, HashSet of ArrayList (removed duplicates)
+3. Traverse the grid 
+    for i, 
+      for j, 
+        - if not visited and 1 found, 
+          - init new ArrayList, 
+          - dfs with ( i, j, vis, vec, grid, i, j ) and
+          - add that ArrayList to Hashset
 */
 
 
 import java.util.*;
 
 class Solution {
+  int countDistinctIslands(int[][] grid) {
+    int n = grid.length;
+    int m = grid[0].length;
+    int vis[][] = new int[n][m];
+    HashSet <ArrayList<String>> st = new HashSet <> ();
+
+    // traverse the grid
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < m; j++) {
+        // if not visited and is a land cell, create a new arrayList and pass in the dfs, add to the set
+        if (vis[i][j] == 0 && grid[i][j] == 1) {
+          ArrayList<String> vec = new ArrayList<>();
+          dfs(i, j, vis, grid, vec, i, j);
+          // store it in HashSet
+          st.add(vec);
+        }
+      }
+    }
+    return st.size();
+  }
+
   private void dfs(int row, int col, int[][] vis,
     int[][] grid, ArrayList < String > vec, int row0, int col0) {
     // mark the cell as visited
@@ -47,26 +84,6 @@ class Solution {
     return Integer.toString(r) + " " + Integer.toString(c);
   }
 
-  int countDistinctIslands(int[][] grid) {
-    int n = grid.length;
-    int m = grid[0].length;
-    int vis[][] = new int[n][m];
-    HashSet <ArrayList<String>> st = new HashSet <> ();
-
-    // traverse the grid
-    for (int i = 0; i < n; i++) {
-      for (int j = 0; j < m; j++) {
-        // if not visited and is a land cell, create a new arrayList and pass in the dfs, add to the set
-        if (vis[i][j] == 0 && grid[i][j] == 1) {
-          ArrayList<String> vec = new ArrayList<> ();
-          dfs(i, j, vis, grid, vec, i, j);
-          // store it in HashSet
-          st.add(vec);
-        }
-      }
-    }
-    return st.size();
-  }
 
   public static void main(String[] args) {
      int grid[][] = {
