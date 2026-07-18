@@ -2,12 +2,29 @@
 // BFS Using Boundary Queue Initialization
 
 /*
+Exactly same as Multi Source BFS - rotten oranges 
 Queue Initialization: By enqueueing all the boundary 'O' cells first, 
 we ensure that only the 'O' cells connected to the boundary are explored. 
 This minimizes the number of BFS calls and makes the algorithm more efficient.
 
 Single BFS Call: Instead of calling BFS for each boundary 'O' cell separately, 
 we only process the queue once, saving redundant calls.
+
+For Surrounded Regions, I would recommend Approach 1 (start BFS whenever you find an unvisited boundary 'O').
+
+Reasons:
+
+It's the standard solution taught for this problem.
+It mirrors the DFS solution closely.
+It's simpler to reason about during interviews.
+
+Use multi-source BFS when the problem naturally models multiple sources spreading simultaneously, such as:
+
+Rotten Oranges
+Walls and Gates
+Nearest Exit
+01 Matrix
+Fire spread / infection problems
 */
 
 

@@ -11,6 +11,9 @@ Enqueue everything at once
 Multi Source BFS
 
 TC = N X M X 4 
+
+Exactly same as Replace O with X, just that do multisource BFS and 
+add all boundary 1s to the queue and mark visited
 */
 
 
@@ -78,7 +81,7 @@ class Solution {
             }
         }
 
-//A better way to enqueue would be 
+//IMP: Another better way to enqueue first row, last row, first col, last col would be
 /*
         // Enqueue all 'O' cells from the boundary (first and last row and column)
         for (int i = 0; i < n; i++) {
