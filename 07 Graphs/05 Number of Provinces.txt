@@ -1,6 +1,7 @@
 /*
 Problem Statement
-You are given an n x n 2D array isConnected where isConnected[i][j] = 1 if the i-th city is directly connected to the j-th city, 
+You are given an n x n 2D array 
+isConnected where isConnected[i][j] = 1 if the i-th city is directly connected to the j-th city, 
 and isConnected[i][j] = 0 if they are not. Your task is to find the number of provinces in the graph.
 */
 

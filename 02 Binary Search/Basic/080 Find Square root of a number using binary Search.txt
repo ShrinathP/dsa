@@ -1,4 +1,5 @@
 // Leetcode 69: Square root of number using BS
+// cue -> compare mid*mid with x
 
 class Solution {
     public int mySqrt(int x) {

@@ -1,4 +1,5 @@
 // Number of islands
+// Cue - if 1 found, increase count, Recurse in 4 dirs and mark connecting 1s visited 
 /*
 Problem Statement:
 Given a m x n grid of '1's (land) and '0's (water), find the number of islands.

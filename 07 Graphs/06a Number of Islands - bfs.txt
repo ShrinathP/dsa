@@ -1,4 +1,9 @@
 /*
+GFG solution - 8 directions
+Leetcode solution - 4 directions
+
+// Cue - if 1 found, increase count, bfs in 4 dirs and mark connecting 1s visited 
+
 Striver Explanation and code
 IMP : No of Islands, 2D Matrix
 
@@ -88,6 +93,24 @@ class Solution {
                     }
                 }
             }
+
+            /*
+            // For traverse in 4 directions use 2 int arrays
+            // define delRow and delCol before while(!q.isEmpty())
+            int[] delRow = {-1,1,0,0};
+            int[] delCol = {0,0,1,-1};
+
+            for(int i = 0; i < 4; i++) {
+                int nrow = row + delrow[i];
+                int ncol = row + delcol[i];
+
+                if (nrow >= 0 && nrow < n && ncol >= 0 && ncol < m
+                        && grid[nrow][ncol] == '1' && vis[nrow][ncol] == 0) {
+                    vis[nrow][ncol] = 1;
+                    q.add(new Pair(nrow, ncol));
+                }
+            }
+            */
         }
     }
 

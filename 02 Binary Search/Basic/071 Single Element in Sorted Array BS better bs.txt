@@ -1,11 +1,13 @@
 
+// Cue -> If Mid is Odd move 1 back force the mid to be even, then do the validation
+
 /* Leetcode 540: Single element in a Sorted Array
 You are given a sorted array where every element appears twice except one element
  which appears once. Find that single element.
 Example:
 [1, 1, 2, 2, 3, 4, 4, 5, 5]
 Answer: 3
-<!--- If Mid is Odd move 1 back force the mid to be even, then do the validation--->
+
 */
 
 //Take U forward
@@ -38,6 +40,7 @@ class Solution {
         if (nums[mid] == nums[mid + 1]) {
             low = mid + 2;
         } else {
+            //single number is on left side
             high = mid;
         }
     }

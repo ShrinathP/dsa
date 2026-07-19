@@ -26,11 +26,22 @@ Space Complexity: O(m * n), due to the recursion stack in the worst case of all 
 import java.util.*;
 
 class GfG {
+    // Main function to perform flood fill
+    static int[][] floodFill(int[][] image, int sr, int sc, int newColor){
+        // If the starting pixel already has the new color, no need to process
+        if (image[sr][sc] == newColor) {
+            return image;
+        }
+
+        // Call DFS with the original color of the starting pixel
+        dfs(image, sr, sc, image[sr][sc], newColor);
+
+        // Return the updated image
+        return image;
+    }
 
     // Helper method for DFS traversal
-    static void dfs(int[][] image, int x, int y, 
-                        int oldColor, int newColor){
-
+    static void dfs(int[][] image, int x, int y, int oldColor, int newColor){
         // Base case: check for out-of-bound indices or mismatched color
         if (x < 0 || x >= image.length || 
             y < 0 || y >= image[0].length || 
@@ -46,28 +57,10 @@ class GfG {
         dfs(image, x - 1, y, oldColor, newColor);
         dfs(image, x, y + 1, oldColor, newColor); 
         dfs(image, x, y - 1, oldColor, newColor); 
-        
-    }
-
-    // Main function to perform flood fill
-    static int[][] floodFill(int[][] image, int sr, int sc, int newColor){
-
-        // If the starting pixel already has the new color, no need 
-        // to process
-        if (image[sr][sc] == newColor) {
-            return image;
-        }
-
-        // Call DFS with the original color of the starting pixel
-        dfs(image, sr, sc, image[sr][sc], newColor);
-
-        // Return the updated image
-        return image;
     }
 
     // Driver code to test the flood fill function
     public static void main(String[] args) {
-
         // Define the image matrix
         int[][] image = {
             {1, 1, 1, 0},

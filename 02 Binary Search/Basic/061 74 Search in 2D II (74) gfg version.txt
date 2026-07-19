@@ -30,38 +30,36 @@ given elem is less than 29, so move left, which is 1st column
 
 */
 
-class Solution{
+class Solution {
 
 	public static void main(String[] args){
-	
 	int[][] givenMatrix = //[
-[10,20,30,40],
-[11,21,36,43],
-[25,29,39,50],
-[50,60,70,80]
-]
-	findMatrix(givenMatrix,x);
-	
-}
+	[10,20,30,40],
+	[11,21,36,43],
+	[25,29,39,50],
+	[50,60,70,80]
+	]
+		findMatrix(givenMatrix,x);
+	}
 
-static int findMatrix(int[][] mat, target){
-int n = mat.length;
-int m = mat[0].length;
-
- int i =0, j = m-1;
-		while(i<n && j>=0){
+	static int findMatrix(int[][] mat, target){
+		int n = mat.length;
+		int m = mat[0].length;
+		int i =0, j = m-1;
+		while (i<n && j>=0){
 			if(mat[i][j] == target){
 			System.out.println("Found the index");
 			return 1;
 			}
 
-		//target is less, skip column
-		if(mat[i][j] > target) {
-			j--; //move column back - left
-		}
-		//target is greater, check in current col, move row ahead - bottom
-		else if(target > mat[i][j]) {
-			i++; //move row down - bottom
+			//target is less, skip column
+			if(mat[i][j] > target) {
+				j--; //move column back - left
+			}
+			//target is greater, check in current col, move row ahead - bottom
+			else if(target > mat[i][j]) {
+				i++; //move row down - bottom
+			}
 		}
 	}
 }

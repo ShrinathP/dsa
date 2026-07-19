@@ -1,3 +1,7 @@
+// cue if mid is even, compare with next, if mid is odd , compare with prev
+// cue == any new element is seen at even index
+// BS == if mid is even, compare with next, if mid is odd , compare with prev
+
 /*
 Leetcode 540: Single element in a Sorted Array
  You are given a sorted array where every element appears twice except one element
@@ -8,8 +12,6 @@ Example:
 Answer: 3
 */
 
-//cue == any new element is seen at even index
-//BS == if mid is even, compare with next, if mid is odd , compare with prev
 
 //2nd solution
 //Take U forward
@@ -60,6 +62,7 @@ class Solution {
                     //move lo to mids next
                     lo = mid + 1;
                 } else {
+                    //single number is on right
                     hi = mid;
                 }
             }
