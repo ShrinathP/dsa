@@ -3,7 +3,7 @@ Striver explanation and solution
 https://takeuforward.org/graph/bipartite-graph-dfs-implementation/
 
 Cue
-- Mark color, recur dfs on adjacents with reverse colors
+- Mark color, recur dfs on uncolored adjacents with reverse colors
 
 ========================================================================================
 Steps
