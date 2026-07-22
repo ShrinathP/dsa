@@ -1,6 +1,8 @@
 /*
 Cue - to Detect Cycle - On the same path node has to be Visited again, so maintain pathVisited with visited, on backtracking unmark pathVisited
 
+IMP to Do BFS - we need to use Kahns Algorithm - Topological Sort
+
 Striver explanation and code
 https://takeuforward.org/data-structure/detect-cycle-in-a-directed-graph-using-dfs-g-19/
 
