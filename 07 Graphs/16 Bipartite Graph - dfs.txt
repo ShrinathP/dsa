@@ -2,6 +2,9 @@
 Striver explanation and solution
 https://takeuforward.org/graph/bipartite-graph-dfs-implementation/
 
+Cue
+- Mark color, recur dfs on adjacents with reverse colors
+
 ========================================================================================
 Steps
 1. Init color arr, size V
@@ -16,6 +19,7 @@ Steps
 	//if no false found, return true
 	return true;
 4. DFS Function - bfs(index, newColor, adj, color arr)
+   - IMP: DFS IS RECURSIVE SO PASS newColor FROM OUTSIDE in FUNCTION PARAMS --
 	4.2 color at index -> color[i] = 0
 	4.3 for all adjacent nodes,	
 			1-  if not colored, dfs with inverted color and check for false
