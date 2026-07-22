@@ -2,6 +2,9 @@
 Bipartite Graph - BFS Implementation
 https://takeuforward.org/graph/bipartite-graph-bfs-implementation/
 
+Cue
+- Mark color, bfs all uncolored adjacents with reverse colors and add to queue
+
 Striver Explanation and Solution
 Definition
 If you can color a graph with 2 colors, in such a way that no 2 adjacent nodes have the same color
