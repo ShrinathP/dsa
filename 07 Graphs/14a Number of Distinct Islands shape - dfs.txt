@@ -58,7 +58,7 @@ class Solution {
   }
 
   private void dfs(int row, int col, int[][] vis,
-    int[][] grid, ArrayList < String > vec, int row0, int col0) {
+    int[][] grid, ArrayList<String> vec, int row0, int col0) {
     // mark the cell as visited
     vis[row][col] = 1;
 
