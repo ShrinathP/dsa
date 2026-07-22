@@ -14,15 +14,36 @@ Then it is called as a bipartite graph
 Time Complexity: O(V + 2E), Where V = Vertices, 2E is for total degrees as we traverse all adjacent nodes.
 Space Complexity: O(3V) ~ O(V), Space for queue data structure, colour array and an adjacency list.
 
+====================================================================================================
+Steps
+1. Init color arr, size V
+2. For every index, fill color[i] = -1
+3. For every index, BFS Traversal (as it can be unconnected graph)
+	if(color[it] == -1) {
+		boolean result = bfs(int index, int V,List<List<Integer>> adj, int[] color);
+		if(!result) return false;
+	}
+4. BFS Function - bfs(index, V, adj, color arr)
+	4.1 Init queue, add index to queue
+	4.2 color at index -> color[i] = 0
+	4.3 traverse Queue
+		-> while !q.isEmpty(), - get currNode = q.peek(); q.remove()
+		-> for all adjacent nodes,	
+			1-  if not colored, color inverted, add to queue
+			2-  if its colored, and same as currNode, return false
+			if(color[adj] == -1) {
+				color[adj] = 1 - color[currNode];
+				q.add(adj);
+			}
+			else {
+				if(color[adj] == color[currNode]) {
+					return false;
+				}
+			}
+			
+====================================================================================================
+	
 
-The algorithm steps are as follows:
-- For BFS traversal, we need a queue data structure and a visited array (in this case colour array). 
-- Take the source node and push it into the Queue. Whenever we try to put it in the queue, we assign a colour to the node. We will try to colour with 0 and 1, but you can choose other colours as well. We will start with the colour 0, you can start with 1 as well, just make sure for the adjacent node, it should be opposite of what the current node has. 
-- Start the BFS traversal, pop out an element from the queue every time and travel to all its uncoloured neighbours using the adjacency list. 
-- For every uncoloured node, initialise it with the opposite colour to that of the current node, and push it into the Q data structure, for further traversals.
-- Repeat the steps either until the queue becomes empty.
-- If at any moment, we get an adjacent node from the adjacency list which is already coloured and has the same colour as the current node, we can say it is not possible to colour it, hence it cannot be bipartite. Thereby we will stop the check here, and return a false, without visiting any further nodes. 
-- If the queue becomes empty, the graph is coloured and no two adjacent nodes have the same colour then return value 1 indicating it is a bipartite graph.
 */
 
 import java.util.*;
