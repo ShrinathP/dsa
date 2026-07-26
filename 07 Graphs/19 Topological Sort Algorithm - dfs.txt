@@ -5,28 +5,46 @@ https://takeuforward.org/data-structure/topological-sort-algorithm-dfs-g-21/
 NOTE: Should be acyclic graph - otherwise topological sort is not possible
 
 Problem Statement: Given a Directed Acyclic Graph (DAG) with V vertices and E edges, 
-Find any Topological Sorting of that Graph.
-Note: In topological sorting, node u will always appear before node v if there is a directed edge from node u towards node v(u -> v).
-Linear ordering of vertices such that if there is an edge between u and v
+Find any Topological Sorting of that Graph. ORDERING MAINTAINED
+Note: In topological sorting, node u appears before node v if there is an edge from node u towards node v(u -> v).
 u appears before v in that ordering
 
-As you traverse any element whose dfs is completed, put it in stack, 
-As you pop from the stack u will be before v
 
-Since we are inserting the nodes into the stack after the completion of the traversal, 
-we are making sure, 
-there will be no one who appears afterward but may come before in the ordering 
-as everyone during the traversal would have been inserted into the stack. 
+Logic - How ordering is maintained
+1->2->3->4->5
+DFS traversal will end in a terminal node as there will be no adjacent nodes for the terminal node
+At 5, vis[4] == 1, and no remaining adjacents
+stack.push(5) - Now we add 5 to the stack
+stack.push(4) - backtrack and add 4 to the stack
+stack.push(3) - backtrack and add 3 to the stack - stack top to bottom = [3,4,5] so u -> direction stays
 
-Note: Points to remember, that node will be marked as visited immediately after making the DFS call
-and before returning from the DFS call, the node will be pushed into the stack.
+========================================================================================
+Cue -> DFS, mark vis, dfs on adjacents, stack push when no adjacents left
+Steps
+1. Init visited array, Size V, Init Stack
+2. For every node, Run DFS traversal (as there can be non connected components)
+3. DFS Function - dfs(node, Stack<Integer> st, List<List<Integer>> adjMatrix, int[] vis)
+    - mark vis[node] = 1,
+    - Traverse all adjacent nodes, 
+        - if not visited, recur dfs again
+    - backtrack Step - Traversal breaks on terminal node, no unvisited adjacents present
+        - Add the current node to the stack
+    vis[node] = 1;
+    for(int it: adjMatrix.get(node)) {
+        if(vis[it] == 0) {
+            dfs(node, stack, adjMatrix, vis);
+        }
+    }
+    st.push(node);
+4. Empty the stack to get the answer
+========================================================================================
+
 */
 
 import java.util.*;
 
 class Solution {
-    private static void dfs(int node, int vis[], Stack<Integer> st,
-            ArrayList<ArrayList<Integer>> adj) {
+    private static void dfs(int node, int vis[], Stack<Integer> st, ArrayList<ArrayList<Integer>> adj) {
         
         //inside the dfs, mark vis array as 1
         //run dfs for every adjacency node

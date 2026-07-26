@@ -6,28 +6,24 @@ Problem Statement: Given a Directed Acyclic Graph (DAG) with V vertices and E ed
 Find any Topological Sorting of that Graph.
 Note: In topological sorting, node u will always appear before node v if there is a directed edge from node u towards node v(u -> v).
 
-Need an indegree array to keep check of the number of incoming edges to each node
+==================================================================================
+Cue -> Fill indegree, add node with 0 indegree to queue, BFS queue, poll node, add to topo arr, reduce indegree of adjacents, check for 0
+Steps
+1. Calc indegree array for the graph
+    0. Init indegree int arr of size V
+    1. Traverse all the nodes, 
+    2. For Each Node, check for adjacents, increase indegree of the adjacents
+2. Init Queue, add all nodes with indegree 0
+3. init topo int arr, index = 0
+4. BFS Function, 
+    - while Queue is Not Empty, 
+    - node = queue.peek, queue.remove,
+    - add to topo arr, increase index, index++,
+    - For each adjacents, 
+        - decrease indegree, check if its zero, add to queue
+5. return topo arr
+==================================================================================
 
-Indegree Array: 
-Initially all elements are set to 0. 
-Then, We will count the incoming edges for a node and store it in this array. 
-For example, if indegree of node 3 is 2, indegree[3] = 2.
-
-Queue: As we will use BFS, a queue is required. Initially, the node with indegree 0 will be pushed into the queue.
-
-Answer array: Initially empty and is used to store the linear ordering.
-
-The algorithm steps are as follows:
-1. First, we will calculate the indegree of each node and store it in the indegree array. 
-We can iterate through the given adj list, and simply for every node u->v, we can increase the indegree of v by 1 in the indegree array. 
-2. Initially, there will be always at least a single node whose indegree is 0. So, we will push the node(s) with indegree 0 into the queue.
-3. Then, we will pop a node from the queue including the node in our answer array, 
-and for all its adjacent nodes, we will decrease the indegree of that node by one. 
-For example, if node u that has been popped out from the queue has an edge towards node v(u->v), we will decrease indegree[v] by 1.
-4. After that, if for any node the indegree becomes 0, we will push that node again into the queue.
-5. We will repeat steps 3 and 4 until the queue is completely empty. Finally, completing the BFS we will get the linear ordering of the nodes in the answer array.
-
-Whichever node indegree is 0, keep pushing them in the queue, pop the queue, reduce all the popped node adjacency list
 */
 
 
@@ -57,7 +53,8 @@ class Solution {
         while (!q.isEmpty()) {
             int node = q.peek();
             q.remove();
-            topo[i++] = node; //add the node to the topo sort array
+            topo[i] = node; //add the node to the topo sort array
+            i = i++;
             
             // node is in your topo sort
             // so please remove it from the indegree

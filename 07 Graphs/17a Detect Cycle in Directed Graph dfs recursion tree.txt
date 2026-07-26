@@ -1,0 +1,61 @@
+
+
+Recursion Tree call for Detect a cycle in Directed Graph
+
+Graph (No Cycle)
+0 → 1 → 2
+    │
+    └── 3
+
+Adjacency List
+0 : [1]
+1 : [2,3]
+2 : []
+3 : []
+
+Initial State
+vis     = [0,0,0,0]
+pathVis = [0,0,0,0]
+
+Complete Recursion Tree (Including Backtracking)
+dfs(0)
+│
+├── vis[0] = 1
+├── pathVis[0] = 1
+│
+└── dfs(1)
+    │
+    ├── vis[1] = 1
+    ├── pathVis[1] = 1
+    │
+    ├── dfs(2)
+    │   │
+    │   ├── vis[2] = 1
+    │   ├── pathVis[2] = 1
+    │   │
+    │   ├── No neighbours
+    │   │
+    │   ├── pathVis[2] = 0      ← Backtracking
+    │   └── return false
+    │
+    ├── dfs(3)
+    │   │
+    │   ├── vis[3] = 1
+    │   ├── pathVis[3] = 1
+    │   │
+    │   ├── No neighbours
+    │   │
+    │   ├── pathVis[3] = 0      ← Backtracking
+    │   └── return false
+    │
+    ├── All neighbours processed
+    │
+    ├── pathVis[1] = 0          ← Backtracking
+    └── return false
+│
+├── All neighbours processed
+│
+├── pathVis[0] = 0              ← Backtracking
+└── return false
+
+ToDo Ask Recursion Tree for Striver's Problem

@@ -1,21 +1,25 @@
 
 /*
+Cue -> while unmarking of pathVisited from 1 to 0, while backtracking, mark the node as safeNode
+
 Problem Statement: A directed graph of V vertices and E edges is given in the form of an adjacency list adj.
 Each node of the graph is labeled with a distinct integer in the range 0 to V - 1. 
+Find all safeNodes -> all nodes that end up in a terminal Node !!
 
 https://takeuforward.org/data-structure/find-eventual-safe-states-bfs-topological-sort-g-25/
 
 Striver Explanation and Solution, "minor change you need to do in the cycle detection solution"
 - Terminal Node
-A node is a terminal node if there are no outgoing edges. 
+A node is a terminal node if there are no outgoing edges. All edges should be incoming edges. Outdegree = 0
 - Safe Node
 A node is a safe node if every possible path starting from that node leads to a terminal node.
 You have to return an array containing all the safe nodes of the graph. The answer should be sorted in ascending order.
+A Terminal Node is itself a Safe Node
 
-
-Terminal Node - Outdegree should be - 0
+IMP - NON SAFE NODES
 - Any Node that is part of a cycle can never be a safe node
-- If Any Node has an incoming edge going to the cycle - leades to a cycle - that also cannot be a safe node
+- If Any Node has an incoming edge going to the cycle - leads to a cycle - that also cannot be a safe node
+
 
 In the previous Solution - we used visited Array and pathVisited array - we will use the same dfs technique for this as well
 
@@ -32,6 +36,26 @@ Explanation:
   We call the dfsCheck() method for each unvisited node to start DFS and check if the node is safe or not.
 5. Safe Nodes:
   After DFS traversal for all nodes, we gather all the safe nodes in the safeNodes list and return it.
+
+=====================================================================================================================
+Steps
+1. Init Visited arr, PathVisited arr, checkSafeNodde arr, both size V
+2. For every index, Run DFS traversal (as there can be non connected components), check for any true
+3. DFS function - dfs(node, List<List<Integer>> adjMatrix, int[] vis, int[] pathVis, int[] check)
+  - mark vis[node] = 1, pathVis[node] = 1, check[node] = 0;
+  - Traverse adjacent nodes - check for cycle
+    - if not visited, recur dfs on adjacent nodes and check for true, 
+        if true check[node] = 0; return true
+    - else visited, check if pathVis[adj] == 1, (On the same Path, node was visited again. 
+      Yayy we have a cycle detected)
+        check[node] = 0; return true
+  - backtrack -> checked all adjacents and didnt find cycle, mark current node as safeNode
+      check[node] = 1;
+      pathVis[node] = 0;
+      return false
+4. Traverse throuse the check array and add all nodes with 1 to safeNode array, return the same
+=====================================================================================================================
+
 */
 
 
@@ -50,20 +74,21 @@ class Solution {
             // when the node is not visited
             if (vis[it] == 0) {
                 if (dfsCheck(it, adj, vis, pathVis, check) == true) {
-                    // cycle found, this node cannot be a cycle
+                    // cycle found, this node cannot be a safeNode
                     check[node] = 0;
                     return true;
                 }
             }
-            // if the node has been previously visited
-            // but it has to be visited on the same path in order to be safeNode
+            // if the node has been previously visited on the same path, not safeNode
             else if (pathVis[it] == 1) {
                 //cannot be a safeNode
                 check[node] = 0;
                 return true;
             }
         }
-        //can be a safeNode as there was no already pathVisited
+        //This will be executed only if we end up at terminal node
+        //can be a safeNode as there was no cycle found and reached a terminal Node
+        //Backtracking step -> mark safeNode return false
         check[node] = 1;
         pathVis[node] = 0;
         return false;
@@ -89,7 +114,6 @@ class Solution {
                 safeNodes.add(i);
         }
         return safeNodes;
-        // Your code here
     }
 }
 
