@@ -3,6 +3,11 @@ Course Schedule II is basically finding a valid topological order of courses (if
 given prerequisites. 
 If there’s a cycle, return an empty array. We can solve it using BFS (Kahn’s Algorithm)
 //pre-requisite int 2D array consists of the prerequisite tasks required to complete a task
+
+=========================================================================================================
+Steps
+Exactly same as Course Schedule I - change is return topological order instead of can/cannot be completed
+=========================================================================================================
 */
 
 
