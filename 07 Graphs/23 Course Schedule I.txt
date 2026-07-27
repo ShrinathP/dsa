@@ -21,6 +21,30 @@ Hence use BFS (Topo Sort) way
 
 Course Schedule I is basically checking if a directed graph (prerequisite courses) has a cycle.
 
+================================================================================
+Steps
+1. Build adjacency List List<List<Integer>> adj    
+    - For each course, adj.add(new ArrayList<>());
+    - For each prereq of prereq[] -> course = prereq[0], prereq = prereq[1]
+    - For each prereq, add corresponding course, u -> v
+        - adj.get(prereq).add(course)
+2. Calc indegree array for the graph
+    0. Init indegree int arr of size V
+    1. Traverse all the nodes,
+    2. For Each Node, check for adjacents, increase indegree of the adjacents
+3. Init Queue, add all nodes with indegree 0
+4. init count
+5. BFS Function, 
+    - while Queue is Not Empty, 
+        - node = queue.peek, queue.remove,
+        - increase count
+        - For each adjacents, 
+            - decrease indegree, check if its zero, add to queue
+6. return count == numCourses
+================================================================================
+
+
+
 */
 
 import java.util.*;

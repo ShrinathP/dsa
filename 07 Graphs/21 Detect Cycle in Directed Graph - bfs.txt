@@ -4,40 +4,72 @@ https://takeuforward.org/data-structure/detect-a-cycle-in-directed-graph-topolog
 If the Topo sort has exactly N element - that means the graph is Directed Acyclic Graph
 If the Topo sort has lesser than N eleemnts - that means the queue was empty before traversing all N elements i.e. there is a cycle
 We dont need to store the topo sort array, just need a count variable to check if it matches N
-*/
 
+==================================================================================
+Same as previous, no need to topo arr or addition in topo array, just maintain count instead of adding to topo array
+Cue -> Fill indegree, add node with 0 indegree to queue, BFS queue, poll node, add to topo arr, reduce indegree of adjacents, check for 0
+
+Changes from prev solution 
+Change 1 -> topo arr not needed, just need count
+Change 2 -> after BFS, check if count == V, return false, no cycle
+Change 3 -> return true instead of topo arr
+==================================================================================
+
+*/
 
 import java.util.*;
 
 class Solution {
-    public boolean isCyclic(int N, ArrayList<ArrayList<Integer>> adj) {
-        // int topo[] = new int[N];
-        int indegree[] = new int[N];
-        for (int i = 0; i < N; i++) {
-            for (Integer it : adj.get(i)) {
+    // Function to return boolean isCyclic
+    static boolean isCyclicTopoSort(int V, ArrayList<ArrayList<Integer>> adj) {
+        int indegree[] = new int[V];
+        for (int i = 0; i < V; i++) {
+            for (int it : adj.get(i)) {
                 indegree[it]++;
             }
         }
 
         Queue<Integer> q = new LinkedList<Integer>();
-        for (int i = 0; i < N; i++) {
+        ;
+        for (int i = 0; i < V; i++) {
             if (indegree[i] == 0) {
                 q.add(i);
             }
         }
-        int cnt = 0;
+
+        //** Change 1
+        // topo arr not needed, just need count
+        // int topo[] = new int[V];
+        // int i = 0;
+        int count = 0;
+
         while (!q.isEmpty()) {
-            Integer node = q.poll();
-            cnt++;
-            for (Integer it : adj.get(node)) {
+            int node = q.peek();
+            q.remove();
+            
+            count++;
+            // topo arr not needed, just need count
+            // topo[i] = node; //add the node to the topo sort array
+            // i = i++;
+            
+            // node is in your topo sort
+            // so please remove it from the indegree
+            for (int it : adj.get(node)) {
                 indegree[it]--;
                 if (indegree[it] == 0) {
-                    q.add(it);
+                    q.add(it); //reduce the indegree of all the adjacent nodes, if someone reaches 0, push it to the queue
                 }
             }
         }
-        if (cnt == N)
+
+        //** Change 2
+        // check if count == V, no cycle found, false
+        if(cnt == V) {
             return false;
+        }
+
+        //** Change 3
+        // return topo;
         return true;
     }
 }
@@ -49,17 +81,17 @@ public class tUf {
         for (int i = 0; i < V; i++) {
             adj.add(new ArrayList<>());
         }
-        adj.get(1).add(2);
         adj.get(2).add(3);
-        adj.get(3).add(4);
-        adj.get(3).add(5);
-        adj.get(4).add(2);
+        adj.get(3).add(1);
+        adj.get(4).add(0);
+        adj.get(4).add(1);
+        adj.get(5).add(0);
+        adj.get(5).add(2);
 
-        Solution obj = new Solution();
-        boolean ans = obj.isCyclic(V, adj);
-        if (ans)
-            System.out.println("True");
-        else
-            System.out.println("False");
+        int[] ans = Solution.topoSort(V, adj);
+        for (int node : ans) {
+            System.out.print(node + " ");
+        }
+        System.out.println("");
     }
 }
