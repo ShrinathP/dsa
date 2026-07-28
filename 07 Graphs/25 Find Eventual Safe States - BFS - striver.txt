@@ -17,6 +17,26 @@ Now, the nodes with indegree 0 become the terminal nodes. After this step, we wi
     - Reduce indegree of its neighbors in reversed graph.
     - If indegree becomes 0 → enqueue neighbor.
 5. Sort the resulting nodes to return in ascending order.
+
+Steps:
+1. Build reversed adjacency List List<List<Integer>> adj, fill indegree
+    - For each course, adjRev.add(new ArrayList<>());
+    - Fill indegree while reversing adjacency List
+    - For each node, get adjacents, point v -> u, increase indegree of u
+        for(int u=0; u<V; u++) {
+            for(int v: adj.get(u)) adjRev.get(v).add(u);
+            indegree[u]++;
+        }
+2. Init Queue, add all nodes with indegree 0
+4. init count
+5. BFS Function, 
+    - while Queue is Not Empty, 
+        - node = queue.peek, queue.remove,
+        - add to safeNodes
+        - For each adjacents, 
+            - decrease indegree, check if its zero, add to queue
+6. return safeNodes
+=====
 */
 
 
