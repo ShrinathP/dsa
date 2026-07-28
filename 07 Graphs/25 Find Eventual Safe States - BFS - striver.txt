@@ -18,6 +18,8 @@ Now, the nodes with indegree 0 become the terminal nodes. After this step, we wi
     - If indegree becomes 0 → enqueue neighbor.
 5. Sort the resulting nodes to return in ascending order.
 
+Cue -> create reversed adjacency List, fill indegress, BFS function
+========================================================================
 Steps:
 1. Build reversed adjacency List List<List<Integer>> adj, fill indegree
     - For each course, adjRev.add(new ArrayList<>());
@@ -28,7 +30,7 @@ Steps:
             indegree[u]++;
         }
 2. Init Queue, add all nodes with indegree 0
-4. init count
+4. init safeNodes arrayList
 5. BFS Function, 
     - while Queue is Not Empty, 
         - node = queue.peek, queue.remove,
@@ -36,7 +38,7 @@ Steps:
         - For each adjacents, 
             - decrease indegree, check if its zero, add to queue
 6. return safeNodes
-=====
+===========================================================================
 */
 
 
