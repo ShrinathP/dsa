@@ -1,0 +1,177 @@
+
+/*
+Striver explanation and code
+Problem Statement
+Given a DAG, find the shortest path from the source to all other nodes in this DAG. 
+In this problem statement, we have assumed the source vertex to be ‘0’. You will be given the weighted edges of the graph.
+https://takeuforward.org/data-structure/shortest-path-in-directed-acyclic-graph-topological-sort-g-27/
+
+
+The adjacency list this time will have adjacent nodes with weights
+The DAG has weights so each of the path has weight
+Eg
+6 -> {4,1}, {5, 3}
+6 has an adjacency node of 4 with weight 1
+6 has an adjacency node of 5 with weight 3
+
+Step 1
+Assume any source
+Do a TopoSort on the DAG any way DFS or BFS
+DFS way
+- Run a loop For every node of the DAG, call DFS
+  - Keep a visited array, if not visited, mark visited call DFS on adjacents, keep doing the same
+  - whenever a DFS call is over put it into the stack
+- After all the loop is complete keep popping the stack and you will get the answer
+
+Step 2
+Take all nodes from the stack and relax the edges
+- Declare a distance array, fill everything with infinity, mark the source node as 0, 
+distance from source to source will be 0, and rest nodes will be infinity
+For the source node 
+- Check its adjacents, get the distance and update the distance array, to the min (distance, infinity)
+For each subsequent node of the stack
+- Check its adjacents, get the new computed distance and update the distance array, to the min (prevdistance, newcomputed_distance)
+- If the subsequnct node has infinity, update the distance to min (distance, infinity)
+
+
+Cue -> Pair(to, weight), build adjList, do topoSortDFS, get stack, while (!st.isEmpty()), fill dist arr
+==========================================================================================
+Steps
+1. Built adjList, Init ArrayList<ArrayList<Pair>> adjList, init Pair(int to, int weight)
+    - adjList = new ArrayList<ArrayList<Pair>>();
+    - For i to V, adjList.add(new ArrayList<Pair>)
+2. Add edges[] arr to adjList to complete building adjacency Matrix
+    - for i to edges.length
+      int u = edges[i][0];
+      int v = edges[i][1];
+      int wt = edges[i][2];
+      adjList.get(u).add(new Pair(v, wt));
+3. Now we have adjList, do topoSort DFS using adjList to find the correct Order
+      - init stack, init visited arr
+      - for i to V, if vis[i] = 0, topoSortDFS(i, adj, visited, stack)
+      - topoSortDFS logic - check 19 Topological Sort Algorithm - dfs.txt
+          - mark visited[node]
+          - get adjacents, if not visited, topoSortDFS on adjacent -> topoSort(edge.to, adj, visited, stack)
+          - push node to stack after visiting all adjacents
+4. Now we have topoSort order in Stack, fill dist array
+  - init dist[], fill with Integer.MAX_VALUE, mark dist[src] = 0
+  - while (!stack.isEmpty()), 
+    - u = pop from stack, check if its marked 0 in dist arr, 
+    - for adjacents, check if dist[u] + edge.weight < dist[edge.to], update dist[edge.to]
+    - replace rest Integer.MAX_VALUE with -1
+    - return dist;
+==========================================================================================
+Distance updation example
+       2
+    6 ----> 4
+    2 ↘   ↗ 1
+        5
+    eg if 6 to 4 is 2, then dist[5] + 1 = 2 + 1 > 2, so no need to updating dist[4]
+
+*/
+
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Main {
+
+  public static void main(String[] args) throws IOException {
+    int n = 6, m = 7;
+    int[][] edge = {{0,1,2},{0,4,1},{4,5,4},{4,2,2},{1,2,3},{2,3,6},{5,3,1}};
+    Solution obj = new Solution();
+    int res[] = obj.shortestPath(n, m, edge);
+    for (int i = 0; i < n; i++) {
+      System.out.print(res[i] + " ");
+    }
+    System.out.println();
+  }
+}
+
+class Pair {
+  int to, weight;
+  Pair(int _first, int _second) {
+    this.to = _first;
+    this.weight = _second;
+  }
+}
+
+
+//User function Template for Java
+class Solution {
+
+  //This is the function to implement Topological sort. 
+  private void topoSortDFS(int node, ArrayList <ArrayList<Pair>> adj, int vis[], Stack <Integer> stack) {
+    vis[node] = 1;
+    for (Pair edge : adj.get(node)) {
+            if (!visited[edge.to]) {
+                topoSortDFS(edge.to, adj, visited, stack);
+            }
+        }
+    stack.push(node); // Push node to stack after visiting all its neighbors
+  }
+
+
+
+  public int[] shortestPath(int N, int M, int[][] edges, int src) {
+    ArrayList<ArrayList<Pair>> adj = new ArrayList<>();
+    for (int i = 0; i < N; i++) {
+      ArrayList<Pair> temp = new ArrayList<Pair>();
+      adj.add(temp);
+    }
+    
+    // We create a graph first in the form of an adjacency list.
+    // for every node, create an adjacency list, with u taking v and weights
+    for (int i = 0; i < M; i++) {
+      int u = edges[i][0];
+      int v = edges[i][1];
+      int wt = edges[i][2];
+      adj.get(u).add(new Pair(v, wt));
+    }
+    
+    // Create a visited array
+    int vis[] = new int[N];
+    //Now, we perform topo sort using DFS technique 
+    //and store the result in the stack st.
+
+    Stack<Integer> st = new Stack<>();
+    for (int i = 0; i < N; i++) {
+      if (vis[i] == 0) {
+        topoSortDFS(i, adj, vis, st);
+      }
+    }
+
+    //Further, we declare a vector ‘dist’ in which we update the value of the nodes’
+    //distance from the source vertex after relaxation of a particular node.
+    
+    int[] dist = new int[V];
+    Arrays.fill(dist, Integer.MAX_VALUE); // Initialize distances to infinity
+    dist[src] = 0; // Distance to source is 0
+
+    // Process vertices in topological order
+    while (!stack.isEmpty()) {
+        int u = stack.pop();
+
+        // Only process if u is reachable (not MAX_VALUE)
+        // Process at dist[src] = 0
+        if (dist[u] != Integer.MAX_VALUE) {
+          //for every adjacents, update the distance array
+            for (Pair edge : adj.get(u)) {
+                if (dist[u] + edge.weight < dist[edge.to]) {
+                    dist[edge.to] = dist[u] + edge.weight;
+                }
+            }
+        }
+    }
+
+    // Replace unreachable nodes with -1 if desired
+        for (int i = 0; i < V; i++) {
+            if (dist[i] == Integer.MAX_VALUE) {
+                dist[i] = -1;
+            }
+        }
+
+    return dist;
+  }
+}

@@ -1,12 +1,21 @@
 /*
-Problem Statement: A directed graph of V vertices and E edges is given in the form of an adjacency list adj.
+Problem Statement: A directed graph of V vertices and E edges is given in the form of an adjacency list adj. 
 Each node of the graph is labeled with a distinct integer in the range 0 to V - 1. 
-
+A node is a terminal node if there are no outgoing edges. 
+A node is a safe node if every possible path starting from that node leads to a terminal node. 
+You have to return an array containing all the safe nodes of the graph. 
+The answer should be sorted in ascending order.
 https://takeuforward.org/data-structure/find-eventual-safe-states-bfs-topological-sort-g-25/
 
-The node with outdegree 0 is considered to be a terminal node but the topological sort algorithm deals with the indegrees of the nodes. 
-So, to use the topological sort algorithm, we will reverse every edge of the graph. 
-Now, the nodes with indegree 0 become the terminal nodes. After this step, we will just follow the topological sort algorithm as it is.
+
+IMP Intuition and Explanation ->
+As Safe Nodes is where Outdegree = 0, and topoSort is when we collection Indegree = 0
+Reverse the edges and calculate the Indegree
+Think of below
+6 -> 7  (Outdegree of 7 = 0, so 7 is SafeNode)
+as this
+6 <- 7  (Indegree of 7 = 0, so 7 is SafeNode)
+
 
 ✅ How it works:
 1. Reverse the graph: edges u->v become v->u.
@@ -18,7 +27,7 @@ Now, the nodes with indegree 0 become the terminal nodes. After this step, we wi
     - If indegree becomes 0 → enqueue neighbor.
 5. Sort the resulting nodes to return in ascending order.
 
-Cue -> create reversed adjacency List, fill indegress, BFS function
+Cue -> create reversed adjacency List, fill indegrees, BFS function
 ========================================================================
 Steps:
 1. Build reversed adjacency List List<List<Integer>> adj, fill indegree

@@ -1,19 +1,48 @@
 /*
+IMP: BFS implementation -> No topoSort indegree, add to queue based on distance updation, i.e. dist[node] + 1 < dist[adj]
+-------------------------------------------------------------------------------------------------------------------------
 Striver explanation and code
 Given an Undirected Graph having unit weight, 
 find the shortest path from the source to all other nodes in this graph. In this problem statement, 
 we have assumed the source vertex to be ‘0’. If a vertex is unreachable from the source node, then return -1 for that vertex.
 https://takeuforward.org/data-structure/shortest-path-in-undirected-graph-with-unit-distance-g-28/
 
-Declare a distance array
-Declare a queue with push {node, distance}
 
-Steps
-- Firstly, we convert the graph into an adjacency list which displays the adjacent nodes for each index represented by a node.
-- Now, we create a dist array of size N initialized with a very large number which can never be the answer to indicate that initially, all the nodes are untraversed.
-- Then, perform the standard BFS traversal. 
-- In every iteration, pick up the front() node, and then traverse for its adjacent nodes.  
-For every adjacent node, we will relax the distance to the adjacent node if (dist[node] + 1 < dist[adjNode]). Here dist[node] means the distance taken to reach the current node, and ‘1’ is the edge weight between the node and the adjNode. We will relax the edges if this distance is shorter than the previously taken distance. Every time a distance is updated for the adjacent node, we push that into the Queue with the increased distance. 
+IMP: BFS implementation -> No topoSort indegree, add to queue based on distance updation, i.e. dist[node] + 1 < dist[adj]
+Cue -> build undirected adjMatrix, init dist[], BFS init Queue, while (!q.isEmpty()), get adj, fill dist arr, q.add(it)
+========================================================================================
+Steps - Unit Weights - no Pair Needed
+1. Built adjList, Init ArrayList<ArrayList<Integer>> adjList
+    - For i to V, adjList.add(new ArrayList<>)
+2. For all rows of the edges 2d arr, fill adj list
+    - Undirected graph so add both u->u, v->u directions
+    - for(int i=0; i<edges.length; i++) {
+        adj.get(edges[i][0]).add(edges[i][1]);
+        adj.get(edges[i][1]).add(edges[i][0]); 
+    }
+3. init dist[], fill with Integer.MAX_VALUE, mark dist[src] = 0
+4. BFS Run 
+    - init Queue, add src node, q.offer(src)
+    - while Queue is not Empty, q.poll(), 
+        get adjacents, 
+        compare distance if (dist[node] + 1 < dist[adj]), update dist[adj], add to queue
+    - while(!q.isEmpty()) {
+        int node  = q.poll();
+        for(int adj: adj[node]) {
+            if(dist[node] + 1 < dist[adj]) {
+                dist[adj] = dist[node] + 1;
+                q.offer(adj);
+            }
+        }
+        
+    }
+5. replace rest Integer.MAX_VALUE with -1
+6. return dist;
+========================================================================================
+
+
+
+
 */
 
 import java.util.*;
@@ -55,14 +84,14 @@ class Solution {
 
     // BFS Implementation
         Queue<Integer> q = new LinkedList<>();
-        q.add(src); 
+        q.offer(src); 
         while(!q.isEmpty()) {
             int node = q.peek(); 
             q.remove(); 
             for(int it : adj.get(node)) {
                 if(dist[node] + 1 < dist[it]) {
                     dist[it] = 1 + dist[node]; 
-                    q.add(it); 
+                    q.offer(it); 
                 }
             }
         }

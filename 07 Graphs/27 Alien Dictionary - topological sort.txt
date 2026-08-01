@@ -4,30 +4,46 @@ Problem Statement: Given a sorted dictionary of an alien language having N words
 Find the order of characters in the alien language.
 Note: Many orders may be possible for a particular test case, thus you may return any valid order.
 
-Sometime appears before something - topolgical sort
+1. Something appears before something - topolgical sort
 convert all alphabets to 0 based indexes
 baa
 abcd
-convert b appears before a to a directed graph b -> a, b has an edge to a
+2. Mismatch at index 0
+at index 0, convert b appears before a to a directed graph b -> a, b has an edge to a
+3. IMP -> store mismatch char in terms of numbers in adj list. i.e. adj.get(s1.charAt(0) - 'a').add(s2.charAt(0) - a);
 abcd
 abca
-convert d appears before a to a directed graph d-> a, d has an edge to a
+4. at index 3, convert d appears before a to a directed graph d-> a, d has an edge to a
+cab
+cad
+5. at index 2, convert b appears before d to a directed graph b -> d, b has an edge to d
+6. This way create adjacency List
+7. Pass it to topo sort to get the correct order of characters
+8. Build chars from toposort
+=> bdac is the correct order of characters
 
-
-Algorithm explanation
-1. - We will run a loop from the starting index to the second last index 
-because we will check the ith element and the (i+1)th element. 
-2. - Inside the loop, we will pick two words (the word at the current index(s1) and the word at the next index(s2)). 
-For comparing them, we will again run a loop up to the length of the smallest string.
-3. - Inside that second loop, if at any index we find inequality (s1[i] != s2[i]), 
-we will add them to the adjacency list (s1[i] —> s2[i]) in terms of numbers(subtracting ‘a’ from them), 
-and then we will immediately come out of the loop. 
-4. - This is only because we want the first differentiating character. Finally, we will get the adjacency list.
-5. - In short, we need to find the differentiating character for adjacent strings and create the graph. 
-6. - Once the graph is created, simply perform a topo sort, whose steps are given below. 
-        - calculate indegree
-        - push the node whose indegree is 0
-        - pop add to the result, for every adjacent nodes, keep decreasing the indegree array, and push to the queue
+================================================================================================================================
+Cue -> build adjlist, init adjList -> compare s1, s2, add edges converted to nums to adjList, 
+        topoSort adjList, 
+        iterate topoSort numbers and conv to char then word
+Steps:
+1. Build adjacency List List<List<Integer>> adj by comparing s1 to s2
+    - For each word, adj.add(new ArrayList<>());
+    - Word comparison function 
+        - run from i to N-1, or i to dict[].length - 1, find s1, s2, min length, 
+        for i to N-1, s1 = dict[i], s2 = dict[i-1], get min length = min(s1,s2)
+        - run from ptr 0 to minlen, if not equal we can create an edge,
+        IMP -> create edge in terms of numbers or indexes
+        for(ptr = 0 to < minlen), if s1.chatAt(ptr) != s2.charAt(ptr), build adjList.get(s1.charAt(ptr) - 'a').add(s2.charAt(ptr) - 'a')
+2. Use topo sort to sort the numbers based on adjacency list
+    - init indegree arr, init Queue
+    - for u: 0 -> V fill indegree[u]++, add indegree[u] to queue
+    - while !q.isEmpty(), poll add to topoList, reduce indegree, check if its 0, add to queue
+    - return topoList
+3. Convert numbers from topoList back to real char by adding a, and append to answer
+    - for (int it: topoList), ans = ans + (char) (it + (int) a);
+    - return ans;
+================================================================================================================================
 */
 
 
@@ -35,6 +51,37 @@ import java.util.*;
 
 
 class Solution {
+    public String findOrder(String [] dict, int N, int K) {
+        List<List<Integer>> adj = new ArrayList<>();
+        for (int i = 0; i < K; i++) {
+            adj.add(new ArrayList<>());
+        }
+
+    // word comparision function, whenever there is a non matching character add to the adjacency list
+        for (int i = 0; i < N - 1; i++) {
+            String s1 = dict[i];
+            String s2 = dict[i + 1];
+            int len = Math.min(s1.length(), s2.length());
+            for (int ptr = 0; ptr < len; ptr++) {
+                if (s1.charAt(ptr) != s2.charAt(ptr)) {
+                    // store the characters in terms of their numbers 0,1,2,3,4 etc
+                    adj.get(s1.charAt(ptr) - 'a').add(s2.charAt(ptr) - 'a');
+                    break;
+                }
+            }
+        }
+
+        //perform topo sort
+        List<Integer> topo = topoSort(K, adj);
+
+        //add for every int of the answer, convert into the char array back
+        String ans = "";
+        for (int it : topo) {
+            ans = ans + (char)(it + (int)('a'));
+        }
+        return ans;
+    }
+
     private List<Integer> topoSort(int V, List<List<Integer>> adj) {
         int indegree[] = new int[V];
         for (int i = 0; i < V; i++) {
@@ -64,38 +111,6 @@ class Solution {
         }
 
         return topo;
-    }
-    public String findOrder(String [] dict, int N, int K) {
-        List<List<Integer>> adj = new ArrayList<>();
-        for (int i = 0; i < K; i++) {
-            adj.add(new ArrayList<>());
-        }
-
-// word comparision function, whenever there is a non matching character add to the adjacency list
-        for (int i = 0; i < N - 1; i++) {
-            String s1 = dict[i];
-            String s2 = dict[i + 1];
-            int len = Math.min(s1.length(), s2.length());
-            for (int ptr = 0; ptr < len; ptr++) {
-                if (s1.charAt(ptr) != s2.charAt(ptr)) {
-                    // store the characters in terms of their numbers 0,1,2,3,4 etc
-                    adj.get(s1.charAt(ptr) - 'a').add(s2.charAt(ptr) - 'a');
-                    break;
-                }
-            }
-        }
-
-        //perform topo sort
-        List<Integer> topo = topoSort(K, adj);
-
-        //add for every int of the answer, convert into the char array back
-        String ans = "";
-        for (int it : topo) {
-            ans = ans + (char)(it + (int)('a'));
-        }
-
-        return ans;
-
     }
 }
 
