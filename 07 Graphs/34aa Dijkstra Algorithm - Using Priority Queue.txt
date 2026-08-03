@@ -1,0 +1,133 @@
+
+//chatgpt code
+/*
+
+=================================================================================================================
+Exactly Similar to Shortest Path in DAG, 
+The only difference is how they decide the order of processing nodes.
+
+| Algorithm            | Graph Type                       | Order of Processing                     |
+| -------------------- | -------------------------------- | --------------------------------------- |
+| Shortest Path in DAG | DAG only                         | Topological Order                       |
+| Dijkstra             | Any graph (non-negative weights) | Minimum Distance First (Priority Queue) |
+
+Connection between all these algorithm
+BFS
+   ↓
+Topological Sort
+   ↓
+Shortest Path in DAG
+   ↓
+Dijkstra
+
+Notice how each one builds on the previous:
+
+BFS → process in increasing number of edges (unweighted graph).
+Shortest Path in DAG → process in topological order (works because there are no cycles).
+Dijkstra → process in increasing shortest distance (needed when cycles exist and edge weights are non-negative).
+=================================================================================================================
+
+
+
+Visualization of the Adjacency List
+      4
+ 0 --------> 1
+ |           |
+2|           |5
+ |           |
+ v     1     v
+ 2 --------> 3
+      3
+
+How the adjList looks like
+adj = [
+    // Node 0
+    // adj.get(0) = 
+    [
+        Pair(1,4),
+        Pair(2,2)
+    ],
+
+    // Node 1
+    // adj.get(1) = 
+    [
+        Pair(3,5)
+    ],
+
+    // Node 2
+    // adj.get(2) = 
+    [
+        Pair(1,1),
+        Pair(3,3)
+    ],
+
+    // Node 3
+    [
+
+    ]
+];
+
+Steps
+1. 
+
+*/
+
+import java.util.ArrayList;
+import java.util.PriorityQueue;
+
+//can use class Edge as well
+class Pair {
+    int node;
+    int distance;
+
+    public Pair(int node, int distance) {
+        this.node = node;
+        this.distance = distance;
+    }
+}
+
+class Solution {
+
+    static int[] dijkstra(int V, ArrayList<ArrayList<Pair>> adj, int S) {
+
+        // Stores shortest distance from source to every node
+        int[] dist = new int[V];
+        for (int i = 0; i < V; i++) {
+            dist[i] = Integer.MAX_VALUE;
+        }
+        dist[S] = 0;
+
+        // Min Heap based on shortest distance
+        PriorityQueue<Pair> pq =
+                new PriorityQueue<>((a, b) -> a.distance - b.distance);
+
+        // Source node at distance 0
+        pq.add(new Pair(S, 0));
+
+        while (!pq.isEmpty()) {
+            Pair current = pq.poll();
+            int u = current.node;
+            int currDistance = current.distance;
+
+            // If there is already a lesser distance to this node ignore
+            if (currDistance > dist[u]) {
+                continue;
+            }
+
+            // Traverse all neighbours of u
+            for (Pair edge : adj.get(u)) {
+                int v = edge.node;
+                int weight = edge.distance;
+
+                // Update the distance if dist[u] + weight is less than dist[v]
+                if (dist[u] + weight < dist[v]) {
+                    dist[v] = dist[u] + weight;
+                    // Push updated shortest distance
+                    pq.add(new Pair(v, dist[v]));
+                }
+            }
+        }
+
+        return dist;
+    }
+}
