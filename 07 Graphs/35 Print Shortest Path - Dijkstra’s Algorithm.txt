@@ -17,6 +17,39 @@ Change 3: Reconstruct path from parent arr, from backwards to front, destination
 ==========================================================================================
 
 
+---------------------------------------------------------------------------------------------------------------
+// Explanation of: if (currDistance > dist[u]) continue; from below code
+// If there is already a lesser distance to the current node, ignore the queue record
+//IMP* why this needed, at end
+
+Example:
+Initially:
+0 -> 1 (10)
+PQ:
+(1,10)
+Later we find a better path:
+0 -> 2 -> 1 = 5
+PQ:
+(1,10)
+(1,5)
+
+The queue pops:
+(1,5)   <-- correct
+Later it also pops
+(1,10)  <-- stale/obsolete entry
+if (currDist > dist[u]) continue;
+"The distance stored in this PQ entry is worse than the best distance we already know for this node." SO IGNORE
+Without this condition, we will find neighbours, compare distance and do extra work etc
+
+Without this condition
+Your code does
+for (Pair neighbor : adj.get(u)) {
+    ...
+}
+even for stale entries.
+---------------------------------------------------------------------------------------------------------------
+
+
 */
 
 import java.util.*;
@@ -47,6 +80,13 @@ class Solution {
         while (!pq.isEmpty()) {
             Pair top = pq.poll();
             int u = top.node;
+            int currDistance = top.dist;
+
+            // If there is already a lesser distance to the current node, ignore the queue record
+            //IMP* why this needed, at end
+            if (currDistance > dist[u]) {
+                continue;
+            }
 
             for (Pair neighbor : adj.get(u)) {
                 int v = neighbor.node;
