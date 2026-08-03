@@ -1,0 +1,169 @@
+
+Before trying to memorize the entire solution, first make sure you're comfortable with these three ideas independently:
+
+1. Queue stores paths instead of words.
+2. Copy the path before pushing it into the queue (new ArrayList<>(vec)).
+3. Delay removing visited words until the entire BFS level is processed (usedOnLevel).
+
+=> Step 1 -> In Word Ladder I - we forget the first word, we store second transformation and steps needed
+---------
+Queue contains:
+(hit, 1)
+
+We Pop this:
+(hit,1)
+
+And Generate:
+(hot,2)
+Very simple.
+
+=> Step 2: -> Now We want the entire path, not just the shortest distance.
+---------
+Instead of storing
+'hot'
+we store
+[hit, hot]
+
+Instead of
+'dog'
+we store
+[hit, hot, dot, dog]
+
+So now the queue becomes
+Queue<ArrayList<String>>
+
+=> Step 3 - Queue Visualization
+---------
+Initially
+Queue
+[hit]
+
+Pop
+[hit]
+
+Generate
+hot
+Push
+[hit, hot]
+
+Queue becomes
+[hit, hot]
+
+Pop
+[hit, hot]
+
+Neighbours are
+dot
+lot
+
+Push to Queue
+[hit, hot, dot]
+[hit, hot, lot]
+
+=> Step 4: Get only the last word from the vec. which is current ArrayList
+---------
+String lastWord = vec.get(vec.size()-1);
+Run Word Ladder on this lastWord
+Do exactly Word Ladder I to replace one index of this lastWord
+
+=> Step 5: create a copy of the vec and then add to queue
+---------
+vec.add(replacedWord);
+ArrayList<String> temp = new ArrayList<>(vec);
+q.add(temp);
+vec.remove(vec.size()-1);
+
+As Java stores objects by reference.
+Think of vec as a working notebook.
+Whenever you discover a valid neighbour:
+Write it in the notebook.
+Photocopy the notebook.
+Put the photocopy into the queue.
+Erase the last line.
+Continue.
+
+=> Step 6: Why usedOnLevel?
+---------
+In Word Ladder I we removed words immediately.
+
+Example
+hit
+ ↓
+hot
+Remove
+hot
+immediately.
+No problem.
+
+In Word Ladder II this becomes wrong.
+Suppose
+       hit
+      /   \
+    hot   hut
+      \   /
+      dot
+
+Both
+hit → hot → dot
+and
+hit → hut → dot
+are shortest.
+If you remove
+dot
+after the first path,
+the second path can never reach it.
+So you lose answers.
+Therefore we delay removal.
+
+Current BFS level
+[hit, hot]
+discovers
+dot
+Store
+usedOnLevel
+dot
+
+Don't remove yet.
+Maybe another path of the same length also reaches
+dot
+
+After the whole level finishes
+remove everything.
+
+That's exactly what
+if (vec.size() > level) {
+    level++;
+
+    for (String it : usedOnLevel) {
+        st.remove(it);
+    }
+
+    usedOnLevel.clear();
+
+}
+does.
+
+
+
+===============================================================================================================
+Steps
+1. Create HashSet, add all Words
+2. Init Queue<ArrayList<String>> q, 
+    create new ArrayList, add startWord, add this ArrayList to Queue
+3. Init usedOnLevel ArrayList, add startWord, 
+4. Init level 0, Init result = new ArrayList<ArrayList<String>>();
+5. while !q.isEmpty, get ArrayList from queue
+    ArrayList<String> currPath = q.poll()
+    - if currPath.size() > level, this level completed, clear usedOnLevel, clear hashset
+        - level++
+        - remove from hashset all usedOnLevel words
+        - clear usedOnLevel
+    
+    - word = last word of currPath
+    - Base Case if equals targetWord add to ans
+    - Apply Word Ladder I, for all indexes of the word, get charArray from 'a' to 'z' start replacing index, check if hashset contains replacedWord
+        - if match, add replacedWord to currPath, 
+        - create a copy of currPath add to Queue
+        - add replacedWord to usedOnLevel
+        - remove from currPath
+===============================================================================================================

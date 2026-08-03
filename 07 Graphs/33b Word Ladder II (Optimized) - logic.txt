@@ -1,0 +1,244 @@
+# Word Ladder II (Optimized)
+
+## Core Idea
+
+Instead of storing **entire paths** during BFS (which leads to a lot of copying),
+
+we split the solution into **2 phases**.
+
+### Phase 1 : BFS
+
+Perform a normal BFS and only store **the first level at which each word is reached**.
+
+Example:
+
+```text
+Word     Level
+----------------
+hit        1
+hot        2
+dot        3
+lot        3
+dog        4
+log        4
+cog        5
+```
+
+This information is stored in:
+
+```java
+HashMap<String, Integer> levelMap;
+```
+
+---
+
+### Phase 2 : Reverse DFS (Backtracking)
+
+Start from the **endWord** and keep moving to words that belong to the **previous BFS level**.
+
+```
+cog (5)
+│
+├── dog (4)
+│      │
+│      └── dot (3)
+│             │
+│             └── hot (2)
+│                    │
+│                    └── hit (1)
+│
+└── log (4)
+       │
+       └── lot (3)
+              │
+              └── hot (2)
+                     │
+                     └── hit (1)
+```
+
+Whenever we reach the `beginWord`, we have found one shortest path.
+
+Since we started from the end, simply reverse the path before storing it.
+
+---
+
+## Why is this optimized?
+
+**Brute Force**
+
+Queue stores complete paths.
+
+```
+[hit]
+[hit, hot]
+[hit, hot, dot]
+[hit, hot, lot]
+...
+```
+
+Every neighbour requires copying an entire list.
+
+---
+
+**Optimized**
+
+Queue stores only
+
+```
+hit
+hot
+dot
+lot
+dog
+...
+```
+
+and
+
+```
+levelMap
+
+hit -> 1
+hot -> 2
+dot -> 3
+...
+```
+
+Later, DFS reconstructs every shortest path using these levels.
+
+Much less memory is used.
+
+---
+
+## Clean Code
+
+```java
+class Solution {
+
+    // Stores the begin word so DFS knows when to stop.
+    String beginWord;
+
+    // Stores the first BFS level at which every word is reached.
+    HashMap<String, Integer> levelMap;
+
+    // Final answer.
+    List<List<String>> answer;
+
+    // ---------------------------------------------------------
+    // Reverse DFS
+    // Start from endWord and keep moving to previous BFS levels.
+    // ---------------------------------------------------------
+    private void dfs(String currentWord, List<String> currentPath) {
+
+        // Reached the beginWord.
+        // Reverse the path because DFS starts from endWord.
+        if (currentWord.equals(beginWord)) {
+            List<String> path = new ArrayList<>(currentPath);
+            Collections.reverse(path);
+            answer.add(path);
+            return;
+        }
+
+        int currentLevel = levelMap.get(currentWord);
+
+        // Try changing every character.
+        for (int i = 0; i < currentWord.length(); i++) {
+
+            for (char ch = 'a'; ch <= 'z'; ch++) {
+
+                char[] wordArray = currentWord.toCharArray();
+                wordArray[i] = ch;
+
+                String previousWord = new String(wordArray);
+
+                // We can move only to a word that lies exactly
+                // one BFS level before the current word.
+                if (levelMap.containsKey(previousWord)
+                        && levelMap.get(previousWord) + 1 == currentLevel) {
+
+                    currentPath.add(previousWord);
+
+                    dfs(previousWord, currentPath);
+
+                    // Backtrack.
+                    currentPath.remove(currentPath.size() - 1);
+                }
+            }
+        }
+    }
+
+    public List<List<String>> findLadders(String beginWord,
+                                          String endWord,
+                                          List<String> wordList) {
+
+        // ---------------------------------------------------------
+        // STEP 1 : Put all words into a HashSet.
+        // ---------------------------------------------------------
+        Set<String> wordSet = new HashSet<>(wordList);
+
+        // ---------------------------------------------------------
+        // STEP 2 : BFS to find the first level of every reachable word.
+        // ---------------------------------------------------------
+        Queue<String> queue = new LinkedList<>();
+
+        this.beginWord = beginWord;
+
+        levelMap = new HashMap<>();
+
+        queue.offer(beginWord);
+
+        levelMap.put(beginWord, 1);
+
+        wordSet.remove(beginWord);
+
+        while (!queue.isEmpty()) {
+
+            String currentWord = queue.poll();
+
+            int currentLevel = levelMap.get(currentWord);
+
+            // Once endWord is reached,
+            // all required levels have already been computed.
+            if (currentWord.equals(endWord))
+                break;
+
+            for (int i = 0; i < currentWord.length(); i++) {
+
+                for (char ch = 'a'; ch <= 'z'; ch++) {
+
+                    char[] wordArray = currentWord.toCharArray();
+                    wordArray[i] = ch;
+
+                    String nextWord = new String(wordArray);
+
+                    if (wordSet.contains(nextWord)) {
+
+                        queue.offer(nextWord);
+
+                        wordSet.remove(nextWord);
+
+                        // Store the level at which this word is reached.
+                        levelMap.put(nextWord, currentLevel + 1);
+                    }
+                }
+            }
+        }
+
+        // ---------------------------------------------------------
+        // STEP 3 : Reverse DFS to reconstruct all shortest paths.
+        // ---------------------------------------------------------
+        answer = new ArrayList<>();
+
+        if (levelMap.containsKey(endWord)) {
+
+            List<String> currentPath = new ArrayList<>();
+
+            currentPath.add(endWord);
+
+            dfs(endWord, currentPath);
+        }
+
+        return answer;
+    }
+}
+```

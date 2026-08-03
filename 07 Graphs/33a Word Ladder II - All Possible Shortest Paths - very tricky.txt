@@ -1,0 +1,108 @@
+/*
+Extension of Word Ladder I - Dont Print Length - Print all possible shortest sequences -
+https://takeuforward.org/graph/g-30-word-ladder-ii/
+Very complex - check the explanation once again
+Here we do not remove the word from the Set 
+
+Striver explanation
+===============================================================================================================
+Steps
+1. Create HashSet, add all Words
+2. Init Queue<ArrayList<String>> q, 
+    create new ArrayList, add startWord, add this ArrayList to Queue
+3. Init usedOnLevel ArrayList, add startWord, 
+4. Init level 0, Init result = new ArrayList<ArrayList<String>>();
+5. while !q.isEmpty, get ArrayList from queue
+    ArrayList<String> currPath = q.poll()
+    - if currPath.size() > level, this level completed, clear usedOnLevel, clear hashset
+        - level++
+        - remove from hashset all usedOnLevel words
+        - clear usedOnLevel
+    
+    - word = last word of currPath
+    - Base Case if equals targetWord add to ans
+    - Apply Word Ladder I, for all indexes of the word, get charArray from 'a' to 'z' start replacing index, check if hashset contains replacedWord
+        - if match, add replacedWord to currPath, 
+        - create a copy of currPath add to Queue
+        - add replacedWord to usedOnLevel
+        - remove from currPath
+===============================================================================================================
+*/
+
+
+class Solution {
+    public ArrayList<ArrayList<String>> findSequences(String startWord, String targetWord, String[] wordList) {
+        
+        //1. create a Set of Words
+        Set<String> wordSet = new HashSet<String>();
+        int len = wordList.length;
+        for (int i = 0; i < len; i++) {
+            wordSet.add(wordList[i]);
+        } 
+
+        // Init Queue of ArrayList<string>, create an ArrayList add startWord, add this arrList to queue
+        Queue<ArrayList<String>> q = new LinkedList<>();
+        ArrayList<String> initialPath = new ArrayList<>();
+        initialPath.add(startWord);
+        q.add(initialPath);
+
+        ArrayList<String> usedOnLevel = new ArrayList<>();
+        usedOnLevel.add(startWord);
+        int level = 0;
+        ArrayList<ArrayList<String>> ans = new ArrayList<>();
+        while (!q.isEmpty()) {
+            ArrayList<String> currPath = q.peek(); //currPath is just a tracker to track
+            q.remove();
+            
+            //we completed this BFS level
+            //remove all strings at this level from hashset
+            if (currPath.size() > level) {
+                level++;
+                for (String word: usedOnLevel) { ///clear new words added in this level
+                    wordSet.remove(word);
+                }
+                usedOnLevel.clear(); //clear the level
+            }
+
+            String word = currPath.get(currPath.size() - 1);
+            //Base Case
+            if (word.equals(targetWord)) {
+                // the first sequence where we reached end
+                if (ans.size() == 0) {
+                    ans.add(currPath);
+                }
+                else if (ans.get(0).size() == currPath.size()) { 
+                //another sequence found of same length
+                    ans.add(currPath);
+                }
+            }
+
+            for (int i = 0; i < word.length(); i++) {
+                for (char c = 'a'; c <= 'z'; c++) {
+                    char replacedCharArray[] = word.toCharArray();
+                    replacedCharArray[i] = c;
+                    String replacedWord = new String(replacedCharArray);
+                    if (st.contains(replacedWord) == true) {
+                        currPath.add(replacedWord);
+                        // [hit, hot, dot]
+                        //add to Queue
+                        
+                        // Java works by reference,
+                        ArrayList<String> temp = new ArrayList<>(currPath);
+                        q.add(temp);
+                        
+                        // mark as visited on the level
+                        usedOnLevel.add(replacedWord);
+
+                        // search for other replacements,
+                        // maybe [hit, hot, pot] ?
+                        currPath.remove(currPath.size() - 1);
+                        [hit, hot]
+                        
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+}
