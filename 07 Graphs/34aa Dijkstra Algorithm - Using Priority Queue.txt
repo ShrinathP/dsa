@@ -67,8 +67,21 @@ adj = [
     ]
 ];
 
+====================================================================================================
 Steps
-1. 
+1. Init Pair(node, distance), init dist arr, fill with Integer.MAX_VALUE, dist[src] = 0;
+2. Init Priority Queue(min heap) of Pair based on ascending distance 
+   PriorityQueue<Pair> pq = new PriorityQueue<>((pair1, pair2) -> pair1.distance - pair2.distance);
+3. Add source node to the pq.
+   pq.add(new Pair(src, 0));
+4. BFS traversal ->
+   - while !q.isEmpty
+   - pair = q.poll(), get node, get distance
+   - if  currDistance < dist[u], continue, no updation needed
+   - traverse all neighbours of u,
+      for each neighbour, if travelDistance to neighbour is less, update it, add to PriorityQueue
+      if dist[u] + neighbourWeight/neighbourDistance < dist[v] update dist[v]
+====================================================================================================
 
 */
 
