@@ -46,7 +46,7 @@ class Stack {
             newNode.next = top; // Point next newNode to the currenttop (prevTop)
             top = newNode; // Move top to new node
 
-// visualize this IMP -> newNode.next to prevTop, move top to newNode
+// IMP -> visualize this -> newNode.next to prevTop, move top to newNode
         }
     }
 
