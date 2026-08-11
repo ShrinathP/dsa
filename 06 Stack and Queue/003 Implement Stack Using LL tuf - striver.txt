@@ -1,5 +1,7 @@
 /*
 Striver Explanation
+https://youtu.be/tqQ5fTamIN4?t=1934
+
 Chatgpt solution
 push - create a new node, Keep updating the top to new node using, newNode.next = prevTop, newTop = newNode
 newNode
