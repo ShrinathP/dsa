@@ -1,0 +1,112 @@
+/*
+Striver Explanation and modified code
+
+PUSH:
+// PUSH
+if (front == null)
+    front = rear = newNode;
+else {
+    rear.next = newNode;
+    rear = newNode;
+}
+
+POP:
+value = front.data
+front = front.next
+if (front == null)
+    rear = null
+
+PEEK:
+return front.data;
+
+EMPTY:
+return front == null;
+
+*/
+
+class LinkedListQueue {
+
+    private Node front;
+    private Node rear;
+    private int size;
+
+    // Node class
+    private class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    // Constructor
+    public LinkedListQueue() {
+        front = rear = null;
+        size = 0;
+    }
+
+    // Enqueue / Push
+    public void push(int value) {
+        Node newNode = new Node(value);
+        
+        // If queue is empty
+        if (front == null) {
+            front = rear = newNode;
+        }
+        else {
+            rear.next = newNode;
+            rear = newNode;
+        }
+        size++;
+    }
+
+    // Dequeue / Pop
+    public int pop() {
+        if (front == null) {
+            return -1;
+        }
+        int value = front.data;
+
+        // Move front to the next node
+        front = front.next;
+
+        // If queue became empty,
+        // rear must also become null
+        if (front == null) {
+            rear = null;
+        }
+
+        size--;
+
+        return value;
+    }
+
+    // Peek
+    public int peek() {
+        if (front == null) {
+            return -1;
+        }
+        return front.data;
+    }
+
+    // Is Empty
+    public boolean isEmpty() {
+        return front == null;
+    }
+}
+
+// Demo
+public class Main {
+    public static void main(String[] args) {
+        Queue queue = new Queue();
+
+        queue.push(10);
+        queue.push(20);
+        queue.push(30);
+
+        System.out.println(queue.pop());  // 10
+        System.out.println(queue.peek());     // 20
+    }
+}
