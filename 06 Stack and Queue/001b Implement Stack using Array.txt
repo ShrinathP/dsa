@@ -1,5 +1,6 @@
 /*
 GFG Solution
+Striver explanation: https://youtu.be/tqQ5fTamIN4?t=693
 
 - Top or Peek Operation in Stack:
 Returns the top element of the stack.
