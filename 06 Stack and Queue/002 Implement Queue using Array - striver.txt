@@ -1,5 +1,7 @@
 //Striver explanation
 /*
+https://youtu.be/tqQ5fTamIN4?t=1172
+
 Explanation:
 - initialize queue array start, end = -1
 - start points to the first element in the queue.
