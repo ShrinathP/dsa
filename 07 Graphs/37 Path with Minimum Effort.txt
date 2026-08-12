@@ -1,0 +1,150 @@
+/*
+Path With Minimum Effort
+Problem statement
+Given a grid of heights, start at the top-left cell (0,0) and reach the bottom-right cell (n-1,m-1).
+You can move up, down, left, or right.
+The effort of a path is the maximum absolute difference in heights between two consecutive cells along that path.
+Return the minimum possible effort among all paths.
+
+Example:
+1 2 2
+3 8 2
+5 3 5
+
+A path may have differences:
+
+1 → 2 → 2 → 2 → 5
+    1   0   0   3
+
+Effort = max(1, 0, 0, 3) = 3.
+We want the path whose maximum difference is as small as possible.
+
+Logic — Dijkstra
+This is basically Dijkstra, but instead of:
+newDist = currentDist + edgeWeight
+we use:
+newEffort = max(currentEffort, edgeDifference)
+
+Why?
+Because the cost of a path is its maximum edge difference, not the sum.
+
+So if:
+current effort = 4
+new edge difference = 2
+
+then:
+new effort = max(4, 2) = 4
+We always process the cell with the smallest current effort using a min-heap.
+
+=============================================================================================
+Steps
+1. Create Pair implements Comparable with compareTo based on distance.
+2. minimumEffortPath function which takes the grid
+   minimumEffortPath(int[][] heights)
+   - Create a dist 2d arr, fill with INT_MAX, for source node (0,0), fill with 0
+        int n = grid.length;
+        int m = grid[0].length;
+        int [][] dist = new int[n][m];
+        for(int i=0; i<n; i++) { Arrays.fill(dist[i], Integer.MAX_VALUE); }
+        dist[0][0] = 0;
+   - Init PriorityQueue of Pair, offer 0, 0 with distance 0
+        queue.offer(new Pair(0, 0, 0))
+   - Init 2 dir arr, fill directions, dr, dc (incremental row, incremental col)
+    - Start BFS -
+        - while !pq.isEmpty()
+            - poll row, col, effort
+            - if destination reached, return effort
+            - traverse in all 4 directions
+                - init newrow = row + dr , newcol = col + dc
+                - check newrow, newcol within bounds
+                - if within bounds
+                    - find edgeDifference = Math.abs(heights[row][col] - heights[newr][newcol])
+                    - compute newEffort = Math.max(effort, edgeDifference)
+                        if newEffort < dist[newr][newcol], 
+                        we found a better Path to reach this newr, newcol
+                            - update dist arr, offer to PQ
+=============================================================================================
+    
+*/
+
+
+
+import java.util.*;
+
+class Solution {
+
+    static class Pair implements Comparable<Pair> {
+        int effort;
+        int row, col;
+
+        Pair(int effort, int row, int col) {
+            this.effort = effort;
+            this.row = row;
+            this.col = col;
+        }
+
+        public int compareTo(Pair other) {
+            return this.effort - other.effort;
+        }
+    }
+
+    public int minimumEffortPath(int[][] heights) {
+
+        int n = heights.length;
+        int m = heights[0].length;
+
+        // Minimum effort required to reach each cell
+        int[][] dist = new int[n][m];
+
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(dist[i], Integer.MAX_VALUE);
+        }
+
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+
+        // Start from (0,0) with effort 0
+        dist[0][0] = 0;
+        pq.offer(new Pair(0, 0, 0));
+
+        int[] delRow = {-1, 0, 1, 0};
+        int[] delCol = {0, 1, 0, -1};
+
+        while (!pq.isEmpty()) {
+
+            Pair current = pq.poll();
+
+            int effort = current.effort;
+            int row = current.row;
+            int col = current.col;
+
+            // Destination reached
+            if (row == n - 1 && col == m - 1) {
+                return effort;
+            }
+
+            // Explore 4 directions
+            for (int i = 0; i < 4; i++) {
+                int newRow = row + delRow[i];
+                int newCol = col + delCol[i];
+
+                if (newRow >= 0 && newRow < n && newCol >= 0 && newCol < m) {
+
+                    // Difference between current and next cell
+                    int edgeDifference = Math.abs(heights[row][col] - heights[newRow][newCol]);
+
+                    // Path effort is the maximum difference seen so far
+                    int newEffort = Math.max(effort, edgeDifference);
+
+                    // Found a better path
+                    if (newEffort < dist[newRow][newCol]) {
+                        dist[newRow][newCol] = newEffort;
+
+                        pq.offer(new Pair(newEffort, newRow, newCol));
+                    }
+                }
+            }
+        }
+
+        return 0;
+    }
+}
