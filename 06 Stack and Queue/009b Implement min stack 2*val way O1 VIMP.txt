@@ -81,6 +81,7 @@ class MinStack {
 
         int top = stack.pop();
         //if top is less than currMin this is encoded value
+        //modified encoded value is added to the stack
         if (top <= min) {
             min = 2 * min - top; // Restore the previous minimum
         }
