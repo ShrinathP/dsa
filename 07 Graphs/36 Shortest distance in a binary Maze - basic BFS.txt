@@ -77,7 +77,9 @@ class Solution {
         // ideally use PQ, to find minDistance logic
         // all edges are 1 unit weight, 
         // so using Queue instead of PQ 
-        // as at any level when we reach the destination, we already found the least distance
+        // as at any level when we reach the destination, we already found the least distance, 
+        // 1 distance level order traversal, any incremental level you reach first, you found the shortest path
+        
         Queue<int[]> q = new LinkedList<>();
         q.offer(new int[]{0, source[0], source[1]});  // Push source cell with distance 0
 
