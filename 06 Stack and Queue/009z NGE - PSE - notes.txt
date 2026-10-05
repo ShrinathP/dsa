@@ -10,7 +10,7 @@ Light Pole Visualization
      |       |        |          |
 |    |       |        |          |
 |____|_______|________|__________|____
-5    4       3        2          1
+5    4       3        2          1 -> Stack fills from here - back
 
 Stack fills from 1 - right - anything that is smaller than currValue - remove it
 
@@ -28,7 +28,7 @@ Light Pole Visualization
 |    |       |        |          
 |____|_______|________|__________|____
 1    2       3        4          5
-
+Stack fills from 1 front
 Stack fills from 1 - right - anything that is smaller than currValue - remove it
 
 
